@@ -1,0 +1,405 @@
+<!--
+#################
+TOAD
+Api command list
+v1.0
+14/09/2021 (DD/MM/YYYY)
+#################
+
+All the request are followed by their possible replies
+
+Some request my vary or even be deleted over time as the software is under development
+-->
+
+<!--doAuthenticate-->
+<xml>
+	<request>
+		<type>doAuthenticate</type>
+		<content>
+			<userid></userid><!--Example : alexandre.ratel-->
+			<userpassword></userpassword><!--Example : 12345-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>doAuthenticate</type>
+		<content>
+			<securitytoken></securitytoken><!--security token to use for the following requests-->
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>doAuthenticate</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
+
+<!--search-->
+<xml>
+	<request>
+		<type>search</type>
+		<securitytoken></securitytoken><!--Security token of the connected user. Will reply only the visible agents for this user-->
+		<content>
+			<search></search><!--The search content, could be agent name, a team or a skill. Will return agents list-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>search</type>
+		<content>
+			<agents>
+				<agent><!--One or more-->
+					<userid></userid>
+					<firstname></firstname>
+					<lastname></lastname>
+					<number></number>
+					<type></type><!--agent,supervisor-->
+					<teams>
+						<team></team><!--Team name--><!--One or more-->
+					</teams>
+					<skills>
+						<skill><!--One or more skills-->
+							<name></name><!--skill name-->
+							<level></level><!--skill level-->
+						</skill>
+					</skills>
+					<devices>
+						<device><!--One or more-->
+							<type></type><!--deskphone,softphone-->
+							<name></name><!--softphone name or mac address-->
+							<model></model><!--Only relevent for deskphone empty for softphone-->
+						</device>
+					</devices>
+				</agent>
+			</agents>
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>search</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
+
+<!--getAgent-->
+<xml>
+	<request>
+		<type>getAgent</type>
+		<securitytoken></securitytoken><!--Security token of the connected user. Will reply only the visible agents for this user-->
+		<content>
+			<userid></userid><!--Example : alexandre.ratel-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>getAgent</type>
+		<content>
+			<agent>
+				<userid></userid>
+				<firstname></firstname>
+				<lastname></lastname>
+				<number></number>
+				<type></type><!--agent,supervisor-->
+				<teams>
+					<team></team><!--Team name--><!--One or more-->
+				</teams>
+				<skills>
+					<skill><!--One or more skills-->
+						<name></name><!--skill name-->
+						<level></level><!--skill level-->
+					</skill>
+				</skills>
+				<devices>
+					<device><!--One or more-->
+						<type></type><!--deskphone,softphone-->
+						<name></name><!--softphone name or mac address-->
+						<model></model><!--Only relevent for deskphone empty for softphone-->
+					</device>
+				</devices>
+			</agent>
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>getAgent</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
+
+<!--getTeam-->
+<xml>
+	<request>
+		<type>getTeam</type>
+		<securitytoken></securitytoken><!--Security token of the connected user. Will reply only the visible agents for this user-->
+		<content>
+			<team></team><!--Team name-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>getTeam</type>
+		<content>
+			<team>
+				<name></name>
+				<primarysupervisor></primarysupervisor>
+				<supervisors>
+					<supervisor><!--One or more-->
+						<userid></userid>
+						<firstname></firstname>
+						<lastname></lastname>
+					</supervisor>
+				</supervisors>
+				<agents>
+					<agent><!--One or more-->
+						<userid></userid>
+						<firstname></firstname>
+						<lastname></lastname>
+					</agent>
+				</agents>
+				<csqs>
+					<csq><!--One or more-->
+						<name></name>
+						<skills>
+							<skill></skill><!--One or more-->
+						</skills>
+					</csq>
+				</csqs>
+			</team>
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>getTeam</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
+
+<!--addAgent-->
+<xml>
+	<request>
+		<type>addAgent</type>
+		<securitytoken></securitytoken><!--Security token of the connected user. To check if the creation is allowed-->
+		<content>
+			<userid></userid>
+			<firstname></firstname>
+			<lastname></lastname>
+			<type></type><!--agent,supervisor-->
+			<teams>
+				<team></team><!--Team name--><!--One or more-->
+			</teams>
+			<skills>
+				<skill><!--One or more skills-->
+					<name></name><!--skill name-->
+					<level></level><!--skill level-->
+				</skill>
+			</skills>
+			<devices>
+				<device><!--One or more-->
+					<type></type><!--deskphone,softphone-->
+					<name></name><!--softphone name or mac address-->
+					<model></model><!--Only relevent for deskphone empty for softphone-->
+				</device>
+			</devices>
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>addAgent</type>
+		<content>
+			<userid></userid><!--UserID of the created user-->
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>addAgent</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
+
+<!--updateAgent-->
+<!--
+Update agent will only allow to update some fields for now
+-->
+<xml>
+	<request>
+		<type>updateAgent</type>
+		<securitytoken></securitytoken><!--Security token of the connected user. To check if the update is allowed-->
+		<content>
+			<firstname></firstname>
+			<lastname></lastname>
+			<type></type><!--agent,supervisor-->
+			<teams>
+				<team></team><!--Team name--><!--One or more-->
+			</teams>
+			<skills>
+				<skill><!--One or more skills-->
+					<name></name><!--skill name-->
+					<level></level><!--skill level-->
+				</skill>
+			</skills>
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>updateAgent</type>
+		<content>
+			<userid></userid><!--UserID of the updated user-->
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>updateAgent</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
+
+<!--deleteAgent-->
+<xml>
+	<request>
+		<type>deleteAgent</type>
+		<securitytoken></securitytoken><!--Security token of the connected user. To check if the deletion is allowed-->
+		<content>
+			<userid></userid><!--The userid of the user we want to delete-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>deleteAgent</type>
+		<content>
+			</success>
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>deleteAgent</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
+
+<!--listAgents-->
+<xml>
+	<request>
+		<type>listAgents</type>
+		<securitytoken></securitytoken><!--Security token of the connected user. Will reply only the visible agents for this user-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>listAgents</type>
+		<content>
+			<agents>
+				<agent><!--One or more-->
+					<userid></userid>
+					<firstname></firstname>
+					<lastname></lastname>
+					<number></number>
+					<type></type><!--agent,supervisor-->
+					<teams>
+						<team></team><!--Team name--><!--One or more-->
+					</teams>
+					<skills>
+						<skill><!--One or more skills-->
+							<name></name><!--skill name-->
+							<level></level><!--skill level-->
+						</skill>
+					</skills>
+					<devices>
+						<device><!--One or more-->
+							<type></type><!--deskphone,softphone-->
+							<name></name><!--softphone name or mac address-->
+							<model></model><!--Only relevent for deskphone empty for softphone-->
+						</device>
+					</devices>
+				</agent>
+			</agents>
+		</content>
+	</reply>
+</xml>
+
+<!--listTeams-->
+<xml>
+	<request>
+		<type>listTeams</type>
+		<securitytoken></securitytoken><!--Security token of the connected user-->
+		<content>
+			<allteams></allteams><!--true,false--><!--If true, all the teams are returned, if false only the user's teams-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>listTeams</type>
+		<content>
+			<teams>
+				<team></team><!--Team name--><!--One or more-->
+			</teams>
+		</content>
+	</reply>
+</xml>
+
+<!--listSkills-->
+<xml>
+	<request>
+		<type>listSkills</type>
+		<securitytoken></securitytoken><!--Security token of the connected user-->
+		<content>
+			<allskills></allskills><!--true,false--><!--If true, all the skills are returned, if false only the user's skills-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>listSkills</type>
+		<content>
+			<skills>
+				<skill></skill><!--Skill name--><!--One or more-->
+			</skills>
+		</content>
+	</reply>
+</xml>
+
+<!--copyLogFile-->
+<xml>
+	<request>
+		<type>copyLogFile</type>
+		<securitytoken></securitytoken><!--Security token of the connected user-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>copyLogFile</type>
+		<content>
+			</success><!--success, error-->
+		</content>
+	</reply>
+</xml>
