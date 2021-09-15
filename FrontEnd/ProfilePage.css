@@ -1,0 +1,26 @@
+#nav{
+  padding : O; margin: 0;
+  text-align: center;
+  overflow: hidden;
+  background-color: #CECECE;
+}
+
+#nav li{
+  display: inline-block;
+  list-style: none;
+}
+
+#nav a{
+  display: inline-block;
+  margin: 0 30 px;
+  color: white;
+  text-decoration: none;
+  padding : 14px 16px;
+}
+
+#nav a:hover{
+  background-color: #000;
+}
+.active{
+  background-color: #0131B4
+}
