@@ -1,0 +1,153 @@
+﻿<!--Fichier de paramétrage de la collecte-->
+<!--
+Rappel :
+Texte libre à mettre entre guillement simple, exemple = 'test'
+utiliser des + pour séparer les éléments
+Un chiffre entre étoiles placé avant une valeure indique le nombre de lettre à utiliser, exemple : *1_*web.firstname = On utilise la première lettre du prénom
+Le symbole *M* indique que toute la valeure suivante doit être converti en majuscule
+Le symbole *1M* indique que seul la première lettre doit être converti en majuscule. Le chiffre peut être ajusté.
+Le symbole *m* indique que toute la valeure suivante doit être converti en minuscule
+Le symbole *1m* indique que seul la première lettre doit être converti en minuscule. Le chiffre peut être ajusté.
+Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 4 premières lettres du nom mises en majuscule. *M**4* est équivalent. *2M**5*web.lastname affichera les 5 première lettres du prénom dont les deux premières seront en majuscule.
+-->
+<xml>
+	<items>
+		<phone>
+			<targetname>phone</targetname>
+			<devicename>'SEP'+web.phonemac</devicename>
+			<description>(*1M**C*web.firstname+' '+*M**C*web.lastname+' - '+office.name)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname+' - '+office.name)</description>
+			<linedescription>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</linedescription>
+			<alertingname>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</alertingname>
+			<display>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</display>
+			<linetextlabel>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</linetextlabel>
+			<externalphonemask>office.setting.1</externalphonemask>
+			<aarmask></aarmask>
+			<commondeviceconfig>office.name+'_CDC'</commondeviceconfig>
+			<commonphoneconfig>'Standard Common Phone Profile'</commonphoneconfig>
+			<securityprofile>*LFphone*web.phonetype+' - Standard SIP Non-Secure Profile'</securityprofile>
+			<devicemobilitymode>'Default'</devicemobilitymode><!--Off, On, Default-->
+			<aargroup>office.aargroup</aargroup>
+			<aarcss></aarcss>
+			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
+			<reroutingcss>office.name+'_DEVICE_CSS'</reroutingcss>
+			<linenumber>web.linenumber1</linenumber><!--One or more-->
+			<cssline>'TBD'</cssline>
+			<cssforward>'TBD'</cssforward>
+			<fwalldestination>'TBD'</fwalldestination>
+			<fwnoandestination>'TBD'</fwnoandestination>
+			<fwbusydestination>'TBD'</fwbusydestination>
+			<fwunrdestination>'TBD'</fwunrdestination>
+			<fwallvoicemailenable>'false'</fwallvoicemailenable>
+			<fwnoanvoicemailenable>'false'</fwnoanvoicemailenable>
+			<fwbusyvoicemailenable>'false'</fwbusyvoicemailenable>
+			<fwunrvoicemailenable>'false'</fwunrvoicemailenable>
+			<voicemailprofile>office.voicemailprofile</voicemailprofile>
+			<routepartition>config.didpartition</routepartition>
+			<producttype>*LFphone*web.phonetype</producttype>
+			<protocol>config.phoneprotocol</protocol>
+			<buttontemplate>*LFpbt*web.phonetype</buttontemplate>
+			<devicepool>office.name+'_DP'</devicepool>
+			<location>office.name+'_LOC'</location>
+			<cssdevice>office.name+'_DEVICE_CSS'</cssdevice>
+			<service>config.ippaservice</service><!--'Service Name':'Service URL label' One or more service-->
+			<speeddial>'tbd'</speeddial><!--One or more-->
+		</phone>
+		<phone>
+			<targetname>loggedoutphone</targetname>
+			<devicename>'SEP'+web.phonemac</devicename>
+			<description>'Telephone non connecte'</description>
+			<linedescription>'Ligne HSDA'</linedescription>
+			<commondeviceconfig>office.name+'_CDC'</commondeviceconfig>
+			<commonphoneconfig>'Standard Common Phone Profile'</commonphoneconfig>
+			<securityprofile>*LFphone*web.phonetype+' - Standard SIP Non-Secure Profile'</securityprofile>
+			<devicemobilitymode>'Default'</devicemobilitymode><!--Off, On, Default-->
+			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
+			<reroutingcss>office.name+'_DEVICE_CSS'</reroutingcss>
+			<linenumber>cucm.availableline</linenumber><!--One or more-->
+			<cssline>'ALL_CSS'</cssline>
+			<fwallvoicemailenable>'false'</fwallvoicemailenable>
+			<fwnoanvoicemailenable>'false'</fwnoanvoicemailenable>
+			<fwbusyvoicemailenable>'false'</fwbusyvoicemailenable>
+			<fwunrvoicemailenable>'false'</fwunrvoicemailenable>
+			<routepartition>config.nodidpartition</routepartition>
+			<producttype>*LFphone*web.phonetype</producttype>
+			<protocol>config.phoneprotocol</protocol>
+			<buttontemplate>*LFpbt*web.phonetype</buttontemplate>
+			<devicepool>office.name+'_DP'</devicepool>
+			<location>office.name+'_LOC'</location>
+			<cssdevice>office.name+'_DEVICE_CSS'</cssdevice>
+			<service>'Connexion'</service><!--'Service Name':'Service URL label' One or more service-->
+		</phone>
+		<udp>
+			<targetname>udp</targetname>
+			<devicename>*m*web.userid</devicename>
+			<description>(*1M**C*web.firstname+' '+*M**C*web.lastname+' - '+office.name)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname+' - '+office.name)</description>
+			<linedescription>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</linedescription>
+			<alertingname>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</alertingname>
+			<display>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</display>
+			<linetextlabel>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</linetextlabel>
+			<externalphonemask>office.setting.1</externalphonemask>
+			<linenumber>web.linenumber1</linenumber><!--One or more-->
+			<cssline>'TBD'</cssline>
+			<cssforward>'TBD'</cssforward>
+			<fwalldestination>'TBD'</fwalldestination>
+			<fwnoandestination>'TBD'</fwnoandestination>
+			<fwbusydestination>'TBD'</fwbusydestination>
+			<fwunrdestination>'TBD'</fwunrdestination>
+			<fwallvoicemailenable>'false'</fwallvoicemailenable>
+			<fwnoanvoicemailenable>'false'</fwnoanvoicemailenable>
+			<fwbusyvoicemailenable>'false'</fwbusyvoicemailenable>
+			<fwunrvoicemailenable>'false'</fwunrvoicemailenable>
+			<voicemailprofile>office.voicemailprofile</voicemailprofile>
+			<routepartition>config.didpartition</routepartition>
+			<producttype>*LFphone*web.phonetype</producttype>
+			<buttontemplate>*LFpbt*web.phonetype</buttontemplate>
+			<service>config.ippaservice</service><!--'Service Name':'Service URL label' One or more service-->
+			<protocol>config.phoneprotocol</protocol>
+			<speeddial>tbd</speeddial><!--One or more-->
+		</udp>
+		<user>
+			<targetname>user</targetname>
+			<userid>web.userid</userid>
+			<lastname>*M**C*web.lastname</lastname>
+			<firstname>*1M**C*web.firstname</firstname>
+			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
+			<group>'Standard CCM End Users'</group><!--One or more-->
+		</user>
+		<user>
+			<targetname>newuser</targetname>
+			<userid>web.userid</userid>
+			<lastname>*M**C*web.lastname</lastname>
+			<firstname>(*1M**C*web.firstname)IfLongerThan30(*1_**M**C*web.firstname+'.')</firstname>
+			<telephonenumber>web.linenumber1</telephonenumber>
+			<userlocal>office.userlocal</userlocal>
+			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
+			<password>web.linenumber1</password>
+			<pin>web.linenumber1</pin>
+			<group>'Standard CCM End Users'</group><!--One or more-->
+		</user>
+		<user>
+			<targetname>updateudp</targetname>
+			<userid>web.userid</userid>
+			<udp>*m*web.userid</udp>
+		</user>
+		<user>
+			<targetname>updatepe</targetname>
+			<userid>web.userid</userid>
+			<primaryextension>web.linenumber1</primaryextension>
+			<partition>config.didpartition</partition>
+		</user>
+		<user>
+			<targetname>updatephone</targetname>
+			<userid>web.userid</userid>
+			<device>'SEP'+web.phonemac</device>
+		</user>
+		<agent>
+			<targetname>updateagent</targetname>
+			<userid>web.userid</userid>
+			<skill>web.skill1</skill><!--One or more--><!--skill name:skill level-->
+			<team>web.teamname</team>
+			<type>web.agenttype</type><!--agent,supervisor-->
+		</agent>
+	</items>
+</xml>

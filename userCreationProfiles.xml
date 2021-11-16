@@ -1,0 +1,36 @@
+﻿<!--
+File used to describe the user profiles which can then be used in 
+the collection file
+-->
+
+<xml>
+	<profiles>
+		<profile>
+			<name>agent</name>
+			<user>
+				<target>newuser</target>
+				<action>inject</action>
+			</user>
+			<udp>
+				<target>udp</target>
+				<action>inject</action>
+			</udp>
+			<phone>
+				<target>loggedoutphone</target>
+				<action>inject</action>
+			</phone>
+			<phone>
+				<target>softphone</target>
+				<action>inject</action>
+			</phone>
+			<user>
+				<target>updateuser</target>
+				<action>update</action>
+			</user>
+			<user>
+				<target>updatepe</target>
+				<action>update</action>
+			</user>
+		</profile>
+	</profiles>
+</xml>

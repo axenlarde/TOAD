@@ -1,0 +1,59 @@
+<xml>
+	<offices>
+		<office>
+			<name>Toulouse</name>
+			<templatename>template1</templatename>
+			<fullname>Toulouse</fullname>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>Malakoff</name>
+			<templatename>template3</templatename>
+			<fullname>Malakoff</fullname>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Malakoff</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>4408030</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>20857180[3-9]X</did>
+				<did>20857187[0-7]X</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>2085718030</value>
+			</setting>
+		</office>
+	</offices>
+</xml>

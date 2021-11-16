@@ -1,0 +1,61 @@
+﻿<!--
+Overal configuration file
+-->
+
+<xml>
+	<config>
+		<!--Misc-->
+		<log4j>DEBUG</log4j><!--Logging level : ERROR,INFO,DEBUG-->
+		<language>french</language><!--french,english-->
+		<automaticreport>enable</automaticreport><!--enable,disable-->
+		<storerequest>enable</storerequest><!--Keep in memory the already asked UUID-->
+		<javaversiondetection>enable</javaversiondetection><!--enable, disable-->
+		<minjavaversion>1.6:16</minjavaversion><!--Minimum java version allowed-->
+		<splitter>+</splitter>
+		<csvsplitter>,</csvsplitter>
+		<!--Smtp parameters-->
+		<smtpemailport>25</smtpemailport>
+		<smtpemailprotocol>smtp</smtpemailprotocol>
+		<smtpemailserver>tbd</smtpemailserver>
+		<smtpemail>tbd</smtpemail>
+		<smtpemailpassword></smtpemailpassword>
+		<smtpemailreceiver>alexandre.ratel@spie.com</smtpemailreceiver><!--One or more destinations separated by a ;-->
+		<!--CUCM parameters-->
+		<axlhost>X.X.X.X</axlhost><!--IP of the CUCM server-->
+		<axlport>8443</axlport><!--Port to contact the CUCM server using AXL-->
+		<axlversion>105</axlversion><!--85 or 105--><!--AXL version of the CUCM-->
+		<axlusername>AXL_TOAD</axlusername><!--AXL user name to contact the CUCM server-->
+		<axlpassword>password</axlpassword><!--Password of the AXL user in clear !!!!Warning : keep it secret!!!!-->
+		<!--UCCX parameters-->
+		<uccxhost>127.0.0.1</uccxhost><!--IP of the UCCX server-->
+		<uccxport>8443</uccxport><!--Port to contact the UCCX server using REST-->
+		<uccxversion>105</uccxversion><!--Version of the UCCX server-->
+		<uccxusername>UCCX_TOAD</uccxusername><!--Username to contact the UCCX server-->
+		<uccxpassword>password</uccxpassword><!--Password !!!!Warning : keep it secret!!!!-->
+		<!--RISPORT parameters-->
+		<rishost>10.0.1.172</rishost><!--IP of the CUCM server-->
+		<risport>8443</risport><!--Port to contact the CUCM server using RISPORT-->
+		<risusername>ris</risusername><!--RISPORT user name to contact the CUCM server-->
+		<rispassword>******</rispassword><!--Password of the RISPORT user in clear !!!!Warning : keep it secret!!!!-->
+		<rismaxphonerequest>500</rismaxphonerequest><!--Max Phone response per request-->
+		<!--Provisioning Misc-->
+		<nodidrange>19011000:19019999</nodidrange>
+		<didpartition>SDA_P</didpartition>
+		<nodidpartition>HSDA_P</nodidpartition>
+		<maxnumchar>30</maxnumchar><!--Integer-->
+		<!--Mandatory variables template-->
+		<officenametemplate>file.officename</officenametemplate><!--use to find the office name-->
+		<usercreationprofiletemplate>*LFprofile*file.usercreationprofile</usercreationprofiletemplate><!--use to find the creation profile name-->
+		<userlastnametemplate>file.lastname</userlastnametemplate><!--use to find the user lastname-->
+		<userfirstnametemplate>file.firstname</userfirstnametemplate><!--use to find the user first name-->
+		<useridtemplate>file.userid</useridtemplate><!--use to find the user id-->
+		<phonemactemplate>file.phonemac</phonemactemplate><!--use to find the phone mac address-->
+		<phonetypetemplate>file.phonetype</phonetypetemplate><!--use to find the phone mac address-->
+		<phoneprotocol>'SIP'</phoneprotocol>
+		<ippaservice>'tbd'</ippaservice><!--'Service Name':'Service URL label' One or more service-->
+		<!--Web server parameters-->
+		<webserverport>8092</webserverport>
+		<!--Copy Log parameters-->
+		<targetdirectory>C:\WEBPHP\CAMITOWebPortal\WebPortal\log</targetdirectory>
+	</config>
+</xml>
