@@ -31,7 +31,7 @@ public class CollectionTools
 	 * Method used to return the pattern
 	 * @throws Exception 
 	 ****************************************/
-	public static String doRegex(String pat, int currentRow, Object obj, boolean emptyException) throws Exception
+	public static String doRegex(String pat, WebUser webUser, Object obj, boolean emptyException) throws Exception
 		{
 		/**********
 		 * Add here a special regex detection for too long value
