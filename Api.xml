@@ -9,6 +9,18 @@ v1.0
 All the request are followed by their possible replies
 
 Some request my vary or even be deleted over time as the software is under development
+
+doAuthenticate
+search
+getAgent
+getTeam
+addAgent
+updateAgent
+deleteAgent
+listAgent
+listTeam
+listSkill
+copyLogFile
 -->
 
 <!--doAuthenticate-->
@@ -304,17 +316,17 @@ Update agent will only allow to update some fields for now
 	</reply>
 </xml>
 
-<!--listAgents-->
+<!--listAgent-->
 <xml>
 	<request>
-		<type>listAgents</type>
+		<type>listAgent</type>
 		<securitytoken></securitytoken><!--Security token of the connected user. Will reply only the visible agents for this user-->
 		</content>
 	</request>
 </xml>
 <xml>
 	<reply>
-		<type>listAgents</type>
+		<type>listAgent</type>
 		<content>
 			<agents>
 				<agent><!--One or more-->
@@ -344,11 +356,19 @@ Update agent will only allow to update some fields for now
 		</content>
 	</reply>
 </xml>
+<xml>
+	<reply>
+		<type>listAgent</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
 
-<!--listTeams-->
+<!--listTeam-->
 <xml>
 	<request>
-		<type>listTeams</type>
+		<type>listTeam</type>
 		<securitytoken></securitytoken><!--Security token of the connected user-->
 		<content>
 			<allteams></allteams><!--true,false--><!--If true, all the teams are returned, if false only the user's teams-->
@@ -357,7 +377,7 @@ Update agent will only allow to update some fields for now
 </xml>
 <xml>
 	<reply>
-		<type>listTeams</type>
+		<type>listTeam</type>
 		<content>
 			<teams>
 				<team></team><!--Team name--><!--One or more-->
@@ -365,11 +385,19 @@ Update agent will only allow to update some fields for now
 		</content>
 	</reply>
 </xml>
+<xml>
+	<reply>
+		<type>listTeam</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
 
-<!--listSkills-->
+<!--listSkill-->
 <xml>
 	<request>
-		<type>listSkills</type>
+		<type>listSkill</type>
 		<securitytoken></securitytoken><!--Security token of the connected user-->
 		<content>
 			<allskills></allskills><!--true,false--><!--If true, all the skills are returned, if false only the user's skills-->
@@ -378,11 +406,19 @@ Update agent will only allow to update some fields for now
 </xml>
 <xml>
 	<reply>
-		<type>listSkills</type>
+		<type>listSkill</type>
 		<content>
 			<skills>
 				<skill></skill><!--Skill name--><!--One or more-->
 			</skills>
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>listSkill</type>
+		<content>
+			<error>Error description</error>
 		</content>
 	</reply>
 </xml>
@@ -399,7 +435,15 @@ Update agent will only allow to update some fields for now
 	<reply>
 		<type>copyLogFile</type>
 		<content>
-			</success><!--success, error-->
+			</success>
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>copyLogFile</type>
+		<content>
+			<error>Error description</error>
 		</content>
 	</reply>
 </xml>

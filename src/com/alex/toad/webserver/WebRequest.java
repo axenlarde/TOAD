@@ -1,6 +1,6 @@
 package com.alex.toad.webserver;
 
-import com.alex.perceler.webserver.ManageWebRequest.webRequestType;
+import com.alex.toad.webserver.ManageWebRequest.webRequestType;
 
 /**
  * Contain a web request

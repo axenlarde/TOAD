@@ -1,4 +1,4 @@
-package com.alex.toad.uccx.misc;
+package com.alex.toad.uccx.items;
 
 import java.lang.reflect.Field;
 

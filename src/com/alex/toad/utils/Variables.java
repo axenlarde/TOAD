@@ -84,10 +84,27 @@ public class Variables
 		associateanalog,
 		userlocal,
 		softkeytemplate,
+		agent,//UCCX
+		team,//UCCX
+		skill,//UCCX
 		unknown
 		};
 	
 	public enum cucmAXLVersion
+		{
+		version80,
+		version85,
+		version90,
+		version91,
+		version100,
+		version105,
+		version110,
+		version115,
+		version120,
+		version125
+		};
+		
+	public enum UCCXRESTVersion
 		{
 		version80,
 		version85,
@@ -168,27 +185,6 @@ public class Variables
 		external,//LDAP for instance
 		internal//CUCM Internal user
 		};
-		
-	/**
-	 * web request
-	 */
-	public enum webRequestType
-		{
-		doAuthenticate,
-		search,
-		getAgent,
-		getTeam,
-		addAgent,
-		updateAgent,
-		deleteAgent,
-		listAgents,
-		listTeams,
-		listSkills,
-		copyLogFile,
-		success,
-		error
-		}
-	
 	
 	/********************************************
 	 * multipleRequestType :
@@ -213,6 +209,7 @@ public class Variables
 	private static String softwareName;
 	private static String softwareVersion;
 	private static cucmAXLVersion CUCMVersion;
+	private static UCCXRESTVersion UCCXVersion;
 	private static Logger logger;
 	private static ArrayList<String> country;
 	private static ArrayList<Office> OfficeList;
@@ -236,6 +233,7 @@ public class Variables
 	private static UserSource userSource;
 	private static ArrayList<UserCreationProfile> userCreationProfileList;
 	private static ArrayList<String> internalNumberList;
+	private static String logFileName;
 	
 	/** Templates **/
 	private static ArrayList<ItemToInject> userTemplateList;//User
@@ -251,6 +249,7 @@ public class Variables
 	/** REST **/
 	
 	
+	
 	/** Web Management **/
 	private static WebListenerManager webServer;
 	
@@ -262,7 +261,6 @@ public class Variables
 		configFileName = "configFile.xml";
 		userFileName = "userFile.xml";
 		languageFileName = "languages.xml";
-		//observerList = new ArrayList<Observer>();
 		mainConfigFileDirectory = ".";
 		country = UsefulMethod.initCountryList();
 		uuidList = new ArrayList<storedUUID>();
@@ -306,12 +304,37 @@ public class Variables
 				}
 			catch(Exception e)
 				{
-				getLogger().debug("The AXL version couldn't be parsed. We will use the default version", e);
+				getLogger().debug("The AXL version couldn't be parsed. We will use the default version instead", e);
 				CUCMVersion = cucmAXLVersion.version105;
 				}
 			}
 		
 		return CUCMVersion;
+		}
+	
+	public static UCCXRESTVersion getUCCXVersion()
+		{
+		if(UCCXVersion == null)
+			{
+			//It has to be initiated
+			try
+				{
+				UCCXVersion = UsefulMethod.convertStringToUCCXRESTVersion(UsefulMethod.getTargetOption("uccxversion"));
+				Variables.getLogger().info("UCCX version : "+Variables.getUCCXVersion());
+				}
+			catch(Exception e)
+				{
+				getLogger().debug("The UCCX version couldn't be parsed. We will use the default version instead", e);
+				UCCXVersion = UCCXRESTVersion.version105;
+				}
+			}
+		
+		return UCCXVersion;
+		}
+	
+	public static void setUCCXVersion(UCCXRESTVersion uCCXVersion)
+		{
+		UCCXVersion = uCCXVersion;
 		}
 
 	public static void setCUCMVersion(cucmAXLVersion cUCMVersion)
@@ -649,8 +672,18 @@ public class Variables
 		{
 		Variables.userTemplateList = userTemplateList;
 		}
+
+	public static String getLogFileName()
+		{
+		return logFileName;
+		}
+
+	public static void setLogFileName(String logFileName)
+		{
+		Variables.logFileName = logFileName;
+		}
 	
 	
 	
-	/*2021*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}

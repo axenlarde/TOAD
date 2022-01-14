@@ -64,7 +64,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 				{
 				if(UsefulMethod.itemNotFoundInTheCUCM(e.getMessage()))
 					{
-					Variables.getLogger().debug("Item "+this.name+" doesn't already exist in the CUCM");
+					Variables.getLogger().debug("Item "+this.name+" doesn't already exist");
 					exists = false;
 					}
 				else
@@ -170,7 +170,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 			}
 		else
 			{
-			Variables.getLogger().info("The item "+this.getName()+" of type "+this.getType().name()+" can't be deleted because it doesn't exist in the CUCM");
+			Variables.getLogger().info("The item "+this.getName()+" of type "+this.getType().name()+" can't be deleted because it doesn't exist");
 			status = statusType.disabled;
 			}
 		}
@@ -202,7 +202,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 			}
 		else
 			{
-			Variables.getLogger().info("The item "+this.getName()+" of type "+this.getType().name()+" can't be updated because it doesn't exist in the CUCM");
+			Variables.getLogger().info("The item "+this.getName()+" of type "+this.getType().name()+" can't be updated because it doesn't exist");
 			status = statusType.disabled;
 			}
 		}
@@ -320,9 +320,6 @@ public abstract class ItemToInject implements ItemToInjectImpl
 		{
 		this.correctionList = correctionList;
 		}
-	
-	
-	
 	
 	/*2017*//*RATEL Alexandre 8)*/
 	}

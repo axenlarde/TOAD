@@ -30,6 +30,7 @@ import com.alex.toad.misc.Range;
 import com.alex.toad.misc.SimpleRequest;
 import com.alex.toad.misc.ValueMatcher;
 import com.alex.toad.utils.Variables.SubstituteType;
+import com.alex.toad.utils.Variables.UCCXRESTVersion;
 import com.alex.toad.utils.Variables.actionType;
 import com.alex.toad.utils.Variables.cucmAXLVersion;
 import com.alex.toad.utils.Variables.itemType;
@@ -105,18 +106,6 @@ public class UsefulMethod
 			{
 			String jVer = new String(System.getProperty("java.version"));
 			Variables.getLogger().info("Detected JRE version : "+jVer);
-			
-			/*Need to use the config file value*/
-			
-			if(jVer.contains("1.6"))
-				{
-				
-				if(Integer.parseInt(jVer.substring(6,8))<16)
-					{
-					Variables.getLogger().info("JRE version is not compatible. The application will now exit. system.exit(0)");
-					System.exit(0);
-					}
-				}
 			}
 		catch(Exception exc)
 			{
@@ -534,6 +523,37 @@ public class UsefulMethod
 		else
 			{
 			return cucmAXLVersion.version105;
+			}
+		}
+	
+	/**
+	 * Method which convert a string into UCCXRESTVersion
+	 */
+	public static UCCXRESTVersion convertStringToUCCXRESTVersion(String version)
+		{
+		if(version.contains("105"))
+			{
+			return UCCXRESTVersion.version105;
+			}
+		else if(version.contains("110"))
+			{
+			return UCCXRESTVersion.version110;
+			}
+		else if(version.contains("115"))
+			{
+			return UCCXRESTVersion.version115;
+			}
+		else if(version.contains("120"))
+			{
+			return UCCXRESTVersion.version120;
+			}
+		else if(version.contains("125"))
+			{
+			return UCCXRESTVersion.version125;
+			}
+		else
+			{
+			return UCCXRESTVersion.version105;
 			}
 		}
 	

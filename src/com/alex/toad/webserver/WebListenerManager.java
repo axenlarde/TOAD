@@ -1,32 +1,19 @@
 package com.alex.toad.webserver;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.security.KeyStore;
 
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLEngine;
-import javax.net.ssl.SSLParameters;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
-import com.alex.perceler.utils.HttpsTrustManager;
-import com.alex.perceler.utils.UsefulMethod;
-import com.alex.perceler.utils.Variables;
-import com.alex.perceler.webserver.ManageWebRequest.webRequestType;
+import com.alex.toad.utils.UsefulMethod;
+import com.alex.toad.utils.Variables;
+import com.alex.toad.webserver.ManageWebRequest.webRequestType;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import com.sun.net.httpserver.HttpsConfigurator;
-import com.sun.net.httpserver.HttpsParameters;
-import com.sun.net.httpserver.HttpsServer;
 
 /**
  * Class used to manage web request
@@ -139,49 +126,41 @@ public class WebListenerManager implements HttpHandler
 						{
 						reply = ManageWebRequest.search(content);
 						}
-					else if(wr.getType().equals(webRequestType.getOfficeList))
+					else if(wr.getType().equals(webRequestType.getAgent))
 						{
 						reply = ManageWebRequest.getOfficeList();
 						}
-					else if(wr.getType().equals(webRequestType.getDeviceList))
+					else if(wr.getType().equals(webRequestType.getTeam))
 						{
 						reply = ManageWebRequest.getDeviceList();
 						}
-					else if(wr.getType().equals(webRequestType.getTaskList))
+					else if(wr.getType().equals(webRequestType.addAgent))
 						{
 						reply = ManageWebRequest.getTaskList();
 						}
-					else if(wr.getType().equals(webRequestType.getOffice))
+					else if(wr.getType().equals(webRequestType.updateAgent))
 						{
 						reply = ManageWebRequest.getOffice(content);
 						}
-					else if(wr.getType().equals(webRequestType.getDevice))
+					else if(wr.getType().equals(webRequestType.deleteAgent))
 						{
 						reply = ManageWebRequest.getDevice(content);
 						}
-					else if(wr.getType().equals(webRequestType.getTask))
+					else if(wr.getType().equals(webRequestType.listAgent))
 						{
 						reply = ManageWebRequest.getTask(content);
 						}
-					else if(wr.getType().equals(webRequestType.newTask))
+					else if(wr.getType().equals(webRequestType.listTeam))
 						{
 						reply = ManageWebRequest.newTask(content);
 						}
-					else if(wr.getType().equals(webRequestType.setTask))
+					else if(wr.getType().equals(webRequestType.listSkill))
 						{
 						reply = ManageWebRequest.setTask(content);
 						}
 					else if(wr.getType().equals(webRequestType.copyLogFile))
 						{
 						reply = ManageWebRequest.copyLogFile();
-						}
-					else if(wr.getType().equals(webRequestType.newDevice))
-						{
-						reply = ManageWebRequest.newDevice(content);
-						}
-					else if(wr.getType().equals(webRequestType.newOffice))
-						{
-						reply = ManageWebRequest.newOffice(content);
 						}
 					
 					OutputStream os = exc.getResponseBody();

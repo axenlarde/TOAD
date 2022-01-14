@@ -2,6 +2,11 @@ package com.alex.toad.main;
 
 import org.apache.log4j.Level;
 
+import com.alex.toad.action.Action;
+import com.alex.toad.utils.InitLogging;
+import com.alex.toad.utils.UsefulMethod;
+import com.alex.toad.utils.Variables;
+
 /**********************************
  * TOAD Main Class 15/11/2021
  * 
@@ -43,7 +48,7 @@ public class Main
 		/**********
 		 * We check if the java version is compatible
 		 */
-		//UsefulMethod.checkJavaVersion();
+		UsefulMethod.checkJavaVersion();
 		/***************/
 		
 		/**********************
@@ -87,14 +92,7 @@ public class Main
 			Variables.getLogger().error("Failed to init the eMail server : "+e.getMessage());
 			}
 		/*************/
-		
-		/****************
-		 * Initialization of the call logging
-		 */
-		Variables.setCallLogger(InitLogging.infoModeInit(Variables.getSoftwareName()+"_CallLogs.txt"));
-		Variables.getCallLogger().setLevel(Level.INFO);
-		/*************/
-		
+				
 		/*******************
 		 * Start main interface
 		 */

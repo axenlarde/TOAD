@@ -5,14 +5,11 @@ import java.util.ArrayList;
 
 import org.apache.commons.io.FileUtils;
 
-import com.alex.perceler.action.Task;
-import com.alex.perceler.action.TaskManager;
-import com.alex.perceler.action.Task.taskActionType;
-import com.alex.perceler.utils.UsefulMethod;
-import com.alex.perceler.utils.Variables;
-import com.alex.perceler.utils.Variables.actionType;
-import com.alex.perceler.utils.xMLGear;
-import com.cisco.axl.api._10.LUser;
+import com.alex.toad.misc.Task;
+import com.alex.toad.utils.UsefulMethod;
+import com.alex.toad.utils.Variables;
+import com.alex.toad.utils.Variables.actionType;
+import com.alex.toad.utils.xMLGear;
 
 
 /**
@@ -29,19 +26,15 @@ public class ManageWebRequest
 		{
 		doAuthenticate,
 		search,
-		getOfficeList,
-		getDeviceList,
-		getTaskList,
-		getDevice,
-		getOffice,
-		getTask,
-		newTask,
-		setTask,
-		copyLogFile,
-		newDevice,
-		newOffice,
-		success,
-		error
+		getAgent,
+		getTeam,
+		addAgent,
+		updateAgent,
+		deleteAgent,
+		listAgent,
+		listTeam,
+		listSkill,
+		copyLogFile
 		}
 	
 	/**
@@ -89,9 +82,6 @@ public class ManageWebRequest
 		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
 		}
 	
-	/**
-	 * getOfficeList
-	 */
 	public synchronized static WebRequest search(String content)
 		{
 		try
@@ -114,26 +104,27 @@ public class ManageWebRequest
 		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
 		}
 	
-	/**
-	 * getOfficeList
-	 */
-	public synchronized static WebRequest getOfficeList()
+	public synchronized static WebRequest getAgent(String xmlContent)
 		{
 		try
 			{
-			return WebRequestBuilder.buildWebRequest(webRequestType.getOfficeList, null);
+			ArrayList<String> params = new ArrayList<String>();
+			params.add("request");
+			params.add("content");
+			
+			ArrayList<String[][]> parsed = xMLGear.getResultListTab(xmlContent, params);
+			String[][] t = parsed.get(0);
+			
+			String userID = UsefulMethod.getItemByName("userid", t);
+			return WebRequestBuilder.buildGetAgentReply(userID);
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while processing getOfficeList web request : "+e.getMessage(),e);
+			Variables.getLogger().error("ERROR while processing getAgent web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(webRequestType.getAgent, e.getMessage());
 			}
-		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
 		}
 	
-	/**
-	 * getDeviceList
-	 */
 	public synchronized static WebRequest getDeviceList()	
 		{
 		try
@@ -331,7 +322,7 @@ public class ManageWebRequest
 		{
 		try
 			{
-			File srcFile = new File(Variables.getMainDirectory()+"/"+Variables.getLogFileName());
+			File srcFile = new File(Variables.getMainConfigFileDirectory()+"/"+Variables.getLogFileName());
 			if(srcFile.exists())
 				{
 				Variables.getLogger().debug("Copying the first log file");
@@ -340,7 +331,7 @@ public class ManageWebRequest
 				}
 			
 			//We also copy the second log file
-			srcFile = new File(Variables.getMainDirectory()+"/"+Variables.getLogFileName()+".1");
+			srcFile = new File(Variables.getMainConfigFileDirectory()+"/"+Variables.getLogFileName()+".1");
 			if(srcFile.exists())
 				{
 				Variables.getLogger().debug("Copying the second log file");

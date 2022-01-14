@@ -15,7 +15,7 @@ import com.alex.toad.utils.Variables.statusType;
 
 
 /**********************************
- * Class used to define an item of type "Device Pool"
+ * Class used to define an item of type "User"
  * 
  * @author RATEL Alexandre
  **********************************/

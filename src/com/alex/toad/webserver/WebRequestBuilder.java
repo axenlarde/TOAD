@@ -3,18 +3,13 @@ package com.alex.toad.webserver;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import com.alex.perceler.action.Task;
-import com.alex.perceler.device.misc.BasicDevice;
-import com.alex.perceler.device.misc.BasicPhone;
-import com.alex.perceler.misc.ItemToMigrate;
-import com.alex.perceler.misc.SimpleItem;
-import com.alex.perceler.office.misc.BasicOffice;
-import com.alex.perceler.office.misc.IPRange;
-import com.alex.perceler.office.misc.OfficeTools;
-import com.alex.perceler.risport.RisportTools;
-import com.alex.perceler.utils.UsefulMethod;
-import com.alex.perceler.utils.Variables;
-import com.alex.perceler.webserver.ManageWebRequest.webRequestType;
+import com.alex.toad.misc.Task;
+import com.alex.toad.risport.RisportTools;
+import com.alex.toad.utils.UsefulMethod;
+import com.alex.toad.utils.Variables;
+import com.alex.toad.webserver.ManageWebRequest.webRequestType;
+
+
 
 /**
  * Used to build web request
@@ -24,29 +19,29 @@ import com.alex.perceler.webserver.ManageWebRequest.webRequestType;
 public class WebRequestBuilder
 	{
 	
-	public static WebRequest buildWebRequest(webRequestType type, Object obj)
+	/**
+	 * To build a failed web reply
+	 */
+	public static WebRequest buildFailedWebRequest(webRequestType type, String errorMessage)
 		{
-		switch(type)
-			{
-			case search:return buildSearchReply((String)obj);
-			case getOfficeList:return buildGetOfficeListReply();
-			case getDeviceList:return buildGetDeviceListReply();
-			case getTaskList:return buildGetTaskListReply();
-			case getOffice:return buildGetOfficeReply((String)obj);
-			case getDevice:return buildGetDeviceReply((String)obj);
-			case getTask:return buildGetTaskReply((String)obj);
-			case newTask:return buildNewTaskReply((String)obj);
-			case success:return buildSuccess();
-			case error:return buildError((String)obj);
-			default:return null;
-			}
+		StringBuffer content = new StringBuffer();
+		
+		content.append("<xml>\r\n");
+		content.append("	<reply>\r\n");
+		content.append("		<type>"+type.name()+"</type>\r\n");
+		content.append("		<content>\r\n");
+		content.append("			<error>"+errorMessage+"</error>\r\n");
+		content.append("		</content>\r\n");
+		content.append("	</reply>\r\n");
+		content.append("</xml>\r\n");
+		
+		return new WebRequest(content.toString(), type);
 		}
 	
 	/**
-	 * To build the requested request
-	 * getOfficeList
+	 * To build the search request reply
 	 */
-	private static WebRequest buildSearchReply(String search)
+	public static WebRequest buildSearchReply(String search)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.search;
@@ -287,58 +282,27 @@ public class WebRequestBuilder
 	 * To build the requested request
 	 * getOfficeList
 	 */
-	private static WebRequest buildGetOfficeListReply()
+	public static WebRequest buildGetAgentReply(String userID)
 		{
 		StringBuffer content = new StringBuffer();
-		webRequestType type = webRequestType.getOfficeList;
+		webRequestType type = webRequestType.getAgent;
 		
 		content.append("<xml>\r\n");
 		content.append("	<reply>\r\n");
 		content.append("		<type>"+type.name()+"</type>\r\n");
 		content.append("		<content>\r\n");
-		content.append("			<offices>\r\n");
+		content.append("			<agent>\r\n");
 		
 		try
 			{
-			for(BasicOffice o : Variables.getOfficeList())
-				{
-				StringBuffer temp = new StringBuffer();
-				temp.append("				<office>\r\n");
-				temp.append(getOffice("				", o));
-				temp.append("					<devices>\r\n");
-				
-				if(o.getDeviceList().size()!=0)
-					{
-					for(BasicDevice d : o.getDeviceList())
-						{
-						StringBuffer temp2 = new StringBuffer();
-						temp2.append("						<device>\r\n");
-						temp2.append("							<id>"+d.getId()+"</id>\r\n");
-						temp2.append("							<name>"+d.getName()+"</name>\r\n");
-						temp2.append("							<type>"+d.getType()+"</type>\r\n");
-						temp2.append("							<ip>"+d.getIp()+"</ip>\r\n");
-						temp2.append("							<status>"+d.getStatus().name()+"</status>\r\n");
-						temp2.append("						</device>\r\n");
-						temp.append(temp2);
-						}
-					}
-				else
-					{
-					//content.append("						<device></device>\r\n");
-					}
-				
-				content.append("					</devices>\r\n");
-				content.append("				</office>\r\n");
-				content.append(temp);
-				}
+			
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while retrieving the office list : "+e.getMessage());
-			content.append("				<office></office>\r\n");
+			Variables.getLogger().error("ERROR while retrieving the agent : "+e.getMessage());
 			}
 		
-		content.append("			</offices>\r\n");
+		content.append("			</agent>\r\n");
 		content.append("		</content>\r\n");
 		content.append("	</reply>\r\n");
 		content.append("</xml>\r\n");
@@ -350,7 +314,7 @@ public class WebRequestBuilder
 	 * To build the requested request
 	 * getDeviceList
 	 */
-	private static WebRequest buildGetDeviceListReply()
+	public static WebRequest buildGetTeamReply()
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.getDeviceList;
@@ -390,7 +354,7 @@ public class WebRequestBuilder
 	 * To build the requested request
 	 * getTaskList
 	 */
-	private static WebRequest buildGetTaskListReply()
+	public static WebRequest buildGetTaskListReply()
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.getTaskList;
@@ -431,7 +395,7 @@ public class WebRequestBuilder
 	 * To build the requested request
 	 * getOffice
 	 */
-	private static WebRequest buildGetOfficeReply(String officeID)
+	public static WebRequest buildGetOfficeReply(String officeID)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.getOffice;
@@ -509,7 +473,7 @@ public class WebRequestBuilder
 	 * To build the requested request
 	 * getDevice
 	 */
-	private static WebRequest buildGetDeviceReply(String deviceID)
+	public static WebRequest buildGetDeviceReply(String deviceID)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.getDevice;
@@ -555,7 +519,7 @@ public class WebRequestBuilder
 	 * To build the requested request
 	 * getTask
 	 */
-	private static WebRequest buildGetTaskReply(String taskID)
+	public static WebRequest buildAddAgentReply(String taskID)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.getTask;
@@ -617,7 +581,7 @@ public class WebRequestBuilder
 	 * To build the requested request
 	 * newTask
 	 */
-	private static WebRequest buildNewTaskReply(String taskID)
+	public static WebRequest buildNewTaskReply(String taskID)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.newTask;
@@ -637,7 +601,7 @@ public class WebRequestBuilder
 	/**
 	 * To create one office
 	 */
-	private static String getOffice(String tabs, BasicOffice o)
+	public static String getOffice(String tabs, BasicOffice o)
 		{
 		StringBuffer content = new StringBuffer();
 		
@@ -660,7 +624,7 @@ public class WebRequestBuilder
 	/**
 	 * To create one device
 	 */
-	private static String getDevice(String tabs, BasicDevice d)
+	public static String getDevice(String tabs, BasicDevice d)
 		{
 		StringBuffer content = new StringBuffer();
 		
@@ -681,7 +645,7 @@ public class WebRequestBuilder
 	/**
 	 * To create one task
 	 */
-	private static String getTask(String tabs, Task t)
+	public static String getTask(String tabs, Task t)
 		{
 		StringBuffer content = new StringBuffer();
 		
@@ -709,7 +673,8 @@ public class WebRequestBuilder
 	 * To build the requested request
 	 * success
 	 */
-	private static WebRequest buildSuccess()
+	/*
+	public static WebRequest buildSuccess()
 		{
 		StringBuffer content = new StringBuffer();
 		
@@ -724,12 +689,13 @@ public class WebRequestBuilder
 		
 		return new WebRequest(content.toString(), webRequestType.success);
 		}
-	
+	*/
 	/**
 	 * To build the requested request
 	 * error
 	 */
-	private static WebRequest buildError(String message)
+	/*
+	public static WebRequest buildError(String message)
 		{
 		StringBuffer content = new StringBuffer();
 		
@@ -744,6 +710,7 @@ public class WebRequestBuilder
 		
 		return new WebRequest(content.toString(), webRequestType.error);
 		}
+		*/
 	
-	/*2020*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}

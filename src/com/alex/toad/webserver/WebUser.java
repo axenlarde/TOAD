@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import com.alex.toad.misc.Office;
-import com.alex.toad.uccx.misc.Skill;
+import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.utils.Variables.AgentType;
 
 /**********************************

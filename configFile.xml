@@ -9,8 +9,6 @@ Overal configuration file
 		<language>french</language><!--french,english-->
 		<automaticreport>enable</automaticreport><!--enable,disable-->
 		<storerequest>enable</storerequest><!--Keep in memory the already asked UUID-->
-		<javaversiondetection>enable</javaversiondetection><!--enable, disable-->
-		<minjavaversion>1.6:16</minjavaversion><!--Minimum java version allowed-->
 		<splitter>+</splitter>
 		<csvsplitter>,</csvsplitter>
 		<!--Smtp parameters-->
@@ -21,7 +19,7 @@ Overal configuration file
 		<smtpemailpassword></smtpemailpassword>
 		<smtpemailreceiver>alexandre.ratel@spie.com</smtpemailreceiver><!--One or more destinations separated by a ;-->
 		<!--CUCM parameters-->
-		<axlhost>X.X.X.X</axlhost><!--IP of the CUCM server-->
+		<axlhost>127.0.0.1</axlhost><!--IP of the CUCM server-->
 		<axlport>8443</axlport><!--Port to contact the CUCM server using AXL-->
 		<axlversion>105</axlversion><!--85 or 105--><!--AXL version of the CUCM-->
 		<axlusername>AXL_TOAD</axlusername><!--AXL user name to contact the CUCM server-->
@@ -56,6 +54,6 @@ Overal configuration file
 		<!--Web server parameters-->
 		<webserverport>8092</webserverport>
 		<!--Copy Log parameters-->
-		<targetdirectory>C:\WEBPHP\CAMITOWebPortal\WebPortal\log</targetdirectory>
+		<targetdirectory>C:\WEBPHP\TOAD\WebPortal\log</targetdirectory>
 	</config>
 </xml>

@@ -381,6 +381,9 @@ public class UserLinker extends AXLItemLinker
 		
 		User myU = new User(this.getName());
 		myU.setUUID(resp.getReturn().getUser().getUuid());
+		myU.setFirstname(resp.getReturn().getUser().getFirstName());
+		myU.setLastname(resp.getReturn().getUser().getLastName());
+		myU.setTelephoneNumber(resp.getReturn().getUser().getTelephoneNumber());
 		
 		return myU;//Return a User
 		}
