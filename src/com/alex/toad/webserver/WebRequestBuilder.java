@@ -3,8 +3,13 @@ package com.alex.toad.webserver;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import com.alex.toad.misc.Agent;
+import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.misc.Task;
 import com.alex.toad.risport.RisportTools;
+import com.alex.toad.uccx.items.Skill;
+import com.alex.toad.uccx.items.Team;
+import com.alex.toad.uccx.items.UCCXAgent;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.webserver.ManageWebRequest.webRequestType;
@@ -282,7 +287,7 @@ public class WebRequestBuilder
 	 * To build the requested request
 	 * getOfficeList
 	 */
-	public static WebRequest buildGetAgentReply(String userID)
+	public static WebRequest buildGetAgentReply(Agent agent)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.getAgent;
@@ -295,11 +300,36 @@ public class WebRequestBuilder
 		
 		try
 			{
-			
+			content.append("				<userid>"+agent.getUser().getName()+"</userid>\r\n");
+			content.append("				<firstname>"+agent.getUser().getFirstname()+"</firstname>\r\n");
+			content.append("				<lastname>"+agent.getUser().getLastname()+"</lastname>\r\n");
+			content.append("				<number>"+agent.getUser().getTelephoneNumber()+"</number>\r\n");
+			content.append("				<type>"+agent.getAgent().getAgentType().name()+"</type>\r\n");
+			content.append("				<teams>\r\n");
+			for(Team t : agent.getAgent().getTeams())
+				{
+				content.append("					<team>"+t.getName()+"</team>\r\n");
+				}
+			content.append("				</teams>\r\n");
+			content.append("				<skills>\r\n");
+			for(Skill s : agent.getAgent().getSkills())
+				{
+				content.append("					<skill>"+s.getName()+"</skill>\r\n");
+				}
+			content.append("				</skills>\r\n");
+			content.append("				<devices>\r\n");
+			for(ItemToInject iti : agent.getDeviceList())
+				{
+				content.append("					<device>\r\n");
+				content.append("						<type>"+iti.getType().name()+"</type>\r\n");
+				content.append("						<type>"+iti.getName()+"</type>\r\n");
+				content.append("					</device>\r\n");
+				}
+			content.append("				</devices>\r\n");
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while retrieving the agent : "+e.getMessage());
+			Variables.getLogger().error("ERROR while retrieving an agent : "+e.getMessage());
 			}
 		
 		content.append("			</agent>\r\n");
@@ -314,35 +344,49 @@ public class WebRequestBuilder
 	 * To build the requested request
 	 * getDeviceList
 	 */
-	public static WebRequest buildGetTeamReply()
+	public static WebRequest buildGetTeamReply(Team team)
 		{
 		StringBuffer content = new StringBuffer();
-		webRequestType type = webRequestType.getDeviceList;
+		webRequestType type = webRequestType.getTeam;
 		
 		content.append("<xml>\r\n");
 		content.append("	<reply>\r\n");
 		content.append("		<type>"+type.name()+"</type>\r\n");
 		content.append("		<content>\r\n");
-		content.append("			<devices>\r\n");
+		content.append("			<team>\r\n");
 		
 		try
 			{
-			for(BasicDevice d : Variables.getDeviceList())
+			content.append("				<name>"+team.getName()+"</name>\r\n");
+			content.append("				<primarysupervisor>"+team.getName()+"</primarysupervisor>\r\n");
+			content.append("				<supervisors>\r\n");
+			for(UCCXAgent ua : team.getSupervisorList())
 				{
-				StringBuffer temp = new StringBuffer();
-				temp.append("				<device>\r\n");
-				temp.append(getDevice("				", d));
-				temp.append("				</device>\r\n");
-				content.append(temp);
+				content.append("				<supervisor>\r\n");
+				content.append("					<userid>"+ua.getUser().getName()+"</userid>\r\n");
+				content.append("					<firstname>"+ua.getUser().getFirstname()+"</firstname>\r\n");
+				content.append("					<lastname>"+ua.getUser().getLastname()+"</lastname>\r\n");
+				content.append("				</supervisor>\r\n");
 				}
+			content.append("				</supervisors>\r\n");
+			content.append("				<agents>\r\n");
+			for(UCCXAgent a : team.getAgentList())
+				{
+				content.append("				<agent>\r\n");
+				content.append("					<userid>"+a.getUser().getName()+"</userid>\r\n");
+				content.append("					<firstname>"+a.getUser().getFirstname()+"</firstname>\r\n");
+				content.append("					<lastname>"+a.getUser().getLastname()+"</lastname>\r\n");
+				content.append("				</agent>\r\n");
+				}
+			content.append("				</agents>\r\n");
+			
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while retrieving the device list : "+e.getMessage());
-			content.append("				<device></device>\r\n");
+			Variables.getLogger().error("ERROR while retrieving a team : "+e.getMessage());
 			}
 		
-		content.append("			</devices>\r\n");
+		content.append("			</team>\r\n");
 		content.append("		</content>\r\n");
 		content.append("	</reply>\r\n");
 		content.append("</xml>\r\n");

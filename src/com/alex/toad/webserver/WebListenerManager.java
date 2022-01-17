@@ -128,35 +128,35 @@ public class WebListenerManager implements HttpHandler
 						}
 					else if(wr.getType().equals(webRequestType.getAgent))
 						{
-						reply = ManageWebRequest.getOfficeList();
+						reply = ManageWebRequest.getAgent(content);
 						}
 					else if(wr.getType().equals(webRequestType.getTeam))
 						{
-						reply = ManageWebRequest.getDeviceList();
+						reply = ManageWebRequest.getTeam(content);
 						}
 					else if(wr.getType().equals(webRequestType.addAgent))
 						{
-						reply = ManageWebRequest.getTaskList();
+						reply = ManageWebRequest.addAgent(content);
 						}
 					else if(wr.getType().equals(webRequestType.updateAgent))
 						{
-						reply = ManageWebRequest.getOffice(content);
+						reply = ManageWebRequest.updateAgent(content);
 						}
 					else if(wr.getType().equals(webRequestType.deleteAgent))
 						{
-						reply = ManageWebRequest.getDevice(content);
+						reply = ManageWebRequest.deleteAgent(content);
 						}
 					else if(wr.getType().equals(webRequestType.listAgent))
 						{
-						reply = ManageWebRequest.getTask(content);
+						reply = ManageWebRequest.listAgent();
 						}
 					else if(wr.getType().equals(webRequestType.listTeam))
 						{
-						reply = ManageWebRequest.newTask(content);
+						reply = ManageWebRequest.listTeam();
 						}
 					else if(wr.getType().equals(webRequestType.listSkill))
 						{
-						reply = ManageWebRequest.setTask(content);
+						reply = ManageWebRequest.listSkill();
 						}
 					else if(wr.getType().equals(webRequestType.copyLogFile))
 						{

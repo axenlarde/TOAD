@@ -142,12 +142,5 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 			<userid>web.userid</userid>
 			<device>'SEP'+web.phonemac</device>
 		</user>
-		<agent>
-			<targetname>updateagent</targetname>
-			<userid>web.userid</userid>
-			<skill>web.skill1</skill><!--One or more--><!--skill name:skill level-->
-			<team>web.teamname</team>
-			<type>web.agenttype</type><!--agent,supervisor-->
-		</agent>
 	</items>
 </xml>

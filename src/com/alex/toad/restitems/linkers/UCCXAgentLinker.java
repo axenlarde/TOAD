@@ -11,6 +11,7 @@ import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
 import com.alex.toad.uccx.items.UCCXAgent.AgentType;
+import com.alex.toad.utils.Variables;
 
 
 /**********************************
@@ -26,7 +27,7 @@ public class UCCXAgentLinker extends RESTItemLinker
 	 */
 	private AgentType agentType;
 	private User user;
-	private Team team;
+	private ArrayList<Team> teams;
 	private ArrayList<Skill> skills;
 	
 	public enum toUpdate implements ToUpdate
@@ -72,7 +73,7 @@ public class UCCXAgentLinker extends RESTItemLinker
 	 */
 	public void doDeleteVersion105() throws Exception
 		{
-		//To be written
+		Variables.getLogger().warn("A UCCX Agent can only be deleted from the CUCM. So this method does nothing and should not be used");
 		}
 	/**************/
 
@@ -81,17 +82,9 @@ public class UCCXAgentLinker extends RESTItemLinker
 	 */
 	public String doInjectVersion105() throws Exception
 		{
+		Variables.getLogger().warn("A UCCX Agent can only be created from the CUCM. So this method does nothing and should not be used");
 		
-		
-		/**
-		 * We set the item parameters
-		 */
-		
-		/************/
-		
-		//To be written
-		
-		return "UUID";//Return UUID
+		return null;
 		}
 	/**************/
 	
@@ -100,6 +93,7 @@ public class UCCXAgentLinker extends RESTItemLinker
 	 */
 	public void doUpdateVersion105(ArrayList<ToUpdate> tuList) throws Exception
 		{		
+		
 		
 		/***********
 		 * We set the item parameters
@@ -146,9 +140,9 @@ public class UCCXAgentLinker extends RESTItemLinker
 		return user;
 		}
 
-	public Team getTeam()
+	public ArrayList<Team> getTeam()
 		{
-		return team;
+		return teams;
 		}
 
 	public ArrayList<Skill> getSkills()
@@ -166,9 +160,9 @@ public class UCCXAgentLinker extends RESTItemLinker
 		this.user = user;
 		}
 
-	public void setTeam(Team team)
+	public void setTeams(ArrayList<Team> teams)
 		{
-		this.team = team;
+		this.teams = teams;
 		}
 
 	public void setSkills(ArrayList<Skill> skills)

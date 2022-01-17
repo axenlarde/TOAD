@@ -29,17 +29,17 @@ public class UCCXAgent extends ItemToInject
 	private UCCXAgentLinker myAgent;
 	private AgentType agentType;
 	private User user;
-	private Team team;
+	private ArrayList<Team> teams;
 	private ArrayList<Skill> skills;
 	/**
 	 * Constructor
 	 */
-	public UCCXAgent(AgentType type, User user, Team team, ArrayList<Skill> skills)
+	public UCCXAgent(AgentType type, User user, ArrayList<Team> teams, ArrayList<Skill> skills)
 		{
 		super(itemType.agent, user.getName());
 		this.agentType = type;
 		this.user = user;
-		this.team = team;
+		this.teams = teams;
 		this.skills = skills;
 		}
 	
@@ -109,7 +109,7 @@ public class UCCXAgent extends ItemToInject
 		myAgent.setName(this.getName());
 		myAgent.setAgentType(this.getAgentType());
 		myAgent.setSkills(this.skills);
-		myAgent.setTeam(this.team);
+		myAgent.setTeams(this.teams);
 		}
 
 	@Override
@@ -117,7 +117,7 @@ public class UCCXAgent extends ItemToInject
 		{
 		if(agentType != null)tuList.add(UCCXAgentLinker.toUpdate.agentType);
 		if((skills != null) && (skills.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.skills);
-		if(team != null)tuList.add(UCCXAgentLinker.toUpdate.team);
+		if((teams != null) && (teams.size() != 0))tuList.add(UCCXAgentLinker.toUpdate.team);
 		}
 	
 	public AgentType getAgentType()
@@ -128,9 +128,9 @@ public class UCCXAgent extends ItemToInject
 		{
 		return user;
 		}
-	public Team getTeam()
+	public ArrayList<Team> getTeams()
 		{
-		return team;
+		return teams;
 		}
 	public ArrayList<Skill> getSkills()
 		{

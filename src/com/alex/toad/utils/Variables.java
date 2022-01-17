@@ -195,16 +195,6 @@ public class Variables
 		officedidall
 		};
 		
-	/********************************************
-	 * Agent type
-	 * Used to specify the agent type
-	 ********************************************/
-	public enum AgentType
-		{
-		agent,
-		supervisor
-		};
-		
 	/**	MISC	**/
 	private static String softwareName;
 	private static String softwareVersion;

@@ -208,7 +208,6 @@ copyLogFile
 		<type>addAgent</type>
 		<securitytoken></securitytoken><!--Security token of the connected user. To check if the creation is allowed-->
 		<content>
-			<userid></userid>
 			<firstname></firstname>
 			<lastname></lastname>
 			<type></type><!--agent,supervisor-->
@@ -224,8 +223,8 @@ copyLogFile
 			<devices>
 				<device><!--One or more-->
 					<type></type><!--deskphone,softphone-->
-					<name></name><!--softphone name or mac address-->
-					<model></model><!--Only relevent for deskphone empty for softphone-->
+					<name></name><!--Mac address, only relevent for deskphone, empty for softphone-->
+					<model></model><!--Only relevent for deskphone, empty for softphone-->
 				</device>
 			</devices>
 		</content>
@@ -257,6 +256,7 @@ Update agent will only allow to update some fields for now
 		<type>updateAgent</type>
 		<securitytoken></securitytoken><!--Security token of the connected user. To check if the update is allowed-->
 		<content>
+			<userid></userid>
 			<firstname></firstname>
 			<lastname></lastname>
 			<type></type><!--agent,supervisor-->

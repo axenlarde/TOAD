@@ -1,9 +1,11 @@
 <xml>
 	<offices>
 		<office>
-			<name>Toulouse</name>
+			<name>TLS</name>
 			<templatename>template1</templatename>
 			<fullname>Toulouse</fullname>
+			<userprefix>tls</userprefix>
+			<usercreationprofile>agent</usercreationprofile>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
@@ -28,7 +30,7 @@
 			</setting>
 		</office>
 		<office>
-			<name>Malakoff</name>
+			<name>MLK</name>
 			<templatename>template3</templatename>
 			<fullname>Malakoff</fullname>
 			<audiobandwidth>UNLIMITED</audiobandwidth>

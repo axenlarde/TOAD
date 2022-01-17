@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import org.apache.commons.io.FileUtils;
 
+import com.alex.toad.misc.Agent;
+import com.alex.toad.misc.AgentTools;
 import com.alex.toad.misc.Task;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
@@ -116,7 +118,11 @@ public class ManageWebRequest
 			String[][] t = parsed.get(0);
 			
 			String userID = UsefulMethod.getItemByName("userid", t);
-			return WebRequestBuilder.buildGetAgentReply(userID);
+			
+			//We get Agent informations
+			Agent agent = AgentTools.getAgent(userID);
+			
+			return WebRequestBuilder.buildGetAgentReply(agent);
 			}
 		catch (Exception e)
 			{
