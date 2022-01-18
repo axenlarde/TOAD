@@ -6,6 +6,7 @@ import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
+import com.alex.toad.webserver.AgentData;
 
 /**********************************
  * Class used to define an item of type "Line"
@@ -37,10 +38,7 @@ public class Line extends ItemToInject
 	fwBusyVoicemailEnable,
 	fwUnrVoicemailEnable;
 	
-	private int index;
-	
-
-	
+	private AgentData agentData;
 
 	/***************
 	 * Constructor
@@ -54,7 +52,7 @@ public class Line extends ItemToInject
 			String fwBusyDestination, String fwUnrDestination,
 			String voiceMailProfileName, String fwAllVoicemailEnable,
 			String fwNoanVoicemailEnable, String fwBusyVoicemailEnable,
-			String fwUnrVoicemailEnable, int index) throws Exception
+			String fwUnrVoicemailEnable) throws Exception
 		{
 		super(itemType.line, name);
 		myLine = new LineLinker(name, routePartitionName);
@@ -74,7 +72,6 @@ public class Line extends ItemToInject
 		this.fwNoanVoicemailEnable = fwNoanVoicemailEnable;
 		this.fwBusyVoicemailEnable = fwBusyVoicemailEnable;
 		this.fwUnrVoicemailEnable = fwUnrVoicemailEnable;
-		this.index = index;
 		}
 
 	public Line(String name, String routePartitionName) throws Exception
@@ -149,7 +146,7 @@ public class Line extends ItemToInject
 	 */
 	public void resolve() throws Exception
 		{
-		name = CollectionTools.getValueFromCollectionFile(index, name, this, true);
+		name = CollectionTools.applyPattern(agentData, name, this, true);
 		description = CollectionTools.getValueFromCollectionFile(index, description, this, false);
 		routePartitionName = CollectionTools.getValueFromCollectionFile(index, routePartitionName, this, true);
 		alertingName = CollectionTools.getValueFromCollectionFile(index, alertingName, this, false);
@@ -283,16 +280,6 @@ public class Line extends ItemToInject
 		this.shareLineAppearanceCssName = shareLineAppearanceCssName;
 		}
 
-	public int getIndex()
-		{
-		return index;
-		}
-
-	public void setIndex(int index)
-		{
-		this.index = index;
-		}
-
 	public String getCallPickupGroupName()
 		{
 		return callPickupGroupName;
@@ -403,12 +390,17 @@ public class Line extends ItemToInject
 		this.fwUnrVoicemailEnable = fwUnrVoicemailEnable;
 		}
 
+	public AgentData getAgentData()
+		{
+		return agentData;
+		}
+
+	public void setAgentData(AgentData agentData)
+		{
+		this.agentData = agentData;
+		}
 	
 	
-	
-	
-	
-	
-	/*2015*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

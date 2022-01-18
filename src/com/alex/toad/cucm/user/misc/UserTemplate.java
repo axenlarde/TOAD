@@ -1,7 +1,7 @@
 package com.alex.toad.cucm.user.misc;
 
-import com.alex.woot.utils.Variables.actionType;
-import com.alex.woot.utils.Variables.itemType;
+import com.alex.toad.utils.Variables.actionType;
+import com.alex.toad.utils.Variables.itemType;
 
 /**********************************
  * Used to store a template from the User Creation profile File

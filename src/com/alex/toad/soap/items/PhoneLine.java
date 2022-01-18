@@ -2,6 +2,7 @@ package com.alex.toad.soap.items;
 
 import com.alex.toad.misc.BasicItem;
 import com.alex.toad.misc.CollectionTools;
+import com.alex.toad.webserver.AgentData;
 
 /**********************************
  * Class used to store Phone Line parameters
@@ -36,7 +37,7 @@ public class PhoneLine extends BasicItem
 	fwUnrVoicemailEnable;
 	
 	private int lineIndex;
-	private int index;
+	private AgentData agentData;
 
 	/***************
 	 * Constructor
@@ -89,7 +90,7 @@ public class PhoneLine extends BasicItem
 	 */
 	public void resolve() throws Exception
 		{
-		lineLabel = CollectionTools.getValueFromCollectionFile(index, lineLabel, this, false);
+		lineLabel = CollectionTools.applyPattern(agentData, lineLabel, this, false);
 		asciiLineLabel = CollectionTools.getValueFromCollectionFile(index, asciiLineLabel, this, false);
 		lineDisplay = CollectionTools.getValueFromCollectionFile(index, lineDisplay, this, false);
 		lineDisplayAscii = CollectionTools.getValueFromCollectionFile(index, lineDisplayAscii, this, false);
@@ -332,16 +333,18 @@ public class PhoneLine extends BasicItem
 		this.fwUnrVoicemailEnable = fwUnrVoicemailEnable;
 		}
 
-	public int getIndex()
+	public AgentData getAgentData()
 		{
-		return index;
+		return agentData;
 		}
 
-	public void setIndex(int index)
+	public void setAgentData(AgentData agentData)
 		{
-		this.index = index;
+		this.agentData = agentData;
 		}
+
 	
-	/*2016*//*RATEL Alexandre 8)*/
+	
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

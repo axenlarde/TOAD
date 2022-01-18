@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent.AgentType;
+import com.alex.toad.webserver.AgentData;
+import com.alex.toad.webserver.WebRequest;
 
 /**********************************
 * Class used to gather static method about agents
@@ -78,24 +80,22 @@ public class AgentTools
 	 * to display informations for the user
 	 */
 	public static Agent addAgent(String lastName,
-			String firstName, AgentType agentType, ArrayList<Team> teams,
-			ArrayList<Skill> skills, String deviceType, String deviceName, String deviceModel)
+			String firstName, Office office, AgentType agentType, ArrayList<Team> teams,
+			ArrayList<Skill> skills, String deviceName, String deviceModel)
 		{
 		Agent agent;
 		
-		/**
-		 * To create a new agent we will create both the CUCM and the UCCX part
-		 * We will follow the user creation profile to proceed
-		 */
+		
+		AgentData agentData = new AgentData(firstName, lastName, firstName, deviceName, deviceModel, agentType, teams, skills, office);
+		
 		/**
 		 * CUCM part
+		 * We read the creation profile to add the requested item to the list
 		 */
 		
 		
 		
-		/**
-		 * UCCX part
-		 */
+		
 		
 		
 		
@@ -182,6 +182,24 @@ public class AgentTools
 		
 		
 		return skills;
+		}
+	
+	/**
+	 * To check if the request should be allowed
+	 * 
+	 * Based on the securityToken provided
+	 * Throw an exception if not allowed
+	 * 
+	 * This method is not mandatory. It is just an extra layer of security
+	 * Therefore it will be written later
+	 */
+	public static boolean isAllowed(WebRequest request) throws Exception
+		{
+		
+		//TBW
+		//throw new Exception("Request not allowed");
+		
+		return true;
 		}
 	
 	

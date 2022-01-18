@@ -12,6 +12,7 @@ import com.alex.toad.utils.Variables.UserSource;
 import com.alex.toad.utils.Variables.actionType;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.utils.Variables.statusType;
+import com.alex.toad.webserver.AgentData;
 
 
 /**********************************
@@ -43,8 +44,7 @@ public class User extends ItemToInject
 	private ArrayList<String> UDPList;
 	private ArrayList<String> ctiUDPList;
 	
-	private int index;
-	
+	private AgentData agentData; 
 
 	/***************
 	 * Constructor
@@ -205,7 +205,7 @@ public class User extends ItemToInject
 	 */
 	public void resolve() throws Exception
 		{
-		name = CollectionTools.getValueFromCollectionFile(index, name, this, true);
+		name = CollectionTools.applyPattern(agentData, name, this, true);
 		lastname = CollectionTools.getValueFromCollectionFile(index, lastname, this, true);
 		firstname = CollectionTools.getValueFromCollectionFile(index, firstname, this, false);
 		telephoneNumber = CollectionTools.getValueFromCollectionFile(index, telephoneNumber, this, false);
@@ -361,16 +361,6 @@ public class User extends ItemToInject
 		this.deviceList = deviceList;
 		}
 
-	public int getIndex()
-		{
-		return index;
-		}
-
-	public void setIndex(int index)
-		{
-		this.index = index;
-		}
-
 	public ArrayList<String> getUDPList()
 		{
 		return UDPList;
@@ -502,9 +492,19 @@ public class User extends ItemToInject
 		this.ctiUDPList = ctiUDPList;
 		}
 
+	public AgentData getAgentData()
+		{
+		return agentData;
+		}
+
+	public void setAgentData(AgentData agentData)
+		{
+		this.agentData = agentData;
+		}
+
 	
 	
 	
-	/*2020*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

@@ -11,6 +11,7 @@ import com.alex.toad.soap.items.SpeedDial;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
+import com.alex.toad.webserver.AgentData;
 
 
 /**********************************
@@ -37,7 +38,7 @@ public class DeviceProfile extends ItemToInject
 	private ArrayList<PhoneLine> lineList;
 	private ArrayList<SpeedDial> sdList;
 	
-	private int index;
+	private AgentData agentData;
 	
 	/***************
 	 * Constructor
@@ -292,16 +293,6 @@ public class DeviceProfile extends ItemToInject
 		this.lineList = lineList;
 		}
 
-	public int getIndex()
-		{
-		return index;
-		}
-
-	public void setIndex(int index)
-		{
-		this.index = index;
-		}
-
 	public String getPhoneButtonTemplate()
 		{
 		return phoneButtonTemplate;
@@ -331,11 +322,21 @@ public class DeviceProfile extends ItemToInject
 		{
 		this.targetName = targetName;
 		}
+
+	public AgentData getAgentData()
+		{
+		return agentData;
+		}
+
+	public void setAgentData(AgentData agentData)
+		{
+		this.agentData = agentData;
+		}
 	
 	
 	
 	
 	
-	/*2015*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

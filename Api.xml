@@ -216,10 +216,9 @@ copyLogFile
 				</skill>
 			</skills>
 			<devices>
-				<device><!--One or more-->
-					<type></type><!--deskphone,softphone-->
-					<name></name><!--Mac address, only relevent for deskphone, empty for softphone-->
-					<model></model><!--Only relevent for deskphone, empty for softphone-->
+				<device><!--Deskphone-->
+					<name></name><!--Deskphone Mac address-->
+					<model></model><!--Deskphone model-->
 				</device>
 			</devices>
 		</content>

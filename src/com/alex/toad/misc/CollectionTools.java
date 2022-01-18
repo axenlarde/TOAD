@@ -1,13 +1,7 @@
 package com.alex.toad.misc;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
 
 import com.alex.toad.cucm.user.misc.UserError;
 import com.alex.toad.misc.Correction.correctionType;
@@ -16,7 +10,9 @@ import com.alex.toad.utils.LanguageManagement;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.SubstituteType;
-import com.alex.toad.webserver.WebUser;
+import com.alex.toad.webserver.AgentData;
+import com.alex.woot.misc.BasicItem;
+import com.alex.woot.misc.Correction;
 
 
 
@@ -28,10 +24,10 @@ import com.alex.toad.webserver.WebUser;
 public class CollectionTools
 	{
 	/****************************************
-	 * Method used to return the pattern
+	 * Method used to apply the pattern
 	 * @throws Exception 
 	 ****************************************/
-	public static String doRegex(String pat, WebUser webUser, Object obj, boolean emptyException) throws Exception
+	public static String doRegex(String pattern, AgentData ad, Object obj, boolean emptyException) throws Exception
 		{
 		/**********
 		 * Add here a special regex detection for too long value
@@ -39,7 +35,7 @@ public class CollectionTools
 		 * 
 		 * BETA
 		 ****/
-		if(Pattern.matches("\\(.+\\)IfLongerThan\\d+\\(.+\\)", pat))
+		if(Pattern.matches("\\(.+\\)IfLongerThan\\d+\\(.+\\)", pattern))
 			{
 			Variables.getLogger().debug("TooLong value detection required");
 			
@@ -50,9 +46,9 @@ public class CollectionTools
 			Pattern first = Pattern.compile("\\(.+\\)If");
 			Pattern last = Pattern.compile("\\d+\\(.+\\)");
 			Pattern length = Pattern.compile("IfLongerThan\\d+");
-			Matcher mFirst = first.matcher(pat);
-			Matcher mLast = last.matcher(pat);
-			Matcher mLength = length.matcher(pat);
+			Matcher mFirst = first.matcher(pattern);
+			Matcher mLast = last.matcher(pattern);
+			Matcher mLength = length.matcher(pattern);
 			
 			if(mFirst.find())
 				{
@@ -80,30 +76,14 @@ public class CollectionTools
 				{
 				throw new Exception("ERROR : The \"IfLongerThan\" regex returned a bad Result");
 				}
-			
-			/**
-			 * Whatever the result, we need to log the real row number according to the used pattern
-			 * So we need to find it
-			 */
-			int realRowNumber = currentRow+1;//Default value;
-			
-			try
-				{
-				realRowNumber = findRealRow(normal, currentRow);
-				}
-			catch (Exception e)
-				{
-				Variables.getLogger().error("Error : Unable to find the real row number. We will use the default value instead : "+e.getMessage());
-				}
-			
 			/********/
 			
 			Variables.getLogger().debug("We try the normal pattern");
-			normal = dodoRegex(normal, currentRow, emptyException);
+			normal = dodoRegex(normal, ad, emptyException);
 			if(normal.length() > maxLength)
 				{
 				Variables.getLogger().debug("The normal pattern is longer than "+maxLength+" : "+normal+" so we try the backup pattern");
-				tooLong = dodoRegex(tooLong, currentRow, emptyException);
+				tooLong = dodoRegex(tooLong, ad, emptyException);
 				
 				if(tooLong.length() > maxLength)
 					{
@@ -116,7 +96,7 @@ public class CollectionTools
 						}
 					catch (Exception e)
 						{
-						Variables.getLogger().debug("The object is not an \"ItemToInject\" so we try with a \"BasicItem\"");
+						//The object is not an ItemToInject so we try with a BasicItem
 						try
 							{
 							BasicItem bi = (BasicItem)obj;
@@ -126,10 +106,11 @@ public class CollectionTools
 						catch (Exception exc)
 							{
 							Variables.getLogger().error("ERROR : The object is neither an \"ItemToInject\" nor a \"BasicItem\"", exc);
+							Variables.getLogger().debug("Failed to add an error description to the error list");
 							}
 						}
 					
-					Variables.getLogger().debug("Row : "+realRowNumber+" : Even after the IfLongerThan regex the value is still longer than "+maxLength+" : "+tooLong);
+					Variables.getLogger().debug(ad.getFirstName()+" "+ad.getLastName()+" : Even after the IfLongerThan regex the value is still longer than "+maxLength+" : "+tooLong);
 					return tooLong;
 					}
 				else
@@ -142,7 +123,7 @@ public class CollectionTools
 						}
 					catch (Exception e)
 						{
-						Variables.getLogger().debug("The object is not an \"ItemToInject\" so we try with a \"BasicItem\"");
+						//The object is not an ItemToInject so we try with a BasicItem
 						try
 							{
 							BasicItem bi = (BasicItem)obj;
@@ -151,10 +132,11 @@ public class CollectionTools
 						catch (Exception exc)
 							{
 							Variables.getLogger().error("ERROR : The object is neither an \"ItemToInject\" nor a \"BasicItem\"", exc);
+							Variables.getLogger().debug("Failed to add a correction description in the correction list");
 							}
 						}
 					
-					Variables.getLogger().debug("Row : "+realRowNumber+" : The value was longer than \""+maxLength+"\" so the \"too long pattern\" has been used instead. The result is : "+tooLong);
+					Variables.getLogger().debug(ad.getFirstName()+" "+ad.getLastName()+" : The value was longer than \""+maxLength+"\" so the \"too long pattern\" has been used instead. The result is : "+tooLong);
 					return tooLong;
 					}
 				}
@@ -166,7 +148,7 @@ public class CollectionTools
 			}
 		else
 			{
-			return dodoRegex(pat, currentRow, emptyException);
+			return dodoRegex(pattern, ad, emptyException);
 			}
 		}
 	
@@ -175,7 +157,7 @@ public class CollectionTools
 	 * Method used to return the pattern
 	 * @throws Exception 
 	 ****************************************/
-	private static String dodoRegex(String pat, WebUser webUser, boolean emptyException) throws Exception
+	private static String dodoRegex(String pat, AgentData ad, boolean emptyException) throws Exception
 		{
 		StringBuffer regex = new StringBuffer("");
 		
@@ -185,16 +167,16 @@ public class CollectionTools
 			{
 			boolean match = false;
 			
-			if(Pattern.matches(".*web\\..*", param[i]))
+			if(Pattern.matches(".*agent\\..*", param[i]))
 				{
-				String result = webUser.getString(param[i]);
+				String result = ad.getString(param[i]);
 				regex.append(applyRegex(result, param[i]));
 				
 				match = true;
 				}
 			else if(Pattern.matches(".*office\\..*", param[i]))
 				{
-				String result = webUser.getOffice().getString(param[i]);
+				String result = ad.getOffice().getString(param[i]);
 				regex.append(applyRegex(result, param[i]));
 				
 				match = true;
@@ -224,25 +206,6 @@ public class CollectionTools
 			}
 	
 		return regex.toString();
-		}
-			
-	/**
-	 * Return "true" if the value from the collection file is empty
-	 */
-	private static boolean checkEmptyValue(String value)
-		{
-		/************************
-		 * If the value is empty or contains #, it maybe means that we reach the end of the collection file
-		 */
-		if((Pattern.matches("^$", value)) || (value.contains("#")))
-			{
-			return true;
-			}
-		else
-			{
-			return false;
-			}
-		/***********************/
 		}
 			
 	/****
@@ -479,38 +442,14 @@ public class CollectionTools
 		}
 	
 	/********
-	 * Method used to get a single value from the excel file
+	 * Method used to apply a pattern to the given value
 	 * We can here choose what behavior we want regarding the empty value
 	 * in the collection file :
 	 * - True : We will get EmptyValueException if empty
 	 * - False : We will just get an empty String
 	 * @throws Exception 
 	 */
-	public static String getValueFromCollectionFile(int row, String pattern, Object obj, Boolean emptyBehavior) throws Exception
-		{
-		if((pattern == null) || (pattern .equals("")))
-			{
-			Variables.getLogger().debug("The pattern is either null or empty, so we return an empty value");
-			return "";
-			}
-		
-		Variables.getLogger().debug("Value from collection file before : "+pattern);
-		String result = doRegex(pattern, row, obj, emptyBehavior);
-		
-		result = result.trim();//Just to remove unwanted spaces
-		
-		Variables.getLogger().debug("Value from collection file after : "+result);
-		return result;
-		}
-	
-	/********
-	 * Method used to get a direct value
-	 * We can here choose what behavior we want regarding an empty value :
-	 * - True : We will get EmptyValueException if empty
-	 * - False : We will just get an empty String
-	 * @throws Exception 
-	 */
-	public static String getRawValue(String pattern, Object obj, Boolean emptyBehavior) throws Exception
+	public static String applyPattern(AgentData ad, String pattern, Object obj, Boolean emptyBehavior) throws Exception
 		{
 		if((pattern == null) || (pattern .equals("")))
 			{
@@ -519,44 +458,12 @@ public class CollectionTools
 			}
 		
 		Variables.getLogger().debug("Value before : "+pattern);
-		String result = doRegex(pattern, 0, obj, emptyBehavior);
+		String result = doRegex(pattern, ad, obj, emptyBehavior);
 		
 		result = result.trim();//Just to remove unwanted spaces
 		
 		Variables.getLogger().debug("Value after : "+result);
 		return result;
-		}
-	
-	/**
-	 * Method used to get the last "non empty" value in
-	 * a given column
-	 * @throws Exception 
-	 */
-	public static int getTheLastIndexOfAColumn(String matcher) throws Exception
-		{
-		Variables.getLogger().debug("Last reachable index research started for the column "+matcher);
-		int i=0;
-		int max = Integer.parseInt(UsefulMethod.getTargetOption("maxdataprocessed"));
-		
-		while(true)
-			{
-			try
-				{
-				if(i>max)throw new Exception("Max data processed limit reached");
-				
-				CollectionTools.getValueFromCollectionFile(i, matcher, null, true);//Will raise an exception once an empty value will be found
-				}
-			catch(EmptyValueException eve)
-				{
-				Variables.getLogger().debug("Last reachable index found is "+i+" for the column "+matcher);
-				return i;
-				}
-			catch (Exception e)
-				{
-				throw new Exception("Error while searching the last reachable index of the column "+matcher+" : "+e.getMessage());
-				}
-			i++;
-			}
 		}
 	
 	/*************
@@ -569,99 +476,6 @@ public class CollectionTools
 		Variables.getInternalNumberList().remove(0);
 		Variables.getLogger().debug("Returned available number : "+availableNumber);
 		return availableNumber;
-		}
-	
-	/*************
-	 * Method used to get a free non did number in the CPG range
-	 * from the CUCM
-	 */
-	public static String getAvailableCPGNumber() throws Exception
-		{
-		String availableNumber = Variables.getCpgNumberList().get(0);
-		Variables.getCpgNumberList().remove(0);
-		Variables.getLogger().debug("Returned CPG available number : "+availableNumber);
-		return availableNumber;
-		}
-	
-	/*************
-	 * Method used to get a free non did number in the LG range
-	 * from the CUCM
-	 */
-	public static String getAvailableLGNumber() throws Exception
-		{
-		String availableNumber = Variables.getLgNumberList().get(0);
-		Variables.getLgNumberList().remove(0);
-		Variables.getLogger().debug("Returned LG available number : "+availableNumber);
-		return availableNumber;
-		}
-	
-	/**
-	 * Method which return as an integer array the sheet, column and row number
-	 * of a specified matcher
-	 * 
-	 * tab[0] : sheet number
-	 * tab[1] : column number
-	 * tab[2] : row number
-	 * @throws Exception 
-	 */
-	public static int[] getMatcherInfo(String matcher) throws Exception
-		{
-		int[] matcherInfos = new int[3];  
-		
-		try
-			{
-			for(String s : Variables.getMatcherList())
-				{
-				String[] tab = s.split(":");//As a reminder a matcher is : cucm.firstname:4:4:4+*
-				if(tab[0].equals(matcher))
-					{
-					matcherInfos[0] = Integer.parseInt(tab[1]);//Sheet number
-					matcherInfos[1] = Integer.parseInt(tab[2]);//Column number
-					
-					//Row number
-					if(tab[3].contains("-"))
-						{
-						String[] row = tab[3].split("-");
-						matcherInfos[2] = Integer.parseInt(row[0]);
-						}
-					else
-						{
-						matcherInfos[1] = Integer.parseInt(tab[3]);
-						}
-					
-					return matcherInfos;
-					}
-				}
-			}
-		catch (Exception e)
-			{
-			e.printStackTrace();
-			throw new Exception("Error while looking for a matcher infos");
-			}
-		
-		throw new Exception("No matcher found");
-		}
-	
-	
-	/**
-	 * Return true if the collection file value is empty
-	 * @throws Exception 
-	 */
-	public static boolean isValueFromCollectionFileEmpty(int index, String pattern) throws Exception 
-		{
-		try
-			{
-			CollectionTools.getValueFromCollectionFile(index, pattern, null, true);
-			return false;
-			}
-		catch (EmptyValueException eve)
-			{
-			return true;
-			}
-		catch (Exception e)
-			{
-			throw e;
-			}
 		}
 	
 	/**
@@ -693,49 +507,6 @@ public class CollectionTools
 		return tab;
 		}
 	
-	/**
-	 * Used to find the real row number from the index and a pattern such as "file.lastname"
-	 * @param pattern
-	 * @return
-	 * @throws NumberFormatException
-	 * @throws Exception
-	 */
-	private static int findRealRow(String pattern, int index) throws NumberFormatException, Exception
-		{
-		String[] pat = getSplittedValue(pattern, UsefulMethod.getTargetOption("splitter"));
-		
-		for(int i = 0; i<pat.length; i++)
-			{
-			for(String s : Variables.getMatcherList())
-				{
-				String[] tab = s.split(":");//Example : cucm.firstname:4:4:4+*
-				//tab[0]=cucm.firstname, tab[1]=sheet, tab[2]=column and tab[3]=row
-				
-				if(Pattern.matches(".*"+tab[0]+".*", pat[i]))
-					{
-					return getRowNumber(tab[3], index);
-					}
-				}
-			}
-		throw new Exception("No pattern found, so no row number could be retrieve");
-		}
-	
-	/**
-	 * Used to resolve all the items of a string list
-	 * @param list
-	 * @return
-	 * @throws Exception 
-	 */
-	public static ArrayList<String> resolveStringList(ArrayList<String> list, Object o, boolean emptyValueBehavior) throws Exception
-		{
-		for(int i= 0; i<list.size(); i++)
-			{
-			list.set(i,CollectionTools.getRawValue(list.get(i), o, emptyValueBehavior));
-			}
-		
-		return list;
-		}
-	
-	/*2018*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

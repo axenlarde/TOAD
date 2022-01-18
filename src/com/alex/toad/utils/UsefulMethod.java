@@ -1081,6 +1081,20 @@ public class UsefulMethod
 	    return result;
 		}
 	
-	/*2021*//*RATEL Alexandre 8)*/
+	/**
+	 * Search for an office in the office list
+	 * @throws Exception 
+	 */
+	public static Office getOffice(String officeName) throws Exception
+		{
+		for(Office o : Variables.getOfficeList())
+			{
+			if(o.getFullname().equals(officeName)) return o;
+			}
+		
+		throw new Exception("Office not found : "+officeName);
+		}
+	
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

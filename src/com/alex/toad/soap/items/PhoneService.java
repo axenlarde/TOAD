@@ -2,6 +2,7 @@ package com.alex.toad.soap.items;
 
 import com.alex.toad.misc.BasicItem;
 import com.alex.toad.misc.CollectionTools;
+import com.alex.toad.webserver.AgentData;
 
 
 /**********************************
@@ -17,7 +18,7 @@ public class PhoneService extends BasicItem
 	private String template, servicename,
 	surl;
 	
-	private int index;
+	private AgentData agentData;
 
 	/***************
 	 * Constructor
@@ -37,7 +38,7 @@ public class PhoneService extends BasicItem
 	 */
 	public void resolve() throws Exception
 		{
-		template = CollectionTools.getValueFromCollectionFile(index, template, this, true);
+		template = CollectionTools.applyPattern(agentData, template, this, true);
 		
 		if(template.contains(":"))
 			{
@@ -82,17 +83,17 @@ public class PhoneService extends BasicItem
 		this.template = template;
 		}
 
-	public int getIndex()
+	public AgentData getAgentData()
 		{
-		return index;
+		return agentData;
 		}
 
-	public void setIndex(int index)
+	public void setAgentData(AgentData agentData)
 		{
-		this.index = index;
+		this.agentData = agentData;
 		}
 	
 	
-	/*2016*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

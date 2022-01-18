@@ -1,14 +1,18 @@
 package com.alex.toad.webserver;
 
 import java.io.File;
-import java.net.Authenticator.RequestorType;
 import java.util.ArrayList;
 
 import org.apache.commons.io.FileUtils;
 
+import com.alex.toad.cucm.user.items.Phone;
 import com.alex.toad.misc.Agent;
 import com.alex.toad.misc.AgentTools;
+import com.alex.toad.misc.Office;
 import com.alex.toad.misc.Task;
+import com.alex.toad.uccx.items.Skill;
+import com.alex.toad.uccx.items.Team;
+import com.alex.toad.uccx.items.UCCXAgent.AgentType;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.actionType;
@@ -126,7 +130,7 @@ public class ManageWebRequest
 			params.add("request");
 			params.add("content");
 			
-			ArrayList<String[][]> parsed = xMLGear.getResultListTab(content, params);
+			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
 			String[][] t = parsed.get(0);
 			
 			String userID = UsefulMethod.getItemByName("userid", t);
@@ -143,41 +147,7 @@ public class ManageWebRequest
 			}
 		}
 	
-	public synchronized static WebRequest getDeviceList(WebRequest request)	
-		{
-		try
-			{
-			return WebRequestBuilder.buildWebRequest(webRequestType.getDeviceList, null);
-			}
-		catch (Exception e)
-			{
-			Variables.getLogger().error("ERROR while processing getDeviceList web request : "+e.getMessage(),e);
-			}
-		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
-		}
-	
-	/**
-	 * getTaskList
-	 */
-	public synchronized static WebRequest getTaskList()	
-		{
-		try
-			{
-			return WebRequestBuilder.buildWebRequest(webRequestType.getTaskList, null);
-			}
-		catch (Exception e)
-			{
-			Variables.getLogger().error("ERROR while processing getTaskList web request : "+e.getMessage(),e);
-			}
-		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
-		}
-	
-	/**
-	 * getOffice
-	 */
-	public synchronized static WebRequest getOffice(String content)	
+	public synchronized static WebRequest getTeam(WebRequest request)	
 		{
 		try
 			{
@@ -185,24 +155,26 @@ public class ManageWebRequest
 			params.add("request");
 			params.add("content");
 			
-			ArrayList<String[][]> parsed = xMLGear.getResultListTab(content, params);
+			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
 			String[][] t = parsed.get(0);
 			
-			String officeID = UsefulMethod.getItemByName("officeid", t);
-			return WebRequestBuilder.buildWebRequest(webRequestType.getOffice, officeID);
+			String teamName = UsefulMethod.getItemByName("team", t);
+			
+			Team team = AgentTools.getTeam(teamName);
+			
+			return WebRequestBuilder.buildGetTeamReply(team);
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while processing getOffice web request : "+e.getMessage(),e);
+			Variables.getLogger().error("ERROR while processing get Team web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
 			}
-		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
 		}
 	
 	/**
-	 * getDevice
+	 * Add Agent
 	 */
-	public synchronized static WebRequest getDevice(String content)	
+	public synchronized static WebRequest addAgent(WebRequest request)	
 		{
 		try
 			{
@@ -210,24 +182,59 @@ public class ManageWebRequest
 			params.add("request");
 			params.add("content");
 			
-			ArrayList<String[][]> parsed = xMLGear.getResultListTab(content, params);
+			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
 			String[][] t = parsed.get(0);
 			
-			String deviceID = UsefulMethod.getItemByName("deviceid", t);
-			return WebRequestBuilder.buildWebRequest(webRequestType.getDevice, deviceID);
+			String lastName = UsefulMethod.getItemByName("lastname", t);
+			String firstName = UsefulMethod.getItemByName("firstname", t);
+			String officeName = UsefulMethod.getItemByName("office", t);
+			Office office = UsefulMethod.getOffice(officeName);
+			AgentType type = AgentType.valueOf(UsefulMethod.getItemByName("type", t));
+			String deviceName = UsefulMethod.getItemByName("devicename", t);
+			String deviceType = UsefulMethod.getItemByName("devicetype", t);
+			
+			params.add("teams");
+			parsed = xMLGear.getResultListTab(request.getContent(), params);
+			ArrayList<Team> teams = new ArrayList<Team>();
+			
+			for(String[] temp : parsed.get(0))
+				{
+				teams.add(AgentTools.getTeam(temp[1]));
+				}
+			
+			params.remove("teams");
+			params.add("skills");
+			params.add("skill");
+			parsed = xMLGear.getResultListTab(request.getContent(), params);
+			ArrayList<Skill> skills = new ArrayList<Skill>();
+			
+			for(String[][] temp : parsed)
+				{
+				Skill s = AgentTools.getSkill(UsefulMethod.getItemByName("name", temp));
+				s.setLevel(Integer.parseInt(UsefulMethod.getItemByName("level", temp)));
+				skills.add(s);
+				}
+			
+			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
+				{
+				Variables.getLogger().debug("Trying to create agent : "+firstName+" "+lastName+" "+type.name()+" "+office.getFullname());
+				Agent agent = AgentTools.addAgent(lastName, firstName, office, type, teams, skills, deviceName, deviceType);
+				return WebRequestBuilder.buildAddAgentReply(agent.getUser().getName());
+				}
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while processing getDevice web request : "+e.getMessage(),e);
+			Variables.getLogger().error("ERROR while processing addAgent web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
 			}
 		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
+		return WebRequestBuilder.buildFailedWebRequest(request.getType(), "Something went wrong");
 		}
 	
 	/**
-	 * getTask
+	 * Update Agent
 	 */
-	public synchronized static WebRequest getTask(String content)	
+	public synchronized static WebRequest updateAgent(WebRequest request)	
 		{
 		try
 			{
@@ -235,24 +242,56 @@ public class ManageWebRequest
 			params.add("request");
 			params.add("content");
 			
-			ArrayList<String[][]> parsed = xMLGear.getResultListTab(content, params);
+			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
 			String[][] t = parsed.get(0);
 			
-			String taskID = UsefulMethod.getItemByName("taskid", t);
-			return WebRequestBuilder.buildWebRequest(webRequestType.getTask, taskID);
+			String userID = UsefulMethod.getItemByName("userid", t);
+			String lastName = UsefulMethod.getItemByName("lastname", t);
+			String firstName = UsefulMethod.getItemByName("firstname", t);
+			AgentType type = AgentType.valueOf(UsefulMethod.getItemByName("type", t));
+			
+			params.add("teams");
+			parsed = xMLGear.getResultListTab(request.getContent(), params);
+			ArrayList<Team> teams = new ArrayList<Team>();
+			
+			for(String[] temp : parsed.get(0))
+				{
+				teams.add(AgentTools.getTeam(temp[1]));
+				}
+			
+			params.remove("teams");
+			params.add("skills");
+			params.add("skill");
+			parsed = xMLGear.getResultListTab(request.getContent(), params);
+			ArrayList<Skill> skills = new ArrayList<Skill>();
+			
+			for(String[][] temp : parsed)
+				{
+				Skill s = AgentTools.getSkill(UsefulMethod.getItemByName("name", temp));
+				s.setLevel(Integer.parseInt(UsefulMethod.getItemByName("level", temp)));
+				skills.add(s);
+				}
+			
+			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
+				{
+				Variables.getLogger().debug("Trying to update agent : "+firstName+" "+lastName+" "+type.name());
+				Agent agent = AgentTools.updateAgent(userID, lastName, firstName, type, teams, skills);
+				return WebRequestBuilder.buildUpdateAgentReply(agent.getUser().getName());
+				}
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while processing getTask web request : "+e.getMessage(),e);
+			Variables.getLogger().error("ERROR while processing update Agent web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
 			}
 		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
+		return WebRequestBuilder.buildFailedWebRequest(request.getType(), "Something went wrong");
 		}
 	
 	/**
-	 * newTask
+	 * Delete Agent
 	 */
-	public synchronized static WebRequest newTask(String content)	
+	public synchronized static WebRequest deleteAgent(WebRequest request)	
 		{
 		try
 			{
@@ -260,83 +299,95 @@ public class ManageWebRequest
 			params.add("request");
 			params.add("content");
 			
-			ArrayList<String[][]> parsed = xMLGear.getResultListTab(content, params);
-			String[][] tab = parsed.get(0);
+			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
+			String[][] t = parsed.get(0);
 			
-			actionType action = actionType.valueOf(UsefulMethod.getItemByName("action", tab));
-			String ownerid = UsefulMethod.getItemByName("ownerid", tab);
+			String userID = UsefulMethod.getItemByName("userid", t);
 			
-			params.add("itemlist");
-			parsed = xMLGear.getResultListTab(content, params);
-			tab = parsed.get(0);
-			ArrayList<String> idList = new ArrayList<String>();
-			
-			for(String[] t : tab)
+			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
 				{
-				idList.add(t[1]);
+				Variables.getLogger().debug("Trying to delete agent : "+userID);
+				AgentTools.deleteAgent(userID);
+				return WebRequestBuilder.buildSuccessWebRequest(request.getType());
 				}
-			
-			String taskID = TaskManager.addNewTask(idList, action, ownerid);
-			
-			return WebRequestBuilder.buildWebRequest(webRequestType.newTask, taskID);
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while processing newTask web request : "+e.getMessage(),e);
-			return WebRequestBuilder.buildWebRequest(webRequestType.error, e.getMessage());
+			Variables.getLogger().error("ERROR while processing delete Agent web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
+			}
+		
+		return WebRequestBuilder.buildFailedWebRequest(request.getType(), "Something went wrong");
+		}
+	
+	/**
+	 * List Agent
+	 */
+	public synchronized static WebRequest listAgent(WebRequest request)	
+		{
+		try
+			{
+			return WebRequestBuilder.buildListAgentReply(AgentTools.listAgent());
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("ERROR while processing list Agent web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
 			}
 		}
 	
 	/**
-	 * setTask
+	 * List Team
 	 */
-	public synchronized static WebRequest setTask(String content)	
+	public synchronized static WebRequest listTeam(WebRequest request)	
 		{
 		try
 			{
-			ArrayList<String> params = new ArrayList<String>();
-			params.add("request");
-			params.add("content");
-			params.add("task");
-			
-			ArrayList<String[][]> parsed = xMLGear.getResultListTab(content, params);
-			String[][] tab = parsed.get(0);
-			
-			String taskID = UsefulMethod.getItemByName("taskid", tab);
-			taskActionType action = taskActionType.valueOf(UsefulMethod.getItemByName("action", tab));
-			
-			boolean found = false;
-			for(Task t : Variables.getTaskList())
-				{
-				if(t.getTaskId().equals(taskID))
-					{
-					t.act(action);
-					found = true;
-					break;
-					}
-				}
-			
-			if(found)
-				{
-				return WebRequestBuilder.buildWebRequest(webRequestType.success, taskID);
-				}
-			else
-				{
-				Variables.getLogger().debug("The following task ID was not found : "+taskID);
-				}
+			return WebRequestBuilder.buildListTeamReply(AgentTools.listTeam());
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while processing setask web request : "+e.getMessage(),e);
+			Variables.getLogger().error("ERROR while processing list Team web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
 			}
-		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
+		}
+	
+	/**
+	 * List Skill
+	 */
+	public synchronized static WebRequest listSkill(WebRequest request)	
+		{
+		try
+			{
+			return WebRequestBuilder.buildListSkillReply(AgentTools.listSkill());
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("ERROR while processing list Skill web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
+			}
+		}
+	
+	/**
+	 * List Office
+	 */
+	public synchronized static WebRequest listOffice(WebRequest request)	
+		{
+		try
+			{
+			return WebRequestBuilder.buildListOfficeReply(Variables.getOfficeList());
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("ERROR while processing list Office web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
+			}
 		}
 	
 	/**
 	 * copyLogFile
 	 */
-	public synchronized static WebRequest copyLogFile()	
+	public synchronized static WebRequest copyLogFile(WebRequest request)	
 		{
 		try
 			{
@@ -357,49 +408,16 @@ public class ManageWebRequest
 				FileUtils.copyFile(srcFile, dstFile);
 				}
 			
-			return WebRequestBuilder.buildWebRequest(webRequestType.success, null);
+			return WebRequestBuilder.buildSuccessWebRequest(request.getType());
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while processing getTask web request : "+e.getMessage(),e);
+			Variables.getLogger().error("ERROR while processing copy log file web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
 			}
-		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
 		}
 	
-	/**
-	 * newDevice
-	 */
-	public synchronized static WebRequest newDevice(String content)	
-		{
-		try
-			{
-			//To be written
-			}
-		catch (Exception e)
-			{
-			Variables.getLogger().error("ERROR while processing newDevice web request : "+e.getMessage(),e);
-			}
-		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
-		}
 	
-	/**
-	 * newOffice
-	 */
-	public synchronized static WebRequest newOffice(String content)	
-		{
-		try
-			{
-			//To be written
-			}
-		catch (Exception e)
-			{
-			Variables.getLogger().error("ERROR while processing newOffice web request : "+e.getMessage(),e);
-			}
-		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
-		}
 	
-	/*2019*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}

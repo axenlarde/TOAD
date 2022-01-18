@@ -5,38 +5,40 @@ import java.util.ArrayList;
 
 import com.alex.toad.misc.Office;
 import com.alex.toad.uccx.items.Skill;
-import com.alex.toad.utils.Variables.AgentType;
+import com.alex.toad.uccx.items.Team;
+import com.alex.toad.uccx.items.UCCXAgent.AgentType;
 
 /**********************************
-* Class used to store web user data
+* Class used to store the agent data
 * 
 * @author RATEL Alexandre
 **********************************/
-public class WebUser
+public class AgentData
 	{
 	/**
 	 * Variables
 	 */
-	private String firstName, lastName, lineNumber, team, deviceMac, deviceType;
-	private AgentType agentType; 
+	private String firstName, lastName, lineNumber, deviceName, deviceType;
+	private AgentType agentType;
+	private ArrayList<Team> teamList;
 	private ArrayList<Skill> skillList;
 	private Office office;
 	
-	/***************
-	 * Constructeur
-	 ***************/
-	public WebUser(String firstName, String lastName, String lineNumber,
-			String team, String deviceMac, String deviceType,
-			AgentType agentType, ArrayList<Skill> skillList, Office office)
+	/**
+	 * Constructor
+	 */
+	public AgentData(String firstName, String lastName, String lineNumber,
+			String deviceName, String deviceType, AgentType agentType,
+			ArrayList<Team> teamList, ArrayList<Skill> skillList, Office office)
 		{
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.lineNumber = lineNumber;
-		this.team = team;
-		this.deviceMac = deviceMac;
+		this.deviceName = deviceName;
 		this.deviceType = deviceType;
 		this.agentType = agentType;
+		this.teamList = teamList;
 		this.skillList = skillList;
 		this.office = office;
 		}
@@ -74,9 +76,27 @@ public class WebUser
 					return skillList.get(index).getString(tab[3]);
 					}
 				}
+			else if(tab[1].equals("team"))
+				{
+				int index = Integer.parseInt(tab[2]);
+				if(index>teamList.size())
+					{
+					throw new Exception("This team number doesn't exist");
+					}
+				else
+					{
+					return teamList.get(index).getString(tab[3]);
+					}
+				}
 			}
 		
+		
 		throw new Exception("ERROR : No value found");
+		}
+	
+	public String getInfo()
+		{
+		return firstName+" "+lastName;
 		}
 
 	public String getFirstName()
@@ -94,14 +114,9 @@ public class WebUser
 		return lineNumber;
 		}
 
-	public String getTeam()
+	public String getDeviceName()
 		{
-		return team;
-		}
-
-	public String getDeviceMac()
-		{
-		return deviceMac;
+		return deviceName;
 		}
 
 	public String getDeviceType()
@@ -114,6 +129,11 @@ public class WebUser
 		return agentType;
 		}
 
+	public ArrayList<Team> getTeamList()
+		{
+		return teamList;
+		}
+
 	public ArrayList<Skill> getSkillList()
 		{
 		return skillList;
@@ -123,8 +143,12 @@ public class WebUser
 		{
 		return office;
 		}
+
+	
+
 	
 	
-	/*2021*//*RATEL Alexandre 8)*/
+	
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

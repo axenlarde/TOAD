@@ -11,6 +11,7 @@ import com.alex.toad.soap.items.SpeedDial;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
+import com.alex.toad.webserver.AgentData;
 
 
 
@@ -51,7 +52,7 @@ public class Phone extends ItemToInject
 	private ArrayList<PhoneLine> lineList;
 	private ArrayList<SpeedDial> sdList;
 	
-	private int index;
+	private AgentData agentData;
 	
 
 	/***************
@@ -169,7 +170,7 @@ public class Phone extends ItemToInject
 	 */
 	public void resolve() throws Exception
 		{
-		name = CollectionTools.getValueFromCollectionFile(index, name, this, true);
+		name = CollectionTools.applyPattern(agentData, name, this, true);
 		description = CollectionTools.getValueFromCollectionFile(index, description, this, false);//The "false" means that this value can be empty
 		devicePool = CollectionTools.getValueFromCollectionFile(index, devicePool, this, true);
 		enableExtensionMobility = CollectionTools.getValueFromCollectionFile(index, enableExtensionMobility, this, false);
@@ -395,16 +396,6 @@ public class Phone extends ItemToInject
 		this.enableExtensionMobility = enableExtensionMobility;
 		}
 
-	public int getIndex()
-		{
-		return index;
-		}
-
-	public void setIndex(int index)
-		{
-		this.index = index;
-		}
-
 	public ArrayList<SpeedDial> getSdList()
 		{
 		return sdList;
@@ -508,12 +499,21 @@ public class Phone extends ItemToInject
 		this.deviceMobilityMode = deviceMobilityMode;
 		}
 
+	public AgentData getAgentData()
+		{
+		return agentData;
+		}
+
+	public void setAgentData(AgentData agentData)
+		{
+		this.agentData = agentData;
+		}
 	
 	
 	
 	
 	
 	
-	/*2016*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

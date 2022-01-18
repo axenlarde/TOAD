@@ -2,12 +2,15 @@ package com.alex.toad.uccx.items;
 
 import java.lang.reflect.Field;
 
+import com.alex.toad.misc.ItemToInject;
+import com.alex.toad.utils.Variables.itemType;
+
 /**********************************
 * Used to store a UCCX skill
 * 
 * @author RATEL Alexandre
 **********************************/
-public class Skill
+public class Skill extends ItemToInject
 	{
 	/**
 	 * Variables
@@ -18,10 +21,14 @@ public class Skill
 	/***************
 	 * Constructor
 	 ***************/
+	public Skill(String name)
+		{
+		super(itemType.skill, name);
+		}
+	
 	public Skill(String name, int level)
 		{
-		super();
-		this.name = name;
+		super(itemType.skill, name);
 		this.level = level;
 		}
 	
@@ -51,8 +58,13 @@ public class Skill
 		{
 		return level;
 		}
+
+	public void setLevel(int level)
+		{
+		this.level = level;
+		}
 	
 	
-	/*2021*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

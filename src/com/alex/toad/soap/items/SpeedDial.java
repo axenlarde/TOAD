@@ -4,6 +4,7 @@ import com.alex.toad.misc.BasicItem;
 import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables.sdType;
+import com.alex.toad.webserver.AgentData;
 
 /**********************************
  * Used to store a speed dial config
@@ -22,7 +23,8 @@ public class SpeedDial extends BasicItem
 	private boolean pickup;
 	private sdType type;
 	private int position;
-	private int index;
+	
+	private AgentData agentData;
 	
 	/***************
 	 * Constructor
@@ -37,7 +39,7 @@ public class SpeedDial extends BasicItem
 	
 	public void resolve() throws Exception
 		{
-		template = CollectionTools.getValueFromCollectionFile(index, template, this, true);
+		template = CollectionTools.applyPattern(agentData, template, this, true);
 		
 		if(template.contains(":"))
 			{
@@ -133,20 +135,17 @@ public class SpeedDial extends BasicItem
 		this.template = template;
 		}
 
-	public int getIndex()
+	public AgentData getAgentData()
 		{
-		return index;
+		return agentData;
 		}
 
-	public void setIndex(int index)
+	public void setAgentData(AgentData agentData)
 		{
-		this.index = index;
+		this.agentData = agentData;
 		}
+
 	
-	
-	
-	
-	
-	/*2016*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 
