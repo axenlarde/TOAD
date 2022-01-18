@@ -14,12 +14,22 @@ public class WebRequest
 	 */
 	private String content;
 	private webRequestType type;
+	private SecurityToken securityToken;
 	
 	public WebRequest(String content, webRequestType type)
 		{
 		super();
 		this.content = content;
 		this.type = type;
+		this.securityToken = new SecurityToken("", null);
+		}
+	
+	public WebRequest(String content, webRequestType type, SecurityToken securityToken)
+		{
+		super();
+		this.content = content;
+		this.type = type;
+		this.securityToken = securityToken;
 		}
 
 	public String getContent()
@@ -41,6 +51,17 @@ public class WebRequest
 		{
 		this.type = type;
 		}
+
+	public SecurityToken getSecurityToken()
+		{
+		return securityToken;
+		}
+
+	public void setSecurityToken(SecurityToken securityToken)
+		{
+		this.securityToken = securityToken;
+		}
 	
-	/*2019*//*RATEL Alexandre 8)*/
+	
+	/*2022*//*RATEL Alexandre 8)*/
 	}

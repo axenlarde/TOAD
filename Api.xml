@@ -70,6 +70,7 @@ copyLogFile
 					<firstname></firstname>
 					<lastname></lastname>
 					<number></number>
+					<office></office>
 					<type></type><!--agent,supervisor-->
 					<teams>
 						<team></team><!--Team name--><!--One or more-->
@@ -84,7 +85,7 @@ copyLogFile
 						<device><!--One or more-->
 							<type></type><!--deskphone,softphone-->
 							<name></name><!--softphone name or mac address-->
-							<model></model><!--Only relevent for deskphone empty for softphone-->
+							<model></model><!--Not relevant for deskphone empty for softphone-->
 						</device>
 					</devices>
 				</agent>
@@ -120,6 +121,7 @@ copyLogFile
 				<firstname></firstname>
 				<lastname></lastname>
 				<number></number>
+				<office></office>
 				<type></type><!--agent,supervisor-->
 				<teams>
 					<team></team><!--Team name--><!--One or more-->
@@ -132,9 +134,9 @@ copyLogFile
 				</skills>
 				<devices>
 					<device><!--One or more-->
-						<type></type><!--deskphone,softphone-->
-						<name></name><!--softphone name or mac address-->
-						<model></model><!--Only relevent for deskphone empty for softphone-->
+						<type></type><!--deskphone,softphone,deviceprofile-->
+						<name></name><!--name or mac address-->
+						<model></model><!--Not relevant for softphone-->
 					</device>
 				</devices>
 			</agent>
@@ -181,14 +183,6 @@ copyLogFile
 						<lastname></lastname>
 					</agent>
 				</agents>
-				<csqs>
-					<csq><!--One or more-->
-						<name></name>
-						<skills>
-							<skill></skill><!--One or more-->
-						</skills>
-					</csq>
-				</csqs>
 			</team>
 		</content>
 	</reply>
@@ -210,6 +204,7 @@ copyLogFile
 		<content>
 			<firstname></firstname>
 			<lastname></lastname>
+			<office></office>
 			<type></type><!--agent,supervisor-->
 			<teams>
 				<team></team><!--Team name--><!--One or more-->
@@ -334,6 +329,7 @@ Update agent will only allow to update some fields for now
 					<firstname></firstname>
 					<lastname></lastname>
 					<number></number>
+					<office></office>
 					<type></type><!--agent,supervisor-->
 					<teams>
 						<team></team><!--Team name--><!--One or more-->
@@ -417,6 +413,33 @@ Update agent will only allow to update some fields for now
 <xml>
 	<reply>
 		<type>listSkill</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
+
+<!--listOffice-->
+<xml>
+	<request>
+		<type>listOffice</type>
+		<securitytoken></securitytoken><!--Security token of the connected user-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>listOffice</type>
+		<content>
+			<offices>
+				<office></office><!--Office name--><!--One or more-->
+			</offices>
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>listOffice</type>
 		<content>
 			<error>Error description</error>
 		</content>

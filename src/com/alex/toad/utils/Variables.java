@@ -11,6 +11,7 @@ import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.misc.Office;
 import com.alex.toad.misc.ValueMatcher;
 import com.alex.toad.misc.storedUUID;
+import com.alex.toad.webserver.SecurityToken;
 import com.alex.toad.webserver.WebListenerManager;
 
 
@@ -242,6 +243,7 @@ public class Variables
 	
 	/** Web Management **/
 	private static WebListenerManager webServer;
+	private static ArrayList<SecurityToken> securityTokenList;
 	
 	/**************
      * Constructor
@@ -671,6 +673,17 @@ public class Variables
 	public static void setLogFileName(String logFileName)
 		{
 		Variables.logFileName = logFileName;
+		}
+
+	public static ArrayList<SecurityToken> getSecurityTokenList()
+		{
+		return securityTokenList;
+		}
+
+	public static void setSecurityTokenList(
+			ArrayList<SecurityToken> securityTokenList)
+		{
+		Variables.securityTokenList = securityTokenList;
 		}
 	
 	

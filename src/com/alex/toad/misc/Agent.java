@@ -19,16 +19,18 @@ public class Agent
 	private UCCXAgent agent;
 	private User user;
 	private ArrayList<ItemToInject> deviceList;
+	private Office office;
 	
 	/**
 	 * Constructor
 	 */
-	public Agent(UCCXAgent agent, User user, ArrayList<ItemToInject> deviceList)
+	public Agent(UCCXAgent agent, User user, ArrayList<ItemToInject> deviceList, Office office)
 		{
 		super();
 		this.agent = agent;
 		this.user = user;
 		this.deviceList = deviceList;
+		this.office = office;
 		}
 
 	public UCCXAgent getAgent()
@@ -44,6 +46,11 @@ public class Agent
 	public ArrayList<ItemToInject> getDeviceList()
 		{
 		return deviceList;
+		}
+
+	public Office getOffice()
+		{
+		return office;
 		}
 	
 	

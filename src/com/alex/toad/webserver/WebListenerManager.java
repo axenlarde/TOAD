@@ -120,7 +120,7 @@ public class WebListenerManager implements HttpHandler
 					
 					if(wr.getType().equals(webRequestType.doAuthenticate))
 						{
-						reply = ManageWebRequest.doAuthenticate(content);
+						reply = ManageWebRequest.doAuthenticate(wr);
 						}
 					else if(wr.getType().equals(webRequestType.search))
 						{

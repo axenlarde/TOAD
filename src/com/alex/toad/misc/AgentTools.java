@@ -15,6 +15,32 @@ public class AgentTools
 	{
 	
 	/**
+	 * Will authenticate the user through AXL
+	 * So the user and credentials must be valid in the CUCM
+	 */
+	public static boolean doAuthenticate(String userid, String password)
+		{
+		
+		//TBW
+		
+		return false;
+		}
+	
+	/**
+	 * Will look for a list of agents matching the search string
+	 */
+	public static ArrayList<Agent> search(String search)
+		{
+		ArrayList<Agent> agents = new ArrayList<Agent>();
+		
+		//TBW
+		
+		return agents;
+		}
+	
+	
+	
+	/**
 	 * Will get the data about agent, contacting CUCM and UCCX for that
 	 */
 	public static Agent getAgent(String CUCMID)

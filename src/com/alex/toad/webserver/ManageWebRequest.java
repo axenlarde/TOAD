@@ -1,6 +1,7 @@
 package com.alex.toad.webserver;
 
 import java.io.File;
+import java.net.Authenticator.RequestorType;
 import java.util.ArrayList;
 
 import org.apache.commons.io.FileUtils;
@@ -36,6 +37,7 @@ public class ManageWebRequest
 		listAgent,
 		listTeam,
 		listSkill,
+		listOffice,
 		copyLogFile
 		}
 	
@@ -46,6 +48,7 @@ public class ManageWebRequest
 	public synchronized static WebRequest parseWebRequest(String content) throws Exception
 		{
 		ArrayList<String> params = new ArrayList<String>();
+		SecurityToken securityToken = new SecurityToken("", null);
 		
 		//We parse the request type
 		params.add("request");
@@ -53,13 +56,23 @@ public class ManageWebRequest
 		webRequestType type = webRequestType.valueOf(UsefulMethod.getItemByName("type", parsed.get(0)));
 		Variables.getLogger().debug("Web request type found : "+type.name());
 		
-		return new WebRequest(content, type);
+		if(!type.equals(webRequestType.doAuthenticate))
+			{
+			/**
+			 * doAuthenticate is the only case where the security token will be missing
+			 * and therefore not verified
+			 */
+			securityToken = WebTools.getSecurityToken(UsefulMethod.getItemByName("securitytoken", parsed.get(0)));
+			Variables.getLogger().debug("Associated security token found is : "+securityToken);
+			}
+		
+		return new WebRequest(content, type, securityToken);
 		}
 	
 	/**
 	 * doAuthenticate
 	 */
-	public synchronized static WebRequest doAuthenticate(String content)	
+	public synchronized static WebRequest doAuthenticate(WebRequest request)	
 		{
 		try
 			{
@@ -67,24 +80,45 @@ public class ManageWebRequest
 			params.add("request");
 			params.add("content");
 			
-			ArrayList<String[][]> parsed = xMLGear.getResultListTab(content, params);
+			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
 			String[][] t = parsed.get(0);
 			
 			String userID = UsefulMethod.getItemByName("userid", t);
 			String password = UsefulMethod.getItemByName("userpassword", t);
 			
-			if(UsefulMethod.doAuthenticate(userID, password))return WebRequestBuilder.buildWebRequest(webRequestType.success, null);
-			else return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
+			if(AgentTools.doAuthenticate(userID, password))return WebRequestBuilder.buildSuccessWebRequest(request.getType());
 			}
 		catch (Exception e)
 			{
 			Variables.getLogger().error("ERROR while processing doAuthenticate web request : "+e.getMessage(),e);
 			}
 		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
+		return WebRequestBuilder.buildFailedWebRequest(request.getType(), "Failed to authenticate with the provided credentials");
 		}
 	
-	public synchronized static WebRequest search(String content)
+	public synchronized static WebRequest search(WebRequest request)
+		{
+		try
+			{
+			ArrayList<String> params = new ArrayList<String>();
+			params.add("request");
+			params.add("content");
+			
+			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
+			String[][] t = parsed.get(0);
+			
+			String search = UsefulMethod.getItemByName("search", t);
+			
+			return WebRequestBuilder.buildSearchReply(AgentTools.search(search));
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("ERROR while processing the search request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), "ERROR while processing the search request : "+e.getMessage());
+			}
+		}
+	
+	public synchronized static WebRequest getAgent(WebRequest request)
 		{
 		try
 			{
@@ -93,28 +127,6 @@ public class ManageWebRequest
 			params.add("content");
 			
 			ArrayList<String[][]> parsed = xMLGear.getResultListTab(content, params);
-			String[][] t = parsed.get(0);
-			
-			String search = UsefulMethod.getItemByName("search", t);
-			return WebRequestBuilder.buildWebRequest(webRequestType.search, search);
-			}
-		catch (Exception e)
-			{
-			Variables.getLogger().error("ERROR while processing search web request : "+e.getMessage(),e);
-			}
-		
-		return WebRequestBuilder.buildWebRequest(webRequestType.error, null);
-		}
-	
-	public synchronized static WebRequest getAgent(String xmlContent)
-		{
-		try
-			{
-			ArrayList<String> params = new ArrayList<String>();
-			params.add("request");
-			params.add("content");
-			
-			ArrayList<String[][]> parsed = xMLGear.getResultListTab(xmlContent, params);
 			String[][] t = parsed.get(0);
 			
 			String userID = UsefulMethod.getItemByName("userid", t);
@@ -131,7 +143,7 @@ public class ManageWebRequest
 			}
 		}
 	
-	public synchronized static WebRequest getDeviceList()	
+	public synchronized static WebRequest getDeviceList(WebRequest request)	
 		{
 		try
 			{
