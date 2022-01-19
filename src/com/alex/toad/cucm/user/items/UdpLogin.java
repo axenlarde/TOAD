@@ -1,14 +1,12 @@
 package com.alex.toad.cucm.user.items;
 
-import com.alex.woot.axlitems.linkers.LineLinker;
-import com.alex.woot.axlitems.linkers.UdpLoginLinker;
-import com.alex.woot.misc.CollectionTools;
-import com.alex.woot.misc.ItemToInject;
-import com.alex.woot.utils.UsefulMethod;
-import com.alex.woot.utils.Variables;
-import com.alex.woot.utils.Variables.actionType;
-import com.alex.woot.utils.Variables.itemType;
-
+import com.alex.toad.axlitems.linkers.UdpLoginLinker;
+import com.alex.toad.misc.CollectionTools;
+import com.alex.toad.misc.ItemToInject;
+import com.alex.toad.utils.UsefulMethod;
+import com.alex.toad.utils.Variables.actionType;
+import com.alex.toad.utils.Variables.itemType;
+import com.alex.toad.webserver.AgentData;
 
 /**********************************
  * Class used to define an item of type "UDP Login"
@@ -22,10 +20,11 @@ public class UdpLogin extends ItemToInject
 	 * Variables
 	 */
 	private UdpLoginLinker myUDPLogin;
-	private String deviceName,
+	private String targetName,
+	deviceName,
 	deviceProfile;//UserID is the name
 	
-	private int index;
+	private AgentData agentData;
 
 	/***************
 	 * Constructor
@@ -36,6 +35,17 @@ public class UdpLogin extends ItemToInject
 		{
 		super(itemType.udplogin, name);
 		this.myUDPLogin = new UdpLoginLinker();
+		this.deviceName = deviceName;
+		this.deviceProfile = deviceProfile;
+		this.action = actionType.inject;
+		}
+	
+	public UdpLogin(String targetName, String name,
+			String deviceName, String deviceProfile) throws Exception
+		{
+		super(itemType.udplogin, name);
+		this.myUDPLogin = new UdpLoginLinker();
+		this.targetName = targetName;
 		this.deviceName = deviceName;
 		this.deviceProfile = deviceProfile;
 		this.action = actionType.inject;
@@ -154,19 +164,28 @@ public class UdpLogin extends ItemToInject
 		this.deviceProfile = deviceProfile;
 		}
 
-	public int getIndex()
+	public AgentData getAgentData()
 		{
-		return index;
+		return agentData;
 		}
 
-	public void setIndex(int index)
+	public void setAgentData(AgentData agentData)
 		{
-		this.index = index;
+		this.agentData = agentData;
+		}
+
+	public String getTargetName()
+		{
+		return targetName;
+		}
+
+	public void setTargetName(String targetName)
+		{
+		this.targetName = targetName;
 		}
 
 	
 	
-	
-	/*2016*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

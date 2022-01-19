@@ -46,7 +46,7 @@ public class Team extends ItemToInject
 			{
 			for(Field f : this.getClass().getDeclaredFields())
 				{
-				if(f.getName().equals(tab[1]))
+				if(f.getName().toLowerCase().equals(tab[1].toLowerCase()))
 					{
 					return (String) f.get(this);
 					}

@@ -44,7 +44,7 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 			<voicemailprofile>office.voicemailprofile</voicemailprofile>
 			<routepartition>config.didpartition</routepartition>
 			<producttype>*LFphone*web.phonetype</producttype>
-			<protocol>config.phoneprotocol</protocol>
+			<protocol>'SIP'</protocol>
 			<buttontemplate>*LFpbt*web.phonetype</buttontemplate>
 			<devicepool>office.name+'_DP'</devicepool>
 			<location>office.name+'_LOC'</location>
@@ -71,7 +71,7 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 			<fwunrvoicemailenable>'false'</fwunrvoicemailenable>
 			<routepartition>config.nodidpartition</routepartition>
 			<producttype>*LFphone*web.phonetype</producttype>
-			<protocol>config.phoneprotocol</protocol>
+			<protocol>'SIP'</protocol>
 			<buttontemplate>*LFpbt*web.phonetype</buttontemplate>
 			<devicepool>office.name+'_DP'</devicepool>
 			<location>office.name+'_LOC'</location>
@@ -80,14 +80,14 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 		</phone>
 		<udp>
 			<targetname>udp</targetname>
-			<devicename>*m*web.userid</devicename>
+			<devicename>*m*agent.userid</devicename>
 			<description>(*1M**C*web.firstname+' '+*M**C*web.lastname+' - '+office.name)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname+' - '+office.name)</description>
 			<linedescription>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</linedescription>
 			<alertingname>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</alertingname>
 			<display>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</display>
 			<linetextlabel>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</linetextlabel>
 			<externalphonemask>office.setting.1</externalphonemask>
-			<linenumber>web.linenumber1</linenumber><!--One or more-->
+			<linenumber>cucm.availableline</linenumber><!--One or more-->
 			<cssline>'TBD'</cssline>
 			<cssforward>'TBD'</cssforward>
 			<fwalldestination>'TBD'</fwalldestination>
@@ -103,12 +103,12 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 			<producttype>*LFphone*web.phonetype</producttype>
 			<buttontemplate>*LFpbt*web.phonetype</buttontemplate>
 			<service>config.ippaservice</service><!--'Service Name':'Service URL label' One or more service-->
-			<protocol>config.phoneprotocol</protocol>
+			<protocol>'SIP'</protocol>
 			<speeddial>tbd</speeddial><!--One or more-->
 		</udp>
 		<user>
 			<targetname>user</targetname>
-			<userid>web.userid</userid>
+			<userid>agent.userid</userid>
 			<lastname>*M**C*web.lastname</lastname>
 			<firstname>*1M**C*web.firstname</firstname>
 			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
@@ -116,31 +116,41 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 		</user>
 		<user>
 			<targetname>newuser</targetname>
-			<userid>web.userid</userid>
+			<userid>config.agentidprefix+office.availableuseridindex</userid><!--Should generate something like AgentTLS1-->
 			<lastname>*M**C*web.lastname</lastname>
 			<firstname>(*1M**C*web.firstname)IfLongerThan30(*1_**M**C*web.firstname+'.')</firstname>
-			<telephonenumber>web.linenumber1</telephonenumber>
+			<telephonenumber>cucm.availableline</telephonenumber>
 			<userlocal>office.userlocal</userlocal>
 			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
-			<password>web.linenumber1</password>
-			<pin>web.linenumber1</pin>
+			<password>cucm.availableline</password>
+			<pin>cucm.availableline</pin>
 			<group>'Standard CCM End Users'</group><!--One or more-->
 		</user>
 		<user>
 			<targetname>updateudp</targetname>
-			<userid>web.userid</userid>
-			<udp>*m*web.userid</udp>
+			<userid>agent.userid</userid>
+			<udp>*m*agent.userid</udp>
 		</user>
 		<user>
 			<targetname>updatepe</targetname>
-			<userid>web.userid</userid>
-			<primaryextension>web.linenumber1</primaryextension>
+			<userid>agent.userid</userid>
+			<primaryextension>agent.telephonenumber</primaryextension>
 			<partition>config.didpartition</partition>
 		</user>
 		<user>
 			<targetname>updatephone</targetname>
-			<userid>web.userid</userid>
-			<device>'SEP'+web.phonemac</device>
+			<userid>agent.userid</userid>
+			<device>'SEP'+agent.devicename</device>
 		</user>
+		<udplogin>
+			<targetname>udplogin</targetname>
+			<userid>config.agentidprefix+office.availableuseridindex</userid>
+			<device>'SEP'+agent.devicename</device>
+		</udplogin>
+		<udplogin>
+			<targetname>updateudplogin</targetname>
+			<userid>agent.userid</userid>
+			<device>'SEP'+agent.devicename</device>
+		</udplogin>
 	</items>
 </xml>

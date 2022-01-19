@@ -25,8 +25,10 @@ public class UCCXAgentLinker extends RESTItemLinker
 	/**
 	 * Variables
 	 */
+	private String lastname,//Name is the userID
+	firstname,
+	telephoneNumber;
 	private AgentType agentType;
-	private User user;
 	private ArrayList<Team> teams;
 	private ArrayList<Skill> skills;
 	
@@ -135,11 +137,6 @@ public class UCCXAgentLinker extends RESTItemLinker
 		return agentType;
 		}
 
-	public User getUser()
-		{
-		return user;
-		}
-
 	public ArrayList<Team> getTeam()
 		{
 		return teams;
@@ -155,11 +152,6 @@ public class UCCXAgentLinker extends RESTItemLinker
 		this.agentType = agentType;
 		}
 
-	public void setUser(User user)
-		{
-		this.user = user;
-		}
-
 	public void setTeams(ArrayList<Team> teams)
 		{
 		this.teams = teams;
@@ -168,6 +160,41 @@ public class UCCXAgentLinker extends RESTItemLinker
 	public void setSkills(ArrayList<Skill> skills)
 		{
 		this.skills = skills;
+		}
+
+	public String getLastname()
+		{
+		return lastname;
+		}
+
+	public void setLastname(String lastname)
+		{
+		this.lastname = lastname;
+		}
+
+	public String getFirstname()
+		{
+		return firstname;
+		}
+
+	public void setFirstname(String firstname)
+		{
+		this.firstname = firstname;
+		}
+
+	public String getTelephoneNumber()
+		{
+		return telephoneNumber;
+		}
+
+	public void setTelephoneNumber(String telephoneNumber)
+		{
+		this.telephoneNumber = telephoneNumber;
+		}
+
+	public ArrayList<Team> getTeams()
+		{
+		return teams;
 		}
 
 	

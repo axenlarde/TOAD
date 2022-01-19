@@ -9,6 +9,7 @@ import com.alex.toad.cucm.user.misc.TemplateUserReader;
 import com.alex.toad.cucm.user.misc.UserCreationProfile;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.misc.Office;
+import com.alex.toad.misc.Task;
 import com.alex.toad.misc.ValueMatcher;
 import com.alex.toad.misc.storedUUID;
 import com.alex.toad.webserver.SecurityToken;
@@ -207,7 +208,6 @@ public class Variables
 	private static eMailSender eMSender;
 	private static String mainConfigFileDirectory;
 	private static ArrayList<String[][]> mainConfig;
-	private static ArrayList<User> userList;
 	private static String configFileName;
 	private static String userFileName;
 	private static String matcherFileName;
@@ -223,8 +223,8 @@ public class Variables
 	private static boolean pause;
 	private static UserSource userSource;
 	private static ArrayList<UserCreationProfile> userCreationProfileList;
-	private static ArrayList<String> internalNumberList;
 	private static String logFileName;
+	private static ArrayList<Task> taskList;
 	
 	/** Templates **/
 	private static ArrayList<ItemToInject> userTemplateList;//User
@@ -261,7 +261,6 @@ public class Variables
 		officeListFileName = "officeList.xml";
 		substitutesFileName = "substitutes.xml";
 		userCreationProfileFileName = "userCreationProfiles.xml";
-		
 		}
 
 	public static String getSoftwareName()
@@ -454,21 +453,6 @@ public class Variables
 		AXLConnectionToCUCMV105 = aXLConnectionToCUCMV105;
 		}
 
-	public synchronized static ArrayList<User> getUserList() throws Exception
-		{
-		if(userList == null)
-			{
-			Variables.getLogger().debug("Initialisation of userlist");
-			Variables.setUserList(UsefulMethod.initUserList(Variables.getUserFileName()));
-			}
-		return userList;
-		}
-
-	public static void setUserList(ArrayList<User> userList)
-		{
-		Variables.userList = userList;
-		}
-
 	public static boolean isAdvancedLogs()
 		{
 		return advancedLogs;
@@ -634,21 +618,6 @@ public class Variables
 		Variables.userCreationProfileList = userCreationProfileList;
 		}
 
-	public static ArrayList<String> getInternalNumberList() throws Exception
-		{
-		if(internalNumberList == null)
-			{
-			Variables.getLogger().debug("Initialisation of internalNumberList");
-			Variables.setInternalNumberList(UsefulMethod.initNumberList(UsefulMethod.getTargetOption("nodidrange")));
-			}
-		return internalNumberList;
-		}
-
-	public static void setInternalNumberList(ArrayList<String> internalNumberList)
-		{
-		Variables.internalNumberList = internalNumberList;
-		}
-
 	public static ArrayList<ItemToInject> getUserTemplateList() throws Exception
 		{
 		if(userTemplateList == null)
@@ -684,6 +653,17 @@ public class Variables
 			ArrayList<SecurityToken> securityTokenList)
 		{
 		Variables.securityTokenList = securityTokenList;
+		}
+
+	public static ArrayList<Task> getTaskList()
+		{
+		if(taskList == null)taskList = new ArrayList<Task>();
+		return taskList;
+		}
+
+	public static void setTaskList(ArrayList<Task> taskList)
+		{
+		Variables.taskList = taskList;
 		}
 	
 	

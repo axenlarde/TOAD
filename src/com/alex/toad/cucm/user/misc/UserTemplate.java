@@ -27,6 +27,11 @@ public class UserTemplate
 		this.target = target;
 		this.action = action;
 		}
+	
+	public String getInfo()
+		{
+		return type.name()+" "+target+" "+action.name();
+		}
 
 	public itemType getType()
 		{

@@ -196,6 +196,35 @@ copyLogFile
 	</reply>
 </xml>
 
+<!--getTask-->
+<xml>
+	<request>
+		<type>getTask</type>
+		<content>
+			<taskid></taskid>
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>getTask</type>
+		<content>
+			<task>
+				<taskid></taskid>
+				<status></status><!--The current status--><!--injected,error,processing,waiting,init,deleted,updated-->
+				<items>
+					<item><!--One or more item-->
+						<type></type>
+						<info></info>
+						<status></status><!--injected,error,processing,waiting,disabled,init,deleted,updated-->
+						<desc></desc><!--Description in case of error or warning-->
+					</item>
+				</items>
+			</task>
+		</content>
+	</reply>
+</xml>
+
 <!--addAgent-->
 <xml>
 	<request>
@@ -206,6 +235,9 @@ copyLogFile
 			<lastname></lastname>
 			<office></office>
 			<type></type><!--agent,supervisor-->
+			<devicename></devicename><!--Mac address-->
+			<devicetype></devicetype><!--Phone type-->
+			<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->
 			<teams>
 				<team></team><!--Team name--><!--One or more-->
 			</teams>
@@ -215,12 +247,6 @@ copyLogFile
 					<level></level><!--skill level-->
 				</skill>
 			</skills>
-			<devices>
-				<device><!--Deskphone-->
-					<name></name><!--Deskphone Mac address-->
-					<model></model><!--Deskphone model-->
-				</device>
-			</devices>
 		</content>
 	</request>
 </xml>
@@ -228,7 +254,7 @@ copyLogFile
 	<reply>
 		<type>addAgent</type>
 		<content>
-			<userid></userid><!--UserID of the created user-->
+			<taskid></taskid><!--Task ID of the creation process-->
 		</content>
 	</reply>
 </xml>
@@ -254,6 +280,8 @@ Update agent will only allow to update some fields for now
 			<firstname></firstname>
 			<lastname></lastname>
 			<type></type><!--agent,supervisor-->
+			<devicename></devicename><!--Mac address--><!--In the case of an update, the MAC address is used only for udplogin-->
+			<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->
 			<teams>
 				<team></team><!--Team name--><!--One or more-->
 			</teams>
@@ -270,7 +298,7 @@ Update agent will only allow to update some fields for now
 	<reply>
 		<type>updateAgent</type>
 		<content>
-			<userid></userid><!--UserID of the updated user-->
+			<taskid></taskid><!--Task ID of the creation process-->
 		</content>
 	</reply>
 </xml>
@@ -297,7 +325,7 @@ Update agent will only allow to update some fields for now
 	<reply>
 		<type>deleteAgent</type>
 		<content>
-			</success>
+			<taskid></taskid><!--Task ID of the creation process-->
 		</content>
 	</reply>
 </xml>
@@ -439,6 +467,37 @@ Update agent will only allow to update some fields for now
 <xml>
 	<reply>
 		<type>listOffice</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
+
+<!--listTask-->
+<xml>
+	<request>
+		<type>listTask</type>
+		<securitytoken></securitytoken><!--Security token of the connected user-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>listTask</type>
+		<content>
+			<tasks>
+				<task><!--One or more task-->
+					<taskid></taskid>
+					<status>done</status><!--The current step--><!--init,preaudit,migration,postaudit,done,error-->
+					<desc></desc><!--Quick task description-->
+				</task>
+			</tasks>
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>listTask</type>
 		<content>
 			<error>Error description</error>
 		</content>

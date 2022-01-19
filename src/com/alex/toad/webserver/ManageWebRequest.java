@@ -35,6 +35,7 @@ public class ManageWebRequest
 		search,
 		getAgent,
 		getTeam,
+		getTask,
 		addAgent,
 		updateAgent,
 		deleteAgent,
@@ -42,6 +43,7 @@ public class ManageWebRequest
 		listTeam,
 		listSkill,
 		listOffice,
+		listTask,
 		copyLogFile
 		}
 	
@@ -218,8 +220,8 @@ public class ManageWebRequest
 			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
 				{
 				Variables.getLogger().debug("Trying to create agent : "+firstName+" "+lastName+" "+type.name()+" "+office.getFullname());
-				Agent agent = AgentTools.addAgent(lastName, firstName, office, type, teams, skills, deviceName, deviceType);
-				return WebRequestBuilder.buildAddAgentReply(agent.getUser().getName());
+				String taskID = AgentTools.addAgent(lastName, firstName, office, type, teams, skills, deviceName, deviceType);
+				return WebRequestBuilder.buildAddAgentReply(taskID);
 				}
 			}
 		catch (Exception e)
@@ -376,6 +378,22 @@ public class ManageWebRequest
 		try
 			{
 			return WebRequestBuilder.buildListOfficeReply(Variables.getOfficeList());
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("ERROR while processing list Office web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
+			}
+		}
+	
+	/**
+	 * List Task
+	 */
+	public synchronized static WebRequest listTask(WebRequest request)	
+		{
+		try
+			{
+			return WebRequestBuilder.buildListTaskReply(Variables.getTaskList());
 			}
 		catch (Exception e)
 			{

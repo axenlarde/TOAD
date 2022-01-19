@@ -444,56 +444,6 @@ public class UsefulMethod
 			}
 		}
 	
-	/*******
-	 * Used to initialize a number list by asking the CUCM
-	 */
-	public static ArrayList<String> initNumberList(String range) throws Exception
-		{
-		try
-			{
-			ArrayList<String> myUsedNumberList = new ArrayList<String>();
-			ArrayList<String> myAvailableNumberList = new ArrayList<String>();
-			
-			String[] tab = range.split(":");
-			String firstNumber = tab[0];
-			String lastNumber = tab[1];
-			
-			int currentNum = Integer.parseInt(firstNumber);
-			int lastNum = Integer.parseInt(lastNumber);
-			
-			//List<Object> SQLResp = SimpleRequest.doSQLQuery("select dnorpattern from numplan where tkpatternusage='2' and dnorpattern between '"+firstNumber+"' and '"+lastNumber+"'");
-			List<Object> SQLResp = SimpleRequest.doSQLQuery("select dnorpattern from numplan where dnorpattern between '"+firstNumber+"' and '"+lastNumber+"'");
-			
-			for(Object o : SQLResp)
-				{
-				Element rowElement = (Element) o;
-				NodeList list = rowElement.getChildNodes();
-				
-				for(int i = 0; i< list.getLength(); i++)
-					{
-					if(list.item(i).getNodeName().equals("dnorpattern"))myUsedNumberList.add(list.item(i).getTextContent());
-					}
-				}
-			
-			while(currentNum < lastNum)
-				{
-				if(!(myUsedNumberList.contains(Integer.toString(currentNum))))
-					{
-					myAvailableNumberList.add(Integer.toString(currentNum));
-					}
-				currentNum++;
-				}
-			
-			Variables.getLogger().debug("Available number list initialized");
-			
-			return myAvailableNumberList;
-			}
-		catch(Exception e)
-			{
-			throw new Exception("Error while trying to initialize the internal number list"+e.getMessage());
-			}
-		}
-	
 	
 	/**
 	 * Method which convert a string into cucmAXLVersion
@@ -746,37 +696,6 @@ public class UsefulMethod
 		
 		return false;
 		}
-	
-	/**
-	 * Method used to initialize user list
-	 * @throws Exception 
-	 */
-	public static ArrayList<User> initUserList(String fileName) throws Exception
-		{
-		ArrayList<User> myList = new ArrayList<User>();
-		ArrayList<String[][]> myTempList;
-		
-		myTempList = readUserFile(fileName);
-		
-		for(String[][] sTab: myTempList)
-			{
-			myList.add(new User(UsefulMethod.getItemByName("id", sTab),
-					UsefulMethod.getItemByName("firstname", sTab),
-					UsefulMethod.getItemByName("lastname", sTab),
-					UsefulMethod.getItemByName("extension", sTab),
-					UsefulMethod.getItemByName("email", sTab),
-					UsefulMethod.getItemByName("cucmid", sTab),
-					UsefulMethod.getItemByName("salesforceid", sTab),
-					Boolean.parseBoolean(UsefulMethod.getItemByName("incomingcallpopup", sTab)),
-					Boolean.parseBoolean(UsefulMethod.getItemByName("reverselookup", sTab)),
-					Boolean.parseBoolean(UsefulMethod.getItemByName("emailreminder", sTab)),
-					UsefulMethod.getItemByName("defaultbrowser", sTab),
-					UsefulMethod.getItemByName("browseroptions", sTab)));
-			}
-		
-		return myList;
-		}
-	
 	
 	/**
 	 * Method used to read the user file
@@ -1093,6 +1012,20 @@ public class UsefulMethod
 			}
 		
 		throw new Exception("Office not found : "+officeName);
+		}
+	
+	/**
+	 * Search for a User Creation Profile in the User Creation Profile list
+	 * @throws Exception
+	 */
+	public static UserCreationProfile getUserCreationProfile(String UCPName) throws Exception
+		{
+		for(UserCreationProfile ucp : Variables.getUserCreationProfileList())
+			{
+			if(ucp.getName().equals(UCPName)) return ucp;
+			}
+		
+		throw new Exception("User Creation Profile not found : "+UCPName);
 		}
 	
 	/*2022*//*RATEL Alexandre 8)*/

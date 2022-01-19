@@ -1,7 +1,12 @@
 package com.alex.toad.misc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import com.alex.toad.cucm.user.misc.UserError;
 import com.alex.toad.misc.Correction.correctionType;
@@ -11,9 +16,6 @@ import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.SubstituteType;
 import com.alex.toad.webserver.AgentData;
-import com.alex.woot.misc.BasicItem;
-import com.alex.woot.misc.Correction;
-
 
 
 /**********************************
@@ -171,7 +173,11 @@ public class CollectionTools
 				{
 				String result = ad.getString(param[i]);
 				regex.append(applyRegex(result, param[i]));
-				
+				match = true;
+				}
+			else if(Pattern.matches(".*office.availableuseridindex.*", param[i]))
+				{
+				regex.append(applyRegex(getAvailableUserId(applyPattern(ad, UsefulMethod.getTargetOption("agentidprefix"), null, false)), param[i]));
 				match = true;
 				}
 			else if(Pattern.matches(".*office\\..*", param[i]))
@@ -185,13 +191,14 @@ public class CollectionTools
 				{
 				String[] tab = param[i].split("\\.");
 				String result = UsefulMethod.getTargetOption(tab[1]);
-				regex.append(applyRegex(result, param[i]));
+				//regex.append(applyRegex(result, param[i]));
+				regex.append(applyRegex(applyPattern(ad, result, null, false),param[i]));//BETA : To allow to store regex in the configuration file then apply them as a pattern
 				
 				match = true;
 				}
-			else if(Pattern.matches(".*cucm.availableline", param[i]))
+			else if(Pattern.matches(".*cucm.availableline.*", param[i]))
 				{
-				regex.append(applyRegex(getAvailableInternalNumber(), param[i]));
+				regex.append(applyRegex(getAvailableInternalNumber(UsefulMethod.getTargetOption("nodidrange")), param[i]));
 				match = true;
 				}
 			
@@ -467,15 +474,96 @@ public class CollectionTools
 		}
 	
 	/*************
-	 * Method used to get a free non did number
+	 * Method used to get an available number in the given range
 	 * from the CUCM
 	 */
-	public static String getAvailableInternalNumber() throws Exception
+	public static String getAvailableInternalNumber(String range) throws Exception
 		{
-		String availableNumber = Variables.getInternalNumberList().get(0);
-		Variables.getInternalNumberList().remove(0);
-		Variables.getLogger().debug("Returned available number : "+availableNumber);
-		return availableNumber;
+		try
+			{
+			ArrayList<String> myUsedNumberList = new ArrayList<String>();
+			
+			String[] tab = range.split(":");
+			String firstNumber = tab[0];
+			String lastNumber = tab[1];
+			
+			int currentNum = Integer.parseInt(firstNumber);
+			int lastNum = Integer.parseInt(lastNumber);
+			
+			//List<Object> SQLResp = SimpleRequest.doSQLQuery("select dnorpattern from numplan where tkpatternusage='2' and dnorpattern between '"+firstNumber+"' and '"+lastNumber+"'");
+			List<Object> SQLResp = SimpleRequest.doSQLQuery("select dnorpattern from numplan where dnorpattern between '"+firstNumber+"' and '"+lastNumber+"'");
+			
+			for(Object o : SQLResp)
+				{
+				Element rowElement = (Element) o;
+				NodeList list = rowElement.getChildNodes();
+				
+				for(int i = 0; i< list.getLength(); i++)
+					{
+					if(list.item(i).getNodeName().equals("dnorpattern"))myUsedNumberList.add(list.item(i).getTextContent());
+					}
+				}
+			
+			while(currentNum < lastNum)
+				{
+				if(!(myUsedNumberList.contains(Integer.toString(currentNum))))
+					{
+					return Integer.toString(currentNum);
+					}
+				currentNum++;
+				}
+			
+			Variables.getLogger().debug("No available number found in the range : "+range);
+			throw new Exception("No available number found in the range : "+range);
+			}
+		catch(Exception e)
+			{
+			throw new Exception("Error while trying to get an available number : "+e.getMessage());
+			}
+		}
+	
+	/*************
+	 * Method used to get an available userID in the given range
+	 * from the CUCM
+	 */
+	public static String getAvailableUserId(String prefix) throws Exception
+		{
+		try
+			{
+			ArrayList<String> usedUserIdList = new ArrayList<String>();
+			
+			int currentIndex = 1;
+			int lastIndex = Integer.parseInt(UsefulMethod.getTargetOption("maxuseridindex"));//Max index
+			
+			List<Object> SQLResp = SimpleRequest.doSQLQuery("select userid from enduser where userid like '"+prefix+"%'");
+			
+			for(Object o : SQLResp)
+				{
+				Element rowElement = (Element) o;
+				NodeList list = rowElement.getChildNodes();
+				
+				for(int i = 0; i< list.getLength(); i++)
+					{
+					if(list.item(i).getNodeName().equals("userid"))usedUserIdList.add(list.item(i).getTextContent());
+					}
+				}
+			
+			while(currentIndex < lastIndex)
+				{
+				if(!(usedUserIdList.contains(prefix+currentIndex)))
+					{
+					return prefix+currentIndex;
+					}
+				currentIndex++;
+				}
+			
+			Variables.getLogger().debug("No available userID found with the prefix : "+prefix);
+			throw new Exception("No available userID found with the prefix : "+prefix);
+			}
+		catch(Exception e)
+			{
+			throw new Exception("Error while trying to get an available userID : "+e.getMessage());
+			}
 		}
 	
 	/**

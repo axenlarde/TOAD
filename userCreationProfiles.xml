@@ -6,7 +6,7 @@ the collection file
 <xml>
 	<profiles>
 		<profile>
-			<name>agent</name>
+			<name>addAgent</name>
 			<user>
 				<target>newuser</target>
 				<action>inject</action>
@@ -31,6 +31,56 @@ the collection file
 				<target>updatepe</target>
 				<action>update</action>
 			</user>
+			<udplogin>
+				<target>udplogin</target>
+				<action>update</action>
+			</udplogin>
+		</profile>
+		<profile>
+			<name>updateAgent</name>
+			<user>
+				<target>newuser</target>
+				<action>inject</action>
+			</user>
+			<udp>
+				<target>udp</target>
+				<action>inject</action>
+			</udp>
+			<phone>
+				<target>loggedoutphone</target>
+				<action>inject</action>
+			</phone>
+			<phone>
+				<target>softphone</target>
+				<action>inject</action>
+			</phone>
+			<user>
+				<target>updateuser</target>
+				<action>update</action>
+			</user>
+			<user>
+				<target>updatepe</target>
+				<action>update</action>
+			</user>
+			<udplogin>
+				<target>udplogin</target>
+				<action>update</action>
+			</udplogin>
+		</profile>
+		<profile>
+			<name>deleteAgent</name>
+			<user>
+				<target>newuser</target>
+				<action>delete</action>
+			</user>
+			<udp>
+				<target>udp</target>
+				<action>delete</action>
+			</udp>
+			<phone>
+				<target>softphone</target>
+				<action>delete</action>
+			</phone>
 		</profile>
 	</profiles>
 </xml>

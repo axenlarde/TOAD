@@ -245,6 +245,17 @@ public abstract class ItemToInject implements ItemToInjectImpl
 			}
 		if(!exists)correctionList.add(correction);
 		}
+	
+	public String getDetailedStatus()
+		{
+		StringBuffer result = new StringBuffer("");
+		
+		if(errorList.size() > 0)result.append(", Error found");
+		
+		//To improve if needed
+		
+		return result.toString();
+		}
 
 	public itemType getType()
 		{

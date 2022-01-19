@@ -2,11 +2,18 @@ package com.alex.toad.misc;
 
 import java.util.ArrayList;
 
+import com.alex.toad.cucm.user.misc.UserCreationProfile;
+import com.alex.toad.cucm.user.misc.UserTools;
 import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
+import com.alex.toad.uccx.items.UCCXAgent;
 import com.alex.toad.uccx.items.UCCXAgent.AgentType;
+import com.alex.toad.utils.UsefulMethod;
+import com.alex.toad.utils.Variables;
+import com.alex.toad.utils.Variables.actionType;
 import com.alex.toad.webserver.AgentData;
 import com.alex.toad.webserver.WebRequest;
+import com.alex.toad.webserver.ManageWebRequest.webRequestType;
 
 /**********************************
 * Class used to gather static method about agents
@@ -76,30 +83,42 @@ public class AgentTools
 	
 	/**
 	 * Used to create a new agent
-	 * Will return the agent created to allow
-	 * to display informations for the user
+	 * Will return the taskID
 	 */
-	public static Agent addAgent(String lastName,
+	public static String addAgent(String lastName,
 			String firstName, Office office, AgentType agentType, ArrayList<Team> teams,
-			ArrayList<Skill> skills, String deviceName, String deviceModel)
+			ArrayList<Skill> skills, String deviceName, String deviceModel, boolean udpLogin) throws Exception
 		{
-		Agent agent;
-		
-		
-		AgentData agentData = new AgentData(firstName, lastName, firstName, deviceName, deviceModel, agentType, teams, skills, office);
+		AgentData agentData = new AgentData("", firstName, lastName, "", deviceName, deviceModel, agentType, teams, skills, office);
+		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to Inject List
 		
 		/**
-		 * CUCM part
-		 * We read the creation profile to add the requested item to the list
+		 * CUCM items
+		 * Listed in the User Creation Profile : Phone, Line, UDP and so on...
 		 */
+		UserCreationProfile ucp = UsefulMethod.getUserCreationProfile(UsefulMethod.getTargetOption("addagentusercreationprofilename"));
+		Variables.getLogger().debug("The User Creation Profile used for Agent creation is : "+ucp.getName());
 		
+		//All the User Creation Profile items are now added to the injection list 
+		itil.addAll(UserTools.getUserItemList(agentData, actionType.inject, ucp, udpLogin));
 		
+		/**
+		 * UCCX items
+		 * To create the Agent
+		 */
+		UCCXAgent agent = new UCCXAgent(deviceName, lastName, firstName, deviceModel, agentType, teams, skills);
+		agent.setAgentData(agentData);
+		agent.resolve();
 		
+		itil.add(agent);
 		
+		/**
+		 * We now launch the injection process
+		 */
+		String taskID = TaskManager.addNewTask(itil, webRequestType.addAgent);
+		Variables.getLogger().debug(agentData.getInfo()+" : Add agent task started, task ID is : "+taskID);
 		
-		
-		
-		return agent;
+		return taskID;
 		}
 	
 	/**
@@ -107,7 +126,7 @@ public class AgentTools
 	 * Will return the agent created to allow
 	 * to display informations for the user
 	 */
-	public static Agent updateAgent(String CUCMID, String lastName,
+	public static Agent updateAgent(String userID, String lastName,
 			String firstName, AgentType agentType, ArrayList<Team> teams,
 			ArrayList<Skill> skills)
 		{

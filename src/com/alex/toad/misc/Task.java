@@ -2,9 +2,14 @@ package com.alex.toad.misc;
 
 import java.util.ArrayList;
 
-import com.alex.woot.utils.Variables;
-import com.alex.woot.utils.Variables.actionType;
-import com.alex.woot.utils.Variables.statusType;
+import org.apache.commons.codec.digest.DigestUtils;
+
+import com.alex.toad.utils.Variables;
+import com.alex.toad.utils.Variables.actionType;
+import com.alex.toad.utils.Variables.statusType;
+import com.alex.toad.webserver.ManageWebRequest.webRequestType;
+
+
 
 /**********************************
  * Class used to store a list of todo
@@ -22,11 +27,13 @@ public class Task extends Thread
 	private statusType status;
 	private boolean pause, stop, started, end;
 	private int progress;
+	private webRequestType type;
+	private String taskID;
 	
 	/***************
 	 * Constructor
 	 ***************/
-	public Task(ArrayList<ItemToInject> todoList)
+	public Task(ArrayList<ItemToInject> todoList, webRequestType type)
 		{
 		this.todoList = todoList;
 		this.status = statusType.init;
@@ -35,6 +42,8 @@ public class Task extends Thread
 		started = false;
 		end = false;
 		progress = 0;
+		this.taskID = DigestUtils.md5Hex(System.currentTimeMillis()+Math.random()+"8)");
+		this.type = type;
 		}
 	
 	/******
@@ -144,12 +153,16 @@ public class Task extends Thread
 			Variables.getLogger().info("Task ends");
 			Variables.setUuidList(new ArrayList<storedUUID>());//We clean the UUID list
 			Variables.getLogger().info("UUID list cleared");
-			Variables.closeWorkbook();
 			}
 		catch (Exception e)
 			{
 			Variables.getLogger().debug("ERROR : "+e.getMessage(),e);
 			}
+		}
+	
+	public String getInfo()
+		{
+		return type.name()+" : "+progress+"/"+todoList.size();
 		}
 
 	public ArrayList<ItemToInject> getTodoList()
@@ -224,6 +237,11 @@ public class Task extends Thread
 	public void setEnd(boolean end)
 		{
 		this.end = end;
+		}
+
+	public String getTaskID()
+		{
+		return taskID;
 		}
 	
 	

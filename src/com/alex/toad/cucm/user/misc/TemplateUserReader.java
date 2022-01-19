@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.alex.toad.cucm.user.items.DeviceProfile;
 import com.alex.toad.cucm.user.items.Phone;
+import com.alex.toad.cucm.user.items.UdpLogin;
 import com.alex.toad.cucm.user.items.User;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.soap.items.PhoneLine;
@@ -219,6 +220,14 @@ public class TemplateUserReader
 					UsefulMethod.getItemByName("partition", itemDetails),
 					UsefulMethod.getItemByName("pin", itemDetails),
 					UsefulMethod.getItemByName("password", itemDetails));
+			}
+		else if(type.equals(itemType.udplogin))
+			{
+			//UDP Login
+			return new UdpLogin(UsefulMethod.getItemByName("targetname", itemDetails),
+					UsefulMethod.getItemByName("userid", itemDetails),
+					UsefulMethod.getItemByName("device", itemDetails),
+					UsefulMethod.getItemByName("udp", itemDetails));
 			}
 		else if(type.equals(itemType.voicemail))
 			{

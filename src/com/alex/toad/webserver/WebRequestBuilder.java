@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.alex.toad.misc.Agent;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.misc.Office;
+import com.alex.toad.misc.Task;
 import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
@@ -166,9 +167,9 @@ public class WebRequestBuilder
 			for(UCCXAgent ua : team.getSupervisorList())
 				{
 				content.append("				<supervisor>\r\n");
-				content.append("					<userid>"+ua.getUser().getName()+"</userid>\r\n");
-				content.append("					<firstname>"+ua.getUser().getFirstname()+"</firstname>\r\n");
-				content.append("					<lastname>"+ua.getUser().getLastname()+"</lastname>\r\n");
+				content.append("					<userid>"+ua.getName()+"</userid>\r\n");
+				content.append("					<firstname>"+ua.getFirstname()+"</firstname>\r\n");
+				content.append("					<lastname>"+ua.getLastname()+"</lastname>\r\n");
 				content.append("				</supervisor>\r\n");
 				}
 			content.append("				</supervisors>\r\n");
@@ -176,9 +177,9 @@ public class WebRequestBuilder
 			for(UCCXAgent a : team.getAgentList())
 				{
 				content.append("				<agent>\r\n");
-				content.append("					<userid>"+a.getUser().getName()+"</userid>\r\n");
-				content.append("					<firstname>"+a.getUser().getFirstname()+"</firstname>\r\n");
-				content.append("					<lastname>"+a.getUser().getLastname()+"</lastname>\r\n");
+				content.append("					<userid>"+a.getName()+"</userid>\r\n");
+				content.append("					<firstname>"+a.getFirstname()+"</firstname>\r\n");
+				content.append("					<lastname>"+a.getLastname()+"</lastname>\r\n");
 				content.append("				</agent>\r\n");
 				}
 			content.append("				</agents>\r\n");
@@ -198,9 +199,53 @@ public class WebRequestBuilder
 		}
 	
 	/**
+	 * To build the get Task reply
+	 */
+	public static WebRequest buildGetTaskReply(Task task)
+		{
+		StringBuffer content = new StringBuffer();
+		webRequestType type = webRequestType.getTask;
+		
+		content.append("<xml>\r\n");
+		content.append("	<reply>\r\n");
+		content.append("		<type>"+type.name()+"</type>\r\n");
+		content.append("		<content>\r\n");
+		content.append("			<task>\r\n");
+		
+		try
+			{
+			content.append("				<taskid>"+task.getTaskID()+"</taskid>\r\n");
+			content.append("				<status>"+task.getStatus()+"</status>\r\n");
+			content.append("				<items>\r\n");
+			for(ItemToInject iti : task.getTodoList())
+				{
+				content.append("					<item>\r\n");
+				content.append("						<type>"+iti.getType()+"</type>\r\n");
+				content.append("						<info>"+iti.getInfo()+"</info>\r\n");
+				content.append("						<status>"+iti.getStatus().name()+"</status>\r\n");
+				content.append("						<desc>"+iti.getDetailedStatus()+"</desc>\r\n");
+				content.append("					</item>\r\n");
+				}
+			content.append("				</items>\r\n");
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("ERROR while retrieving an agent : "+e.getMessage());
+			content.append("			<agent></agent>\r\n");
+			}
+		
+		content.append("			</task>\r\n");
+		content.append("		</content>\r\n");
+		content.append("	</reply>\r\n");
+		content.append("</xml>\r\n");
+		
+		return new WebRequest(content.toString(), type);
+		}
+	
+	/**
 	 * To build the add agent reply
 	 */
-	public static WebRequest buildAddAgentReply(String userID)
+	public static WebRequest buildAddAgentReply(String taskID)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.addAgent;
@@ -209,7 +254,7 @@ public class WebRequestBuilder
 		content.append("	<reply>\r\n");
 		content.append("		<type>"+type.name()+"</type>\r\n");
 		content.append("		<content>\r\n");
-		content.append("			<userid>"+userID+"</userid>\r\n");
+		content.append("			<taskid>"+taskID+"</taskid>\r\n");
 		content.append("		</content>\r\n");
 		content.append("	</reply>\r\n");
 		content.append("</xml>\r\n");
@@ -220,7 +265,7 @@ public class WebRequestBuilder
 	/**
 	 * To build the update agent reply
 	 */
-	public static WebRequest buildUpdateAgentReply(String userID)
+	public static WebRequest buildUpdateAgentReply(String taskID)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.updateAgent;
@@ -229,7 +274,27 @@ public class WebRequestBuilder
 		content.append("	<reply>\r\n");
 		content.append("		<type>"+type.name()+"</type>\r\n");
 		content.append("		<content>\r\n");
-		content.append("			<userid>"+userID+"</userid>\r\n");
+		content.append("			<taskid>"+taskID+"</taskid>\r\n");
+		content.append("		</content>\r\n");
+		content.append("	</reply>\r\n");
+		content.append("</xml>\r\n");
+		
+		return new WebRequest(content.toString(), type);
+		}
+	
+	/**
+	 * To build the delete agent reply
+	 */
+	public static WebRequest buildDeleteAgentReply(String taskID)
+		{
+		StringBuffer content = new StringBuffer();
+		webRequestType type = webRequestType.deleteAgent;
+		
+		content.append("<xml>\r\n");
+		content.append("	<reply>\r\n");
+		content.append("		<type>"+type.name()+"</type>\r\n");
+		content.append("		<content>\r\n");
+		content.append("			<taskid>"+taskID+"</taskid>\r\n");
 		content.append("		</content>\r\n");
 		content.append("	</reply>\r\n");
 		content.append("</xml>\r\n");
@@ -368,6 +433,45 @@ public class WebRequestBuilder
 			}
 		
 		content.append("			</offices>\r\n");
+		content.append("		</content>\r\n");
+		content.append("	</reply>\r\n");
+		content.append("</xml>\r\n");
+		
+		return new WebRequest(content.toString(), type);
+		}
+	
+	/**
+	 * To build the list task reply
+	 */
+	public static WebRequest buildListTaskReply(ArrayList<Task> tasks)
+		{
+		StringBuffer content = new StringBuffer();
+		webRequestType type = webRequestType.listTask;
+		
+		content.append("<xml>\r\n");
+		content.append("	<reply>\r\n");
+		content.append("		<type>"+type.name()+"</type>\r\n");
+		content.append("		<content>\r\n");
+		content.append("			<tasks>\r\n");
+		
+		try
+			{
+			for(Task t : tasks)
+				{
+				content.append("				<task>\r\n");
+				content.append("					<taskid>"+t.getTaskID()+"</taskid>\r\n");
+				content.append("					<status>"+t.getStatus().name()+"</status>\r\n");
+				content.append("					<desc>"+t.getInfo()+"</desc>\r\n");
+				content.append("				<task>\r\n");
+				}
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("ERROR while retrieving the office list : "+e.getMessage());
+			content.append("				<task></task>\r\n");
+			}
+		
+		content.append("			</tasks>\r\n");
 		content.append("		</content>\r\n");
 		content.append("	</reply>\r\n");
 		content.append("</xml>\r\n");

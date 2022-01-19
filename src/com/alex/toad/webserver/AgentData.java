@@ -18,7 +18,7 @@ public class AgentData
 	/**
 	 * Variables
 	 */
-	private String firstName, lastName, lineNumber, deviceName, deviceType;
+	private String userID, firstName, lastName, lineNumber, deviceName, deviceType;
 	private AgentType agentType;
 	private ArrayList<Team> teamList;
 	private ArrayList<Skill> skillList;
@@ -27,11 +27,12 @@ public class AgentData
 	/**
 	 * Constructor
 	 */
-	public AgentData(String firstName, String lastName, String lineNumber,
+	public AgentData(String userID, String firstName, String lastName, String lineNumber,
 			String deviceName, String deviceType, AgentType agentType,
 			ArrayList<Team> teamList, ArrayList<Skill> skillList, Office office)
 		{
 		super();
+		this.userID = userID;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.lineNumber = lineNumber;
@@ -55,7 +56,7 @@ public class AgentData
 			{
 			for(Field f : this.getClass().getDeclaredFields())
 				{
-				if(f.getName().equals(tab[1]))
+				if(f.getName().toLowerCase().equals(tab[1].toLowerCase()))
 					{
 					return (String) f.get(this);
 					}
@@ -144,10 +145,10 @@ public class AgentData
 		return office;
 		}
 
-	
-
-	
-	
+	public String getUserID()
+		{
+		return userID;
+		}
 	
 	/*2022*//*RATEL Alexandre 8)*/
 	}

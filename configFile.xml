@@ -11,6 +11,7 @@ Overal configuration file
 		<storerequest>enable</storerequest><!--Keep in memory the already asked UUID-->
 		<splitter>+</splitter>
 		<csvsplitter>,</csvsplitter>
+		<maxtaskthread>10</maxtaskthread><!--The number of task allowed to process in the same time-->
 		<!--Smtp parameters-->
 		<smtpemailport>25</smtpemailport>
 		<smtpemailprotocol>smtp</smtpemailprotocol>
@@ -42,16 +43,12 @@ Overal configuration file
 		<didpartition>SDA_P</didpartition>
 		<nodidpartition>HSDA_P</nodidpartition>
 		<maxnumchar>30</maxnumchar><!--Integer-->
+		<maxuseridindex>999</maxuseridindex><!--The higher index allowed for naming userid-->
 		<!--Mandatory variables template-->
-		<officenametemplate>file.officename</officenametemplate><!--use to find the office name-->
-		<usercreationprofiletemplate>*LFprofile*file.usercreationprofile</usercreationprofiletemplate><!--use to find the creation profile name-->
-		<userlastnametemplate>file.lastname</userlastnametemplate><!--use to find the user lastname-->
-		<userfirstnametemplate>file.firstname</userfirstnametemplate><!--use to find the user first name-->
-		<useridtemplate>file.userid</useridtemplate><!--use to find the user id-->
-		<phonemactemplate>file.phonemac</phonemactemplate><!--use to find the phone mac address-->
-		<phonetypetemplate>file.phonetype</phonetypetemplate><!--use to find the phone mac address-->
-		<phoneprotocol>'SIP'</phoneprotocol>
-		<ippaservice>'tbd'</ippaservice><!--'Service Name':'Service URL label' One or more service-->
+		<addagentusercreationprofilename>addAgent</addagentusercreationprofilename><!--The creation profile to use for agent creation-->
+		<updateagentusercreationprofilename>updateAgent</updateagentusercreationprofilename><!--The creation profile to use for agent update-->
+		<deleteagentusercreationprofilename>deleteAgent</deleteagentusercreationprofilename><!--The creation profile to use for agent deletion-->
+		<agentidprefix>*1M*agent.agenttype+office.name</agentidprefix>
 		<!--Web server parameters-->
 		<webserverport>8092</webserverport>
 		<!--Copy Log parameters-->
