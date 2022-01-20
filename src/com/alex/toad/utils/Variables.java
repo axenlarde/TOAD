@@ -261,6 +261,7 @@ public class Variables
 		officeListFileName = "officeList.xml";
 		substitutesFileName = "substitutes.xml";
 		userCreationProfileFileName = "userCreationProfiles.xml";
+		userSource = UserSource.internal;
 		}
 
 	public static String getSoftwareName()

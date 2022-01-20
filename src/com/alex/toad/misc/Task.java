@@ -38,7 +38,7 @@ public class Task extends Thread
 		this.todoList = todoList;
 		this.status = statusType.init;
 		stop = false;
-		pause = true;
+		pause = false;
 		started = false;
 		end = false;
 		progress = 0;

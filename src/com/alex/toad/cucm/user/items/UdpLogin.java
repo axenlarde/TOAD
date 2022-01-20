@@ -111,9 +111,9 @@ public class UdpLogin extends ItemToInject
 	 */
 	public void resolve() throws Exception
 		{
-		name = CollectionTools.getValueFromCollectionFile(index, name, this, true);
-		deviceName = CollectionTools.getValueFromCollectionFile(index, deviceName, this, true);
-		deviceProfile = CollectionTools.getValueFromCollectionFile(index, deviceProfile, this, true);
+		name = CollectionTools.applyPattern(agentData, name, this, true);
+		deviceName = CollectionTools.applyPattern(agentData, deviceName, this, true);
+		deviceProfile = CollectionTools.applyPattern(agentData, deviceProfile, this, true);
 		
 		/**
 		 * We set the item parameters

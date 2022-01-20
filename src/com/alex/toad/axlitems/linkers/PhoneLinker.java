@@ -19,6 +19,7 @@ import com.alex.toad.soap.items.SpeedDial;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.utils.Variables.sdType;
+import com.cisco.axl.api._10.RPhoneLine;
 
 
 
@@ -508,16 +509,18 @@ public class PhoneLinker extends AXLItemLinker
 		req.setName(this.getName());
 		/************/
 		
-		//Temp
-		com.cisco.axl.api._10.RPhone returnedTags = new com.cisco.axl.api._10.RPhone();
-		returnedTags.setUuid("");
-		req.setReturnedTags(returnedTags);
-		//Temp
-		
 		com.cisco.axl.api._10.GetPhoneRes resp = Variables.getAXLConnectionToCUCMV105().getPhone(req);//We send the request to the CUCM
 		
 		Phone myPhone = new Phone(this.getName());
 		myPhone.setUUID(resp.getReturn().getPhone().getUuid());
+		
+		for(RPhoneLine l : resp.getReturn().getPhone().getLines().getLine())//We also get the associated lines
+			{
+			lineList.add(new PhoneLine(l.getDirn().getPattern(), l.getDirn().getRoutePartitionName().getValue()));
+			}
+		
+		myPhone.setLineList(lineList);
+		
 		//etc..
 		//Has to be written
 		

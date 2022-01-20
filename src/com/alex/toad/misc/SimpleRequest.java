@@ -619,7 +619,30 @@ public class SimpleRequest
 		return getXFKV105(resp.getReturn().getLine().getUuid(), lineNumber, itemType.line);
 		}
 	
+	/**
+	 * To make a user authenticate by the CUCM 
+	 */
+	public static boolean doAuthenticate(String userID, String password)
+		{
+		try
+			{
+			com.cisco.axl.api._10.DoAuthenticateUserReq req = new com.cisco.axl.api._10.DoAuthenticateUserReq();
+			
+			req.setUserid(userID);
+			req.setPassword(password);
+			
+			com.cisco.axl.api._10.DoAuthenticateUserRes resp = Variables.getAXLConnectionToCUCMV105().doAuthenticateUser(req);
+			
+			return Boolean.parseBoolean(resp.getReturn().getUserAuthenticated());
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("ERROR while authenticating user "+userID+" : "+e.getMessage(),e);
+			}
+		
+		return false;
+		}
 	
-	/*2020*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

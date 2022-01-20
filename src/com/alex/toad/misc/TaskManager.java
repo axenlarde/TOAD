@@ -44,6 +44,7 @@ public class TaskManager
 					{
 					Task t = new Task(todoList, type);
 					Variables.getTaskList().add(t);
+					t.startBuildProcess();
 					t.start();
 					return t.getTaskID();
 					}

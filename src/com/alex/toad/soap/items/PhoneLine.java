@@ -42,6 +42,13 @@ public class PhoneLine extends BasicItem
 	/***************
 	 * Constructor
 	 ***************/
+	public PhoneLine(String lineNumber, String routePartition)
+		{
+		super();
+		this.lineNumber = lineNumber;
+		this.routePartition = routePartition;
+		}
+	
 	public PhoneLine(String description, String lineLabel,
 			String asciiLineLabel, String lineDisplay, String lineDisplayAscii,
 			String externalPhoneNumberMask,

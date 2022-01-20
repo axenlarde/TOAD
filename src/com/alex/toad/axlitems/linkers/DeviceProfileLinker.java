@@ -19,6 +19,7 @@ import com.alex.toad.soap.items.SpeedDial;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.utils.Variables.sdType;
+import com.cisco.axl.api._10.RPhoneLine;
 
 
 /**********************************
@@ -411,6 +412,14 @@ public class DeviceProfileLinker extends AXLItemLinker
 		
 		DeviceProfile myUDP = new DeviceProfile(this.getName());
 		myUDP.setUUID(resp.getReturn().getDeviceProfile().getUuid());
+		
+		for(RPhoneLine l : resp.getReturn().getDeviceProfile().getLines().getLine())//We also get the associated lines
+			{
+			lineList.add(new PhoneLine(l.getDirn().getPattern(), l.getDirn().getRoutePartitionName().getValue()));
+			}
+		
+		myUDP.setLineList(lineList);
+		
 		//etc..
 		//Has to be written
 		

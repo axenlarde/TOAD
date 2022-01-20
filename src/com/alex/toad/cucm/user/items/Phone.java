@@ -151,7 +151,9 @@ public class Phone extends ItemToInject
 	public boolean isExisting() throws Exception
 		{
 		Phone myPh = (Phone) myPhone.get();
-		this.UUID = myPh.getUUID();
+		UUID = myPh.getUUID();
+		lineList = myPh.getLineList();
+		
 		//Etc...
 		//Has to be written
 		
@@ -171,22 +173,22 @@ public class Phone extends ItemToInject
 	public void resolve() throws Exception
 		{
 		name = CollectionTools.applyPattern(agentData, name, this, true);
-		description = CollectionTools.getValueFromCollectionFile(index, description, this, false);//The "false" means that this value can be empty
-		devicePool = CollectionTools.getValueFromCollectionFile(index, devicePool, this, true);
-		enableExtensionMobility = CollectionTools.getValueFromCollectionFile(index, enableExtensionMobility, this, false);
-		location = CollectionTools.getValueFromCollectionFile(index, location, this, false);
-		phoneButtonTemplate = CollectionTools.getValueFromCollectionFile(index, phoneButtonTemplate, this, true);
-		productType = CollectionTools.getValueFromCollectionFile(index, productType, this, true);
-		phoneCss = CollectionTools.getValueFromCollectionFile(index, phoneCss, this, false);
-		protocol = CollectionTools.getValueFromCollectionFile(index, protocol, this, true);
-		commonDeviceConfigName = CollectionTools.getValueFromCollectionFile(index, commonDeviceConfigName, this, false);
-		aarNeighborhoodName = CollectionTools.getValueFromCollectionFile(index, aarNeighborhoodName, this, false);
-		automatedAlternateRoutingCssName = CollectionTools.getValueFromCollectionFile(index, automatedAlternateRoutingCssName, this, false);
-		subscribeCallingSearchSpaceName = CollectionTools.getValueFromCollectionFile(index, subscribeCallingSearchSpaceName, this, false);
-		rerouteCallingSearchSpaceName = CollectionTools.getValueFromCollectionFile(index, rerouteCallingSearchSpaceName, this, false);
-		commonPhoneConfigName = CollectionTools.getValueFromCollectionFile(index, commonPhoneConfigName, this, false);
-		securityProfileName = CollectionTools.getValueFromCollectionFile(index, securityProfileName, this, false);
-		deviceMobilityMode = CollectionTools.getValueFromCollectionFile(index, deviceMobilityMode, this, false);
+		description = CollectionTools.applyPattern(agentData, description, this, false);//The "false" means that this value can be empty
+		devicePool = CollectionTools.applyPattern(agentData, devicePool, this, true);
+		enableExtensionMobility = CollectionTools.applyPattern(agentData, enableExtensionMobility, this, false);
+		location = CollectionTools.applyPattern(agentData, location, this, false);
+		phoneButtonTemplate = CollectionTools.applyPattern(agentData, phoneButtonTemplate, this, true);
+		productType = CollectionTools.applyPattern(agentData, productType, this, true);
+		phoneCss = CollectionTools.applyPattern(agentData, phoneCss, this, false);
+		protocol = CollectionTools.applyPattern(agentData, protocol, this, true);
+		commonDeviceConfigName = CollectionTools.applyPattern(agentData, commonDeviceConfigName, this, false);
+		aarNeighborhoodName = CollectionTools.applyPattern(agentData, aarNeighborhoodName, this, false);
+		automatedAlternateRoutingCssName = CollectionTools.applyPattern(agentData, automatedAlternateRoutingCssName, this, false);
+		subscribeCallingSearchSpaceName = CollectionTools.applyPattern(agentData, subscribeCallingSearchSpaceName, this, false);
+		rerouteCallingSearchSpaceName = CollectionTools.applyPattern(agentData, rerouteCallingSearchSpaceName, this, false);
+		commonPhoneConfigName = CollectionTools.applyPattern(agentData, commonPhoneConfigName, this, false);
+		securityProfileName = CollectionTools.applyPattern(agentData, securityProfileName, this, false);
+		deviceMobilityMode = CollectionTools.applyPattern(agentData, deviceMobilityMode, this, false);
 		
 		/**
 		 * We fetch the errors and corrections from the lists

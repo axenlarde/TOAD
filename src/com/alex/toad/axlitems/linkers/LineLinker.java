@@ -135,7 +135,7 @@ public class LineLinker extends AXLItemLinker
 	 */
 	public void doDeleteVersion105() throws Exception
 		{
-		//First we get the UUID of the line
+		//we get the UUID of the line
 		com.cisco.axl.api._10.GetLineReq req = new com.cisco.axl.api._10.GetLineReq();
 		req.setPattern(this.name);
 		req.setRoutePartitionName(new JAXBElement(new QName("routePartitionName"), com.cisco.axl.api._10.XFkType.class,SimpleRequest.getUUIDV105(itemType.partition, this.routePartitionName)));

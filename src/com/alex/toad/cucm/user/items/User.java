@@ -137,6 +137,25 @@ public class User extends ItemToInject
 	public void doBuild() throws Exception
 		{
 		/**
+		 * We pass the local variables to the linker
+		 */
+		myUser.setName(this.getName());
+		myUser.setFirstname(firstname);
+		myUser.setLastname(lastname);
+		myUser.setTelephoneNumber(telephoneNumber);
+		myUser.setUserLocale(userLocale);
+		myUser.setSubscribeCallingSearchSpaceName(subscribeCallingSearchSpaceName);
+		myUser.setPrimaryExtension(primaryExtension);
+		myUser.setIpccExtension(ipccExtension);
+		myUser.setRoutePartition(routePartition);
+		myUser.setUserControlGroupList(userControlGroupList);
+		myUser.setPassword(password);
+		myUser.setPin(pin);
+		myUser.setDeviceList(deviceList);
+		myUser.setUDPList(UDPList);
+		myUser.setCtiUDPList(ctiUDPList);
+		
+		/**
 		 * If the user already exist but the data source is LDAP
 		 * we will update it instead
 		 */
@@ -187,10 +206,17 @@ public class User extends ItemToInject
 	public boolean isExisting() throws Exception
 		{
 		User myU = (User) myUser.get();
-		this.UUID = myU.getUUID();
-		//Has to be written
+		UUID = myU.getUUID();
+		firstname = myU.getFirstname();
+		lastname = myU.getLastname();
+		telephoneNumber = myU.getTelephoneNumber();
+		primaryExtension = myU.getPrimaryExtension();
+		ipccExtension = myU.getIpccExtension();
+		deviceList = myU.getDeviceList();
+		UDPList = myU.getUDPList();
+		ctiUDPList = myU.getCtiUDPList();
 		
-		Variables.getLogger().debug("Item "+this.name+" already exist in the CUCM");
+		Variables.getLogger().debug("Item "+this.name+" exists in the CUCM");
 		return true;
 		}
 	
@@ -206,23 +232,23 @@ public class User extends ItemToInject
 	public void resolve() throws Exception
 		{
 		name = CollectionTools.applyPattern(agentData, name, this, true);
-		lastname = CollectionTools.getValueFromCollectionFile(index, lastname, this, true);
-		firstname = CollectionTools.getValueFromCollectionFile(index, firstname, this, false);
-		telephoneNumber = CollectionTools.getValueFromCollectionFile(index, telephoneNumber, this, false);
-		userLocale = CollectionTools.getValueFromCollectionFile(index, userLocale, this, false);
-		subscribeCallingSearchSpaceName = CollectionTools.getValueFromCollectionFile(index, subscribeCallingSearchSpaceName, this, false);
-		primaryExtension = CollectionTools.getValueFromCollectionFile(index, primaryExtension, this, false);
-		ipccExtension = CollectionTools.getValueFromCollectionFile(index, ipccExtension, this, false);
-		routePartition = CollectionTools.getValueFromCollectionFile(index, routePartition, this, false);
-		pin = CollectionTools.getValueFromCollectionFile(index, pin, this, false);
-		password = CollectionTools.getValueFromCollectionFile(index, password, this, false);
+		lastname = CollectionTools.applyPattern(agentData, lastname, this, true);
+		firstname = CollectionTools.applyPattern(agentData, firstname, this, false);
+		telephoneNumber = CollectionTools.applyPattern(agentData, telephoneNumber, this, false);
+		userLocale = CollectionTools.applyPattern(agentData, userLocale, this, false);
+		subscribeCallingSearchSpaceName = CollectionTools.applyPattern(agentData, subscribeCallingSearchSpaceName, this, false);
+		primaryExtension = CollectionTools.applyPattern(agentData, primaryExtension, this, false);
+		ipccExtension = CollectionTools.applyPattern(agentData, ipccExtension, this, false);
+		routePartition = CollectionTools.applyPattern(agentData, routePartition, this, false);
+		pin = CollectionTools.applyPattern(agentData, pin, this, false);
+		password = CollectionTools.applyPattern(agentData, password, this, false);
 		
 		ArrayList<String> ucgList = new ArrayList<String>();
 		for(String s : userControlGroupList)
 			{
 			try
 				{
-				ucgList.add(CollectionTools.getValueFromCollectionFile(index, s, this, true));
+				ucgList.add(CollectionTools.applyPattern(agentData, s, this, true));
 				}
 			catch(EmptyValueException eve)
 				{
@@ -232,31 +258,14 @@ public class User extends ItemToInject
 			}
 		this.userControlGroupList = ucgList;
 		
-		resolveDevices(index);
-		
-		/**
-		 * We set the item parameters
-		 */
-		myUser.setName(this.getName());
-		myUser.setFirstname(firstname);
-		myUser.setLastname(lastname);
-		myUser.setTelephoneNumber(telephoneNumber);
-		myUser.setUserLocale(userLocale);
-		myUser.setSubscribeCallingSearchSpaceName(subscribeCallingSearchSpaceName);
-		myUser.setPrimaryExtension(primaryExtension);
-		myUser.setIpccExtension(ipccExtension);
-		myUser.setRoutePartition(routePartition);
-		myUser.setUserControlGroupList(userControlGroupList);
-		myUser.setPassword(password);
-		myUser.setPin(pin);
-		/*********/
+		resolveDevices(agentData);
 		}
 	
 	/**
 	 * Used to resolve only the devices and UDPs
 	 * @throws Exception 
 	 */
-	public void resolveDevices(int j) throws Exception
+	public void resolveDevices(AgentData agentData) throws Exception
 		{
 		//Devices
 		ArrayList<String> dList = new ArrayList<String>();
@@ -264,7 +273,7 @@ public class User extends ItemToInject
 			{
 			try
 				{
-				dList.add(CollectionTools.getValueFromCollectionFile(j, deviceList.get(i), this, true));
+				dList.add(CollectionTools.applyPattern(agentData, deviceList.get(i), this, true));
 				}
 			catch(EmptyValueException eve)
 				{
@@ -279,7 +288,7 @@ public class User extends ItemToInject
 			{
 			try
 				{
-				udpList.add(CollectionTools.getValueFromCollectionFile(j, UDPList.get(i), this, true));
+				udpList.add(CollectionTools.applyPattern(agentData, UDPList.get(i), this, true));
 				}
 			catch(EmptyValueException eve)
 				{
@@ -294,7 +303,7 @@ public class User extends ItemToInject
 			{
 			try
 				{
-				ctiudpList.add(CollectionTools.getValueFromCollectionFile(j, ctiUDPList.get(i), this, true));
+				ctiudpList.add(CollectionTools.applyPattern(agentData, ctiUDPList.get(i), this, true));
 				}
 			catch(EmptyValueException eve)
 				{
@@ -306,9 +315,6 @@ public class User extends ItemToInject
 		deviceList = dList;
 		UDPList = udpList;
 		ctiUDPList = ctiudpList;
-		myUser.setDeviceList(deviceList);
-		myUser.setUDPList(UDPList);
-		myUser.setCtiUDPList(ctiUDPList);
 		}
 	
 	/**

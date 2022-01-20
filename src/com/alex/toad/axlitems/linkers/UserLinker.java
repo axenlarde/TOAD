@@ -20,6 +20,7 @@ import com.alex.toad.misc.SimpleRequest;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
+import com.cisco.axl.api._10.XFkType;
 
 
 /**********************************
@@ -384,6 +385,30 @@ public class UserLinker extends AXLItemLinker
 		myU.setFirstname(resp.getReturn().getUser().getFirstName());
 		myU.setLastname(resp.getReturn().getUser().getLastName());
 		myU.setTelephoneNumber(resp.getReturn().getUser().getTelephoneNumber());
+		myU.setPrimaryExtension(resp.getReturn().getUser().getPrimaryExtension().getPattern());
+		myU.setIpccExtension(resp.getReturn().getUser().getIpccExtension().getValue());
+		
+		//Get the devices
+		for(String d : resp.getReturn().getUser().getAssociatedDevices().getDevice())
+			{
+			deviceList.add(d);
+			}
+		myU.setDeviceList(deviceList);
+		
+		//Get the UDP
+		for(XFkType d : resp.getReturn().getUser().getPhoneProfiles().getProfileName())
+			{
+			UDPList.add(d.getValue());
+			}
+		myU.setUDPList(UDPList);
+		
+		
+		//Get the ctiUDP
+		for(XFkType d : resp.getReturn().getUser().getCtiControlledDeviceProfiles().getProfileName())
+			{
+			ctiUDPList.add(d.getValue());
+			}
+		myU.setCtiUDPList(ctiUDPList);
 		
 		return myU;//Return a User
 		}

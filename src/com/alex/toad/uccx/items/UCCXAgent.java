@@ -91,13 +91,18 @@ public class UCCXAgent extends ItemToInject
 		}
 
 	/**
-	 * Method used to check if the element exist in the UCCX
+	 * Method used to check if the element exists in the UCCX
 	 */
 	public boolean isExisting() throws Exception
 		{
 		UCCXAgent myUA = (UCCXAgent) myAgent.get();
-		this.UUID = myUA.getUUID();
-		//Has to be written
+		UUID = myUA.getUUID();
+		firstname = myUA.getFirstname();
+		lastname = myUA.getLastname();
+		telephoneNumber = myUA.getTelephoneNumber();
+		agentType = myUA.getAgentType();
+		teams = myUA.getTeams();
+		skills = myUA.getSkills();
 		
 		Variables.getLogger().debug("Item "+this.name+" already exist in the UCCX");
 		return true;
@@ -124,7 +129,7 @@ public class UCCXAgent extends ItemToInject
 		{
 		if(agentType != null)tuList.add(UCCXAgentLinker.toUpdate.agentType);
 		if((skills != null) && (skills.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.skills);
-		if((teams != null) && (teams.size() != 0))tuList.add(UCCXAgentLinker.toUpdate.team);
+		if((teams != null) && (teams.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.teams);
 		}
 
 	public AgentData getAgentData()

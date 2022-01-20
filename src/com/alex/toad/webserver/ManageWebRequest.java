@@ -92,7 +92,9 @@ public class ManageWebRequest
 			String userID = UsefulMethod.getItemByName("userid", t);
 			String password = UsefulMethod.getItemByName("userpassword", t);
 			
-			if(AgentTools.doAuthenticate(userID, password))return WebRequestBuilder.buildSuccessWebRequest(request.getType());
+			AgentData agent = AgentTools.doAuthenticate(userID, password);
+			SecurityToken token = WebTools.newSecurityToken(agent);
+			return WebRequestBuilder.buildDoAuthenticateReply(token.getToken());
 			}
 		catch (Exception e)
 			{

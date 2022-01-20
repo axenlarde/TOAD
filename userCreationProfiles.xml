@@ -67,20 +67,5 @@ the collection file
 				<action>update</action>
 			</udplogin>
 		</profile>
-		<profile>
-			<name>deleteAgent</name>
-			<user>
-				<target>newuser</target>
-				<action>delete</action>
-			</user>
-			<udp>
-				<target>udp</target>
-				<action>delete</action>
-			</udp>
-			<phone>
-				<target>softphone</target>
-				<action>delete</action>
-			</phone>
-		</profile>
 	</profiles>
 </xml>

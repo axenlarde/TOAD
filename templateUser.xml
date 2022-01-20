@@ -130,6 +130,7 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 			<targetname>updateudp</targetname>
 			<userid>agent.userid</userid>
 			<udp>*m*agent.userid</udp>
+			<ctiudp>*m*agent.userid</ctiudp><!--To test-->
 		</user>
 		<user>
 			<targetname>updatepe</targetname>

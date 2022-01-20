@@ -13,12 +13,12 @@ public class SecurityToken
 	 * Variables
 	 */
 	private String token;
-	private Agent agent;
+	private AgentData agent;
 	
 	/**
 	 * Constructor
 	 */
-	public SecurityToken(String token, Agent agent)
+	public SecurityToken(String token, AgentData agent)
 		{
 		super();
 		this.token = token;
@@ -30,7 +30,7 @@ public class SecurityToken
 		return token;
 		}
 
-	public Agent getAgent()
+	public AgentData getAgent()
 		{
 		return agent;
 		}

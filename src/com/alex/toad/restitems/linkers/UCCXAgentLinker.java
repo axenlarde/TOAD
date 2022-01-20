@@ -35,7 +35,7 @@ public class UCCXAgentLinker extends RESTItemLinker
 	public enum toUpdate implements ToUpdate
 		{
 		agentType,
-		team,
+		teams,
 		skills
 		}
 	
@@ -103,7 +103,7 @@ public class UCCXAgentLinker extends RESTItemLinker
 		
 		
 		if(tuList.contains(toUpdate.agentType));//To be written
-		if(tuList.contains(toUpdate.team));//To be written
+		if(tuList.contains(toUpdate.teams));//To be written
 		if(tuList.contains(toUpdate.skills));//To be written
 		
 		/************/

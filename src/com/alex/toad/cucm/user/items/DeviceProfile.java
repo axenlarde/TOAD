@@ -118,7 +118,9 @@ public class DeviceProfile extends ItemToInject
 	public boolean isExisting() throws Exception
 		{
 		DeviceProfile myPh = (DeviceProfile) myUDP.get();
-		this.UUID = myPh.getUUID();
+		UUID = myPh.getUUID();
+		lineList = myPh.getLineList();
+		
 		//Etc...
 		//Has to be written
 		
@@ -137,13 +139,13 @@ public class DeviceProfile extends ItemToInject
 	 */
 	public void resolve() throws Exception
 		{
-		this.name = CollectionTools.getValueFromCollectionFile(index, this.name, this, true);
-		this.description = CollectionTools.getValueFromCollectionFile(index, this.description, this, false);
-		this.phoneClass = CollectionTools.getValueFromCollectionFile(index, this.phoneClass, this, true);
-		this.productType = CollectionTools.getValueFromCollectionFile(index, this.productType, this, true);
-		this.protocol = CollectionTools.getValueFromCollectionFile(index, this.protocol, this, true);
-		this.protocolSide = CollectionTools.getValueFromCollectionFile(index, this.protocolSide, this, true);
-		this.phoneButtonTemplate = CollectionTools.getValueFromCollectionFile(index, this.phoneButtonTemplate, this, true);
+		this.name = CollectionTools.applyPattern(agentData, this.name, this, true);
+		this.description = CollectionTools.applyPattern(agentData, this.description, this, false);
+		this.phoneClass = CollectionTools.applyPattern(agentData, this.phoneClass, this, true);
+		this.productType = CollectionTools.applyPattern(agentData, this.productType, this, true);
+		this.protocol = CollectionTools.applyPattern(agentData, this.protocol, this, true);
+		this.protocolSide = CollectionTools.applyPattern(agentData, this.protocolSide, this, true);
+		this.phoneButtonTemplate = CollectionTools.applyPattern(agentData, this.phoneButtonTemplate, this, true);
 		
 		/**
 		 * We fetch the errors and corrections from the lists
@@ -183,22 +185,6 @@ public class DeviceProfile extends ItemToInject
 		myUDP.setSdList(this.sdList);
 		myUDP.setPhoneButtonTemplate(phoneButtonTemplate);
 		/*********/
-		}
-	
-	/**
-	 * Used to resolve only the lines
-	 * @throws Exception 
-	 */
-	public void resolveLine(int i) throws Exception
-		{
-		//Line
-		for(PhoneLine myLine : lineList)
-			{
-			myLine.setIndex(i);
-			myLine.resolve();
-			}
-		
-		myUDP.setLineList(this.lineList);
 		}
 	
 	/**

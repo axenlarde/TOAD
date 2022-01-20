@@ -34,18 +34,17 @@ public class WebTools
 	
 	/**
 	 * Used to create a new security token and add it to the list
-	 * 
 	 */
-	public static SecurityToken newSecurityToken(Agent agent)
+	public static SecurityToken newSecurityToken(AgentData agent)
 		{
 		/**
 		 * Checking for any existing token for the same user
 		 */
 		for(SecurityToken st : Variables.getSecurityTokenList())
 			{
-			if(st.getAgent().getUser().getName().equals(agent.getUser().getName()))
+			if(st.getAgent().getUserID().equals(agent.getUserID()))
 				{
-				Variables.getLogger().debug("Existing token found for user : "+agent.getUser().getName()+" deleting and creating new one");
+				Variables.getLogger().debug("Existing token found for user : "+agent.getUserID()+" deleting and creating new one");
 				Variables.getSecurityTokenList().remove(st);
 				break;
 				}
@@ -54,7 +53,7 @@ public class WebTools
 		/**
 		 * Generating token hash
 		 */
-		String hash = DigestUtils.md5Hex(Math.random()+agent.getUser().getName()).toUpperCase();
+		String hash = DigestUtils.md5Hex(Math.random()+agent.getUserID()).toUpperCase();
 		
 		/**
 		 * Creating the token
@@ -66,7 +65,7 @@ public class WebTools
 		 */
 		Variables.getSecurityTokenList().add(token);
 		
-		Variables.getLogger().debug("New security token ("+hash+") created for user : "+agent.getUser().getName());
+		Variables.getLogger().debug("New security token ("+hash+") created for user : "+agent.getUserID());
 		
 		return token;
 		}

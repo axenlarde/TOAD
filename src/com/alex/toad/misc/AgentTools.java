@@ -2,8 +2,15 @@ package com.alex.toad.misc;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.jmx.Agent;
+
+import com.alex.toad.cucm.user.items.DeviceProfile;
+import com.alex.toad.cucm.user.items.Line;
+import com.alex.toad.cucm.user.items.Phone;
+import com.alex.toad.cucm.user.items.User;
 import com.alex.toad.cucm.user.misc.UserCreationProfile;
 import com.alex.toad.cucm.user.misc.UserTools;
+import com.alex.toad.soap.items.PhoneLine;
 import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
@@ -12,8 +19,8 @@ import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.actionType;
 import com.alex.toad.webserver.AgentData;
-import com.alex.toad.webserver.WebRequest;
 import com.alex.toad.webserver.ManageWebRequest.webRequestType;
+import com.alex.toad.webserver.WebRequest;
 
 /**********************************
 * Class used to gather static method about agents
@@ -27,12 +34,18 @@ public class AgentTools
 	 * Will authenticate the user through AXL
 	 * So the user and credentials must be valid in the CUCM
 	 */
-	public static boolean doAuthenticate(String userid, String password)
+	public static AgentData doAuthenticate(String userid, String password) throws Exception
 		{
-		
-		//TBW
-		
-		return false;
+		if(SimpleRequest.doAuthenticate(userid, password))
+			{
+			//Successful
+			return new AgentData(userid);
+			}
+		else
+			{
+			//Failed
+			throw new Exception(userid+" : Failed to authenticate");
+			}
 		}
 	
 	/**
@@ -52,32 +65,35 @@ public class AgentTools
 	/**
 	 * Will get the data about agent, contacting CUCM and UCCX for that
 	 */
-	public static Agent getAgent(String CUCMID)
+	public static AgentData getAgent(String userID) throws Exception
 		{
-		Agent agent;
+		AgentData agentData = new AgentData(userID);
 		
 		/**
-		 * The agent will contain a CUCM User, an associated phone and a UCCX agent profile
-		 * So we have to build that up and retrieve all the informations from the CUCM and UCCX server
+		 * We get the User from the CUCM
 		 */
-		/**
-		 * User
-		 */
-		
-		
-		/**
-		 * Phone
-		 */
-		
+		User myUser = new User(userID);
+		myUser.isExisting();
+		agentData.setFirstName(myUser.getFirstname());
+		agentData.setLastName(myUser.getLastname());
+		agentData.setLineNumber(myUser.getIpccExtension());
 		
 		/**
-		 * UCCX Agent
-		 * Should also contain skills and Teams
+		 * We get the associated devices from the CUCM
 		 */
+		agentData.setDeviceList(myUser.getDeviceList());
+		agentData.setUDPList(myUser.getUDPList());
 		
+		/**
+		 * We get the agent Teams and skills from the UCCX 
+		 */
+		UCCXAgent agent = new UCCXAgent(userID);
+		agent.isExisting();
+		agentData.setAgentType(agent.getAgentType());
+		agentData.setSkillList(agent.getSkills());
+		agentData.setTeamList(agent.getTeams());
 		
-		
-		return agent;
+		return agentData;
 		}
 	
 	
@@ -108,6 +124,7 @@ public class AgentTools
 		 */
 		UCCXAgent agent = new UCCXAgent(deviceName, lastName, firstName, deviceModel, agentType, teams, skills);
 		agent.setAgentData(agentData);
+		agent.setAction(actionType.inject);
 		agent.resolve();
 		
 		itil.add(agent);
@@ -123,30 +140,119 @@ public class AgentTools
 	
 	/**
 	 * Used to update an existing agent
-	 * Will return the agent created to allow
-	 * to display informations for the user
+	 * Will return the taskID
+	 * @throws Exception 
 	 */
-	public static Agent updateAgent(String userID, String lastName,
-			String firstName, AgentType agentType, ArrayList<Team> teams,
-			ArrayList<Skill> skills)
+	public static String updateAgent(String userID, String lastName,
+			String firstName, Office office, AgentType agentType, ArrayList<Team> teams,
+			ArrayList<Skill> skills, String deviceName, boolean udpLogin) throws Exception
 		{
-		Agent agent;
+		AgentData agentData = new AgentData(userID, firstName, lastName, "", deviceName, "", agentType, teams, skills, office);
+		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to Inject List
 		
+		/**
+		 * CUCM items
+		 * Listed in the User Creation Profile : Phone, Line, UDP and so on...
+		 */
+		UserCreationProfile ucp = UsefulMethod.getUserCreationProfile(UsefulMethod.getTargetOption("updateAgent"));
+		Variables.getLogger().debug("The User Creation Profile used for Agent update is : "+ucp.getName());
 		
+		//All the User Creation Profile items are now added to the injection list 
+		itil.addAll(UserTools.getUserItemList(agentData, actionType.update, ucp, udpLogin));
 		
-		return agent;
+		/**
+		 * UCCX items
+		 * To create the Agent
+		 */
+		UCCXAgent agent = new UCCXAgent(deviceName, lastName, firstName, "", agentType, teams, skills);
+		agent.setAgentData(agentData);
+		agent.setAction(actionType.update);
+		agent.resolve();
+		
+		itil.add(agent);
+		
+		/**
+		 * We now launch the injection process
+		 */
+		String taskID = TaskManager.addNewTask(itil, webRequestType.updateAgent);
+		Variables.getLogger().debug(agentData.getInfo()+" : Update agent task started, task ID is : "+taskID);
+
+		return taskID;
 		}
 	
 	/**
 	 * Used to delete an agent based on the user ID
 	 */
-	public static void deleteAgent(String CUCMID)
+	public static void deleteAgent(String userID)
 		{
+		AgentData agentData = new AgentData(userID);
+		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to delete List
 		
-		//TBW
+		/**
+		 * We get the User from the CUCM
+		 */
+		User myUser = new User(userID);
+		myUser.isExisting();
+		agentData.setFirstName(myUser.getFirstname());
+		agentData.setLastName(myUser.getLastname());
+		agentData.setLineNumber(myUser.getIpccExtension());
 		
+		myUser.setAction(actionType.delete);
+		itil.add(myUser);
 		
+		/**
+		 * We get the associated devices from the CUCM
+		 * 
+		 * In addition, we want to be sure that UDPList and ctiUDPList contains the same items
+		 * if not we just add the missing one to the list to be sure
+		 * to delete all the associated udp
+		 */
+		agentData.setDeviceList(myUser.getDeviceList());
+		agentData.setUDPList(myUser.getUDPList());
 		
+		for(String ctiudp : myUser.getCtiUDPList())
+			{
+			if(!agentData.getUDPList().contains(ctiudp))agentData.getUDPList().add(ctiudp);
+			}
+		
+		/**
+		 * We then create the associated axl items
+		 */
+		for(String d : agentData.getDeviceList())
+			{
+			Phone phone = new Phone(d);//The phone name is sufficient to delete it
+			phone.isExisting();
+			phone.setAction(actionType.delete);
+			itil.add(phone);
+			//We also get the associated line
+			for(PhoneLine pl : phone.getLineList())
+				{
+				Line l = new Line(pl.getLineNumber(), pl.getRoutePartition());
+				l.setAction(actionType.delete);
+				itil.add(l);
+				}
+			}
+		
+		for(String udp : agentData.getUDPList())
+			{
+			DeviceProfile dp = new DeviceProfile(udp);//The udp name is sufficient to delete it
+			dp.isExisting();
+			dp.setAction(actionType.delete);
+			itil.add(dp);
+			}
+		
+		/**
+		 * Nothing to do from the UCCX side
+		 * Deleting the user from the CUCM also delete it from the UCCX
+		 */
+		
+		/**
+		 * We now launch the injection process
+		 */
+		String taskID = TaskManager.addNewTask(itil, webRequestType.deleteAgent);
+		Variables.getLogger().debug(agentData.getInfo()+" : Add agent task started, task ID is : "+taskID);
+		
+		return taskID;
 		}
 	
 	/**

@@ -191,7 +191,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 				this.status = statusType.processing;
 				doUpdate();//Item successfully updated
 				Variables.getLogger().info("Item "+this.getName()+" updated successfully");
-				this.status = statusType.updated;//Item successfully deleted
+				this.status = statusType.updated;
 				}
 			catch (Exception e)
 				{

@@ -25,13 +25,24 @@ public class AgentData
 	private Office office;
 	
 	/**
+	 * Those two are used to store the devices associated to the user
+	 * Mainly to display them quickly in the web interface 
+	 */
+	private ArrayList<String> deviceList;
+	private ArrayList<String> UDPList;
+	
+	/**
 	 * Constructor
 	 */
+	public AgentData(String userID)
+		{
+		this.userID = userID;
+		}
+	
 	public AgentData(String userID, String firstName, String lastName, String lineNumber,
 			String deviceName, String deviceType, AgentType agentType,
 			ArrayList<Team> teamList, ArrayList<Skill> skillList, Office office)
 		{
-		super();
 		this.userID = userID;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -149,6 +160,77 @@ public class AgentData
 		{
 		return userID;
 		}
+
+	public void setUserID(String userID)
+		{
+		this.userID = userID;
+		}
+
+	public void setFirstName(String firstName)
+		{
+		this.firstName = firstName;
+		}
+
+	public void setLastName(String lastName)
+		{
+		this.lastName = lastName;
+		}
+
+	public void setLineNumber(String lineNumber)
+		{
+		this.lineNumber = lineNumber;
+		}
+
+	public void setDeviceName(String deviceName)
+		{
+		this.deviceName = deviceName;
+		}
+
+	public void setDeviceType(String deviceType)
+		{
+		this.deviceType = deviceType;
+		}
+
+	public void setAgentType(AgentType agentType)
+		{
+		this.agentType = agentType;
+		}
+
+	public void setTeamList(ArrayList<Team> teamList)
+		{
+		this.teamList = teamList;
+		}
+
+	public void setSkillList(ArrayList<Skill> skillList)
+		{
+		this.skillList = skillList;
+		}
+
+	public void setOffice(Office office)
+		{
+		this.office = office;
+		}
+
+	public ArrayList<String> getDeviceList()
+		{
+		return deviceList;
+		}
+
+	public void setDeviceList(ArrayList<String> deviceList)
+		{
+		this.deviceList = deviceList;
+		}
+
+	public ArrayList<String> getUDPList()
+		{
+		return UDPList;
+		}
+
+	public void setUDPList(ArrayList<String> uDPList)
+		{
+		UDPList = uDPList;
+		}
+	
 	
 	/*2022*//*RATEL Alexandre 8)*/
 	}

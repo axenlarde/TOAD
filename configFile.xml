@@ -47,7 +47,6 @@ Overal configuration file
 		<!--Mandatory variables template-->
 		<addagentusercreationprofilename>addAgent</addagentusercreationprofilename><!--The creation profile to use for agent creation-->
 		<updateagentusercreationprofilename>updateAgent</updateagentusercreationprofilename><!--The creation profile to use for agent update-->
-		<deleteagentusercreationprofilename>deleteAgent</deleteagentusercreationprofilename><!--The creation profile to use for agent deletion-->
 		<agentidprefix>*1M*agent.agenttype+office.name</agentidprefix>
 		<!--Web server parameters-->
 		<webserverport>8092</webserverport>
