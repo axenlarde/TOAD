@@ -7,7 +7,8 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.RollingFileAppender;
 
-import com.alex.wassgar.main.Main;
+import com.alex.toad.main.Main;
+
 
 
 /*********************************************

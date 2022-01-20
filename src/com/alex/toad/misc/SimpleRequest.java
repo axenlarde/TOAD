@@ -1,5 +1,6 @@
 package com.alex.toad.misc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
@@ -8,12 +9,12 @@ import javax.xml.namespace.QName;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.alex.toad.uccx.items.UCCXAgent;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.cucmAXLVersion;
 import com.alex.toad.utils.Variables.itemType;
 import com.cisco.axl.api._10.GetCCMVersionReq;
 import com.cisco.axl.api._10.GetCCMVersionRes;
-import com.cisco.axl.api._10.XFkType;
 
 /**********************************
  * Class used to contain static method for

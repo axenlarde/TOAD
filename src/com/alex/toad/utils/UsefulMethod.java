@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -17,10 +16,7 @@ import javax.swing.JOptionPane;
 import javax.xml.ws.BindingProvider;
 
 import org.apache.log4j.Level;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
-import com.alex.toad.cucm.user.items.User;
 import com.alex.toad.cucm.user.misc.UserCreationProfile;
 import com.alex.toad.cucm.user.misc.UserTemplate;
 import com.alex.toad.misc.DidRange;
@@ -29,9 +25,11 @@ import com.alex.toad.misc.OfficeSetting;
 import com.alex.toad.misc.Range;
 import com.alex.toad.misc.SimpleRequest;
 import com.alex.toad.misc.ValueMatcher;
+import com.alex.toad.rest.misc.RESTServer;
 import com.alex.toad.utils.Variables.SubstituteType;
 import com.alex.toad.utils.Variables.UCCXRESTVersion;
 import com.alex.toad.utils.Variables.actionType;
+import com.alex.toad.utils.Variables.agentStatus;
 import com.alex.toad.utils.Variables.cucmAXLVersion;
 import com.alex.toad.utils.Variables.itemType;
 
@@ -157,6 +155,20 @@ public class UsefulMethod
 		}
 	
 	/**
+	 * Method used to initialize the UCCX REST connection
+	 * @throws Exception 
+	 */
+	public static RESTServer iniUCCXConnection() throws Exception
+		{
+		return new RESTServer(UsefulMethod.getTargetOption("uccxhost"),
+				UsefulMethod.getTargetOption("uccxport"),
+				UsefulMethod.getTargetOption("uccxusername"),
+				UsefulMethod.getTargetOption("uccxpassword"),
+				Integer.parseInt(UsefulMethod.getTargetOption("uccxresttimeout")),
+				"UCCX server");
+		}
+	
+	/**
 	 * Method used to init the userlocal arraylist
 	 */
 	public static ArrayList<String> initUserLocalList()
@@ -226,12 +238,6 @@ public class UsefulMethod
 			}
 		Variables.getLogger().info("Log level found in the configuration file : "+Variables.getLogger().getLevel().toString());
 		/*************/
-		
-		/***********
-		 * Advanced log
-		 */
-		Variables.setAdvancedLogs(Boolean.parseBoolean(UsefulMethod.getTargetOption("advancedcalllogs")));
-		/************/
 		
 		/************
 		 * Etc...
@@ -519,6 +525,24 @@ public class UsefulMethod
 			if(itemDetails[i][0].equals(name))
 				{
 				return itemDetails[i][1];
+				}
+			}
+		//throw new Exception("Item not found : "+name);
+		Variables.getLogger().debug("Item not found : "+name);
+		return "";
+		}
+	
+	/**************
+	 * Method aims to get a template item attribute value by giving its name
+	 * @throws Exception 
+	 *************/
+	public static String getAttributeItemByName(String name, String[][] itemDetails) throws Exception
+		{
+		for(int i=0; i<itemDetails.length; i++)
+			{
+			if(itemDetails[i][0].equals(name))
+				{
+				return itemDetails[i][2];
 				}
 			}
 		//throw new Exception("Item not found : "+name);
@@ -1026,6 +1050,22 @@ public class UsefulMethod
 			}
 		
 		throw new Exception("User Creation Profile not found : "+UCPName);
+		}
+	
+	/**
+	 * Convert string status to agentStatus
+	 */
+	public static agentStatus convertStringToAgentStatus(String status)
+		{
+		try
+			{
+			return agentStatus.valueOf(status);
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("Failed to convert the following status : "+status+" returning the default status",e);
+			}
+		return agentStatus.UNKNOWN;
 		}
 	
 	/*2022*//*RATEL Alexandre 8)*/

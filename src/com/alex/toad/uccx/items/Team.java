@@ -17,6 +17,7 @@ public class Team extends ItemToInject
 	 * Variables
 	 */
 	private String name;
+	private TeamLinker myTeam;
 	private ArrayList<UCCXAgent> agentList;
 	private ArrayList<UCCXAgent> supervisorList;
 	private UCCXAgent mainSupervisor;//Can be null

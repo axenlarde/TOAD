@@ -79,6 +79,21 @@ public class DeviceProfile extends ItemToInject
 	 */
 	public void doBuild() throws Exception
 		{
+		/**
+		 * We pass the local variables to the linker
+		 */
+		myUDP.setName(this.getName());
+		myUDP.setDescription(this.description);
+		myUDP.setLineList(this.lineList);
+		myUDP.setPhoneClass(this.phoneClass);
+		myUDP.setProductType(this.productType);
+		myUDP.setProtocol(this.protocol);
+		myUDP.setProtocolSide(this.protocolSide);
+		myUDP.setServiceList(this.serviceList);
+		myUDP.setSdList(this.sdList);
+		myUDP.setPhoneButtonTemplate(phoneButtonTemplate);
+		/**************/
+		
 		errorList.addAll(myUDP.init());
 		}
 	
@@ -170,21 +185,6 @@ public class DeviceProfile extends ItemToInject
 			this.getErrorList().addAll(sd.getErrorList());
 			this.getCorrectionList().addAll(sd.getCorrectionList());
 			}
-		
-		/**
-		 * We set the item parameters
-		 */
-		myUDP.setName(this.getName());
-		myUDP.setDescription(this.description);
-		myUDP.setLineList(this.lineList);
-		myUDP.setPhoneClass(this.phoneClass);
-		myUDP.setProductType(this.productType);
-		myUDP.setProtocol(this.protocol);
-		myUDP.setProtocolSide(this.protocolSide);
-		myUDP.setServiceList(this.serviceList);
-		myUDP.setSdList(this.sdList);
-		myUDP.setPhoneButtonTemplate(phoneButtonTemplate);
-		/*********/
 		}
 	
 	/**

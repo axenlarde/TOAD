@@ -2,7 +2,6 @@ package com.alex.toad.misc;
 
 import java.util.ArrayList;
 
-import org.apache.log4j.jmx.Agent;
 
 import com.alex.toad.cucm.user.items.DeviceProfile;
 import com.alex.toad.cucm.user.items.Line;
@@ -182,8 +181,9 @@ public class AgentTools
 	
 	/**
 	 * Used to delete an agent based on the user ID
+	 * @throws Exception 
 	 */
-	public static void deleteAgent(String userID)
+	public static String deleteAgent(String userID) throws Exception
 		{
 		AgentData agentData = new AgentData(userID);
 		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to delete List
@@ -192,7 +192,7 @@ public class AgentTools
 		 * We get the User from the CUCM
 		 */
 		User myUser = new User(userID);
-		myUser.isExisting();
+		myUser.isExisting();//Will trigger information fetch
 		agentData.setFirstName(myUser.getFirstname());
 		agentData.setLastName(myUser.getLastname());
 		agentData.setLineNumber(myUser.getIpccExtension());
@@ -221,7 +221,7 @@ public class AgentTools
 		for(String d : agentData.getDeviceList())
 			{
 			Phone phone = new Phone(d);//The phone name is sufficient to delete it
-			phone.isExisting();
+			phone.isExisting();//Will trigger information fetch
 			phone.setAction(actionType.delete);
 			itil.add(phone);
 			//We also get the associated line
@@ -239,6 +239,13 @@ public class AgentTools
 			dp.isExisting();
 			dp.setAction(actionType.delete);
 			itil.add(dp);
+			//We also get the associated line
+			for(PhoneLine pl : dp.getLineList())
+				{
+				Line l = new Line(pl.getLineNumber(), pl.getRoutePartition());
+				l.setAction(actionType.delete);
+				itil.add(l);
+				}
 			}
 		
 		/**
@@ -250,7 +257,7 @@ public class AgentTools
 		 * We now launch the injection process
 		 */
 		String taskID = TaskManager.addNewTask(itil, webRequestType.deleteAgent);
-		Variables.getLogger().debug(agentData.getInfo()+" : Add agent task started, task ID is : "+taskID);
+		Variables.getLogger().debug(agentData.getInfo()+" : delete agent task started, task ID is : "+taskID);
 		
 		return taskID;
 		}
@@ -258,9 +265,9 @@ public class AgentTools
 	/**
 	 * To get all the agent
 	 */
-	public static ArrayList<Agent> listAgent()
+	public static ArrayList<AgentData> listAgent()
 		{
-		ArrayList<Agent> agents = new ArrayList<Agent>();
+		ArrayList<AgentData> agents = new ArrayList<AgentData>();
 		
 		
 		
@@ -270,11 +277,12 @@ public class AgentTools
 	
 	/**
 	 * To get a Team
+	 * @throws Exception 
 	 */
-	public static Team getTeam(String teamName)
+	public static Team getTeam(String teamName) throws Exception
 		{
-		Team team;
-		
+		Team team = new Team(teamName);
+		team.isExisting();//Will trigger information fetch
 		return team;
 		}
 	
@@ -292,12 +300,12 @@ public class AgentTools
 	
 	/**
 	 * To get a skill
+	 * @throws Exception 
 	 */
-	public static Skill getSkill(String skillName)
+	public static Skill getSkill(String skillName) throws Exception
 		{
-		Skill skill;
-		
-		
+		Skill skill = new Skill(skillName);
+		skill.isExisting();//Will trigger information fetch
 		return skill;
 		}
 	
@@ -315,7 +323,12 @@ public class AgentTools
 	 * Based on the securityToken provided
 	 * Throw an exception if not allowed
 	 * 
-	 * This method is not mandatory. It is just an extra layer of security
+	 * This method is not mandatory because the user already
+	 * sees only allowed data
+	 * 
+	 * So It is just an extra layer of security in case somebody
+	 * craft a request containing not allowed items
+	 * 
 	 * Therefore it will be written later
 	 */
 	public static boolean isAllowed(WebRequest request) throws Exception

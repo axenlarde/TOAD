@@ -16,6 +16,7 @@ public class Skill extends ItemToInject
 	 * Variables
 	 */
 	private String name;
+	private SkillLinker mySkill;
 	private int level;
 	
 	/***************
@@ -62,6 +63,55 @@ public class Skill extends ItemToInject
 	public void setLevel(int level)
 		{
 		this.level = level;
+		}
+
+	@Override
+	public void doBuild() throws Exception
+		{
+		// TODO Auto-generated method stub
+		
+		}
+
+	@Override
+	public String doInject() throws Exception
+		{
+		// TODO Auto-generated method stub
+		return null;
+		}
+
+	@Override
+	public void doDelete() throws Exception
+		{
+		// TODO Auto-generated method stub
+		
+		}
+
+	@Override
+	public void doUpdate() throws Exception
+		{
+		// TODO Auto-generated method stub
+		
+		}
+
+	@Override
+	public boolean isExisting() throws Exception
+		{
+		// TODO Auto-generated method stub
+		return false;
+		}
+
+	@Override
+	public void resolve() throws Exception
+		{
+		// TODO Auto-generated method stub
+		
+		}
+
+	@Override
+	public void manageTuList() throws Exception
+		{
+		// TODO Auto-generated method stub
+		
 		}
 	
 	

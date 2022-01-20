@@ -112,6 +112,33 @@ public class Phone extends ItemToInject
 	 */
 	public void doBuild() throws Exception
 		{
+		/**
+		 * We pass the local variables to the linker
+		 */
+		myPhone.setName(this.getName());
+		myPhone.setDescription(this.description);
+		myPhone.setDevicePool(this.devicePool);
+		myPhone.setEnableExtensionMobility(this.enableExtensionMobility);
+		myPhone.setLineList(this.lineList);
+		myPhone.setLocation(this.location);
+		myPhone.setPhoneButtonTemplate(this.phoneButtonTemplate);
+		myPhone.setPhoneClass(this.phoneClass);
+		myPhone.setProductType(this.productType);
+		myPhone.setPhoneCss(this.phoneCss);
+		myPhone.setProtocol(this.protocol);
+		myPhone.setProtocolSide(this.protocolSide);
+		myPhone.setServiceList(this.serviceList);
+		myPhone.setSdList(sdList);
+		myPhone.setCommonDeviceConfigName(commonDeviceConfigName);
+		myPhone.setAarNeighborhoodName(aarNeighborhoodName);
+		myPhone.setAutomatedAlternateRoutingCssName(automatedAlternateRoutingCssName);
+		myPhone.setSubscribeCallingSearchSpaceName(subscribeCallingSearchSpaceName);
+		myPhone.setRerouteCallingSearchSpaceName(rerouteCallingSearchSpaceName);
+		myPhone.setCommonPhoneConfigName(commonPhoneConfigName);
+		myPhone.setSecurityProfileName(securityProfileName);
+		myPhone.setDeviceMobilityMode(deviceMobilityMode);
+		/***************/
+		
 		this.errorList.addAll(myPhone.init());
 		}
 	
@@ -213,34 +240,6 @@ public class Phone extends ItemToInject
 			this.getErrorList().addAll(sd.getErrorList());
 			this.getCorrectionList().addAll(sd.getCorrectionList());
 			}
-		
-		
-		/**
-		 * We set the item parameters
-		 */
-		myPhone.setName(this.getName());
-		myPhone.setDescription(this.description);
-		myPhone.setDevicePool(this.devicePool);
-		myPhone.setEnableExtensionMobility(this.enableExtensionMobility);
-		myPhone.setLineList(this.lineList);
-		myPhone.setLocation(this.location);
-		myPhone.setPhoneButtonTemplate(this.phoneButtonTemplate);
-		myPhone.setPhoneClass(this.phoneClass);
-		myPhone.setProductType(this.productType);
-		myPhone.setPhoneCss(this.phoneCss);
-		myPhone.setProtocol(this.protocol);
-		myPhone.setProtocolSide(this.protocolSide);
-		myPhone.setServiceList(this.serviceList);
-		myPhone.setSdList(sdList);
-		myPhone.setCommonDeviceConfigName(commonDeviceConfigName);
-		myPhone.setAarNeighborhoodName(aarNeighborhoodName);
-		myPhone.setAutomatedAlternateRoutingCssName(automatedAlternateRoutingCssName);
-		myPhone.setSubscribeCallingSearchSpaceName(subscribeCallingSearchSpaceName);
-		myPhone.setRerouteCallingSearchSpaceName(rerouteCallingSearchSpaceName);
-		myPhone.setCommonPhoneConfigName(commonPhoneConfigName);
-		myPhone.setSecurityProfileName(securityProfileName);
-		myPhone.setDeviceMobilityMode(deviceMobilityMode);
-		/*********/
 		}
 	
 	/**

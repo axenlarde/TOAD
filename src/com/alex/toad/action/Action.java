@@ -1,7 +1,12 @@
 package com.alex.toad.action;
 
 
+import java.util.ArrayList;
+
+import com.alex.toad.uccx.items.UCCXAgent.AgentType;
+import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
+import com.alex.toad.utils.xMLGear;
 import com.alex.toad.webserver.WebListenerManager;
 
 /**
@@ -17,17 +22,7 @@ public class Action
 	
 	public Action()
 		{
-		/**
-		 * We read the current user file
-		 */
-		try
-			{
-			Variables.getLogger().info("User list size : "+Variables.getUserList().size());//This trigger the file reading
-			}
-		catch (Exception e)
-			{
-			Variables.getLogger().error("ERROR while reading the user list : "+e.getMessage(), e);
-			}
+		
 		
 		/**
 		 * We start the web server

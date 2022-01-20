@@ -87,6 +87,29 @@ public class Line extends ItemToInject
 	 */
 	public void doBuild() throws Exception
 		{
+		/**
+		 * We pass the local variables to the linker
+		 */
+		myLine.setName(name);//It is the line number
+		myLine.setDescription(description);
+		myLine.setRoutePartitionName(routePartitionName);
+		myLine.setAlertingName(alertingName);
+		myLine.setAsciiAlertingName(asciiAlertingName);
+		myLine.setShareLineAppearanceCssName(shareLineAppearanceCssName);
+		myLine.setUsage(usage);
+		myLine.setCallPickupGroupName(callPickupGroupName);
+		myLine.setFwCallingSearchSpaceName(fwCallingSearchSpaceName);
+		myLine.setFwAllDestination(fwAllDestination);
+		myLine.setFwNoanDestination(fwNoanDestination);
+		myLine.setFwBusyDestination(fwBusyDestination);
+		myLine.setFwUnrDestination(fwUnrDestination);
+		myLine.setVoiceMailProfileName(voiceMailProfileName);
+		myLine.setFwAllVoicemailEnable(fwAllVoicemailEnable.equals("true")?true:false);
+		myLine.setFwNoanVoicemailEnable(fwNoanVoicemailEnable.equals("true")?true:false);
+		myLine.setFwBusyVoicemailEnable(fwBusyVoicemailEnable.equals("true")?true:false);
+		myLine.setFwUnrVoicemailEnable(fwUnrVoicemailEnable.equals("true")?true:false);
+		/*****************/
+		
 		errorList.addAll(myLine.init());
 		}
 	
@@ -163,29 +186,6 @@ public class Line extends ItemToInject
 		fwBusyVoicemailEnable = CollectionTools.applyPattern(agentData, fwBusyVoicemailEnable, this, false);
 		fwUnrVoicemailEnable = CollectionTools.applyPattern(agentData, fwUnrVoicemailEnable, this, false);
 		callPickupGroupName = CollectionTools.applyPattern(agentData, callPickupGroupName, this, false);
-		
-		/**
-		 * We set the item parameters
-		 */
-		myLine.setName(name);//It is the line number
-		myLine.setDescription(description);
-		myLine.setRoutePartitionName(routePartitionName);
-		myLine.setAlertingName(alertingName);
-		myLine.setAsciiAlertingName(asciiAlertingName);
-		myLine.setShareLineAppearanceCssName(shareLineAppearanceCssName);
-		myLine.setUsage(usage);
-		myLine.setCallPickupGroupName(callPickupGroupName);
-		myLine.setFwCallingSearchSpaceName(fwCallingSearchSpaceName);
-		myLine.setFwAllDestination(fwAllDestination);
-		myLine.setFwNoanDestination(fwNoanDestination);
-		myLine.setFwBusyDestination(fwBusyDestination);
-		myLine.setFwUnrDestination(fwUnrDestination);
-		myLine.setVoiceMailProfileName(voiceMailProfileName);
-		myLine.setFwAllVoicemailEnable(fwAllVoicemailEnable.equals("true")?true:false);
-		myLine.setFwNoanVoicemailEnable(fwNoanVoicemailEnable.equals("true")?true:false);
-		myLine.setFwBusyVoicemailEnable(fwBusyVoicemailEnable.equals("true")?true:false);
-		myLine.setFwUnrVoicemailEnable(fwUnrVoicemailEnable.equals("true")?true:false);
-		/*********/
 		}
 	
 	/**

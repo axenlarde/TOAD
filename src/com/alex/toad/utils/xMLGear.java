@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.JDOMParseException;
@@ -16,11 +17,7 @@ import org.xml.sax.InputSource;
 
 
 /*************************************************************
- * Class ayant pour but d'exploiter facilement une source XML
- * tout en �tant grandement r�utilisable
- * 
- * Elle re�oit en argument la source (File ou String) et une
- * liste contenant les param�tres XML � rechercher
+ * Class used to ease XML parsing
  * 
  * @author RATEL Alexandre
  *************************************************************/
@@ -76,6 +73,17 @@ public class xMLGear
 		
 		root = parseXMLString(sourceXML);
 		exploreLayerElementTab(root,listParams,listParams.size());
+		return listTabResult;
+		}
+	
+	public static ArrayList<String[][]> getResultListTabAndAtt(String sourceXML, ArrayList<String> listParams) throws Exception
+		{
+		root = null;
+		listTabResult = null;
+		listTabResult = new ArrayList<String[][]>();
+		
+		root = parseXMLString(sourceXML);
+		exploreLayerElementTabAndAtt(root,listParams,listParams.size());
 		return listTabResult;
 		}
 	
@@ -146,9 +154,9 @@ public class xMLGear
 				Iterator j = PhoneList.iterator();
 				
 				int a = 0;
-				//On cr�er un tableau de la bonne taille
+				//We create a tab
 				String[][] tabArgs = new String[PhoneList.size()][2];
-				//On remplie le tableau
+				//We fill the tab
 				while(j.hasNext())
 					{
 					Element courant2 = (Element)j.next();
@@ -161,6 +169,39 @@ public class xMLGear
 			else
 				{
 				exploreLayerElementTab(courant, node, --index);
+				}
+			}
+		index++;
+		}
+	
+	private static void exploreLayerElementTabAndAtt(Element layer, ArrayList<String> node, int index) //Should be improved
+		{
+		Iterator i = layer.getChildren(node.get(node.size()-index)).iterator();
+		while(i.hasNext())
+			{
+			Element courant = (Element)i.next();
+			if(index<2)
+				{
+				List PhoneList = courant.getChildren();
+				Iterator j = PhoneList.iterator();
+				
+				int a = 0;
+				//We create a tab of the good size
+				String[][] tabArgs = new String[PhoneList.size()][3];
+				//We fill the tab
+				while(j.hasNext())
+					{
+					Element courant2 = (Element)j.next();
+					tabArgs[a][0] = (courant2.getName());
+					tabArgs[a][1] = (courant2.getText());
+					if(courant2.getAttributes().size()>0)tabArgs[a][2] = (((Attribute)courant2.getAttributes().get(0)).getValue());//We get only the first Attribute
+					a++;
+					}
+				listTabResult.add(tabArgs);
+				}
+			else
+				{
+				exploreLayerElementTabAndAtt(courant, node, --index);
 				}
 			}
 		index++;
@@ -204,5 +245,5 @@ public class xMLGear
 		return sxb.build(new InputSource(new StringReader(sourceXML))).getRootElement();
 		}
 	
-	/*Fin Classe*//*AR :)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}

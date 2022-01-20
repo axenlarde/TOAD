@@ -10,9 +10,9 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.commons.net.util.Base64;
 
-import com.alex.ubc.utils.UsefulMethod;
-import com.alex.ubc.utils.Variables;
-import com.alex.ubc.utils.Variables.requestType;
+import com.alex.toad.utils.UsefulMethod;
+import com.alex.toad.utils.Variables;
+import com.alex.toad.utils.Variables.requestType;
 
 
 /**

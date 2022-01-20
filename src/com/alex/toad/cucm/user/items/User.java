@@ -154,6 +154,7 @@ public class User extends ItemToInject
 		myUser.setDeviceList(deviceList);
 		myUser.setUDPList(UDPList);
 		myUser.setCtiUDPList(ctiUDPList);
+		/***********/
 		
 		/**
 		 * If the user already exist but the data source is LDAP

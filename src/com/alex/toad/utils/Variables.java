@@ -12,6 +12,7 @@ import com.alex.toad.misc.Office;
 import com.alex.toad.misc.Task;
 import com.alex.toad.misc.ValueMatcher;
 import com.alex.toad.misc.storedUUID;
+import com.alex.toad.rest.misc.RESTServer;
 import com.alex.toad.webserver.SecurityToken;
 import com.alex.toad.webserver.WebListenerManager;
 
@@ -196,6 +197,33 @@ public class Variables
 		{
 		officedidall
 		};
+	
+	/**
+	 * Different UCCX Agent status
+	 */
+	public enum agentStatus
+		{
+		READY,
+		NOT_READY,
+		RESERVED,
+		TALKING,
+		LOGOUT,
+		LOGIN,
+		WORK,
+		WORK_READY,
+		HOLD,
+		UNKNOWN
+		}
+	
+	/**
+	 * REST request type
+	 */
+	public enum requestType
+		{
+		GET,
+		POST,
+		PUT
+		};
 		
 	/**	MISC	**/
 	private static String softwareName;
@@ -238,7 +266,7 @@ public class Variables
 	private static com.cisco.axlapiservice10.AXLPort AXLConnectionToCUCMV105;//Connection to CUCM version 105
 	
 	/** REST **/
-	
+	private static RESTServer uccxServer;
 	
 	
 	/** Web Management **/
@@ -665,6 +693,20 @@ public class Variables
 	public static void setTaskList(ArrayList<Task> taskList)
 		{
 		Variables.taskList = taskList;
+		}
+
+	public static RESTServer getUccxServer() throws Exception
+		{
+		if(uccxServer == null)
+			{
+			uccxServer = UsefulMethod.iniUCCXConnection();
+			}
+		return uccxServer;
+		}
+
+	public static void setUccxServer(RESTServer uccxServer)
+		{
+		Variables.uccxServer = uccxServer;
 		}
 	
 	

@@ -57,6 +57,14 @@ public class UdpLogin extends ItemToInject
 	 */
 	public void doBuild() throws Exception
 		{
+		/**
+		 * We pass the local variables to the linker
+		 */
+		myUDPLogin.setName(name);//It is the userID
+		myUDPLogin.setDeviceName(deviceName);
+		myUDPLogin.setDeviceProfile(deviceProfile);
+		/**************/
+		
 		errorList.addAll(myUDPLogin.init());
 		}
 	
@@ -114,14 +122,6 @@ public class UdpLogin extends ItemToInject
 		name = CollectionTools.applyPattern(agentData, name, this, true);
 		deviceName = CollectionTools.applyPattern(agentData, deviceName, this, true);
 		deviceProfile = CollectionTools.applyPattern(agentData, deviceProfile, this, true);
-		
-		/**
-		 * We set the item parameters
-		 */
-		myUDPLogin.setName(name);//It is the userID
-		myUDPLogin.setDeviceName(deviceName);
-		myUDPLogin.setDeviceProfile(deviceProfile);
-		/*********/
 		}
 	
 	/**
