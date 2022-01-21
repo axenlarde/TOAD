@@ -16,8 +16,7 @@ public class Team extends ItemToInject
 	/**
 	 * Variables
 	 */
-	private String name;
-	private TeamLinker myTeam;
+	//private TeamLinker myTeam;
 	private ArrayList<UCCXAgent> agentList;
 	private ArrayList<UCCXAgent> supervisorList;
 	private UCCXAgent mainSupervisor;//Can be null
@@ -54,11 +53,6 @@ public class Team extends ItemToInject
 				}
 			}
 		throw new Exception("ERROR : No value found");
-		}
-
-	public String getName()
-		{
-		return name;
 		}
 
 	public ArrayList<UCCXAgent> getAgentList()

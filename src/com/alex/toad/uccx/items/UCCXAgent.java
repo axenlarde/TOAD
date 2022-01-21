@@ -37,11 +37,11 @@ public class UCCXAgent extends ItemToInject
 	/**
 	 * Constructor
 	 */
-	public UCCXAgent(String name, String lastname,
+	public UCCXAgent(String userID, String lastname,
 			String firstname, String telephoneNumber,
 			AgentType agentType, ArrayList<Team> teams, ArrayList<Skill> skills)
 		{
-		super(itemType.agent, name);
+		super(itemType.agent, userID);
 		this.lastname = lastname;
 		this.firstname = firstname;
 		this.telephoneNumber = telephoneNumber;

@@ -6,6 +6,8 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -174,7 +176,7 @@ public class xMLGear
 		index++;
 		}
 	
-	private static void exploreLayerElementTabAndAtt(Element layer, ArrayList<String> node, int index) //Should be improved
+	private static void exploreLayerElementTabAndAtt(Element layer, ArrayList<String> node, int index)
 		{
 		Iterator i = layer.getChildren(node.get(node.size()-index)).iterator();
 		while(i.hasNext())
@@ -243,6 +245,24 @@ public class xMLGear
 		{
 		SAXBuilder sxb = new SAXBuilder();
 		return sxb.build(new InputSource(new StringReader(sourceXML))).getRootElement();
+		}
+	
+	/**
+	 * Return all the occurrences of the given xml tag
+	 * 
+	 * <xmltag>.*?</xmltag>
+	 */
+	public static ArrayList<String> getTextOccurences(String xmlContent, String xmlTag)
+		{
+		ArrayList<String> list = new ArrayList<String>();
+		Pattern p = Pattern.compile("<"+xmlTag+">.*?</"+xmlTag+">", Pattern.DOTALL);
+		Matcher m = p.matcher(xmlContent);
+		while(m.find())
+			{
+			list.add(m.group());
+			}
+		
+		return list;
 		}
 	
 	/*2022*//*RATEL Alexandre 8)*/

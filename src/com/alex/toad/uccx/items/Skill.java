@@ -15,8 +15,7 @@ public class Skill extends ItemToInject
 	/**
 	 * Variables
 	 */
-	private String name;
-	private SkillLinker mySkill;
+	//private SkillLinker mySkill;
 	private int level;
 	
 	/***************
@@ -48,11 +47,6 @@ public class Skill extends ItemToInject
 				}
 			}
 		throw new Exception("ERROR : No value found");
-		}
-
-	public String getName()
-		{
-		return name;
 		}
 
 	public int getLevel()
