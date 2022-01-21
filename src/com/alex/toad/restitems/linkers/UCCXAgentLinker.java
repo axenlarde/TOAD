@@ -3,15 +3,23 @@ package com.alex.toad.restitems.linkers;
 import java.util.ArrayList;
 
 import com.alex.toad.axlitems.misc.ToUpdate;
-import com.alex.toad.cucm.user.items.User;
 import com.alex.toad.misc.ErrorTemplate;
+import com.alex.toad.misc.ErrorTemplate.errorType;
+import com.alex.toad.rest.misc.RESTGear;
+import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.restitems.misc.RESTItemLinker;
 import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
 import com.alex.toad.uccx.items.UCCXAgent.AgentType;
+import com.alex.toad.uccx.misc.UCCXError;
+import com.alex.toad.uccx.misc.UCCXTools;
+import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
+import com.alex.toad.utils.xMLGear;
+import com.alex.toad.utils.Variables.itemType;
+import com.alex.toad.utils.Variables.requestType;
 
 
 /**********************************
@@ -29,13 +37,13 @@ public class UCCXAgentLinker extends RESTItemLinker
 	firstname,
 	telephoneNumber;
 	private AgentType agentType;
-	private ArrayList<Team> teams;
+	private Team team;
 	private ArrayList<Skill> skills;
 	
 	public enum toUpdate implements ToUpdate
 		{
 		agentType,
-		teams,
+		team,
 		skills
 		}
 	
@@ -55,14 +63,27 @@ public class UCCXAgentLinker extends RESTItemLinker
 		{
 		ArrayList<ErrorTemplate> errorList = new ArrayList<ErrorTemplate>();
 		
-		//CSS
+		//Teams
 		try
 			{
-			
+			RESTTools.getRESTUUIDV105(itemType.team, team.getName());
 			}
 		catch (Exception e)
 			{
-			//errorList.add(new UCCXError(this.name, "", "Not found during init : "+e.getMessage(), itemType.agent, itemType.callingsearchspace, errorType.notFound));
+			errorList.add(new UCCXError(this.name, "", "Not found during init : "+e.getMessage(), itemType.agent, itemType.team, errorType.notFound));
+			}
+		
+		//Skills
+		try
+			{
+			for(Skill s : skills)
+				{
+				RESTTools.getRESTUUIDV105(itemType.skill, s.getName());
+				}
+			}
+		catch (Exception e)
+			{
+			errorList.add(new UCCXError(this.name, "", "Not found during init : "+e.getMessage(), itemType.agent, itemType.skill, errorType.notFound));
 			}
 		
 				
@@ -95,19 +116,20 @@ public class UCCXAgentLinker extends RESTItemLinker
 	 */
 	public void doUpdateVersion105(ArrayList<ToUpdate> tuList) throws Exception
 		{		
+		String uri = "https://"+Variables.getUccxServer().getHost()+":"+Variables.getUccxServer().getPort()+"adminapi/resource/"+name;
+		StringBuffer content = new StringBuffer();
 		
+		content.append("<resources>\r\n");
+		content.append("	<resource>\r\n");
 		
-		/***********
-		 * We set the item parameters
-		 */
+		if(tuList.contains(toUpdate.skills))content.append(UCCXTools.getRESTFromSkills(skills));
+		if(tuList.contains(toUpdate.team))content.append(UCCXTools.getRESTFromTeam(team));
+		if(tuList.contains(toUpdate.agentType))content.append("		<type>"+UsefulMethod.convertAgentTypeToInt(agentType)+"</type>\r\n");
 		
+		content.append("	</resource>\r\n");
+		content.append("</resources>\r\n");
 		
-		if(tuList.contains(toUpdate.agentType));//To be written
-		if(tuList.contains(toUpdate.teams));//To be written
-		if(tuList.contains(toUpdate.skills));//To be written
-		
-		/************/
-		
+		String reply = RESTGear.send(requestType.PUT, uri, content.toString(), Variables.getUccxServer().getUsername(), Variables.getUccxServer().getPassword(), Variables.getUccxServer().getTimeout());
 		}
 	/**************/
 	
@@ -117,16 +139,13 @@ public class UCCXAgentLinker extends RESTItemLinker
 	 */
 	public ItemToInject doGetVersion105() throws Exception
 		{
+		String uri = "https://"+Variables.getUccxServer().getHost()+":"+Variables.getUccxServer().getPort()+"adminapi/resource/"+name;
+		String reply = RESTGear.send(requestType.GET, uri, "", Variables.getUccxServer().getUsername(), Variables.getUccxServer().getPassword(), Variables.getUccxServer().getTimeout());
 		
-		/******************
-		 * We set the item parameters
-		 */
+		reply = reply.replace("<resources>", "");
+		reply = reply.replace("</resources>", "");
 		
-		/************/
-		
-		
-		UCCXAgent myUA = new UCCXAgent(this.getName());
-		//TBW
+		UCCXAgent myUA = UCCXTools.getAgentFromRESTReply(reply);
 		
 		return myUA;//Return a UCCXAgent
 		}
@@ -137,11 +156,6 @@ public class UCCXAgentLinker extends RESTItemLinker
 		return agentType;
 		}
 
-	public ArrayList<Team> getTeam()
-		{
-		return teams;
-		}
-
 	public ArrayList<Skill> getSkills()
 		{
 		return skills;
@@ -150,11 +164,6 @@ public class UCCXAgentLinker extends RESTItemLinker
 	public void setAgentType(AgentType agentType)
 		{
 		this.agentType = agentType;
-		}
-
-	public void setTeams(ArrayList<Team> teams)
-		{
-		this.teams = teams;
 		}
 
 	public void setSkills(ArrayList<Skill> skills)
@@ -192,9 +201,14 @@ public class UCCXAgentLinker extends RESTItemLinker
 		this.telephoneNumber = telephoneNumber;
 		}
 
-	public ArrayList<Team> getTeams()
+	public Team getTeam()
 		{
-		return teams;
+		return team;
+		}
+
+	public void setTeam(Team team)
+		{
+		this.team = team;
 		}
 
 	

@@ -26,6 +26,7 @@ import com.alex.toad.misc.Range;
 import com.alex.toad.misc.SimpleRequest;
 import com.alex.toad.misc.ValueMatcher;
 import com.alex.toad.rest.misc.RESTServer;
+import com.alex.toad.uccx.items.UCCXAgent.AgentType;
 import com.alex.toad.utils.Variables.SubstituteType;
 import com.alex.toad.utils.Variables.UCCXRESTVersion;
 import com.alex.toad.utils.Variables.actionType;
@@ -1066,6 +1067,12 @@ public class UsefulMethod
 			Variables.getLogger().error("Failed to convert the following status : "+status+" returning the default status",e);
 			}
 		return agentStatus.UNKNOWN;
+		}
+	
+	public static int convertAgentTypeToInt(AgentType type)
+		{
+		if(type.equals(AgentType.agent))return 1;
+		else return 2;
 		}
 	
 	/*2022*//*RATEL Alexandre 8)*/

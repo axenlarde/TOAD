@@ -31,6 +31,7 @@ Overal configuration file
 		<uccxversion>105</uccxversion><!--Version of the UCCX server-->
 		<uccxusername>UCCX_TOAD</uccxusername><!--Username to contact the UCCX server-->
 		<uccxpassword>password</uccxpassword><!--Password !!!!Warning : keep it secret!!!!-->
+		<uccxresttimeout>10000</uccxresttimeout><!--ms-->
 		<uccxrmcmuser>UCCXrmcm</uccxrmcmuser><!--CUCM rmcm user to update while creating a new UCCX agents phone-->
 		<!--RISPORT parameters-->
 		<rishost>10.0.1.172</rishost><!--IP of the CUCM server-->

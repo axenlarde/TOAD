@@ -3,6 +3,7 @@ package com.alex.toad.uccx.items;
 import java.lang.reflect.Field;
 
 import com.alex.toad.misc.ItemToInject;
+import com.alex.toad.restitems.linkers.SkillLinker;
 import com.alex.toad.utils.Variables.itemType;
 
 /**********************************
@@ -15,7 +16,7 @@ public class Skill extends ItemToInject
 	/**
 	 * Variables
 	 */
-	//private SkillLinker mySkill;
+	private SkillLinker mySkill;
 	private int level;
 	
 	/***************
@@ -34,6 +35,7 @@ public class Skill extends ItemToInject
 	
 	public String getString(String s) throws Exception
 		{
+		/*
 		String tab[] = s.split("\\.");
 		
 		if(tab.length == 2)
@@ -45,7 +47,16 @@ public class Skill extends ItemToInject
 					return (String) f.get(this);
 					}
 				}
+			}*/
+		
+		for(Field f : this.getClass().getDeclaredFields())
+			{
+			if(f.getName().toLowerCase().equals(s.toLowerCase()))
+				{
+				return (String) f.get(this);
+				}
 			}
+		
 		throw new Exception("ERROR : No value found");
 		}
 

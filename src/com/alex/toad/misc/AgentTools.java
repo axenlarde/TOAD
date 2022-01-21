@@ -90,7 +90,7 @@ public class AgentTools
 		agent.isExisting();
 		agentData.setAgentType(agent.getAgentType());
 		agentData.setSkillList(agent.getSkills());
-		agentData.setTeamList(agent.getTeams());
+		agentData.setTeam(agent.getTeam());
 		
 		return agentData;
 		}
@@ -101,10 +101,11 @@ public class AgentTools
 	 * Will return the taskID
 	 */
 	public static String addAgent(String lastName,
-			String firstName, Office office, AgentType agentType, ArrayList<Team> teams,
+			String firstName, Office office, AgentType agentType, String teamName,
 			ArrayList<Skill> skills, String deviceName, String deviceModel, boolean udpLogin) throws Exception
 		{
-		AgentData agentData = new AgentData("", firstName, lastName, "", deviceName, deviceModel, agentType, teams, skills, office);
+		Team team = new Team(teamName);
+		AgentData agentData = new AgentData("", firstName, lastName, "", deviceName, deviceModel, agentType, team, skills, office);
 		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to Inject List
 		
 		/**
@@ -121,7 +122,7 @@ public class AgentTools
 		 * UCCX items
 		 * To create the Agent
 		 */
-		UCCXAgent agent = new UCCXAgent(deviceName, lastName, firstName, deviceModel, agentType, teams, skills);
+		UCCXAgent agent = new UCCXAgent("", lastName, firstName, "", agentType, team, skills);
 		agent.setAgentData(agentData);
 		agent.setAction(actionType.inject);
 		agent.resolve();
@@ -143,10 +144,11 @@ public class AgentTools
 	 * @throws Exception 
 	 */
 	public static String updateAgent(String userID, String lastName,
-			String firstName, Office office, AgentType agentType, ArrayList<Team> teams,
+			String firstName, Office office, AgentType agentType, String teamName,
 			ArrayList<Skill> skills, String deviceName, boolean udpLogin) throws Exception
 		{
-		AgentData agentData = new AgentData(userID, firstName, lastName, "", deviceName, "", agentType, teams, skills, office);
+		Team team = new Team(teamName);
+		AgentData agentData = new AgentData(userID, firstName, lastName, "", deviceName, "", agentType, team, skills, office);
 		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to Inject List
 		
 		/**
@@ -163,7 +165,7 @@ public class AgentTools
 		 * UCCX items
 		 * To create the Agent
 		 */
-		UCCXAgent agent = new UCCXAgent(deviceName, lastName, firstName, "", agentType, teams, skills);
+		UCCXAgent agent = new UCCXAgent(userID, lastName, firstName, "", agentType, team, skills);
 		agent.setAgentData(agentData);
 		agent.setAction(actionType.update);
 		agent.resolve();

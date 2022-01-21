@@ -1,7 +1,5 @@
 package com.alex.toad.webserver;
 
-import com.alex.toad.misc.Agent;
-
 /**********************************
 * Used to store a security token
 * 

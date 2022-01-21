@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.restitems.linkers.UCCXAgentLinker;
+import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.webserver.AgentData;
@@ -29,7 +30,7 @@ public class UCCXAgent extends ItemToInject
 	telephoneNumber;
 	private UCCXAgentLinker myAgent;
 	private AgentType agentType;
-	private ArrayList<Team> teams;
+	private Team team;
 	private ArrayList<Skill> skills;
 	
 	private AgentData agentData;
@@ -39,14 +40,14 @@ public class UCCXAgent extends ItemToInject
 	 */
 	public UCCXAgent(String userID, String lastname,
 			String firstname, String telephoneNumber,
-			AgentType agentType, ArrayList<Team> teams, ArrayList<Skill> skills)
+			AgentType agentType, Team team, ArrayList<Skill> skills)
 		{
 		super(itemType.agent, userID);
 		this.lastname = lastname;
 		this.firstname = firstname;
 		this.telephoneNumber = telephoneNumber;
 		this.agentType = agentType;
-		this.teams = teams;
+		this.team = team;
 		this.skills = skills;
 		}
 
@@ -60,7 +61,18 @@ public class UCCXAgent extends ItemToInject
 	 */
 	public void doBuild() throws Exception
 		{
-		//TBW
+		/**
+		 * We pass the local variables to the linker
+		 */
+		myAgent.setName(name);
+		myAgent.setFirstname(firstname);
+		myAgent.setLastname(lastname);
+		myAgent.setTelephoneNumber(telephoneNumber);
+		myAgent.setAgentType(this.getAgentType());
+		myAgent.setSkills(this.skills);
+		myAgent.setTeam(this.team);
+		/************/
+		
 		errorList.addAll(myAgent.init());
 		}
 
@@ -101,10 +113,10 @@ public class UCCXAgent extends ItemToInject
 		lastname = myUA.getLastname();
 		telephoneNumber = myUA.getTelephoneNumber();
 		agentType = myUA.getAgentType();
-		teams = myUA.getTeams();
+		team = myUA.getTeam();
 		skills = myUA.getSkills();
 		
-		Variables.getLogger().debug("Item "+this.name+" already exist in the UCCX");
+		Variables.getLogger().debug("Item "+this.name+" exists in the UCCX");
 		return true;
 		}
 	
@@ -115,13 +127,7 @@ public class UCCXAgent extends ItemToInject
 		 * In this case, there is no pattern to apply
 		 * For instance, agent firstName can only be changed from the CUCM
 		 */
-		myAgent.setName(name);
-		myAgent.setFirstname(firstname);
-		myAgent.setLastname(lastname);
-		myAgent.setTelephoneNumber(telephoneNumber);
-		myAgent.setAgentType(this.getAgentType());
-		myAgent.setSkills(this.skills);
-		myAgent.setTeams(this.teams);
+		//So nothing to resolve
 		}
 
 	@Override
@@ -129,7 +135,7 @@ public class UCCXAgent extends ItemToInject
 		{
 		if(agentType != null)tuList.add(UCCXAgentLinker.toUpdate.agentType);
 		if((skills != null) && (skills.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.skills);
-		if((teams != null) && (teams.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.teams);
+		if(team != null)tuList.add(UCCXAgentLinker.toUpdate.team);
 		}
 
 	public AgentData getAgentData()
@@ -167,11 +173,6 @@ public class UCCXAgent extends ItemToInject
 		return agentType;
 		}
 
-	public ArrayList<Team> getTeams()
-		{
-		return teams;
-		}
-
 	public ArrayList<Skill> getSkills()
 		{
 		return skills;
@@ -202,14 +203,19 @@ public class UCCXAgent extends ItemToInject
 		this.agentType = agentType;
 		}
 
-	public void setTeams(ArrayList<Team> teams)
-		{
-		this.teams = teams;
-		}
-
 	public void setSkills(ArrayList<Skill> skills)
 		{
 		this.skills = skills;
+		}
+
+	public Team getTeam()
+		{
+		return team;
+		}
+
+	public void setTeam(Team team)
+		{
+		this.team = team;
 		}
 	
 	

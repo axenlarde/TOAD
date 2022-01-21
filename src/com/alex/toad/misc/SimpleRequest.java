@@ -74,7 +74,7 @@ public class SimpleRequest
 	 */
 	public static com.cisco.axl.api._10.XFkType getUUIDV105(itemType type, String itemName) throws Exception
 		{
-		Variables.getLogger().debug("Get UUID from CUCM : "+type+" "+itemName);
+		Variables.getLogger().debug("Getting UUID from CUCM : "+type+" "+itemName);
 		
 		if((itemName == null) || (itemName.equals("")))
 			{

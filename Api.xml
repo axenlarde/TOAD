@@ -123,9 +123,13 @@ copyLogFile
 				<number></number>
 				<office></office>
 				<type></type><!--agent,supervisor-->
-				<teams>
+				<team></team><!--Team name-->
+				<primarysupervisorof>
 					<team></team><!--Team name--><!--One or more-->
-				</teams>
+				</primarysupervisorof>
+				<secondarysupervisorof>
+					<team></team><!--Team name--><!--One or more-->
+				</secondarysupervisorof>
 				<skills>
 					<skill><!--One or more skills-->
 						<name></name><!--skill name-->
@@ -238,9 +242,13 @@ copyLogFile
 			<devicename></devicename><!--Mac address-->
 			<devicetype></devicetype><!--Phone type-->
 			<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->
-			<teams>
+			<team></team><!--Team name-->
+			<primarysupervisorof>
 				<team></team><!--Team name--><!--One or more-->
-			</teams>
+			</primarysupervisorof>
+			<secondarysupervisorof>
+				<team></team><!--Team name--><!--One or more-->
+			</secondarysupervisorof>
 			<skills>
 				<skill><!--One or more skills-->
 					<name></name><!--skill name-->
@@ -283,9 +291,13 @@ Update agent will only allow to update some fields for now
 			<type></type><!--agent,supervisor-->
 			<devicename></devicename><!--Mac address--><!--In the case of an update, the MAC address is used only for udplogin-->
 			<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->
-			<teams>
+			<team></team><!--Team name-->
+			<primarysupervisorof>
 				<team></team><!--Team name--><!--One or more-->
-			</teams>
+			</primarysupervisorof>
+			<secondarysupervisorof>
+				<team></team><!--Team name--><!--One or more-->
+			</secondarysupervisorof>
 			<skills>
 				<skill><!--One or more skills-->
 					<name></name><!--skill name-->
@@ -359,9 +371,13 @@ Update agent will only allow to update some fields for now
 					<number></number>
 					<office></office>
 					<type></type><!--agent,supervisor-->
-					<teams>
+					<team></team><!--Team name-->
+					<primarysupervisorof>
 						<team></team><!--Team name--><!--One or more-->
-					</teams>
+					</primarysupervisorof>
+					<secondarysupervisorof>
+						<team></team><!--Team name--><!--One or more-->
+					</secondarysupervisorof>
 					<skills>
 						<skill><!--One or more skills-->
 							<name></name><!--skill name-->
@@ -394,8 +410,6 @@ Update agent will only allow to update some fields for now
 	<request>
 		<type>listTeam</type>
 		<securitytoken></securitytoken><!--Security token of the connected user-->
-		<content>
-			<allteams></allteams><!--true,false--><!--If true, all the teams are returned, if false only the user's teams-->
 		</content>
 	</request>
 </xml>
@@ -423,8 +437,6 @@ Update agent will only allow to update some fields for now
 	<request>
 		<type>listSkill</type>
 		<securitytoken></securitytoken><!--Security token of the connected user-->
-		<content>
-			<allskills></allskills><!--true,false--><!--If true, all the skills are returned, if false only the user's skills-->
 		</content>
 	</request>
 </xml>

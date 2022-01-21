@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.apache.commons.io.FileUtils;
 
 import com.alex.toad.cucm.user.items.Phone;
-import com.alex.toad.misc.Agent;
 import com.alex.toad.misc.AgentTools;
 import com.alex.toad.misc.Office;
 import com.alex.toad.misc.Task;
@@ -196,17 +195,9 @@ public class ManageWebRequest
 			AgentType type = AgentType.valueOf(UsefulMethod.getItemByName("type", t));
 			String deviceName = UsefulMethod.getItemByName("devicename", t);
 			String deviceType = UsefulMethod.getItemByName("devicetype", t);
+			String team = UsefulMethod.getItemByName("team", t);
+			boolean udpLogin = Boolean.parseBoolean(UsefulMethod.getItemByName("udplogin", t));
 			
-			params.add("teams");
-			parsed = xMLGear.getResultListTab(request.getContent(), params);
-			ArrayList<Team> teams = new ArrayList<Team>();
-			
-			for(String[] temp : parsed.get(0))
-				{
-				teams.add(AgentTools.getTeam(temp[1]));
-				}
-			
-			params.remove("teams");
 			params.add("skills");
 			params.add("skill");
 			parsed = xMLGear.getResultListTab(request.getContent(), params);
@@ -222,7 +213,7 @@ public class ManageWebRequest
 			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
 				{
 				Variables.getLogger().debug("Trying to create agent : "+firstName+" "+lastName+" "+type.name()+" "+office.getFullname());
-				String taskID = AgentTools.addAgent(lastName, firstName, office, type, teams, skills, deviceName, deviceType);
+				String taskID = AgentTools.addAgent(lastName, firstName, office, type, team, skills, deviceName, deviceType, udpLogin);
 				return WebRequestBuilder.buildAddAgentReply(taskID);
 				}
 			}

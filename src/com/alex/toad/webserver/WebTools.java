@@ -2,7 +2,6 @@ package com.alex.toad.webserver;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import com.alex.toad.misc.Agent;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 

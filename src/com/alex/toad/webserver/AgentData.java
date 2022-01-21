@@ -20,7 +20,7 @@ public class AgentData
 	 */
 	private String userID, firstName, lastName, lineNumber, deviceName, deviceType;
 	private AgentType agentType;
-	private ArrayList<Team> teamList;
+	private Team team;
 	private ArrayList<Skill> skillList;
 	private Office office;
 	
@@ -41,7 +41,7 @@ public class AgentData
 	
 	public AgentData(String userID, String firstName, String lastName, String lineNumber,
 			String deviceName, String deviceType, AgentType agentType,
-			ArrayList<Team> teamList, ArrayList<Skill> skillList, Office office)
+			Team team, ArrayList<Skill> skillList, Office office)
 		{
 		this.userID = userID;
 		this.firstName = firstName;
@@ -50,7 +50,7 @@ public class AgentData
 		this.deviceName = deviceName;
 		this.deviceType = deviceType;
 		this.agentType = agentType;
-		this.teamList = teamList;
+		this.team = team;
 		this.skillList = skillList;
 		this.office = office;
 		}
@@ -73,6 +73,13 @@ public class AgentData
 					}
 				}
 			}
+		else if(tab.length == 3)
+			{
+			if(tab[1].equals("team"))
+				{
+				return team.getString(tab[2]);
+				}
+			}
 		else if(tab.length == 4)
 			{
 			//Here we treat the particular cases
@@ -88,20 +95,7 @@ public class AgentData
 					return skillList.get(index).getString(tab[3]);
 					}
 				}
-			else if(tab[1].equals("team"))
-				{
-				int index = Integer.parseInt(tab[2]);
-				if(index>teamList.size())
-					{
-					throw new Exception("This team number doesn't exist");
-					}
-				else
-					{
-					return teamList.get(index).getString(tab[3]);
-					}
-				}
 			}
-		
 		
 		throw new Exception("ERROR : No value found");
 		}
@@ -139,11 +133,6 @@ public class AgentData
 	public AgentType getAgentType()
 		{
 		return agentType;
-		}
-
-	public ArrayList<Team> getTeamList()
-		{
-		return teamList;
 		}
 
 	public ArrayList<Skill> getSkillList()
@@ -196,11 +185,6 @@ public class AgentData
 		this.agentType = agentType;
 		}
 
-	public void setTeamList(ArrayList<Team> teamList)
-		{
-		this.teamList = teamList;
-		}
-
 	public void setSkillList(ArrayList<Skill> skillList)
 		{
 		this.skillList = skillList;
@@ -229,6 +213,16 @@ public class AgentData
 	public void setUDPList(ArrayList<String> uDPList)
 		{
 		UDPList = uDPList;
+		}
+
+	public Team getTeam()
+		{
+		return team;
+		}
+
+	public void setTeam(Team team)
+		{
+		this.team = team;
 		}
 	
 	
