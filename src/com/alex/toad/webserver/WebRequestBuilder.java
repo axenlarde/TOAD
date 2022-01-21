@@ -82,7 +82,7 @@ public class WebRequestBuilder
 	/**
 	 * To build the search request reply
 	 */
-	public static WebRequest buildSearchReply(ArrayList<Agent> agents)
+	public static WebRequest buildSearchReply(ArrayList<AgentData> agents)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.search;
@@ -95,9 +95,9 @@ public class WebRequestBuilder
 		
 		try
 			{
-			for(Agent a : agents)
+			for(AgentData ad : agents)
 				{
-				content.append(buildAgent(a));
+				content.append(buildAgent(ad));
 				}
 			}
 		catch (Exception e)
@@ -117,7 +117,7 @@ public class WebRequestBuilder
 	/**
 	 * To build the get agent reply
 	 */
-	public static WebRequest buildGetAgentReply(Agent agent)
+	public static WebRequest buildGetAgentReply(AgentData agent)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.getAgent;
@@ -304,7 +304,7 @@ public class WebRequestBuilder
 	/**
 	 * To build the list agent reply
 	 */
-	public static WebRequest buildListAgentReply(ArrayList<Agent> agents)
+	public static WebRequest buildListAgentReply(ArrayList<AgentData> agents)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.listAgent;
@@ -317,9 +317,9 @@ public class WebRequestBuilder
 		
 		try
 			{
-			for(Agent a : agents)
+			for(AgentData ad : agents)
 				{
-				content.append(buildAgent(a));
+				content.append(buildAgent(ad));
 				}
 			}
 		catch (Exception e)
@@ -482,38 +482,39 @@ public class WebRequestBuilder
 	/**
 	 * To build one agent reply
 	 */
-	private static StringBuffer buildAgent(Agent agent) throws Exception 
+	private static StringBuffer buildAgent(AgentData agent) throws Exception 
 		{
 		StringBuffer content = new StringBuffer();
 		
 		content.append("			<agent>\r\n");
-		content.append("				<userid>"+agent.getUser().getName()+"</userid>\r\n");
-		content.append("				<firstname>"+agent.getUser().getFirstname()+"</firstname>\r\n");
-		content.append("				<lastname>"+agent.getUser().getLastname()+"</lastname>\r\n");
-		content.append("				<number>"+agent.getUser().getTelephoneNumber()+"</number>\r\n");
+		content.append("				<userid>"+agent.getUserID()+"</userid>\r\n");
+		content.append("				<firstname>"+agent.getFirstName()+"</firstname>\r\n");
+		content.append("				<lastname>"+agent.getLastName()+"</lastname>\r\n");
+		content.append("				<number>"+agent.getLineNumber()+"</number>\r\n");
 		content.append("				<office>"+agent.getOffice()+"</office>\r\n");
-		content.append("				<type>"+agent.getAgent().getAgentType().name()+"</type>\r\n");
-		content.append("				<teams>\r\n");
-		for(Team t : agent.getAgent().getTeams())
-			{
-			content.append("					<team>"+t.getName()+"</team>\r\n");
-			}
-		content.append("				</teams>\r\n");
+		content.append("				<type>"+agent.getAgentType()+"</type>\r\n");
+		content.append("				<team>"+agent.getTeam()+"</team>\r\n");
 		content.append("				<skills>\r\n");
-		for(Skill s : agent.getAgent().getSkills())
+		for(Skill s : agent.getSkillList())
 			{
 			content.append("					<skill>"+s.getName()+"</skill>\r\n");
 			}
 		content.append("				</skills>\r\n");
 		content.append("				<devices>\r\n");
-		for(ItemToInject iti : agent.getDeviceList())
+		for(String s : agent.getDeviceList())
 			{
 			content.append("					<device>\r\n");
-			content.append("						<type>"+iti.getType().name()+"</type>\r\n");
-			content.append("						<type>"+iti.getName()+"</type>\r\n");
+			content.append("						<name>"+s+"</name>\r\n");
 			content.append("					</device>\r\n");
 			}
-		content.append("				</devices>\r\n");
+		content.append("				</udps>\r\n");
+		for(String s : agent.getUDPList())
+			{
+			content.append("					<udp>\r\n");
+			content.append("						<name>"+s+"</name>\r\n");
+			content.append("					</udp>\r\n");
+			}
+		content.append("				</udps>\r\n");
 		content.append("			</agent>\r\n");
 		
 		return content;

@@ -138,11 +138,14 @@ copyLogFile
 				</skills>
 				<devices>
 					<device><!--One or more-->
-						<type></type><!--deskphone,softphone,deviceprofile-->
 						<name></name><!--name or mac address-->
-						<model></model><!--Not relevant for softphone-->
 					</device>
 				</devices>
+				<udps>
+					<udp><!--One or more-->
+						<name></name><!--name or mac address-->
+					</udp>
+				</udps>
 			</agent>
 		</content>
 	</reply>

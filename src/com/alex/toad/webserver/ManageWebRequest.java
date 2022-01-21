@@ -244,17 +244,10 @@ public class ManageWebRequest
 			String lastName = UsefulMethod.getItemByName("lastname", t);
 			String firstName = UsefulMethod.getItemByName("firstname", t);
 			AgentType type = AgentType.valueOf(UsefulMethod.getItemByName("type", t));
+			String team = UsefulMethod.getItemByName("team", t);
+			String deviceName = UsefulMethod.getItemByName("devicename", t);
+			boolean udpLogin = Boolean.parseBoolean(UsefulMethod.getItemByName("udplogin", t));
 			
-			params.add("teams");
-			parsed = xMLGear.getResultListTab(request.getContent(), params);
-			ArrayList<Team> teams = new ArrayList<Team>();
-			
-			for(String[] temp : parsed.get(0))
-				{
-				teams.add(AgentTools.getTeam(temp[1]));
-				}
-			
-			params.remove("teams");
 			params.add("skills");
 			params.add("skill");
 			parsed = xMLGear.getResultListTab(request.getContent(), params);
@@ -270,8 +263,8 @@ public class ManageWebRequest
 			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
 				{
 				Variables.getLogger().debug("Trying to update agent : "+firstName+" "+lastName+" "+type.name());
-				Agent agent = AgentTools.updateAgent(userID, lastName, firstName, type, teams, skills);
-				return WebRequestBuilder.buildUpdateAgentReply(agent.getUser().getName());
+				String taskID = AgentTools.updateAgent(userID, lastName, firstName, office, type, team, skills, deviceName, udpLogin);
+				return WebRequestBuilder.buildUpdateAgentReply(taskID);
 				}
 			}
 		catch (Exception e)
