@@ -3,6 +3,7 @@ package com.alex.toad.rest.misc;
 import java.util.ArrayList;
 
 import com.alex.toad.misc.storedUUID;
+import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
 import com.alex.toad.uccx.misc.UCCXTools;
 import com.alex.toad.utils.UsefulMethod;
@@ -85,6 +86,30 @@ public class RESTTools
 		}
 	
 	/**
+	 * Will list all UCCX team
+	 * @throws Exception 
+	 */
+	public static ArrayList<Team> doListTeam(RESTServer host) throws Exception
+		{
+		ArrayList<Team> teams = new ArrayList<Team>();
+		Variables.getLogger().debug("List teams request started");
+		String uri = "https://"+host.getHost()+":"+host.getPort()+"adminapi/team";
+		String content = "";
+		
+		String reply = RESTGear.send(requestType.GET, uri, content, host.getUsername(), host.getPassword(), host.getTimeout());
+		
+		ArrayList<String> teamList = xMLGear.getTextOccurences(reply, "team");//Will return all the teams in an arraylist
+		
+		for(String teamName : teamList)
+			{
+			teams.add(UCCXTools.getTeamFromRESTReply(teamName));
+			}
+		
+		Variables.getLogger().debug("List team done, "+teams.size()+" team found");
+		return teams;
+		}
+	
+	/**
 	 * Method used to find a UUID from the UCCX
 	 * 
 	 * In addition it stores all the UUID found to avoid to
@@ -159,7 +184,7 @@ public class RESTTools
 		}
 	
 	/**
-	 * Add the UUID to the history 
+	 * Add the UUID to the history
 	 */
 	private static String getRESTReply(String UUID, String itemName, itemType type) throws Exception
 		{

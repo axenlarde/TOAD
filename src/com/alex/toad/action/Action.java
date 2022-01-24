@@ -48,6 +48,7 @@ public class Action
 		
 		
 		//Temp
+		System.exit(0);
 		
 		/**
 		 * We start the web server

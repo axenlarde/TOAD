@@ -31,6 +31,10 @@ the collection file
 				<target>updatepe</target>
 				<action>update</action>
 			</user>
+			<appuser>
+				<target>updateappuser</target>
+				<action>update</action>
+			</appuser>
 			<udplogin>
 				<target>udplogin</target>
 				<action>update</action>

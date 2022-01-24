@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -1026,7 +1027,7 @@ public class UsefulMethod
 		}
 	
 	/**
-	 * Search for an office in the office list
+	 *  Get an office in the office list
 	 * @throws Exception 
 	 */
 	public static Office getOffice(String officeName) throws Exception
@@ -1037,6 +1038,20 @@ public class UsefulMethod
 			}
 		
 		throw new Exception("Office not found : "+officeName);
+		}
+	
+	/**
+	 * Search for an office in the office list
+	 * @throws Exception 
+	 */
+	public static Office searchOffice(String word) throws Exception
+		{
+		for(Office o : Variables.getOfficeList())
+			{
+			if(Pattern.matches(".*"+o.getName()+".*|.*"+o.getFullname()+".*", word)) return o;
+			}
+		
+		throw new Exception("Office not found using the following search word : "+word);
 		}
 	
 	/**

@@ -139,7 +139,7 @@ public class ManageWebRequest
 			String userID = UsefulMethod.getItemByName("userid", t);
 			
 			//We get Agent informations
-			Agent agent = AgentTools.getAgent(userID);
+			AgentData agent = AgentTools.getAgent(userID);
 			
 			return WebRequestBuilder.buildGetAgentReply(agent);
 			}
@@ -248,6 +248,12 @@ public class ManageWebRequest
 			String deviceName = UsefulMethod.getItemByName("devicename", t);
 			boolean udpLogin = Boolean.parseBoolean(UsefulMethod.getItemByName("udplogin", t));
 			
+			//Office
+			String officeName = UsefulMethod.getItemByName("office", t);
+			Office office = UsefulMethod.getOffice(officeName);
+			
+			
+			//Skills
 			params.add("skills");
 			params.add("skill");
 			parsed = xMLGear.getResultListTab(request.getContent(), params);

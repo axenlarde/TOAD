@@ -33,12 +33,6 @@ Overal configuration file
 		<uccxpassword>password</uccxpassword><!--Password !!!!Warning : keep it secret!!!!-->
 		<uccxresttimeout>10000</uccxresttimeout><!--ms-->
 		<uccxrmcmuser>UCCXrmcm</uccxrmcmuser><!--CUCM rmcm user to update while creating a new UCCX agents phone-->
-		<!--RISPORT parameters-->
-		<rishost>10.0.1.172</rishost><!--IP of the CUCM server-->
-		<risport>8443</risport><!--Port to contact the CUCM server using RISPORT-->
-		<risusername>ris</risusername><!--RISPORT user name to contact the CUCM server-->
-		<rispassword>******</rispassword><!--Password of the RISPORT user in clear !!!!Warning : keep it secret!!!!-->
-		<rismaxphonerequest>500</rismaxphonerequest><!--Max Phone response per request-->
 		<!--Provisioning Misc-->
 		<nodidrange>19011000:19019999</nodidrange>
 		<didpartition>SDA_P</didpartition>

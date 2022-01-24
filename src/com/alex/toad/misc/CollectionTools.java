@@ -566,6 +566,48 @@ public class CollectionTools
 			}
 		}
 	
+	/*************
+	 * Method used to get an available userID in the given range
+	 * from the CUCM
+	 */
+	public static ArrayList<AgentData> searchForAgent(String searchPattern) throws Exception
+		{
+		try
+			{
+			ArrayList<AgentData> userList = new ArrayList<AgentData>();
+			
+			List<Object> SQLResp = SimpleRequest.doSQLQuery("select userid, firstname, lastname from enduser where userid like '%"+searchPattern+"%'");
+			
+			for(Object o : SQLResp)
+				{
+				Element rowElement = (Element) o;
+				NodeList list = rowElement.getChildNodes();
+				
+				String userid = null, lastname = null, firstname = null;
+				
+				for(int i = 0; i< list.getLength(); i++)
+					{
+					if(list.item(i).getNodeName().equals("userid"))userid = list.item(i).getTextContent();
+					else if(list.item(i).getNodeName().equals("firstname"))firstname = list.item(i).getTextContent();
+					else if(list.item(i).getNodeName().equals("lastname"))lastname = list.item(i).getTextContent();
+					}
+				
+				AgentData ad = new AgentData(userid);
+				ad.setLastName(lastname);
+				ad.setFirstName(firstname);
+				
+				userList.add(ad);
+				}
+			
+			Variables.getLogger().debug("No user found with the following search pattern : "+searchPattern);
+			throw new Exception("No user found with the following search pattern : "+searchPattern);
+			}
+		catch(Exception e)
+			{
+			throw new Exception("Error while trying to search for a user : "+e.getMessage());
+			}
+		}
+	
 	/**
 	 * Used to split a value while using the escape character "\"
 	 * @param pat

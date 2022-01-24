@@ -2,7 +2,6 @@ package com.alex.toad.misc;
 
 import java.util.ArrayList;
 
-
 import com.alex.toad.cucm.user.items.DeviceProfile;
 import com.alex.toad.cucm.user.items.Line;
 import com.alex.toad.cucm.user.items.Phone;
@@ -50,9 +49,9 @@ public class AgentTools
 	/**
 	 * Will look for a list of agents matching the search string
 	 */
-	public static ArrayList<Agent> search(String search)
+	public static ArrayList<AgentData> search(String search)
 		{
-		ArrayList<Agent> agents = new ArrayList<Agent>();
+		ArrayList<AgentData> agents = new ArrayList<AgentData>();
 		
 		//TBW
 		
@@ -91,6 +90,34 @@ public class AgentTools
 		agentData.setAgentType(agent.getAgentType());
 		agentData.setSkillList(agent.getSkills());
 		agentData.setTeam(agent.getTeam());
+		
+		/**
+		 * We find the office
+		 * 
+		 * Because there is no database about the relation between the offices and their agent
+		 * we have to guess the office every time we look for a user
+		 * We use the office name for that
+		 * If not found, we also try to match the team name with an office name
+		 */
+		 try
+			{
+			Office o = UsefulMethod.searchOffice(userID);
+			agentData.setOffice(o);
+			}
+		 catch (Exception e)
+			{
+			Variables.getLogger().debug("No office found for the following userid : "+userID+", looking for a UCCX team name as well");
+			
+			try
+				{
+				Office o = UsefulMethod.searchOffice(agentData.getTeam().getName());
+				agentData.setOffice(o);
+				}
+			catch (Exception e1)
+				{
+				Variables.getLogger().error("No office found for the following userid : "+userID+" , returning null");
+				}
+			}
 		
 		return agentData;
 		}
