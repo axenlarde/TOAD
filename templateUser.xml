@@ -143,6 +143,12 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 			<userid>agent.userid</userid>
 			<device>'SEP'+agent.devicename</device>
 		</user>
+		<appuser>
+			<targetname>updateappuser</targetname>
+			<userid>config.uccxrmcmuser</userid>
+			<device>'SEP'+agent.devicename</device><!--Should be a softphone-->
+			<ctiudp>*m*agent.userid</ctiudp><!--To test-->
+		</appuser>
 		<udplogin>
 			<targetname>udplogin</targetname>
 			<userid>config.agentidprefix+office.availableuseridindex</userid>

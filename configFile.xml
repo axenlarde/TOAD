@@ -43,6 +43,7 @@ Overal configuration file
 		<addagentusercreationprofilename>addAgent</addagentusercreationprofilename><!--The creation profile to use for agent creation-->
 		<updateagentusercreationprofilename>updateAgent</updateagentusercreationprofilename><!--The creation profile to use for agent update-->
 		<agentidprefix>*1M*agent.agenttype+office.name</agentidprefix>
+		<officepattern></officepattern><!--To find the user's office during a getAgent-->
 		<!--Web server parameters-->
 		<webserverport>8092</webserverport>
 		<!--Copy Log parameters-->

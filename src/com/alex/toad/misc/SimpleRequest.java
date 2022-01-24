@@ -262,6 +262,16 @@ public class SimpleRequest
 			com.cisco.axl.api._10.GetUserRes resp = Variables.getAXLConnectionToCUCMV105().getUser(req);//We send the request to the CUCM
 			return getXFKV105(resp.getReturn().getUser().getUuid(), itemName, type);
 			}
+		else if(type.equals(itemType.appuser))
+			{
+			com.cisco.axl.api._10.GetAppUserReq req = new com.cisco.axl.api._10.GetAppUserReq();
+			com.cisco.axl.api._10.RAppUser returnedTags = new com.cisco.axl.api._10.RAppUser();
+			req.setUserid(itemName);
+			returnedTags.setUuid("");
+			req.setReturnedTags(returnedTags);
+			com.cisco.axl.api._10.GetAppUserRes resp = Variables.getAXLConnectionToCUCMV105().getAppUser(req);//We send the request to the CUCM
+			return getXFKV105(resp.getReturn().getAppUser().getUuid(), itemName, type);
+			}
 		else if(type.equals(itemType.phonetemplatename))
 			{
 			com.cisco.axl.api._10.GetPhoneButtonTemplateReq req = new com.cisco.axl.api._10.GetPhoneButtonTemplateReq();

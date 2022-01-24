@@ -570,13 +570,13 @@ public class CollectionTools
 	 * Method used to get an available userID in the given range
 	 * from the CUCM
 	 */
-	public static ArrayList<AgentData> searchForAgent(String searchPattern) throws Exception
+	public static ArrayList<AgentData> searchForUser(String searchPattern) throws Exception
 		{
 		try
 			{
 			ArrayList<AgentData> userList = new ArrayList<AgentData>();
 			
-			List<Object> SQLResp = SimpleRequest.doSQLQuery("select userid, firstname, lastname from enduser where userid like '%"+searchPattern+"%'");
+			List<Object> SQLResp = SimpleRequest.doSQLQuery("select userid, firstname, lastname from enduser where userid like '%"+searchPattern+"%' or lastname like '%"+searchPattern+"%' or firstname like '%"+searchPattern+"%'");
 			
 			for(Object o : SQLResp)
 				{

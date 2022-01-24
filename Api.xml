@@ -72,22 +72,7 @@ copyLogFile
 					<number></number>
 					<office></office>
 					<type></type><!--agent,supervisor-->
-					<teams>
-						<team></team><!--Team name--><!--One or more-->
-					</teams>
-					<skills>
-						<skill><!--One or more skills-->
-							<name></name><!--skill name-->
-							<level></level><!--skill level-->
-						</skill>
-					</skills>
-					<devices>
-						<device><!--One or more-->
-							<type></type><!--deskphone,softphone-->
-							<name></name><!--softphone name or mac address-->
-							<model></model><!--Not relevant for deskphone empty for softphone-->
-						</device>
-					</devices>
+					<team></team><!--Team name-->
 				</agent>
 			</agents>
 		</content>

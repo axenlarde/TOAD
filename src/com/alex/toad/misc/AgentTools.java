@@ -1,6 +1,7 @@
 package com.alex.toad.misc;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import com.alex.toad.cucm.user.items.DeviceProfile;
 import com.alex.toad.cucm.user.items.Line;
@@ -8,11 +9,13 @@ import com.alex.toad.cucm.user.items.Phone;
 import com.alex.toad.cucm.user.items.User;
 import com.alex.toad.cucm.user.misc.UserCreationProfile;
 import com.alex.toad.cucm.user.misc.UserTools;
+import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.soap.items.PhoneLine;
 import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
 import com.alex.toad.uccx.items.UCCXAgent.AgentType;
+import com.alex.toad.uccx.misc.UCCXTools;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.actionType;
@@ -48,12 +51,29 @@ public class AgentTools
 	
 	/**
 	 * Will look for a list of agents matching the search string
+	 * @throws Exception 
 	 */
-	public static ArrayList<AgentData> search(String search)
+	public static ArrayList<AgentData> search(String search) throws Exception
 		{
 		ArrayList<AgentData> agents = new ArrayList<AgentData>();
 		
-		//TBW
+		ArrayList<UCCXAgent> list = RESTTools.doListAgent(Variables.getUccxServer());
+		
+		for(UCCXAgent ua : list)
+			{
+			if(Pattern.matches(".*"+search+".*", ua.getName()+ua.getLastname()+ua.getFirstname()))
+				{
+				AgentData ad = new AgentData(ua.getName());
+				ad.setLastName(ua.getLastname());
+				ad.setFirstName(ua.getFirstname());
+				ad.setAgentType(ua.getAgentType());
+				ad.setTeam(ua.getTeam());
+				
+				agents.add(ad);
+				}
+			}
+		
+		Variables.getLogger().debug(agents.size()+" agent found for pattern : "+search);
 		
 		return agents;
 		}

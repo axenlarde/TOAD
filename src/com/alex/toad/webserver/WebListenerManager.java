@@ -124,43 +124,51 @@ public class WebListenerManager implements HttpHandler
 						}
 					else if(wr.getType().equals(webRequestType.search))
 						{
-						reply = ManageWebRequest.search(content);
+						reply = ManageWebRequest.search(wr);
 						}
 					else if(wr.getType().equals(webRequestType.getAgent))
 						{
-						reply = ManageWebRequest.getAgent(content);
+						reply = ManageWebRequest.getAgent(wr);
 						}
 					else if(wr.getType().equals(webRequestType.getTeam))
 						{
-						reply = ManageWebRequest.getTeam(content);
+						reply = ManageWebRequest.getTeam(wr);
+						}
+					else if(wr.getType().equals(webRequestType.getTask))
+						{
+						reply = ManageWebRequest.getTask(wr);
 						}
 					else if(wr.getType().equals(webRequestType.addAgent))
 						{
-						reply = ManageWebRequest.addAgent(content);
+						reply = ManageWebRequest.addAgent(wr);
 						}
 					else if(wr.getType().equals(webRequestType.updateAgent))
 						{
-						reply = ManageWebRequest.updateAgent(content);
+						reply = ManageWebRequest.updateAgent(wr);
 						}
 					else if(wr.getType().equals(webRequestType.deleteAgent))
 						{
-						reply = ManageWebRequest.deleteAgent(content);
+						reply = ManageWebRequest.deleteAgent(wr);
 						}
 					else if(wr.getType().equals(webRequestType.listAgent))
 						{
-						reply = ManageWebRequest.listAgent();
+						reply = ManageWebRequest.listAgent(wr);
 						}
 					else if(wr.getType().equals(webRequestType.listTeam))
 						{
-						reply = ManageWebRequest.listTeam();
+						reply = ManageWebRequest.listTeam(wr);
 						}
 					else if(wr.getType().equals(webRequestType.listSkill))
 						{
-						reply = ManageWebRequest.listSkill();
+						reply = ManageWebRequest.listSkill(wr);
+						}
+					else if(wr.getType().equals(webRequestType.listTask))
+						{
+						reply = ManageWebRequest.listTask(wr);
 						}
 					else if(wr.getType().equals(webRequestType.copyLogFile))
 						{
-						reply = ManageWebRequest.copyLogFile();
+						reply = ManageWebRequest.copyLogFile(wr);
 						}
 					
 					OutputStream os = exc.getResponseBody();

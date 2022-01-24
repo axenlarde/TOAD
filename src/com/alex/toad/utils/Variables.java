@@ -87,6 +87,7 @@ public class Variables
 		associateanalog,
 		userlocal,
 		softkeytemplate,
+		appuser,
 		agent,//UCCX
 		team,//UCCX
 		skill,//UCCX

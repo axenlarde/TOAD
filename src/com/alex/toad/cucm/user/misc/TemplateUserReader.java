@@ -2,6 +2,7 @@ package com.alex.toad.cucm.user.misc;
 
 import java.util.ArrayList;
 
+import com.alex.toad.cucm.user.items.AppUser;
 import com.alex.toad.cucm.user.items.DeviceProfile;
 import com.alex.toad.cucm.user.items.Phone;
 import com.alex.toad.cucm.user.items.UdpLogin;
@@ -220,6 +221,20 @@ public class TemplateUserReader
 					UsefulMethod.getItemByName("partition", itemDetails),
 					UsefulMethod.getItemByName("pin", itemDetails),
 					UsefulMethod.getItemByName("password", itemDetails));
+			}
+		else if(type.equals(itemType.appuser))
+			{
+			//device list
+			ArrayList<String> deviceList = readUserList(itemDetails, "device");
+			ArrayList<String> ctiUDPList = readUserList(itemDetails, "ctiudp");
+			ArrayList<String> groupList = readUserList(itemDetails, "group");
+			
+			return new AppUser(UsefulMethod.getItemByName("userid", itemDetails),
+					UsefulMethod.getItemByName("targetname", itemDetails),
+					UsefulMethod.getItemByName("password", itemDetails),
+					groupList,
+					deviceList,
+					ctiUDPList);
 			}
 		else if(type.equals(itemType.udplogin))
 			{

@@ -174,6 +174,30 @@ public class ManageWebRequest
 			}
 		}
 	
+	public synchronized static WebRequest getTask(WebRequest request)	
+		{
+		try
+			{
+			ArrayList<String> params = new ArrayList<String>();
+			params.add("request");
+			params.add("content");
+			
+			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
+			String[][] t = parsed.get(0);
+			
+			String taskID = UsefulMethod.getItemByName("taskid", t);
+			
+			Task task = UsefulMethod.getTask(taskID);
+			
+			return WebRequestBuilder.buildGetTaskReply(task);
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("ERROR while processing get Team web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
+			}
+		}
+	
 	/**
 	 * Add Agent
 	 */

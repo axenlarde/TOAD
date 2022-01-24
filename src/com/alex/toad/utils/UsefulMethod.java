@@ -25,6 +25,7 @@ import com.alex.toad.misc.Office;
 import com.alex.toad.misc.OfficeSetting;
 import com.alex.toad.misc.Range;
 import com.alex.toad.misc.SimpleRequest;
+import com.alex.toad.misc.Task;
 import com.alex.toad.misc.ValueMatcher;
 import com.alex.toad.rest.misc.RESTServer;
 import com.alex.toad.uccx.items.UCCXAgent.AgentType;
@@ -1038,6 +1039,20 @@ public class UsefulMethod
 			}
 		
 		throw new Exception("Office not found : "+officeName);
+		}
+	
+	/**
+	 *  Get an office in the office list
+	 * @throws Exception 
+	 */
+	public static Task getTask(String taskID) throws Exception
+		{
+		for(Task t : Variables.getTaskList())
+			{
+			if(t.getTaskID().equals(taskID)) return t;
+			}
+		
+		throw new Exception("Task not found : "+taskID);
 		}
 	
 	/**

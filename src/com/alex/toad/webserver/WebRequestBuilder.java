@@ -97,7 +97,14 @@ public class WebRequestBuilder
 			{
 			for(AgentData ad : agents)
 				{
-				content.append(buildAgent(ad));
+				content.append("				<agent>\r\n");
+				content.append("					<userid>"+ad.getUserID()+"</userid>\r\n");
+				content.append("					<firstname>"+ad.getFirstName()+"</firstname>\r\n");
+				content.append("					<lastname>"+ad.getLastName()+"</lastname>\r\n");
+				content.append("					<type>"+ad.getAgentType()+"</type>\r\n");
+				content.append("					<team>"+ad.getTeam()+"</team>\r\n");
+				//content.append(buildAgent(ad));
+				content.append("				</agent>\r\n");
 				}
 			}
 		catch (Exception e)
