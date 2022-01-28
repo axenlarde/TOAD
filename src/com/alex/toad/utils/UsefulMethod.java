@@ -161,7 +161,7 @@ public class UsefulMethod
 	 * Method used to initialize the UCCX REST connection
 	 * @throws Exception 
 	 */
-	public static RESTServer iniUCCXConnection() throws Exception
+	public static RESTServer initUCCXConnection() throws Exception
 		{
 		return new RESTServer(UsefulMethod.getTargetOption("uccxhost"),
 				UsefulMethod.getTargetOption("uccxport"),
@@ -525,7 +525,7 @@ public class UsefulMethod
 		{
 		for(int i=0; i<itemDetails.length; i++)
 			{
-			if(itemDetails[i][0].equals(name))
+			if(itemDetails[i][0].equalsIgnoreCase(name))
 				{
 				return itemDetails[i][1];
 				}

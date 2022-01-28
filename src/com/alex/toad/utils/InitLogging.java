@@ -50,7 +50,6 @@ public class InitLogging
 	
 	public static Logger infoModeInit(String logFileName)
 		{
-		//Logger logger = Logger.getLogger(Main.class);
 		Logger logger = Logger.getLogger("");
 		
 		PatternLayout myPattern = new PatternLayout("%d{dd/MM/yyyy - HH:mm:ss} - %m%n");

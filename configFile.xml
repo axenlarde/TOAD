@@ -20,19 +20,19 @@ Overal configuration file
 		<smtpemailpassword></smtpemailpassword>
 		<smtpemailreceiver>alexandre.ratel@spie.com</smtpemailreceiver><!--One or more destinations separated by a ;-->
 		<!--CUCM parameters-->
-		<axlhost>127.0.0.1</axlhost><!--IP of the CUCM server-->
+		<axlhost>10.10.0.20</axlhost><!--IP of the CUCM server-->
 		<axlport>8443</axlport><!--Port to contact the CUCM server using AXL-->
 		<axlversion>105</axlversion><!--85 or 105--><!--AXL version of the CUCM-->
-		<axlusername>AXL_TOAD</axlusername><!--AXL user name to contact the CUCM server-->
-		<axlpassword>password</axlpassword><!--Password of the AXL user in clear !!!!Warning : keep it secret!!!!-->
+		<axlusername>TOAD</axlusername><!--AXL user name to contact the CUCM server-->
+		<axlpassword>CCMCisco92</axlpassword><!--Password of the AXL user in clear !!!!Warning : keep it secret!!!!-->
 		<!--UCCX parameters-->
-		<uccxhost>127.0.0.1</uccxhost><!--IP of the UCCX server-->
-		<uccxport>8443</uccxport><!--Port to contact the UCCX server using REST-->
+		<uccxhost>10.10.0.30</uccxhost><!--IP of the UCCX server-->
+		<uccxport>8445</uccxport><!--Port to contact the UCCX server using REST-->
 		<uccxversion>105</uccxversion><!--Version of the UCCX server-->
-		<uccxusername>UCCX_TOAD</uccxusername><!--Username to contact the UCCX server-->
-		<uccxpassword>password</uccxpassword><!--Password !!!!Warning : keep it secret!!!!-->
+		<uccxusername>administrator</uccxusername><!--Username to contact the UCCX server-->
+		<uccxpassword>CCMCisco92</uccxpassword><!--Password !!!!Warning : keep it secret!!!!-->
 		<uccxresttimeout>10000</uccxresttimeout><!--ms-->
-		<uccxrmcmuser>UCCXrmcm</uccxrmcmuser><!--CUCM rmcm user to update while creating a new UCCX agents phone-->
+		<uccxrmcmuser>UCCXRmCm</uccxrmcmuser><!--CUCM rmcm user to update while creating a new UCCX agents phone-->
 		<!--Provisioning Misc-->
 		<nodidrange>19011000:19019999</nodidrange>
 		<didpartition>SDA_P</didpartition>

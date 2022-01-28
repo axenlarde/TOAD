@@ -5,17 +5,13 @@ import java.util.ArrayList;
 import com.alex.toad.axlitems.misc.ToUpdate;
 import com.alex.toad.misc.ErrorTemplate;
 import com.alex.toad.misc.ErrorTemplate.errorType;
-import com.alex.toad.rest.misc.RESTGear;
 import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.restitems.misc.RESTItemLinker;
-import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
-import com.alex.toad.uccx.items.UCCXAgent.AgentType;
 import com.alex.toad.uccx.misc.UCCXError;
 import com.alex.toad.uccx.misc.UCCXTools;
-import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.utils.Variables.requestType;
@@ -116,8 +112,8 @@ public class TeamLinker extends RESTItemLinker
 	 */
 	public ItemToInject doGetVersion105() throws Exception
 		{
-		String uri = "https://"+Variables.getUccxServer().getHost()+":"+Variables.getUccxServer().getPort()+"adminapi/team/"+name;
-		String reply = RESTGear.send(requestType.GET, uri, "", Variables.getUccxServer().getUsername(), Variables.getUccxServer().getPassword(), Variables.getUccxServer().getTimeout());
+		String uri = "adminapi/team/"+name;
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
 		
 		Team myT = UCCXTools.getTeamFromRESTReply(reply);
 		

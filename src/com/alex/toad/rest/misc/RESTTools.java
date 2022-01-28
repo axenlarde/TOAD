@@ -3,6 +3,7 @@ package com.alex.toad.rest.misc;
 import java.util.ArrayList;
 
 import com.alex.toad.misc.storedUUID;
+import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
 import com.alex.toad.uccx.misc.UCCXTools;
@@ -25,12 +26,12 @@ public class RESTTools
 	public static void AgentLogout(RESTServer host, String userID) throws Exception
 		{
 		Variables.getLogger().debug("Agent "+userID+" logout request started");
-		String uri = "https://"+host.getHost()+":"+host.getPort()+"/finesse/api/User/"+userID;
+		String uri = "finesse/api/User/"+userID;
 		String content = "<User>"
 				+ "	<state>LOGOUT</state>"
 				+ "</User>";
 			
-		String reply = RESTGear.send(requestType.PUT, uri, content, host.getUsername(), host.getPassword(), host.getTimeout());//To logout the agent
+		String reply = Variables.getUccxServer().send(requestType.PUT, uri, content);
 		
 		Variables.getLogger().debug("Agent "+userID+" logout done !");
 		}
@@ -45,10 +46,10 @@ public class RESTTools
 	public static agentStatus getAgentStatus(RESTServer host, String userID) throws Exception
 		{
 		Variables.getLogger().debug("Agent "+userID+" get status request started");
-		String uri = "https://"+host.getHost()+":"+host.getPort()+"/finesse/api/User/"+userID;
+		String uri = "finesse/api/User/"+userID;
 		String content = "";
 		
-		String reply = RESTGear.send(requestType.GET, uri, content, host.getUsername(), host.getPassword(), host.getTimeout());//To logout the agent
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, content);
 		
 		//We parse the reply
 		reply = "<xml>"+reply+"</xml>";
@@ -69,10 +70,10 @@ public class RESTTools
 		{
 		ArrayList<UCCXAgent> agents = new ArrayList<UCCXAgent>();
 		Variables.getLogger().debug("List agent request started");
-		String uri = "https://"+host.getHost()+":"+host.getPort()+"adminapi/resource";
+		String uri = "adminapi/resource";
 		String content = "";
 		
-		String reply = RESTGear.send(requestType.GET, uri, content, host.getUsername(), host.getPassword(), host.getTimeout());
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, content);
 		
 		ArrayList<String> resources = xMLGear.getTextOccurences(reply, "resource");//Will return all the agent in an arraylist
 		
@@ -93,10 +94,10 @@ public class RESTTools
 		{
 		ArrayList<Team> teams = new ArrayList<Team>();
 		Variables.getLogger().debug("List teams request started");
-		String uri = "https://"+host.getHost()+":"+host.getPort()+"adminapi/team";
+		String uri = "adminapi/team";
 		String content = "";
 		
-		String reply = RESTGear.send(requestType.GET, uri, content, host.getUsername(), host.getPassword(), host.getTimeout());
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, content);
 		
 		ArrayList<String> teamList = xMLGear.getTextOccurences(reply, "team");//Will return all the teams in an arraylist
 		
@@ -107,6 +108,30 @@ public class RESTTools
 		
 		Variables.getLogger().debug("List team done, "+teams.size()+" team found");
 		return teams;
+		}
+	
+	/**
+	 * Will list all UCCX skills
+	 * @throws Exception 
+	 */
+	public static ArrayList<Skill> doListSkill(RESTServer host) throws Exception
+		{
+		ArrayList<Skill> skills = new ArrayList<Skill>();
+		Variables.getLogger().debug("List skills request started");
+		String uri = "adminapi/skill";
+		String content = "";
+		
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, content);
+		
+		ArrayList<String> skillList = xMLGear.getTextOccurences(reply, "skill");//Will return all the skills in an arraylist
+		
+		for(String skillName : skillList)
+			{
+			skills.add(UCCXTools.getSkillFromRESTReply(skillName));
+			}
+		
+		Variables.getLogger().debug("List skill done, "+skills.size()+" skill found");
+		return skills;
 		}
 	
 	/**
@@ -139,8 +164,8 @@ public class RESTTools
 		
 		if(type.equals(itemType.agent))
 			{
-			String uri = "https://"+Variables.getUccxServer().getHost()+":"+Variables.getUccxServer().getPort()+"adminapi/resource/"+itemName;
-			String reply = RESTGear.send(requestType.GET, uri, "", Variables.getUccxServer().getUsername(), Variables.getUccxServer().getPassword(), Variables.getUccxServer().getTimeout());
+			String uri = "adminapi/resource/"+itemName;
+			String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
 			
 			ArrayList<String> listParams = new ArrayList<String>();
 			listParams.add("resource");
@@ -153,8 +178,8 @@ public class RESTTools
 			}
 		else if(type.equals(itemType.team))
 			{
-			String uri = "https://"+Variables.getUccxServer().getHost()+":"+Variables.getUccxServer().getPort()+"adminapi/team/"+itemName;
-			String reply = RESTGear.send(requestType.GET, uri, "", Variables.getUccxServer().getUsername(), Variables.getUccxServer().getPassword(), Variables.getUccxServer().getTimeout());
+			String uri = "adminapi/team/"+itemName;
+			String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
 			
 			reply = "<xml>"+reply+"</xml>";
 			ArrayList<String> listParams = new ArrayList<String>();
@@ -167,8 +192,8 @@ public class RESTTools
 			}
 		else if(type.equals(itemType.skill))
 			{
-			String uri = "https://"+Variables.getUccxServer().getHost()+":"+Variables.getUccxServer().getPort()+"adminapi/skill/"+itemName;
-			String reply = RESTGear.send(requestType.GET, uri, "", Variables.getUccxServer().getUsername(), Variables.getUccxServer().getPassword(), Variables.getUccxServer().getTimeout());
+			String uri = "adminapi/skill/"+itemName;
+			String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
 			
 			reply = "<xml>"+reply+"</xml>";
 			ArrayList<String> listParams = new ArrayList<String>();

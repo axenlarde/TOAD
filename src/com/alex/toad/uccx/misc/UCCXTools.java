@@ -26,7 +26,7 @@ public class UCCXTools
 	public static UCCXAgent getAgentFromRESTReply(String resource) throws Exception
 		{
 		//We parse the XML
-		resource = "<xml>\r\n"+resource+"\r\n</xml>";
+		resource = "<xml>"+resource+"</xml>";
 		ArrayList<String> listParams = new ArrayList<String>();
 		listParams.add("resource");
 		ArrayList<String[][]> parsedReply = xMLGear.getResultListTabAndAtt(resource, listParams);
@@ -69,21 +69,43 @@ public class UCCXTools
 	public static Team getTeamFromRESTReply(String content) throws Exception
 		{
 		//We parse the XML
-		content = "<xml>\r\n"+content+"\r\n</xml>";
+		content = "<xml>"+content+"</xml>";
 		ArrayList<String> listParams = new ArrayList<String>();
-		listParams.add("Team");
+		listParams.add("team");
 		ArrayList<String[][]> parsedReply = xMLGear.getResultListTab(content, listParams);
 		
 		String[][] s = parsedReply.get(0);//To ease the following
 		
-		Team team = new Team(UsefulMethod.getItemByName("teamName", s),
-				null,
-				null,
-				null);//TBW
+		Team team = new Team(UsefulMethod.getItemByName("teamname", s));
 		
-		team.setUUID(UsefulMethod.getItemByName("teamName", s));
+		team.setUUID(UsefulMethod.getItemByName("teamId", s));
 		
 		return team;
+		}
+	
+	/**
+	 * Parse the REST reply and return a Skill
+	 * @throws Exception 
+	 */
+	public static Skill getSkillFromRESTReply(String content) throws Exception
+		{
+		//We parse the XML
+		content = "<xml>"+content+"</xml>";
+		ArrayList<String> listParams = new ArrayList<String>();
+		
+		//Because sometime the skill tag contains upercase we have to test
+		if(content.contains("<Skill>"))listParams.add("Skill");
+		else listParams.add("skill");
+		
+		ArrayList<String[][]> parsedReply = xMLGear.getResultListTab(content, listParams);
+		
+		String[][] s = parsedReply.get(0);//To ease the following
+		
+		Skill skill = new Skill(UsefulMethod.getItemByName("skillName", s));
+		
+		skill.setUUID(UsefulMethod.getItemByName("skillId", s));
+		
+		return skill;
 		}
 	
 	/**

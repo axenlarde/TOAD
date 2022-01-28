@@ -34,7 +34,7 @@ public class WebListenerManager implements HttpHandler
 		try
 			{
 			HttpServer server = HttpServer.create(new InetSocketAddress(Integer.parseInt(UsefulMethod.getTargetOption("webserverport"))), 0);
-			HttpContext context = server.createContext("/PERCELER", this);
+			HttpContext context = server.createContext("/"+Variables.getSoftwareName(), this);
 			server.start();
 			Variables.getLogger().debug("Web Server started !");
 			

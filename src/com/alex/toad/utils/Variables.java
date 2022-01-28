@@ -700,7 +700,7 @@ public class Variables
 		{
 		if(uccxServer == null)
 			{
-			uccxServer = UsefulMethod.iniUCCXConnection();
+			uccxServer = UsefulMethod.initUCCXConnection();
 			}
 		return uccxServer;
 		}

@@ -67,7 +67,7 @@ public class ManageWebRequest
 			 * doAuthenticate is the only case where the security token will be missing
 			 * and therefore not verified
 			 */
-			securityToken = WebTools.getSecurityToken(UsefulMethod.getItemByName("securitytoken", parsed.get(0)));
+			//securityToken = WebTools.getSecurityToken(UsefulMethod.getItemByName("securitytoken", parsed.get(0)));
 			Variables.getLogger().debug("Associated security token found is : "+securityToken);
 			}
 		

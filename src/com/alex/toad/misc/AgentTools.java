@@ -313,12 +313,14 @@ public class AgentTools
 	
 	/**
 	 * To get all the agent
+	 * @throws Exception 
 	 */
-	public static ArrayList<AgentData> listAgent()
+	public static ArrayList<AgentData> listAgent() throws Exception
 		{
 		ArrayList<AgentData> agents = new ArrayList<AgentData>();
+		ArrayList<UCCXAgent> uccxAgents = RESTTools.doListAgent(Variables.getUccxServer());
 		
-		
+		//TBW
 		
 		return agents;
 		}
@@ -337,12 +339,11 @@ public class AgentTools
 	
 	/**
 	 * To get all the team
+	 * @throws Exception 
 	 */
-	public static ArrayList<Team> listTeam()
+	public static ArrayList<Team> listTeam() throws Exception
 		{
-		ArrayList<Team> teams = new ArrayList<Team>();
-		
-		
+		ArrayList<Team> teams = RESTTools.doListTeam(Variables.getUccxServer());
 		
 		return teams;
 		}
@@ -358,10 +359,9 @@ public class AgentTools
 		return skill;
 		}
 	
-	public static ArrayList<Skill> listSkill()
+	public static ArrayList<Skill> listSkill() throws Exception
 		{
-		ArrayList<Skill> skills = new ArrayList<Skill>();
-		
+		ArrayList<Skill> skills = RESTTools.doListSkill(Variables.getUccxServer());
 		
 		return skills;
 		}

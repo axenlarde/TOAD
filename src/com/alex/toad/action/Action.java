@@ -16,6 +16,32 @@ public class Action
 	
 	public Action()
 		{
+		//Temp
+		/*
+		try
+			{
+			
+			
+			String reply = Variables.getUccxServer().send(requestType.GET, "adminapi/team", "");
+			
+			System.out.println(reply);
+			
+			System.out.println(UCCXTools.getTeamFromRESTReply(reply).getName());
+			
+			
+			
+			}
+		catch (Exception e1)
+			{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			}
+		
+		System.exit(0);*/
+		//Temp
+		
+		
+		
 		/**
 		 * We start the web server
 		 */

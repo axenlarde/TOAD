@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.alex.toad.axlitems.misc.ToUpdate;
 import com.alex.toad.misc.ErrorTemplate;
 import com.alex.toad.misc.ErrorTemplate.errorType;
-import com.alex.toad.rest.misc.RESTGear;
 import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.restitems.misc.RESTItemLinker;
@@ -96,9 +95,11 @@ public class SkillLinker extends RESTItemLinker
 	 */
 	public ItemToInject doGetVersion105() throws Exception
 		{
-		Skill myS = new Skill(name);
-		
 		//Not used but still written
+		String uri = "adminapi/skill/"+name;
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
+		
+		Skill myS = UCCXTools.getSkillFromRESTReply(reply);
 		
 		return myS;//Return a Skill
 		}

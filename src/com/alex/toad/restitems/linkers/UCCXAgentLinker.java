@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.alex.toad.axlitems.misc.ToUpdate;
 import com.alex.toad.misc.ErrorTemplate;
 import com.alex.toad.misc.ErrorTemplate.errorType;
-import com.alex.toad.rest.misc.RESTGear;
 import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.restitems.misc.RESTItemLinker;
@@ -129,7 +128,7 @@ public class UCCXAgentLinker extends RESTItemLinker
 		content.append("	</resource>\r\n");
 		content.append("</resources>\r\n");
 		
-		String reply = RESTGear.send(requestType.PUT, uri, content.toString(), Variables.getUccxServer().getUsername(), Variables.getUccxServer().getPassword(), Variables.getUccxServer().getTimeout());
+		String reply = Variables.getUccxServer().send(requestType.PUT, uri, content.toString());
 		}
 	/**************/
 	
@@ -139,8 +138,8 @@ public class UCCXAgentLinker extends RESTItemLinker
 	 */
 	public ItemToInject doGetVersion105() throws Exception
 		{
-		String uri = "https://"+Variables.getUccxServer().getHost()+":"+Variables.getUccxServer().getPort()+"adminapi/resource/"+name;
-		String reply = RESTGear.send(requestType.GET, uri, "", Variables.getUccxServer().getUsername(), Variables.getUccxServer().getPassword(), Variables.getUccxServer().getTimeout());
+		String uri = "adminapi/resource/"+name;
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
 		
 		reply = reply.replace("<resources>", "");
 		reply = reply.replace("</resources>", "");

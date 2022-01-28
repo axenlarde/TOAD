@@ -223,26 +223,28 @@ copyLogFile
 		<type>addAgent</type>
 		<securitytoken></securitytoken><!--Security token of the connected user. To check if the creation is allowed-->
 		<content>
-			<firstname></firstname>
-			<lastname></lastname>
-			<office></office>
-			<type></type><!--agent,supervisor-->
-			<devicename></devicename><!--Mac address-->
-			<devicetype></devicetype><!--Phone type-->
-			<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->
-			<team></team><!--Team name-->
-			<primarysupervisorof>
-				<team></team><!--Team name--><!--One or more-->
-			</primarysupervisorof>
-			<secondarysupervisorof>
-				<team></team><!--Team name--><!--One or more-->
-			</secondarysupervisorof>
-			<skills>
-				<skill><!--One or more skills-->
-					<name></name><!--skill name-->
-					<level></level><!--skill level-->
-				</skill>
-			</skills>
+			<agent>
+				<firstname></firstname>
+				<lastname></lastname>
+				<!--<office></office>-->
+				<type></type><!--agent,supervisor-->
+				<devicename></devicename><!--Mac address-->
+				<devicetype></devicetype><!--Phone type-->
+				<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->
+				<team></team><!--Team name-->
+				<primarysupervisorof>
+					<team></team><!--Team name-->
+				</primarysupervisorof>
+				<secondarysupervisorof>
+					<team></team><!--Team name--><!--One or more-->
+				</secondarysupervisorof>
+				<skills>
+					<skill><!--One or more skills-->
+						<name></name><!--skill name-->
+						<level></level><!--skill level-->
+					</skill>
+				</skills>
+			</agent>
 		</content>
 	</request>
 </xml>
