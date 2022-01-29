@@ -3,6 +3,7 @@ package com.alex.toad.misc;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import com.alex.toad.uccx.items.Team;
 import com.alex.toad.utils.Variables.multipleRequestType;
 
 
@@ -20,6 +21,7 @@ public class Office
 	private String name,
 	templatename,
 	fullname,
+	team,
 	audiobandwidth,
 	videobandwidth,
 	softkeytemplate,
@@ -44,7 +46,7 @@ public class Office
 	/***************
 	 * Constructor
 	 ***************/
-	public Office(String name, String templatename, String fullname, String audiobandwidth,
+	public Office(String name, String templatename, String fullname, String team, String audiobandwidth,
 			String videobandwidth, String softkeytemplate,
 			String callmanagergroup, String datetimegroup, String mohnumber,
 			String internalprefix, String e164, String receptionnumber,
@@ -56,6 +58,7 @@ public class Office
 		this.name = name;
 		this.templatename = templatename;
 		this.fullname = fullname;
+		this.team = team;
 		this.audiobandwidth = audiobandwidth;
 		this.videobandwidth = videobandwidth;
 		this.softkeytemplate = softkeytemplate;
@@ -279,9 +282,14 @@ public class Office
 		{
 		this.templatename = templatename;
 		}
-	
-	
-	
+	public String getTeam()
+		{
+		return team;
+		}
+	public void setTeam(String team)
+		{
+		this.team = team;
+		}
 	
 	
 	/*2018*//*RATEL Alexandre 8)*/

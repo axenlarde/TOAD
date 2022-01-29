@@ -21,15 +21,18 @@ public class Skill extends ItemToInject
 	
 	/***************
 	 * Constructor
+	 * @throws Exception 
 	 ***************/
-	public Skill(String name)
+	public Skill(String name) throws Exception
 		{
 		super(itemType.skill, name);
+		mySkill = new SkillLinker(name);
 		}
 	
-	public Skill(String name, int level)
+	public Skill(String name, int level) throws Exception
 		{
 		super(itemType.skill, name);
+		mySkill = new SkillLinker(name);
 		this.level = level;
 		}
 	

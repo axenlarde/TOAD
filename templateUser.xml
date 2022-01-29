@@ -116,14 +116,14 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 		</user>
 		<user>
 			<targetname>newuser</targetname>
-			<userid>config.agentidprefix+office.availableuseridindex</userid><!--Should generate something like AgentTLS1-->
+			<userid>agent.userid</userid><!--Should generate something like AgentTLS1-->
 			<lastname>*M**C*web.lastname</lastname>
 			<firstname>(*1M**C*web.firstname)IfLongerThan30(*1_**M**C*web.firstname+'.')</firstname>
-			<telephonenumber>cucm.availableline</telephonenumber>
+			<telephonenumber>agent.linenumber</telephonenumber>
 			<userlocal>office.userlocal</userlocal>
 			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
-			<password>cucm.availableline</password>
-			<pin>cucm.availableline</pin>
+			<password>agent.linenumber</password>
+			<pin>agent.linenumber</pin>
 			<group>'Standard CCM End Users'</group><!--One or more-->
 		</user>
 		<user>
@@ -135,7 +135,7 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 		<user>
 			<targetname>updatepe</targetname>
 			<userid>agent.userid</userid>
-			<primaryextension>agent.telephonenumber</primaryextension>
+			<primaryextension>agent.linenumber</primaryextension>
 			<partition>config.didpartition</partition>
 		</user>
 		<user>
@@ -151,7 +151,7 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 		</appuser>
 		<udplogin>
 			<targetname>udplogin</targetname>
-			<userid>config.agentidprefix+office.availableuseridindex</userid>
+			<userid>agent.userid</userid>
 			<device>'SEP'+agent.devicename</device>
 		</udplogin>
 		<udplogin>

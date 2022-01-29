@@ -41,6 +41,12 @@ public class UCCXTools
 		String UUID = temp[temp.length-1];//The ID is the last item
 		AgentType type = (UsefulMethod.getItemByName("type", s)).equals("1")?AgentType.agent:AgentType.supervisor;
 		
+		//PrimarySupervisorof
+		ArrayList<Team> primarySupervisorOf = new ArrayList<Team>();
+		
+		//SecondarySupervisorof
+		ArrayList<Team> secondarySupervisorOf = new ArrayList<Team>();
+		
 		//Skill
 		ArrayList<Skill> skills = new ArrayList<Skill>();
 		for(String[][] t : skillReply)
@@ -55,6 +61,8 @@ public class UCCXTools
 				UsefulMethod.getItemByName("extension", s),
 				type,
 				new Team(UsefulMethod.getAttributeItemByName("team", s)),
+				,
+				,
 				skills);
 		
 		agent.setUUID(UUID);

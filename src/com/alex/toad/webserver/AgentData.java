@@ -3,6 +3,7 @@ package com.alex.toad.webserver;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.misc.Office;
 import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
@@ -98,6 +99,16 @@ public class AgentData
 			}
 		
 		throw new Exception("ERROR : No value found");
+		}
+	
+	public void resolve() throws Exception
+		{
+		userID = CollectionTools.applyPattern(this, userID, this, true);
+		firstName = CollectionTools.applyPattern(this, firstName, this, true);
+		lastName = CollectionTools.applyPattern(this, lastName, this, true);
+		lineNumber = CollectionTools.applyPattern(this, lineNumber, this, true);
+		deviceName = CollectionTools.applyPattern(this, deviceName, this, true);
+		deviceType = CollectionTools.applyPattern(this, deviceType, this, true);
 		}
 	
 	public String getInfo()

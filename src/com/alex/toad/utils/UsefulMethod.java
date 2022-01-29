@@ -28,6 +28,7 @@ import com.alex.toad.misc.SimpleRequest;
 import com.alex.toad.misc.Task;
 import com.alex.toad.misc.ValueMatcher;
 import com.alex.toad.rest.misc.RESTServer;
+import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent.AgentType;
 import com.alex.toad.utils.Variables.SubstituteType;
 import com.alex.toad.utils.Variables.UCCXRESTVersion;
@@ -331,6 +332,7 @@ public class UsefulMethod
 						UsefulMethod.getItemByName("name", tab),
 						UsefulMethod.getItemByName("templatename", tab),
 						UsefulMethod.getItemByName("fullname", tab),
+						UsefulMethod.getItemByName("teamname", tab),
 						UsefulMethod.getItemByName("audiobandwidth", tab),
 						UsefulMethod.getItemByName("videobandwidth", tab),
 						UsefulMethod.getItemByName("softkeytemplate", tab),
@@ -1028,17 +1030,18 @@ public class UsefulMethod
 		}
 	
 	/**
-	 *  Get an office in the office list
+	 *  Look for the corresponding office
+	 *  Will try to compare to the office fullname and associated Team name
 	 * @throws Exception 
 	 */
-	public static Office getOffice(String officeName) throws Exception
+	public static Office getOffice(String name) throws Exception
 		{
 		for(Office o : Variables.getOfficeList())
 			{
-			if(o.getFullname().equals(officeName)) return o;
+			if((o.getFullname().equals(name)) || (o.getTeam().equals(name))) return o;
 			}
 		
-		throw new Exception("Office not found : "+officeName);
+		throw new Exception("Office not found : "+name);
 		}
 	
 	/**

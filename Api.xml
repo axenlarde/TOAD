@@ -233,7 +233,7 @@ copyLogFile
 				<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->
 				<team></team><!--Team name-->
 				<primarysupervisorof>
-					<team></team><!--Team name-->
+					<team></team><!--Team name--><!--One or more-->
 				</primarysupervisorof>
 				<secondarysupervisorof>
 					<team></team><!--Team name--><!--One or more-->
@@ -277,7 +277,7 @@ Update agent will only allow to update some fields for now
 			<userid></userid>
 			<firstname></firstname>
 			<lastname></lastname>
-			<office></office><!--Just to avoid retreiving it, Not to allow modification-->
+			<!--<office></office>--><!--Just to avoid retreiving it, Not to allow modification-->
 			<type></type><!--agent,supervisor-->
 			<devicename></devicename><!--Mac address--><!--In the case of an update, the MAC address is used only for udplogin-->
 			<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->

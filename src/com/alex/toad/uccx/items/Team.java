@@ -25,16 +25,19 @@ public class Team extends ItemToInject
 	
 	/**
 	 * Constructor
+	 * @throws Exception 
 	 */
-	public Team(String name)
+	public Team(String name) throws Exception
 		{
 		super(itemType.team, name);
+		myTeam = new TeamLinker(name);
 		}
 	
 	public Team(String name, ArrayList<UCCXAgent> agentList,
-			ArrayList<UCCXAgent> supervisorList, UCCXAgent mainSupervisor)
+			ArrayList<UCCXAgent> supervisorList, UCCXAgent mainSupervisor) throws Exception
 		{
 		super(itemType.team, name);
+		myTeam = new TeamLinker(name);
 		this.agentList = agentList;
 		this.supervisorList = supervisorList;
 		this.mainSupervisor = mainSupervisor;

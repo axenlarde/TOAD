@@ -148,11 +148,22 @@ public class AgentTools
 	 * Will return the taskID
 	 */
 	public static String addAgent(String lastName,
-			String firstName, Office office, AgentType agentType, String teamName,
+			String firstName, Office office, AgentType agentType, Team team, ArrayList<Team> primarySupervisorOf, ArrayList<Team> secondarySupervisorOf,
 			ArrayList<Skill> skills, String deviceName, String deviceModel, boolean udpLogin) throws Exception
 		{
-		Team team = new Team(teamName);
-		AgentData agentData = new AgentData("", firstName, lastName, "", deviceName, deviceModel, agentType, team, skills, office);
+		AgentData agentData = new AgentData(UsefulMethod.getTargetOption("agentidpattern"),
+				firstName,
+				lastName,
+				UsefulMethod.getTargetOption("agentextension"),
+				deviceName,
+				deviceModel,
+				agentType,
+				team,
+				skills,
+				office);
+		
+		agentData.resolve();
+		
 		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to Inject List
 		
 		/**
@@ -160,19 +171,19 @@ public class AgentTools
 		 * Listed in the User Creation Profile : Phone, Line, UDP and so on...
 		 */
 		UserCreationProfile ucp = UsefulMethod.getUserCreationProfile(UsefulMethod.getTargetOption("addagentusercreationprofilename"));
-		Variables.getLogger().debug("The User Creation Profile used for Agent creation is : "+ucp.getName());
 		
 		//All the User Creation Profile items are now added to the injection list 
 		itil.addAll(UserTools.getUserItemList(agentData, actionType.inject, ucp, udpLogin));
 		
 		/**
 		 * UCCX items
-		 * To create the Agent
+		 * To update the brand new Agent
 		 */
-		UCCXAgent agent = new UCCXAgent("", lastName, firstName, "", agentType, team, skills);
-		agent.setAgentData(agentData);
-		agent.setAction(actionType.inject);
-		agent.resolve();
+		UCCXAgent agent = new UCCXAgent(agentData.getUserID(), lastName, firstName, agentData.getLineNumber(), agentType, team, primarySupervisorOf, secondarySupervisorOf, skills);
+		/**
+		 * Here we update the agent because it has just been created by the CUCM
+		 */
+		agent.setAction(actionType.update);
 		
 		itil.add(agent);
 		
@@ -191,10 +202,9 @@ public class AgentTools
 	 * @throws Exception 
 	 */
 	public static String updateAgent(String userID, String lastName,
-			String firstName, Office office, AgentType agentType, String teamName,
+			String firstName, Office office, AgentType agentType, Team team, ArrayList<Team> primarySupervisorOf, ArrayList<Team> secondarySupervisorOf,
 			ArrayList<Skill> skills, String deviceName, boolean udpLogin) throws Exception
 		{
-		Team team = new Team(teamName);
 		AgentData agentData = new AgentData(userID, firstName, lastName, "", deviceName, "", agentType, team, skills, office);
 		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to Inject List
 		
@@ -212,10 +222,8 @@ public class AgentTools
 		 * UCCX items
 		 * To create the Agent
 		 */
-		UCCXAgent agent = new UCCXAgent(userID, lastName, firstName, "", agentType, team, skills);
-		agent.setAgentData(agentData);
+		UCCXAgent agent = new UCCXAgent(userID, lastName, firstName, "", agentType, team, primarySupervisorOf, secondarySupervisorOf, skills);
 		agent.setAction(actionType.update);
-		agent.resolve();
 		
 		itil.add(agent);
 		

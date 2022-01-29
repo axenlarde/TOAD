@@ -4,6 +4,7 @@
 			<name>TLS</name>
 			<templatename>template1</templatename>
 			<fullname>Toulouse</fullname>
+			<teamname>TLS</teamname>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>

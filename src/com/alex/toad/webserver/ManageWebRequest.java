@@ -214,14 +214,37 @@ public class ManageWebRequest
 			
 			String lastName = UsefulMethod.getItemByName("lastname", t);
 			String firstName = UsefulMethod.getItemByName("firstname", t);
-			String officeName = UsefulMethod.getItemByName("office", t);
-			Office office = UsefulMethod.getOffice(officeName);
+			//String officeName = UsefulMethod.getItemByName("office", t);
+			Office office = UsefulMethod.getOffice(UsefulMethod.getItemByName("team", t));
 			AgentType type = AgentType.valueOf(UsefulMethod.getItemByName("type", t));
 			String deviceName = UsefulMethod.getItemByName("devicename", t);
 			String deviceType = UsefulMethod.getItemByName("devicetype", t);
-			String team = UsefulMethod.getItemByName("team", t);
+			Team team = new Team(UsefulMethod.getItemByName("team", t));
 			boolean udpLogin = Boolean.parseBoolean(UsefulMethod.getItemByName("udplogin", t));
 			
+			//Primary supervisor teams
+			params.add("primarysupervisorof");
+			parsed = xMLGear.getResultListTab(request.getContent(), params);
+			t = parsed.get(0);
+			ArrayList<Team> primarySupervisorOf = new ArrayList<Team>();
+			for(String[] s : t)
+				{
+				primarySupervisorOf.add(new Team(s[1]));
+				}
+			
+			//Primary supervisor teams
+			params.remove("primarysupervisorof");
+			params.add("secondarysupervisorof");
+			parsed = xMLGear.getResultListTab(request.getContent(), params);
+			t = parsed.get(0);
+			ArrayList<Team> secondarySupervisorOf = new ArrayList<Team>();
+			for(String[] s : t)
+				{
+				secondarySupervisorOf.add(new Team(s[1]));
+				}
+			
+			//Skills
+			params.remove("secondarysupervisorof");
 			params.add("skills");
 			params.add("skill");
 			parsed = xMLGear.getResultListTab(request.getContent(), params);
@@ -237,7 +260,18 @@ public class ManageWebRequest
 			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
 				{
 				Variables.getLogger().debug("Trying to create agent : "+firstName+" "+lastName+" "+type.name()+" "+office.getFullname());
-				String taskID = AgentTools.addAgent(lastName, firstName, office, type, team, skills, deviceName, deviceType, udpLogin);
+				String taskID = AgentTools.addAgent(
+						lastName,
+						firstName,
+						office,
+						type,
+						team,
+						primarySupervisorOf,
+						secondarySupervisorOf,
+						skills,
+						deviceName,
+						deviceType,
+						udpLogin);
 				return WebRequestBuilder.buildAddAgentReply(taskID);
 				}
 			}
@@ -268,14 +302,33 @@ public class ManageWebRequest
 			String lastName = UsefulMethod.getItemByName("lastname", t);
 			String firstName = UsefulMethod.getItemByName("firstname", t);
 			AgentType type = AgentType.valueOf(UsefulMethod.getItemByName("type", t));
-			String team = UsefulMethod.getItemByName("team", t);
+			Team team = new Team(UsefulMethod.getItemByName("team", t));
 			String deviceName = UsefulMethod.getItemByName("devicename", t);
 			boolean udpLogin = Boolean.parseBoolean(UsefulMethod.getItemByName("udplogin", t));
 			
 			//Office
-			String officeName = UsefulMethod.getItemByName("office", t);
-			Office office = UsefulMethod.getOffice(officeName);
+			Office office = UsefulMethod.getOffice(UsefulMethod.getItemByName("team", t));
 			
+			//Primary supervisor teams
+			params.add("primarysupervisorof");
+			parsed = xMLGear.getResultListTab(request.getContent(), params);
+			t = parsed.get(0);
+			ArrayList<Team> primarySupervisorOf = new ArrayList<Team>();
+			for(String[] s : t)
+				{
+				primarySupervisorOf.add(new Team(s[1]));
+				}
+			
+			//Primary supervisor teams
+			params.remove("primarysupervisorof");
+			params.add("secondarysupervisorof");
+			parsed = xMLGear.getResultListTab(request.getContent(), params);
+			t = parsed.get(0);
+			ArrayList<Team> secondarySupervisorOf = new ArrayList<Team>();
+			for(String[] s : t)
+				{
+				secondarySupervisorOf.add(new Team(s[1]));
+				}
 			
 			//Skills
 			params.add("skills");
@@ -293,7 +346,18 @@ public class ManageWebRequest
 			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
 				{
 				Variables.getLogger().debug("Trying to update agent : "+firstName+" "+lastName+" "+type.name());
-				String taskID = AgentTools.updateAgent(userID, lastName, firstName, office, type, team, skills, deviceName, udpLogin);
+				String taskID = AgentTools.updateAgent(
+						userID,
+						lastName,
+						firstName,
+						office,
+						type,
+						team,
+						primarySupervisorOf,
+						secondarySupervisorOf,
+						skills,
+						deviceName,
+						udpLogin);
 				return WebRequestBuilder.buildUpdateAgentReply(taskID);
 				}
 			}

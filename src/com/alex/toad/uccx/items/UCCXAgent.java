@@ -31,29 +31,35 @@ public class UCCXAgent extends ItemToInject
 	private UCCXAgentLinker myAgent;
 	private AgentType agentType;
 	private Team team;
+	private ArrayList<Team> primarySupervisorOf;
+	private ArrayList<Team> secondarySupervisorOf;
 	private ArrayList<Skill> skills;
-	
-	private AgentData agentData;
 	
 	/**
 	 * Constructor
+	 * @throws Exception 
 	 */
-	public UCCXAgent(String userID, String lastname,
+	public UCCXAgent(String name, String lastname,
 			String firstname, String telephoneNumber,
-			AgentType agentType, Team team, ArrayList<Skill> skills)
+			AgentType agentType, Team team, ArrayList<Team> primarySupervisorOf,
+			ArrayList<Team> secondarySupervisorOf, ArrayList<Skill> skills) throws Exception
 		{
-		super(itemType.agent, userID);
+		super(itemType.agent, name);
+		myAgent = new UCCXAgentLinker(name);
 		this.lastname = lastname;
 		this.firstname = firstname;
 		this.telephoneNumber = telephoneNumber;
 		this.agentType = agentType;
 		this.team = team;
+		this.primarySupervisorOf = primarySupervisorOf;
+		this.secondarySupervisorOf = secondarySupervisorOf;
 		this.skills = skills;
 		}
 
-	public UCCXAgent(String userID)
+	public UCCXAgent(String userID) throws Exception
 		{
 		super(itemType.agent, userID);
+		myAgent = new UCCXAgentLinker(name);
 		}
 	
 	/**
@@ -71,6 +77,8 @@ public class UCCXAgent extends ItemToInject
 		myAgent.setAgentType(this.getAgentType());
 		myAgent.setSkills(this.skills);
 		myAgent.setTeam(this.team);
+		myAgent.setPrimarySupervisorOf(primarySupervisorOf);
+		myAgent.setSecondarySupervisorOf(secondarySupervisorOf);
 		/************/
 		
 		errorList.addAll(myAgent.init());
@@ -115,6 +123,8 @@ public class UCCXAgent extends ItemToInject
 		agentType = myUA.getAgentType();
 		team = myUA.getTeam();
 		skills = myUA.getSkills();
+		primarySupervisorOf = myUA.getPrimarySupervisorOf();
+		secondarySupervisorOf = myUA.getSecondarySupervisorOf();
 		
 		Variables.getLogger().debug("Item "+this.name+" exists in the UCCX");
 		return true;
@@ -136,16 +146,8 @@ public class UCCXAgent extends ItemToInject
 		if(agentType != null)tuList.add(UCCXAgentLinker.toUpdate.agentType);
 		if((skills != null) && (skills.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.skills);
 		if(team != null)tuList.add(UCCXAgentLinker.toUpdate.team);
-		}
-
-	public AgentData getAgentData()
-		{
-		return agentData;
-		}
-
-	public void setAgentData(AgentData agentData)
-		{
-		this.agentData = agentData;
+		if((primarySupervisorOf != null) && (primarySupervisorOf.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.primarySupervisorOf);
+		if((secondarySupervisorOf != null) && (secondarySupervisorOf.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.secondarySupervisorOf);
 		}
 
 	public String getLastname()
@@ -216,6 +218,26 @@ public class UCCXAgent extends ItemToInject
 	public void setTeam(Team team)
 		{
 		this.team = team;
+		}
+
+	public ArrayList<Team> getPrimarySupervisorOf()
+		{
+		return primarySupervisorOf;
+		}
+
+	public void setPrimarySupervisorOf(ArrayList<Team> primarySupervisorOf)
+		{
+		this.primarySupervisorOf = primarySupervisorOf;
+		}
+
+	public ArrayList<Team> getSecondarySupervisorOf()
+		{
+		return secondarySupervisorOf;
+		}
+
+	public void setSecondarySupervisorOf(ArrayList<Team> secondarySupervisorOf)
+		{
+		this.secondarySupervisorOf = secondarySupervisorOf;
 		}
 	
 	

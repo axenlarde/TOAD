@@ -16,7 +16,6 @@ import com.alex.toad.uccx.misc.UCCXError;
 import com.alex.toad.uccx.misc.UCCXTools;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
-import com.alex.toad.utils.xMLGear;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.utils.Variables.requestType;
 
@@ -37,12 +36,16 @@ public class UCCXAgentLinker extends RESTItemLinker
 	telephoneNumber;
 	private AgentType agentType;
 	private Team team;
+	private ArrayList<Team> primarySupervisorOf;
+	private ArrayList<Team> secondarySupervisorOf;
 	private ArrayList<Skill> skills;
 	
 	public enum toUpdate implements ToUpdate
 		{
 		agentType,
 		team,
+		primarySupervisorOf,
+		secondarySupervisorOf,
 		skills
 		}
 	
@@ -66,6 +69,8 @@ public class UCCXAgentLinker extends RESTItemLinker
 		try
 			{
 			RESTTools.getRESTUUIDV105(itemType.team, team.getName());
+			for(Team t : primarySupervisorOf)RESTTools.getRESTUUIDV105(itemType.team, t.getName());
+			for(Team t : secondarySupervisorOf)RESTTools.getRESTUUIDV105(itemType.team, t.getName());
 			}
 		catch (Exception e)
 			{
@@ -121,9 +126,29 @@ public class UCCXAgentLinker extends RESTItemLinker
 		content.append("<resources>\r\n");
 		content.append("	<resource>\r\n");
 		
-		if(tuList.contains(toUpdate.skills))content.append(UCCXTools.getRESTFromSkills(skills));
-		if(tuList.contains(toUpdate.team))content.append(UCCXTools.getRESTFromTeam(team));
 		if(tuList.contains(toUpdate.agentType))content.append("		<type>"+UsefulMethod.convertAgentTypeToInt(agentType)+"</type>\r\n");
+		if(tuList.contains(toUpdate.team))content.append(UCCXTools.getRESTFromTeam(team));
+		if(tuList.contains(toUpdate.primarySupervisorOf))
+			{
+			content.append("<primarySupervisorOf>");
+			for(Team t : primarySupervisorOf)
+				{
+				content.append(UCCXTools.getRESTFromTeam(t));
+				}
+			content.append("</primarySupervisorOf>");
+			}
+		if(tuList.contains(toUpdate.secondarySupervisorOf))
+			{
+			content.append("<secondarySupervisorOf>");
+			for(Team t : secondarySupervisorOf)
+				{
+				content.append(UCCXTools.getRESTFromTeam(t));
+				}
+			content.append("</secondarySupervisorOf>");
+			}
+		if(tuList.contains(toUpdate.skills))content.append(UCCXTools.getRESTFromSkills(skills));
+		
+		
 		
 		content.append("	</resource>\r\n");
 		content.append("</resources>\r\n");
@@ -208,6 +233,26 @@ public class UCCXAgentLinker extends RESTItemLinker
 	public void setTeam(Team team)
 		{
 		this.team = team;
+		}
+
+	public ArrayList<Team> getPrimarySupervisorOf()
+		{
+		return primarySupervisorOf;
+		}
+
+	public void setPrimarySupervisorOf(ArrayList<Team> primarySupervisorOf)
+		{
+		this.primarySupervisorOf = primarySupervisorOf;
+		}
+
+	public ArrayList<Team> getSecondarySupervisorOf()
+		{
+		return secondarySupervisorOf;
+		}
+
+	public void setSecondarySupervisorOf(ArrayList<Team> secondarySupervisorOf)
+		{
+		this.secondarySupervisorOf = secondarySupervisorOf;
 		}
 
 	
