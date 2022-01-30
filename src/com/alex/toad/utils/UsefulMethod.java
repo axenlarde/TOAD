@@ -123,6 +123,7 @@ public class UsefulMethod
 	 */
 	public static synchronized void initAXLConnectionToCUCM() throws Exception
 		{
+		Variables.getLogger().debug("CUCM AXL connection initialization started");
 		try
 			{
 			UsefulMethod.disableSecurity();//We first turned off security
@@ -149,6 +150,7 @@ public class UsefulMethod
 			 */
 			SimpleRequest.getCUCMVersion();
 			Variables.setCUCMReachable(true);
+			Variables.getLogger().debug("CUCM AXL connection initialization done");
 			}
 		catch (Exception e)
 			{
@@ -1038,7 +1040,11 @@ public class UsefulMethod
 		{
 		for(Office o : Variables.getOfficeList())
 			{
-			if((o.getFullname().equals(name)) || (o.getTeam().equals(name))) return o;
+			if((o.getFullname().toLowerCase().equals(name.toLowerCase())) || (o.getTeam().toLowerCase().equals(name.toLowerCase())))
+				{
+				Variables.getLogger().debug("Office found : "+o.getFullname());
+				return o;
+				}
 			}
 		
 		throw new Exception("Office not found : "+name);

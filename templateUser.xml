@@ -3,36 +3,36 @@
 Rappel :
 Texte libre à mettre entre guillement simple, exemple = 'test'
 utiliser des + pour séparer les éléments
-Un chiffre entre étoiles placé avant une valeure indique le nombre de lettre à utiliser, exemple : *1_*web.firstname = On utilise la première lettre du prénom
+Un chiffre entre étoiles placé avant une valeure indique le nombre de lettre à utiliser, exemple : *1_*agent.firstname = On utilise la première lettre du prénom
 Le symbole *M* indique que toute la valeure suivante doit être converti en majuscule
 Le symbole *1M* indique que seul la première lettre doit être converti en majuscule. Le chiffre peut être ajusté.
 Le symbole *m* indique que toute la valeure suivante doit être converti en minuscule
 Le symbole *1m* indique que seul la première lettre doit être converti en minuscule. Le chiffre peut être ajusté.
-Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 4 premières lettres du nom mises en majuscule. *M**4* est équivalent. *2M**5*web.lastname affichera les 5 première lettres du prénom dont les deux premières seront en majuscule.
+Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera les 4 premières lettres du nom mises en majuscule. *M**4* est équivalent. *2M**5*agent.lastname affichera les 5 première lettres du prénom dont les deux premières seront en majuscule.
 -->
 <xml>
 	<items>
 		<phone>
-			<targetname>phone</targetname>
-			<devicename>'SEP'+web.phonemac</devicename>
-			<description>(*1M**C*web.firstname+' '+*M**C*web.lastname+' - '+office.name)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname+' - '+office.name)</description>
-			<linedescription>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</linedescription>
-			<alertingname>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</alertingname>
-			<display>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</display>
-			<linetextlabel>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</linetextlabel>
+			<targetname>softphone</targetname>
+			<devicename>'CSF'+agent.userid</devicename>
+			<description>(*1M**C*agent.firstname+' '+*M**C*agent.lastname+' - '+office.name)IfLongerThan40(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname+' - '+office.name)</description>
+			<linedescription>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan40(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</linedescription>
+			<alertingname>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan40(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</alertingname>
+			<display>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan40(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</display>
+			<linetextlabel>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan40(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</linetextlabel>
 			<externalphonemask>office.setting.1</externalphonemask>
 			<aarmask></aarmask>
 			<commondeviceconfig>office.name+'_CDC'</commondeviceconfig>
 			<commonphoneconfig>'Standard Common Phone Profile'</commonphoneconfig>
-			<securityprofile>*LFphone*web.phonetype+' - Standard SIP Non-Secure Profile'</securityprofile>
+			<securityprofile>*LFphone*agent.devicetype+' - Standard SIP Non-Secure Profile'</securityprofile>
 			<devicemobilitymode>'Default'</devicemobilitymode><!--Off, On, Default-->
-			<aargroup>office.aargroup</aargroup>
+			<!--<aargroup>office.aargroup</aargroup>-->
 			<aarcss></aarcss>
 			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
 			<reroutingcss>office.name+'_DEVICE_CSS'</reroutingcss>
-			<linenumber>web.linenumber1</linenumber><!--One or more-->
-			<cssline>'TBD'</cssline>
-			<cssforward>'TBD'</cssforward>
+			<linenumber>agent.linenumber</linenumber><!--One or more-->
+			<cssline>'All_CSS'</cssline>
+			<!--<cssforward>'TBD'</cssforward>
 			<fwalldestination>'TBD'</fwalldestination>
 			<fwnoandestination>'TBD'</fwnoandestination>
 			<fwbusydestination>'TBD'</fwbusydestination>
@@ -41,38 +41,38 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 			<fwnoanvoicemailenable>'false'</fwnoanvoicemailenable>
 			<fwbusyvoicemailenable>'false'</fwbusyvoicemailenable>
 			<fwunrvoicemailenable>'false'</fwunrvoicemailenable>
-			<voicemailprofile>office.voicemailprofile</voicemailprofile>
+			<voicemailprofile>office.voicemailprofile</voicemailprofile>-->
 			<routepartition>config.didpartition</routepartition>
-			<producttype>*LFphone*web.phonetype</producttype>
+			<producttype>*LFphone*agent.devicetype</producttype>
 			<protocol>'SIP'</protocol>
-			<buttontemplate>*LFpbt*web.phonetype</buttontemplate>
+			<buttontemplate>*LFpbt*agent.devicetype</buttontemplate>
 			<devicepool>office.name+'_DP'</devicepool>
 			<location>office.name+'_LOC'</location>
 			<cssdevice>office.name+'_DEVICE_CSS'</cssdevice>
-			<service>config.ippaservice</service><!--'Service Name':'Service URL label' One or more service-->
-			<speeddial>'tbd'</speeddial><!--One or more-->
+			<service>'ippa':'UCCX'</service><!--'Service Name':'Service URL label' One or more service-->
+			<!--<speeddial>'tbd'</speeddial>--><!--One or more-->
 		</phone>
 		<phone>
 			<targetname>loggedoutphone</targetname>
-			<devicename>'SEP'+web.phonemac</devicename>
+			<devicename>'SEP'+agent.devicename</devicename>
 			<description>'Telephone non connecte'</description>
 			<linedescription>'Ligne HSDA'</linedescription>
 			<commondeviceconfig>office.name+'_CDC'</commondeviceconfig>
 			<commonphoneconfig>'Standard Common Phone Profile'</commonphoneconfig>
-			<securityprofile>*LFphone*web.phonetype+' - Standard SIP Non-Secure Profile'</securityprofile>
+			<securityprofile>*LFphone*agent.devicetype+' - Standard SIP Non-Secure Profile'</securityprofile>
 			<devicemobilitymode>'Default'</devicemobilitymode><!--Off, On, Default-->
 			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
 			<reroutingcss>office.name+'_DEVICE_CSS'</reroutingcss>
 			<linenumber>cucm.availableline</linenumber><!--One or more-->
-			<cssline>'ALL_CSS'</cssline>
+			<cssline>'All_CSS'</cssline>
 			<fwallvoicemailenable>'false'</fwallvoicemailenable>
 			<fwnoanvoicemailenable>'false'</fwnoanvoicemailenable>
 			<fwbusyvoicemailenable>'false'</fwbusyvoicemailenable>
 			<fwunrvoicemailenable>'false'</fwunrvoicemailenable>
 			<routepartition>config.nodidpartition</routepartition>
-			<producttype>*LFphone*web.phonetype</producttype>
+			<producttype>*LFphone*agent.devicetype</producttype>
 			<protocol>'SIP'</protocol>
-			<buttontemplate>*LFpbt*web.phonetype</buttontemplate>
+			<buttontemplate>*LFpbt*agent.devicetype</buttontemplate>
 			<devicepool>office.name+'_DP'</devicepool>
 			<location>office.name+'_LOC'</location>
 			<cssdevice>office.name+'_DEVICE_CSS'</cssdevice>
@@ -81,15 +81,15 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 		<udp>
 			<targetname>udp</targetname>
 			<devicename>*m*agent.userid</devicename>
-			<description>(*1M**C*web.firstname+' '+*M**C*web.lastname+' - '+office.name)IfLongerThan40(*1_**M**C*web.firstname+'.'+*M**C*web.lastname+' - '+office.name)</description>
-			<linedescription>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</linedescription>
-			<alertingname>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</alertingname>
-			<display>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</display>
-			<linetextlabel>(*1M**C*web.firstname+' '+*M**C*web.lastname)IfLongerThan30(*1_**M**C*web.firstname+'.'+*M**C*web.lastname)</linetextlabel>
+			<description>(*1M**C*agent.firstname+' '+*M**C*agent.lastname+' - '+office.name)IfLongerThan40(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname+' - '+office.name)</description>
+			<linedescription>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan30(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</linedescription>
+			<alertingname>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan30(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</alertingname>
+			<display>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan30(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</display>
+			<linetextlabel>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan30(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</linetextlabel>
 			<externalphonemask>office.setting.1</externalphonemask>
-			<linenumber>cucm.availableline</linenumber><!--One or more-->
-			<cssline>'TBD'</cssline>
-			<cssforward>'TBD'</cssforward>
+			<linenumber>agent.linenumber</linenumber><!--One or more-->
+			<cssline>'All_CSS'</cssline>
+			<!--<cssforward>'TBD'</cssforward>
 			<fwalldestination>'TBD'</fwalldestination>
 			<fwnoandestination>'TBD'</fwnoandestination>
 			<fwbusydestination>'TBD'</fwbusydestination>
@@ -98,29 +98,29 @@ Les combinaisons sont possibles, par exemple : *4**M*web.lastname affichera les 
 			<fwnoanvoicemailenable>'false'</fwnoanvoicemailenable>
 			<fwbusyvoicemailenable>'false'</fwbusyvoicemailenable>
 			<fwunrvoicemailenable>'false'</fwunrvoicemailenable>
-			<voicemailprofile>office.voicemailprofile</voicemailprofile>
+			<voicemailprofile>office.voicemailprofile</voicemailprofile>-->
 			<routepartition>config.didpartition</routepartition>
-			<producttype>*LFphone*web.phonetype</producttype>
-			<buttontemplate>*LFpbt*web.phonetype</buttontemplate>
-			<service>config.ippaservice</service><!--'Service Name':'Service URL label' One or more service-->
+			<producttype>*LFphone*agent.devicetype</producttype>
+			<buttontemplate>*LFpbt*agent.devicetype</buttontemplate>
+			<service>'ippa':'UCCX'</service><!--'Service Name':'Service URL label'--><!--One or more-->
 			<protocol>'SIP'</protocol>
-			<speeddial>tbd</speeddial><!--One or more-->
+			<!--<speeddial>tbd</speeddial>--> 
 		</udp>
 		<user>
 			<targetname>user</targetname>
 			<userid>agent.userid</userid>
-			<lastname>*M**C*web.lastname</lastname>
-			<firstname>*1M**C*web.firstname</firstname>
+			<lastname>*M**C*agent.lastname</lastname>
+			<firstname>*1M**C*agent.firstname</firstname>
 			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
 			<group>'Standard CCM End Users'</group><!--One or more-->
 		</user>
 		<user>
 			<targetname>newuser</targetname>
-			<userid>agent.userid</userid><!--Should generate something like AgentTLS1-->
-			<lastname>*M**C*web.lastname</lastname>
-			<firstname>(*1M**C*web.firstname)IfLongerThan30(*1_**M**C*web.firstname+'.')</firstname>
+			<userid>agent.userid</userid>
+			<lastname>*M**C*agent.lastname</lastname>
+			<firstname>(*1M**C*agent.firstname)IfLongerThan30(*1_**M**C*agent.firstname+'.')</firstname>
 			<telephonenumber>agent.linenumber</telephonenumber>
-			<userlocal>office.userlocal</userlocal>
+			<!--<userlocal>office.userlocal</userlocal>-->
 			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
 			<password>agent.linenumber</password>
 			<pin>agent.linenumber</pin>

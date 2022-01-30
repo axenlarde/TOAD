@@ -43,9 +43,11 @@ public class UCCXTools
 		
 		//PrimarySupervisorof
 		ArrayList<Team> primarySupervisorOf = new ArrayList<Team>();
+		//TBW
 		
 		//SecondarySupervisorof
 		ArrayList<Team> secondarySupervisorOf = new ArrayList<Team>();
+		//TBW
 		
 		//Skill
 		ArrayList<Skill> skills = new ArrayList<Skill>();
@@ -61,8 +63,8 @@ public class UCCXTools
 				UsefulMethod.getItemByName("extension", s),
 				type,
 				new Team(UsefulMethod.getAttributeItemByName("team", s)),
-				,
-				,
+				primarySupervisorOf,
+				secondarySupervisorOf,
 				skills);
 		
 		agent.setUUID(UUID);

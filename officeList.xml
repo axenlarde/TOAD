@@ -29,9 +29,38 @@
 			</setting>
 		</office>
 		<office>
+			<name>DEFAULT</name>
+			<templatename>template1</templatename>
+			<fullname>Default</fullname>
+			<teamname>Default</teamname>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
 			<name>MLK</name>
 			<templatename>template3</templatename>
 			<fullname>Malakoff</fullname>
+			<teamname>MLK</teamname>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>

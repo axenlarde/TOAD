@@ -24,7 +24,7 @@ the collection file
 				<action>inject</action>
 			</phone>
 			<user>
-				<target>updateuser</target>
+				<target>updateudp</target>
 				<action>update</action>
 			</user>
 			<user>

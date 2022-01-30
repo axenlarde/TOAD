@@ -82,7 +82,7 @@ public class WebRequestBuilder
 	/**
 	 * To build the search request reply
 	 */
-	public static WebRequest buildSearchReply(ArrayList<AgentData> agents)
+	public static WebRequest buildSearchReply(ArrayList<UCCXAgent> agents)
 		{
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.search;
@@ -95,15 +95,14 @@ public class WebRequestBuilder
 		
 		try
 			{
-			for(AgentData ad : agents)
+			for(UCCXAgent ad : agents)
 				{
 				content.append("				<agent>\r\n");
-				content.append("					<userid>"+ad.getUserID()+"</userid>\r\n");
-				content.append("					<firstname>"+ad.getFirstName()+"</firstname>\r\n");
-				content.append("					<lastname>"+ad.getLastName()+"</lastname>\r\n");
+				content.append("					<userid>"+ad.getName()+"</userid>\r\n");
+				content.append("					<firstname>"+ad.getFirstname()+"</firstname>\r\n");
+				content.append("					<lastname>"+ad.getLastname()+"</lastname>\r\n");
 				content.append("					<type>"+ad.getAgentType()+"</type>\r\n");
-				content.append("					<team>"+ad.getTeam()+"</team>\r\n");
-				//content.append(buildAgent(ad));
+				content.append("					<team>"+ad.getTeam().getName()+"</team>\r\n");
 				content.append("				</agent>\r\n");
 				}
 			}

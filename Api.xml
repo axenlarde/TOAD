@@ -106,7 +106,6 @@ copyLogFile
 				<firstname></firstname>
 				<lastname></lastname>
 				<number></number>
-				<office></office>
 				<type></type><!--agent,supervisor-->
 				<team></team><!--Team name-->
 				<primarysupervisorof>
@@ -224,8 +223,10 @@ copyLogFile
 		<securitytoken></securitytoken><!--Security token of the connected user. To check if the creation is allowed-->
 		<content>
 			<agent>
+				<userid></userid><!--if empty we will generate one-->
 				<firstname></firstname>
 				<lastname></lastname>
+				<number></number><!--if empty we will generate one-->
 				<!--<office></office>-->
 				<type></type><!--agent,supervisor-->
 				<devicename></devicename><!--Mac address-->

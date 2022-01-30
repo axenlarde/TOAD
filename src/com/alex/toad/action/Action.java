@@ -1,6 +1,11 @@
 package com.alex.toad.action;
 
+import com.alex.toad.misc.CollectionTools;
+import com.alex.toad.uccx.items.Team;
+import com.alex.toad.uccx.items.UCCXAgent.AgentType;
+import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
+import com.alex.toad.webserver.AgentData;
 import com.alex.toad.webserver.WebListenerManager;
 
 /**
@@ -20,13 +25,6 @@ public class Action
 		/*
 		try
 			{
-			
-			
-			String reply = Variables.getUccxServer().send(requestType.GET, "adminapi/team", "");
-			
-			System.out.println(reply);
-			
-			System.out.println(UCCXTools.getTeamFromRESTReply(reply).getName());
 			
 			
 			

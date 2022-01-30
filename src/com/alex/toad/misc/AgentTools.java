@@ -53,23 +53,18 @@ public class AgentTools
 	 * Will look for a list of agents matching the search string
 	 * @throws Exception 
 	 */
-	public static ArrayList<AgentData> search(String search) throws Exception
+	public static ArrayList<UCCXAgent> search(String search) throws Exception
 		{
-		ArrayList<AgentData> agents = new ArrayList<AgentData>();
+		ArrayList<UCCXAgent> agents = new ArrayList<UCCXAgent>();
 		
 		ArrayList<UCCXAgent> list = RESTTools.doListAgent(Variables.getUccxServer());
 		
 		for(UCCXAgent ua : list)
 			{
-			if(Pattern.matches(".*"+search+".*", ua.getName()+ua.getLastname()+ua.getFirstname()))
+			if(Pattern.matches(".*"+search+".*", ua.getName()+ua.getLastname()+ua.getFirstname()+ua.getTeam().getName()))
 				{
-				AgentData ad = new AgentData(ua.getName());
-				ad.setLastName(ua.getLastname());
-				ad.setFirstName(ua.getFirstname());
-				ad.setAgentType(ua.getAgentType());
-				ad.setTeam(ua.getTeam());
-				
-				agents.add(ad);
+				Variables.getLogger().debug("The agent "+ua.getName()+" match the search criteria : "+search);
+				agents.add(ua);
 				}
 			}
 		
@@ -147,14 +142,20 @@ public class AgentTools
 	 * Used to create a new agent
 	 * Will return the taskID
 	 */
-	public static String addAgent(String lastName,
+	public static String addAgent(String userID, String lastName,
 			String firstName, Office office, AgentType agentType, Team team, ArrayList<Team> primarySupervisorOf, ArrayList<Team> secondarySupervisorOf,
-			ArrayList<Skill> skills, String deviceName, String deviceModel, boolean udpLogin) throws Exception
+			ArrayList<Skill> skills, String deviceName, String deviceModel, String lineNumber, boolean udpLogin) throws Exception
 		{
-		AgentData agentData = new AgentData(UsefulMethod.getTargetOption("agentidpattern"),
+		String userIDPattern = UsefulMethod.getTargetOption("agentidpattern");
+		String linePattern = UsefulMethod.getTargetOption("agentextension");
+		
+		if(userID.equals(""))userID = userIDPattern;
+		if(lineNumber.equals(""))lineNumber = linePattern;
+		
+		AgentData agentData = new AgentData(userID,
 				firstName,
 				lastName,
-				UsefulMethod.getTargetOption("agentextension"),
+				lineNumber,
 				deviceName,
 				deviceModel,
 				agentType,
@@ -185,7 +186,7 @@ public class AgentTools
 		 */
 		agent.setAction(actionType.update);
 		
-		itil.add(agent);
+		//itil.add(agent);
 		
 		/**
 		 * We now launch the injection process

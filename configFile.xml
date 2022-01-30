@@ -42,7 +42,8 @@ Overal configuration file
 		<!--Mandatory variables template-->
 		<addagentusercreationprofilename>addAgent</addagentusercreationprofilename><!--The creation profile to use for agent creation-->
 		<updateagentusercreationprofilename>updateAgent</updateagentusercreationprofilename><!--The creation profile to use for agent update-->
-		<agentidpattern>*1M*agent.agenttype+office.name+office.availableuseridindex</agentidpattern><!--Should generate something like AgentTLS1-->
+		<agentidpattern>office.availableuserid</agentidpattern>
+		<agentidprefix>*1M*agent.agenttype+office.name</agentidprefix>
 		<agentextension>cucm.availableline</agentextension>
 		<officepattern></officepattern><!--To find the user's office during a getAgent-->
 		<!--Web server parameters-->

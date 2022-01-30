@@ -175,16 +175,20 @@ public class CollectionTools
 				regex.append(applyRegex(result, param[i]));
 				match = true;
 				}
-			else if(Pattern.matches(".*office.availableuseridindex.*", param[i]))
+			else if(Pattern.matches(".*office.availableuserid.*", param[i]))
 				{
-				regex.append(applyRegex(getAvailableUserId(applyPattern(ad, UsefulMethod.getTargetOption("agentidprefix"), null, false)), param[i]));
+				String prefix = UsefulMethod.getTargetOption("agentidprefix");
+				//pattern = pattern.replaceAll("\\+office.availableuseridindex|office.availableuseridindex\\+", "");
+				prefix = applyPattern(ad, prefix, null, false);
+				String userID = getAvailableUserId(prefix);
+				Variables.getLogger().debug("Generated userID : "+userID);
+				regex.append(userID);
 				match = true;
 				}
 			else if(Pattern.matches(".*office\\..*", param[i]))
 				{
 				String result = ad.getOffice().getString(param[i]);
 				regex.append(applyRegex(result, param[i]));
-				
 				match = true;
 				}
 			else if(Pattern.matches(".*config\\..*", param[i]))
@@ -192,7 +196,7 @@ public class CollectionTools
 				String[] tab = param[i].split("\\.");
 				String result = UsefulMethod.getTargetOption(tab[1]);
 				//regex.append(applyRegex(result, param[i]));
-				regex.append(applyRegex(applyPattern(ad, result, null, false),param[i]));//BETA : To allow to store regex in the configuration file then apply them as a pattern
+				regex.append(applyRegex(applyPattern(ad, result, null, false),param[i]));//BETA : Should allow to store regex in the configuration file then apply them as a pattern
 				
 				match = true;
 				}

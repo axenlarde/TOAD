@@ -70,7 +70,14 @@ public class AgentData
 				{
 				if(f.getName().toLowerCase().equals(tab[1].toLowerCase()))
 					{
-					return (String) f.get(this);
+					if(f.getType().equals(AgentType.class))
+						{
+						return ((AgentType) f.get(this)).name();
+						}
+					else
+						{
+						return (String) f.get(this);
+						}
 					}
 				}
 			}
@@ -79,6 +86,10 @@ public class AgentData
 			if(tab[1].equals("team"))
 				{
 				return team.getString(tab[2]);
+				}
+			else if(tab[1].equals("office"))
+				{
+				return office.getString(tab[2]);
 				}
 			}
 		else if(tab.length == 4)
