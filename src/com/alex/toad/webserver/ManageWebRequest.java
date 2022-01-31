@@ -213,11 +213,11 @@ public class ManageWebRequest
 			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
 			String[][] t = parsed.get(0);
 			
+			String userCreationProfile = UsefulMethod.getItemByName("usercreationprofile", t);
 			String userID = UsefulMethod.getItemByName("userid", t);
 			String lastName = UsefulMethod.getItemByName("lastname", t);
 			String firstName = UsefulMethod.getItemByName("firstname", t);
 			String lineNumber = UsefulMethod.getItemByName("number", t);
-			//String officeName = UsefulMethod.getItemByName("office", t);
 			Office office = UsefulMethod.getOffice(UsefulMethod.getItemByName("team", t));
 			AgentType type = AgentType.valueOf(UsefulMethod.getItemByName("type", t));
 			String deviceName = UsefulMethod.getItemByName("devicename", t);
@@ -264,6 +264,7 @@ public class ManageWebRequest
 				{
 				Variables.getLogger().debug("Trying to create agent : "+firstName+" "+lastName+" "+type.name()+" "+office.getFullname());
 				String taskID = AgentTools.addAgent(
+						userCreationProfile,
 						userID,
 						lastName,
 						firstName,

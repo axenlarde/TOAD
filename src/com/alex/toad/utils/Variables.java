@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import com.alex.toad.cucm.user.items.User;
 import com.alex.toad.cucm.user.misc.TemplateUserReader;
 import com.alex.toad.cucm.user.misc.UserCreationProfile;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.misc.Office;
 import com.alex.toad.misc.Task;
+import com.alex.toad.misc.UsedItemList;
 import com.alex.toad.misc.ValueMatcher;
 import com.alex.toad.misc.storedUUID;
 import com.alex.toad.rest.misc.RESTServer;
@@ -244,7 +244,6 @@ public class Variables
 	private static String officeListFileName;
 	private static String substitutesFileName;
 	private static String userCreationProfileFileName;
-	private static ArrayList<String> matcherList;
 	private static ArrayList<ValueMatcher> substituteList;
 	private static ArrayList<storedUUID> uuidList;
 	private static boolean CUCMReachable;
@@ -254,6 +253,8 @@ public class Variables
 	private static ArrayList<UserCreationProfile> userCreationProfileList;
 	private static String logFileName;
 	private static ArrayList<Task> taskList;
+	private static ArrayList<UsedItemList> usedUserIdList;
+	private static ArrayList<UsedItemList> usedNumberList;
 	
 	/** Templates **/
 	private static ArrayList<ItemToInject> userTemplateList;//User
@@ -580,21 +581,6 @@ public class Variables
 		Variables.userCreationProfileFileName = userCreationProfileFileName;
 		}
 
-	public static ArrayList<String> getMatcherList() throws Exception
-		{
-		if(matcherList == null)
-			{
-			Variables.getLogger().debug("Initialisation of matcherList");
-			Variables.setMatcherList(UsefulMethod.readFile("matchers", Variables.getMatcherFileName()));
-			}
-		return matcherList;
-		}
-
-	public static void setMatcherList(ArrayList<String> matcherList)
-		{
-		Variables.matcherList = matcherList;
-		}
-
 	public static ArrayList<ValueMatcher> getSubstituteList() throws Exception
 		{
 		if(substituteList == null)
@@ -709,7 +695,27 @@ public class Variables
 		{
 		Variables.uccxServer = uccxServer;
 		}
-	
+
+	public static ArrayList<UsedItemList> getUsedUserIdList()
+		{
+		return usedUserIdList;
+		}
+
+	public static void setUsedUserIdList(ArrayList<UsedItemList> usedUserIdList)
+		{
+		Variables.usedUserIdList = usedUserIdList;
+		}
+
+	public static ArrayList<UsedItemList> getUsedNumberList()
+		{
+		return usedNumberList;
+		}
+
+	public static void setUsedNumberList(ArrayList<UsedItemList> usedNumberList)
+		{
+		Variables.usedNumberList = usedNumberList;
+		}
+
 	
 	
 	/*2022*//*RATEL Alexandre 8)*/

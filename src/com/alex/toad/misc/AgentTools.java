@@ -107,32 +107,9 @@ public class AgentTools
 		agentData.setTeam(agent.getTeam());
 		
 		/**
-		 * We find the office
-		 * 
-		 * Because there is no database about the relation between the offices and their agent
-		 * we have to guess the office every time we look for a user
-		 * We use the office name for that
-		 * If not found, we also try to match the team name with an office name
+		 * We find the office thanks to the Team name
 		 */
-		 try
-			{
-			Office o = UsefulMethod.searchOffice(userID);
-			agentData.setOffice(o);
-			}
-		 catch (Exception e)
-			{
-			Variables.getLogger().debug("No office found for the following userid : "+userID+", looking for a UCCX team name as well");
-			
-			try
-				{
-				Office o = UsefulMethod.searchOffice(agentData.getTeam().getName());
-				agentData.setOffice(o);
-				}
-			catch (Exception e1)
-				{
-				Variables.getLogger().error("No office found for the following userid : "+userID+" , returning null");
-				}
-			}
+		agentData.setOffice(UsefulMethod.getOffice(agentData.getTeam().getName()));
 		
 		return agentData;
 		}
@@ -142,7 +119,7 @@ public class AgentTools
 	 * Used to create a new agent
 	 * Will return the taskID
 	 */
-	public static String addAgent(String userID, String lastName,
+	public static String addAgent(String userCreationProfile, String userID, String lastName,
 			String firstName, Office office, AgentType agentType, Team team, ArrayList<Team> primarySupervisorOf, ArrayList<Team> secondarySupervisorOf,
 			ArrayList<Skill> skills, String deviceName, String deviceModel, String lineNumber, boolean udpLogin) throws Exception
 		{
@@ -171,7 +148,7 @@ public class AgentTools
 		 * CUCM items
 		 * Listed in the User Creation Profile : Phone, Line, UDP and so on...
 		 */
-		UserCreationProfile ucp = UsefulMethod.getUserCreationProfile(UsefulMethod.getTargetOption("addagentusercreationprofilename"));
+		UserCreationProfile ucp = UsefulMethod.getUserCreationProfile(userCreationProfile);
 		
 		//All the User Creation Profile items are now added to the injection list 
 		itil.addAll(UserTools.getUserItemList(agentData, actionType.inject, ucp, udpLogin));

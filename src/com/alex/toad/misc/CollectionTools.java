@@ -478,14 +478,14 @@ public class CollectionTools
 		}
 	
 	/*************
-	 * Method used to get an available number in the given range
+	 * Method used to get an available number
 	 * from the CUCM
 	 */
 	public static String getAvailableInternalNumber(String range) throws Exception
 		{
 		try
 			{
-			ArrayList<String> myUsedNumberList = new ArrayList<String>();
+			UsedItemList uil = UsefulMethod.getUsedNumberList(range);
 			
 			String[] tab = range.split(":");
 			String firstNumber = tab[0];
@@ -494,36 +494,24 @@ public class CollectionTools
 			int currentNum = Integer.parseInt(firstNumber);
 			int lastNum = Integer.parseInt(lastNumber);
 			
-			//List<Object> SQLResp = SimpleRequest.doSQLQuery("select dnorpattern from numplan where tkpatternusage='2' and dnorpattern between '"+firstNumber+"' and '"+lastNumber+"'");
-			List<Object> SQLResp = SimpleRequest.doSQLQuery("select dnorpattern from numplan where dnorpattern between '"+firstNumber+"' and '"+lastNumber+"'");
-			
-			for(Object o : SQLResp)
-				{
-				Element rowElement = (Element) o;
-				NodeList list = rowElement.getChildNodes();
-				
-				for(int i = 0; i< list.getLength(); i++)
-					{
-					if(list.item(i).getNodeName().equals("dnorpattern"))myUsedNumberList.add(list.item(i).getTextContent());
-					}
-				}
-			
 			while(currentNum < lastNum)
 				{
-				if(!(myUsedNumberList.contains(Integer.toString(currentNum))))
+				if(!(uil.getItemList().contains(Integer.toString(currentNum))))
 					{
-					return Integer.toString(currentNum);
+					String num = Integer.toString(currentNum);
+					uil.getItemList().add(num);//We add the number to the list to be sure to not use it twice
+					Variables.getLogger().debug("Available number found : "+num);
+					return num;
 					}
 				currentNum++;
 				}
-			
-			Variables.getLogger().debug("No available number found in the range : "+range);
-			throw new Exception("No available number found in the range : "+range);
 			}
-		catch(Exception e)
+		catch (Exception e)
 			{
 			throw new Exception("Error while trying to get an available number : "+e.getMessage());
 			}
+		
+		throw new Exception("No available number found in the range : "+range);
 		}
 	
 	/*************
@@ -534,40 +522,28 @@ public class CollectionTools
 		{
 		try
 			{
-			ArrayList<String> usedUserIdList = new ArrayList<String>();
+			UsedItemList uil = UsefulMethod.getUsedUserIDList(prefix);
 			
 			int currentIndex = 1;
 			int lastIndex = Integer.parseInt(UsefulMethod.getTargetOption("maxuseridindex"));//Max index
 			
-			List<Object> SQLResp = SimpleRequest.doSQLQuery("select userid from enduser where userid like '"+prefix+"%'");
-			
-			for(Object o : SQLResp)
-				{
-				Element rowElement = (Element) o;
-				NodeList list = rowElement.getChildNodes();
-				
-				for(int i = 0; i< list.getLength(); i++)
-					{
-					if(list.item(i).getNodeName().equals("userid"))usedUserIdList.add(list.item(i).getTextContent());
-					}
-				}
-			
 			while(currentIndex < lastIndex)
 				{
-				if(!(usedUserIdList.contains(prefix+currentIndex)))
+				if(!(uil.getItemList().contains(prefix+currentIndex)))
 					{
-					return prefix+currentIndex;
+					String userID = prefix+currentIndex;
+					uil.getItemList().add(userID);//We add the userID to the list to be sure to not use it twice
+					Variables.getLogger().debug("Available userID found : "+userID);
+					return userID;
 					}
 				currentIndex++;
 				}
-			
-			Variables.getLogger().debug("No available userID found with the prefix : "+prefix);
-			throw new Exception("No available userID found with the prefix : "+prefix);
 			}
 		catch(Exception e)
 			{
 			throw new Exception("Error while trying to get an available userID : "+e.getMessage());
 			}
+		throw new Exception("No available userID found with the prefix : "+prefix);
 		}
 	
 	/*************

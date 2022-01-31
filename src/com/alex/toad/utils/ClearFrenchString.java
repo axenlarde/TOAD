@@ -21,7 +21,7 @@ public class ClearFrenchString
 			{
 			int a = -1;
 			char c = (char)0;
-			String chars= "~�() /#&-_.,'1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU��VWXYZ������������������������������";
+			String chars= "~°() /#&-_.,'1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUÛÜVWXYZàâäéèêëîïôöùûüÜçÇÉÈËÏÔÓÒÕòñÑÃã";
 			String replace= "        -_., 1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUUUVWXYZaaaeeeeiioouuuUcCEEEIOOOOonNAa";
 			for(int i=0; i<src.length(); i++)
 				{

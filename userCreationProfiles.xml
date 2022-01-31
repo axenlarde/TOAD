@@ -6,6 +6,37 @@ the collection file
 <xml>
 	<profiles>
 		<profile>
+			<name>test</name>
+			<user>
+				<target>newuser</target>
+				<action>inject</action>
+			</user>
+			<!--<udp>
+				<target>udp</target>
+				<action>inject</action>
+			</udp>
+			<phone>
+				<target>loggedoutphone</target>
+				<action>inject</action>
+			</phone>
+			<user>
+				<target>updateudp</target>
+				<action>update</action>
+			</user>
+			<user>
+				<target>updatepe</target>
+				<action>update</action>
+			</user>
+			<appuser>
+				<target>updateappuserudp</target>
+				<action>update</action>
+			</appuser>
+			<udplogin>
+				<target>udplogin</target>
+				<action>update</action>
+			</udplogin>-->
+		</profile>
+		<profile>
 			<name>addAgent</name>
 			<user>
 				<target>newuser</target>
@@ -19,10 +50,6 @@ the collection file
 				<target>loggedoutphone</target>
 				<action>inject</action>
 			</phone>
-			<phone>
-				<target>softphone</target>
-				<action>inject</action>
-			</phone>
 			<user>
 				<target>updateudp</target>
 				<action>update</action>
@@ -32,7 +59,7 @@ the collection file
 				<action>update</action>
 			</user>
 			<appuser>
-				<target>updateappuser</target>
+				<target>updateappuserudp</target>
 				<action>update</action>
 			</appuser>
 			<udplogin>
@@ -41,8 +68,31 @@ the collection file
 			</udplogin>
 		</profile>
 		<profile>
-			<name>updateAgent</name>
+			<name>addRemoteAgent</name>
 			<user>
+				<target>newuser</target>
+				<action>inject</action>
+			</user>
+			<phone>
+				<target>softphone</target>
+				<action>inject</action>
+			</phone>
+			<user>
+				<target>updatephone</target>
+				<action>update</action>
+			</user>
+			<user>
+				<target>updatepe</target>
+				<action>update</action>
+			</user>
+			<appuser>
+				<target>updateappuserphone</target>
+				<action>update</action>
+			</appuser>
+		</profile>
+		<profile>
+			<name>updateAgent</name>
+			<!--<user>
 				<target>newuser</target>
 				<action>inject</action>
 			</user>
@@ -69,7 +119,7 @@ the collection file
 			<udplogin>
 				<target>udplogin</target>
 				<action>update</action>
-			</udplogin>
+			</udplogin>-->
 		</profile>
 	</profiles>
 </xml>

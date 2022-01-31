@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.actionType;
 import com.alex.toad.utils.Variables.statusType;
@@ -151,8 +152,7 @@ public class Task extends Thread
 				}
 			end = true;
 			Variables.getLogger().info("Task ends");
-			Variables.setUuidList(new ArrayList<storedUUID>());//We clean the UUID list
-			Variables.getLogger().info("UUID list cleared");
+			UsefulMethod.clean();
 			}
 		catch (Exception e)
 			{

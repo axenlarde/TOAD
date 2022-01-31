@@ -223,6 +223,7 @@ copyLogFile
 		<securitytoken></securitytoken><!--Security token of the connected user. To check if the creation is allowed-->
 		<content>
 			<agent>
+				<usercreationprofile></usercreationprofile><!--The profile to use for CUCM item creation-->
 				<userid></userid><!--if empty we will generate one-->
 				<firstname></firstname>
 				<lastname></lastname>

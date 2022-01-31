@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.regex.Pattern;
+import java.util.List;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 import javax.xml.ws.BindingProvider;
 
 import org.apache.log4j.Level;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import com.alex.toad.cucm.user.misc.UserCreationProfile;
 import com.alex.toad.cucm.user.misc.UserTemplate;
@@ -26,7 +28,9 @@ import com.alex.toad.misc.OfficeSetting;
 import com.alex.toad.misc.Range;
 import com.alex.toad.misc.SimpleRequest;
 import com.alex.toad.misc.Task;
+import com.alex.toad.misc.UsedItemList;
 import com.alex.toad.misc.ValueMatcher;
+import com.alex.toad.misc.storedUUID;
 import com.alex.toad.rest.misc.RESTServer;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent.AgentType;
@@ -423,6 +427,73 @@ public class UsefulMethod
 			}
 		
 		return ucpList;
+		}
+	
+	/*******
+	 * Used to initialize the used number list by asking the CUCM
+	 */
+	public static UsedItemList initNumberList(String range) throws Exception
+		{
+		try
+			{
+			Variables.getLogger().debug("Initialisation of UsedNumberList");
+			ArrayList<String> myUsedNumberList = new ArrayList<String>();
+			
+			String[] tab = range.split(":");
+			String firstNumber = tab[0];
+			String lastNumber = tab[1];
+			
+			//List<Object> SQLResp = SimpleRequest.doSQLQuery("select dnorpattern from numplan where tkpatternusage='2' and dnorpattern between '"+firstNumber+"' and '"+lastNumber+"'");
+			List<Object> SQLResp = SimpleRequest.doSQLQuery("select dnorpattern from numplan where dnorpattern between '"+firstNumber+"' and '"+lastNumber+"'");
+			
+			for(Object o : SQLResp)
+				{
+				Element rowElement = (Element) o;
+				NodeList list = rowElement.getChildNodes();
+				
+				for(int i = 0; i< list.getLength(); i++)
+					{
+					if(list.item(i).getNodeName().equals("dnorpattern"))myUsedNumberList.add(list.item(i).getTextContent());
+					}
+				}
+			
+			return new UsedItemList(range, myUsedNumberList);
+			}
+		catch(Exception e)
+			{
+			throw new Exception("Error while initializing the used number list : "+e.getMessage());
+			}
+		}
+	
+	/**
+	 * Used to initialize the used userID list
+	 * @throws Exception 
+	 */
+	public static UsedItemList initUserIDList(String prefix) throws Exception
+		{
+		try
+			{
+			ArrayList<String> usedUserIdList = new ArrayList<String>();
+			
+			List<Object> SQLResp = SimpleRequest.doSQLQuery("select userid from enduser where userid like '"+prefix+"%'");
+			
+			for(Object o : SQLResp)
+				{
+				Element rowElement = (Element) o;
+				NodeList list = rowElement.getChildNodes();
+				
+				for(int i = 0; i< list.getLength(); i++)
+					{
+					if(list.item(i).getNodeName().equals("userid"))usedUserIdList.add(list.item(i).getTextContent());
+					}
+				}
+			
+			return new UsedItemList(prefix, usedUserIdList);
+			}
+		catch(Exception e)
+			{
+			throw new Exception("Error while initializing the used userID list : "+e.getMessage());
+			}
 		}
 	
 	/**
@@ -1065,20 +1136,6 @@ public class UsefulMethod
 		}
 	
 	/**
-	 * Search for an office in the office list
-	 * @throws Exception 
-	 */
-	public static Office searchOffice(String word) throws Exception
-		{
-		for(Office o : Variables.getOfficeList())
-			{
-			if(Pattern.matches(".*"+o.getName()+".*|.*"+o.getFullname()+".*", word)) return o;
-			}
-		
-		throw new Exception("Office not found using the following search word : "+word);
-		}
-	
-	/**
 	 * Search for a User Creation Profile in the User Creation Profile list
 	 * @throws Exception
 	 */
@@ -1112,6 +1169,87 @@ public class UsefulMethod
 		{
 		if(type.equals(AgentType.agent))return 1;
 		else return 2;
+		}
+	
+	/**
+	 * Used to clean what needs to be after a task ends
+	 */
+	public static void clean()
+		{
+		Variables.setUuidList(new ArrayList<storedUUID>());//We clean the UUID list
+		Variables.getLogger().info("UUID list cleared");
+		Variables.setUsedUserIdList(null);//We clean the UsedUserIDList
+		Variables.getLogger().info("Used userID list cleared");
+		Variables.setUsedNumberList(null);//We clean the UsedNumberList
+		Variables.getLogger().info("Used number list cleared");
+		}
+	
+	/**
+	 * Used to retrieve the NumberList to use
+	 * @throws Exception 
+	 */
+	public static UsedItemList getUsedNumberList(String range) throws Exception
+		{
+		/**
+		 * We check if the list must be initialized
+		 */
+		if(Variables.getUsedNumberList() == null)
+			{
+			ArrayList<UsedItemList> list = new ArrayList<UsedItemList>();
+			UsedItemList uil = UsefulMethod.initNumberList(range);
+			list.add(uil);
+			Variables.setUsedNumberList(list);
+			return uil;
+			}
+		
+		for(UsedItemList uil : Variables.getUsedNumberList())
+			{
+			if(uil.getPattern().equals(range))
+				{
+				return uil;
+				}
+			}
+		
+		/**
+		 * No list were found for the given range so we create one
+		 */
+		UsedItemList uil = UsefulMethod.initNumberList(range);
+		Variables.getUsedNumberList().add(uil);
+		return uil;
+		}
+	
+	/**
+	 * Used to retrieve the UserID list to use
+	 * @throws Exception 
+	 */
+	public static UsedItemList getUsedUserIDList(String prefix) throws Exception
+		{
+		/**
+		 * We check if the list must be initialized
+		 */
+		if(Variables.getUsedUserIdList() == null)
+			{
+			ArrayList<UsedItemList> list = new ArrayList<UsedItemList>();
+			UsedItemList uil = UsefulMethod.initUserIDList(prefix);
+			list.add(uil);
+			Variables.setUsedUserIdList(list);
+			return uil;
+			}
+		
+		for(UsedItemList uil : Variables.getUsedUserIdList())
+			{
+			if(uil.getPattern().equals(prefix))
+				{
+				return uil;
+				}
+			}
+		
+		/**
+		 * No list were found for the given prefix so we create one
+		 */
+		UsedItemList uil = UsefulMethod.initUserIDList(prefix);
+		Variables.getUsedUserIdList().add(uil);
+		return uil;
 		}
 	
 	/*2022*//*RATEL Alexandre 8)*/

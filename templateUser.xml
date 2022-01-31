@@ -14,7 +14,7 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 	<items>
 		<phone>
 			<targetname>softphone</targetname>
-			<devicename>'CSF'+agent.userid</devicename>
+			<devicename>'CSF'+*M*agent.userid</devicename>
 			<description>(*1M**C*agent.firstname+' '+*M**C*agent.lastname+' - '+office.name)IfLongerThan40(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname+' - '+office.name)</description>
 			<linedescription>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan40(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</linedescription>
 			<alertingname>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan40(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</alertingname>
@@ -133,29 +133,35 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 			<ctiudp>*m*agent.userid</ctiudp><!--To test-->
 		</user>
 		<user>
+			<targetname>updatephone</targetname>
+			<userid>agent.userid</userid>
+			<device>'SEP'+file.phonemac</device>
+		</user>
+		<user>
 			<targetname>updatepe</targetname>
 			<userid>agent.userid</userid>
 			<primaryextension>agent.linenumber</primaryextension>
+			<ipccextension>agent.linenumber</ipccextension>
 			<partition>config.didpartition</partition>
 		</user>
 		<user>
 			<targetname>updatephone</targetname>
 			<userid>agent.userid</userid>
-			<device>'SEP'+agent.devicename</device>
+			<device>'CSF'+*M*agent.userid</device>
 		</user>
 		<appuser>
-			<targetname>updateappuser</targetname>
+			<targetname>updateappuserudp</targetname>
 			<userid>config.uccxrmcmuser</userid>
-			<device>'SEP'+agent.devicename</device><!--Should be a softphone-->
+			<device>'SEP'+agent.devicename</device>
 			<ctiudp>*m*agent.userid</ctiudp><!--To test-->
+		</appuser>
+		<appuser>
+			<targetname>updateappuserphone</targetname>
+			<userid>config.uccxrmcmuser</userid>
+			<device>'CSF'+*M*agent.userid</device>
 		</appuser>
 		<udplogin>
 			<targetname>udplogin</targetname>
-			<userid>agent.userid</userid>
-			<device>'SEP'+agent.devicename</device>
-		</udplogin>
-		<udplogin>
-			<targetname>updateudplogin</targetname>
 			<userid>agent.userid</userid>
 			<device>'SEP'+agent.devicename</device>
 		</udplogin>

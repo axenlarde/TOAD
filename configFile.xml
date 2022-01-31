@@ -40,12 +40,9 @@ Overal configuration file
 		<maxnumchar>30</maxnumchar><!--Integer-->
 		<maxuseridindex>999</maxuseridindex><!--The higher index allowed for naming userid-->
 		<!--Mandatory variables template-->
-		<addagentusercreationprofilename>addAgent</addagentusercreationprofilename><!--The creation profile to use for agent creation-->
-		<updateagentusercreationprofilename>updateAgent</updateagentusercreationprofilename><!--The creation profile to use for agent update-->
 		<agentidpattern>office.availableuserid</agentidpattern>
 		<agentidprefix>*1M*agent.agenttype+office.name</agentidprefix>
 		<agentextension>cucm.availableline</agentextension>
-		<officepattern></officepattern><!--To find the user's office during a getAgent-->
 		<!--Web server parameters-->
 		<webserverport>8092</webserverport>
 		<!--Copy Log parameters-->

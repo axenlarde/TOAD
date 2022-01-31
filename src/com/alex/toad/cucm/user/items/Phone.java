@@ -234,7 +234,7 @@ public class Phone extends ItemToInject
 			this.getCorrectionList().addAll(s.getCorrectionList());
 			}
 		
-		//SD a BLF
+		//SD and BLF
 		for(SpeedDial sd : sdList)
 			{
 			this.getErrorList().addAll(sd.getErrorList());
