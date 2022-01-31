@@ -198,10 +198,10 @@ public class AppUser extends ItemToInject
 	 */
 	public void manageTuList() throws Exception
 		{
-		if(UsefulMethod.isNotEmpty(password))tuList.add(UserLinker.toUpdate.password);
-		if((userControlGroupList != null) && (userControlGroupList.size() != 0))tuList.add(UserLinker.toUpdate.userControlGroup);
-		if((deviceList != null) && (deviceList.size() != 0))tuList.add(UserLinker.toUpdate.devices);
-		if((ctiUDPList != null) && (ctiUDPList.size() != 0))tuList.add(UserLinker.toUpdate.ctiudps);
+		if(UsefulMethod.isNotEmpty(password))tuList.add(AppUserLinker.toUpdate.password);
+		if((userControlGroupList != null) && (userControlGroupList.size() != 0))tuList.add(AppUserLinker.toUpdate.userControlGroup);
+		if((deviceList != null) && (deviceList.size() != 0))tuList.add(AppUserLinker.toUpdate.devices);
+		if((ctiUDPList != null) && (ctiUDPList.size() != 0))tuList.add(AppUserLinker.toUpdate.ctiudps);
 		}
 
 	public AppUserLinker getMyAppUser()

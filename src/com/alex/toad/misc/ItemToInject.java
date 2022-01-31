@@ -115,7 +115,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 	 */
 	public void inject() throws Exception
 		{
-		Variables.getLogger().info("Item "+this.getName()+" of type "+this.getType().name()+" injection process begin");
+		Variables.getLogger().info(this.getType().name()+" "+this.getName()+" injection process begin");
 		
 		if(this.status.equals(statusType.waiting))
 			{
@@ -123,14 +123,14 @@ public abstract class ItemToInject implements ItemToInjectImpl
 				{
 				this.status = statusType.processing;
 				this.UUID = doInject();//Item successfully injected
-				Variables.getLogger().info("Item "+this.getName()+" successfuly injected");
+				Variables.getLogger().info(this.getType().name()+" "+this.getName()+" successfuly injected");
 				this.status = statusType.injected;
 				}
 			catch (Exception e)
 				{
 				this.status = statusType.error;
 				errorList.add(new ErrorTemplate(e.getMessage()));
-				Variables.getLogger().error("Error while injecting the item \""+this.getName()+"\": "+e.getMessage(), e);
+				Variables.getLogger().error("Error while injecting the "+this.getType().name()+" \""+this.getName()+"\": "+e.getMessage(), e);
 				}
 			}
 		else if(this.status.equals(statusType.init))
@@ -149,7 +149,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 	 */
 	public void delete() throws Exception
 		{
-		Variables.getLogger().info("Item "+this.getName()+" deletion process begin");
+		Variables.getLogger().info(this.getType().name()+" "+this.getName()+" deletion process begin");
 		
 		//If we got the UUID we can proceed
 		if((!this.UUID.equals(""))&&(this.UUID != null)&&(status.equals(statusType.waiting)))
@@ -158,7 +158,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 				{
 				this.status = statusType.processing;
 				doDelete();
-				Variables.getLogger().info("Item "+this.getName()+" deleted successfully");
+				Variables.getLogger().info(this.getType().name()+" "+this.getName()+" deleted successfully");
 				this.status = statusType.deleted;//Item successfully deleted
 				}
 			catch (Exception e)
@@ -181,7 +181,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 	 */
 	public void update() throws Exception
 		{
-		Variables.getLogger().info("Item "+this.getName()+" update process begin");
+		Variables.getLogger().info(this.getType().name()+" "+this.getName()+" update process begin");
 		
 		//If we got the UUID we can proceed
 		if((!this.UUID.equals(""))&&(this.UUID != null)&&(status.equals(statusType.waiting)))
@@ -190,7 +190,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 				{
 				this.status = statusType.processing;
 				doUpdate();//Item successfully updated
-				Variables.getLogger().info("Item "+this.getName()+" updated successfully");
+				Variables.getLogger().info(this.getType().name()+" "+this.getName()+" updated successfully");
 				this.status = statusType.updated;
 				}
 			catch (Exception e)

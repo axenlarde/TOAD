@@ -142,18 +142,20 @@ public class DeviceProfileLinker extends AXLItemLinker
 		params.setProtocolSide(this.protocolSide);
 		params.setPhoneTemplateName(new JAXBElement(new QName("phoneTemplateName"), com.cisco.axl.api._10.XFkType.class, SimpleRequest.getUUIDV105(itemType.phonetemplatename, phoneButtonTemplate)));
 		
-		com.cisco.axl.api._10.XDeviceProfile.Services myServices = new com.cisco.axl.api._10.XDeviceProfile.Services();
-		
 		//Services
+		com.cisco.axl.api._10.XDeviceProfile.Services myServices = new com.cisco.axl.api._10.XDeviceProfile.Services();
+		int i = 1;
 		for(PhoneService s : this.serviceList)
 			{
 			com.cisco.axl.api._10.XSubscribedService myService = new com.cisco.axl.api._10.XSubscribedService();
 			myService.setTelecasterServiceName(SimpleRequest.getUUIDV105(itemType.telecasterservice, s.getServicename()));
 			myService.setName(s.getServicename());
 			myService.setServiceNameAscii(s.getServicename());
+			myService.setUrlButtonIndex(Integer.toString(i));
+			myService.setUrlLabel(s.getSurl());
 			myServices.getService().add(myService);
+			i++;
 			}
-		
 		params.setServices(myServices);
 		
 		//SD

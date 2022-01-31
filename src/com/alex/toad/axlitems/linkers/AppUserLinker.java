@@ -1,26 +1,17 @@
 package com.alex.toad.axlitems.linkers;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import com.alex.toad.axlitems.misc.AXLItemLinker;
 import com.alex.toad.axlitems.misc.ToUpdate;
-import com.alex.toad.cucm.user.items.User;
+import com.alex.toad.cucm.user.items.AppUser;
 import com.alex.toad.cucm.user.misc.UserError;
 import com.alex.toad.misc.ErrorTemplate;
 import com.alex.toad.misc.ErrorTemplate.errorType;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.misc.SimpleRequest;
-import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
-import com.cisco.axl.api._10.XFkType;
 
 
 /**********************************
@@ -160,7 +151,7 @@ public class AppUserLinker extends AXLItemLinker
 	 * Update
 	 */
 	public void doUpdateVersion105(ArrayList<ToUpdate> tuList) throws Exception
-		{		
+		{
 		com.cisco.axl.api._10.UpdateAppUserReq req = new com.cisco.axl.api._10.UpdateAppUserReq();
 		
 		/***********
@@ -238,7 +229,8 @@ public class AppUserLinker extends AXLItemLinker
 		
 		com.cisco.axl.api._10.GetAppUserRes resp = Variables.getAXLConnectionToCUCMV105().getAppUser(req);//We send the request to the CUCM
 		
-		User myU = new User(this.getName());
+		AppUser myU = new AppUser(this.getName());
+		myU.setUUID(resp.getReturn().getAppUser().getUuid());
 		
 		//Get the devices
 		for(String d : resp.getReturn().getAppUser().getAssociatedDevices().getDevice())
@@ -254,7 +246,7 @@ public class AppUserLinker extends AXLItemLinker
 			}
 		myU.setCtiUDPList(ctiUDPList);
 		
-		return myU;//Return a User
+		return myU;//Return an AppUser
 		}
 	/****************/
 

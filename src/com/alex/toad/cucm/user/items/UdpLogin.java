@@ -4,7 +4,6 @@ import com.alex.toad.axlitems.linkers.UdpLoginLinker;
 import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.utils.UsefulMethod;
-import com.alex.toad.utils.Variables.actionType;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.webserver.AgentData;
 
@@ -34,21 +33,19 @@ public class UdpLogin extends ItemToInject
 			String deviceName, String deviceProfile) throws Exception
 		{
 		super(itemType.udplogin, name);
-		this.myUDPLogin = new UdpLoginLinker();
+		this.myUDPLogin = new UdpLoginLinker(name);
 		this.deviceName = deviceName;
 		this.deviceProfile = deviceProfile;
-		this.action = actionType.inject;
 		}
 	
 	public UdpLogin(String targetName, String name,
 			String deviceName, String deviceProfile) throws Exception
 		{
 		super(itemType.udplogin, name);
-		this.myUDPLogin = new UdpLoginLinker();
+		this.myUDPLogin = new UdpLoginLinker(name);
 		this.targetName = targetName;
 		this.deviceName = deviceName;
 		this.deviceProfile = deviceProfile;
-		this.action = actionType.inject;
 		}
 
 	/***********

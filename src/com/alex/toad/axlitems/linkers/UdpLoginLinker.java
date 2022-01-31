@@ -38,10 +38,10 @@ public class UdpLoginLinker extends AXLItemLinker
 	/***************
 	 * Constructor
 	 ***************/
-	public UdpLoginLinker()
+	public UdpLoginLinker(String name)
 			throws Exception
 		{
-		super("");
+		super(name);
 		}
 
 	/***************
@@ -97,11 +97,6 @@ public class UdpLoginLinker extends AXLItemLinker
 		{
 		Variables.getLogger().debug("There is nothing to delete in the case of a UDP login");
 		}
-
-	public void doDeleteVersion85() throws Exception
-		{
-		Variables.getLogger().debug("There is nothing to delete in the case of a UDP login");
-		}
 	/**************/
 
 	/***************
@@ -126,12 +121,6 @@ public class UdpLoginLinker extends AXLItemLinker
 		
 		return resp.getReturn();//Return UUID
 		}
-
-	public String doInjectVersion85() throws Exception
-		{
-		//To be written
-		return null;
-		}
 	/**************/
 	
 	/***************
@@ -139,12 +128,19 @@ public class UdpLoginLinker extends AXLItemLinker
 	 */
 	public void doUpdateVersion105(ArrayList<ToUpdate> tuList) throws Exception
 		{
-		Variables.getLogger().debug("There is nothing to update in the case of a UDP login");
-		}
-
-	public void doUpdateVersion85(ArrayList<ToUpdate> tuList) throws Exception
-		{
-		Variables.getLogger().debug("There is nothing to update in the case of a UDP login");
+		//For a UDP login we do like the injection
+		com.cisco.axl.api._10.DoDeviceLoginReq req = new com.cisco.axl.api._10.DoDeviceLoginReq();
+		
+		/******************************
+		 * We set the item parameters
+		 */
+		req.setDeviceName(SimpleRequest.getUUIDV105(itemType.phone, this.deviceName));
+		req.setLoginDuration(new BigInteger("0"));
+		req.setUserId(this.name);
+		req.setProfileName(SimpleRequest.getUUIDV105(itemType.udp, this.deviceProfile));
+		/**********/
+			
+		com.cisco.axl.api._10.StandardResponse resp = Variables.getAXLConnectionToCUCMV105().doDeviceLogin(req);//We send the request to the CUCM
 		}
 	/**************/
 	
@@ -153,12 +149,6 @@ public class UdpLoginLinker extends AXLItemLinker
 	 * Get
 	 */
 	public ItemToInject doGetVersion105() throws Exception
-		{
-		Variables.getLogger().debug("There is nothing to get in the case of a UDP login");
-		return null;
-		}
-
-	public ItemToInject doGetVersion85() throws Exception
 		{
 		Variables.getLogger().debug("There is nothing to get in the case of a UDP login");
 		return null;

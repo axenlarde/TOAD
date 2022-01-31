@@ -24,7 +24,7 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 			<aarmask></aarmask>
 			<commondeviceconfig>office.name+'_CDC'</commondeviceconfig>
 			<commonphoneconfig>'Standard Common Phone Profile'</commonphoneconfig>
-			<securityprofile>*LFphone*agent.devicetype+' - Standard SIP Non-Secure Profile'</securityprofile>
+			<securityprofile>'Cisco Unified Client Services Framework - Standard SIP Non-Secure Profile'</securityprofile>
 			<devicemobilitymode>'Default'</devicemobilitymode><!--Off, On, Default-->
 			<!--<aargroup>office.aargroup</aargroup>-->
 			<aarcss></aarcss>
@@ -43,9 +43,9 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 			<fwunrvoicemailenable>'false'</fwunrvoicemailenable>
 			<voicemailprofile>office.voicemailprofile</voicemailprofile>-->
 			<routepartition>config.didpartition</routepartition>
-			<producttype>*LFphone*agent.devicetype</producttype>
+			<producttype>'Cisco Unified Client Services Framework'</producttype>
 			<protocol>'SIP'</protocol>
-			<buttontemplate>*LFpbt*agent.devicetype</buttontemplate>
+			<buttontemplate>'Standard Client Services Framework'</buttontemplate>
 			<devicepool>office.name+'_DP'</devicepool>
 			<location>office.name+'_LOC'</location>
 			<cssdevice>office.name+'_DEVICE_CSS'</cssdevice>
@@ -153,7 +153,7 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 			<targetname>updateappuserudp</targetname>
 			<userid>config.uccxrmcmuser</userid>
 			<device>'SEP'+agent.devicename</device>
-			<ctiudp>*m*agent.userid</ctiudp><!--To test-->
+			<ctiudp>*m*agent.userid</ctiudp>
 		</appuser>
 		<appuser>
 			<targetname>updateappuserphone</targetname>
@@ -164,6 +164,7 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 			<targetname>udplogin</targetname>
 			<userid>agent.userid</userid>
 			<device>'SEP'+agent.devicename</device>
+			<udp>*m*agent.userid</udp>
 		</udplogin>
 	</items>
 </xml>

@@ -29,6 +29,11 @@ Substitute list
 	</substitute>
 	<substitute>
 		<type>phone</type>
+		<match>7861</match>
+		<replaceby>Cisco 7861</replaceby>
+	</substitute>
+	<substitute>
+		<type>phone</type>
 		<match>7821</match>
 		<replaceby>Cisco 7821</replaceby>
 	</substitute>		
@@ -54,6 +59,31 @@ Substitute list
 	</substitute>
 	<substitute>
 		<type>phone</type>
+		<match>8811</match>
+		<replaceby>Cisco 8811</replaceby>
+	</substitute>
+	<substitute>
+		<type>phone</type>
+		<match>8841</match>
+		<replaceby>Cisco 8841</replaceby>
+	</substitute>
+	<substitute>
+		<type>phone</type>
+		<match>8851</match>
+		<replaceby>Cisco 8851</replaceby>
+	</substitute>
+	<substitute>
+		<type>phone</type>
+		<match>8861</match>
+		<replaceby>Cisco 8861</replaceby>
+	</substitute>
+	<substitute>
+		<type>phone</type>
+		<match>8865</match>
+		<replaceby>Cisco 8865</replaceby>
+	</substitute>
+	<substitute>
+		<type>phone</type>
 		<match>JABBER</match>
 		<replaceby>Cisco Unified Client Services Framework</replaceby>
 	</substitute>
@@ -76,7 +106,17 @@ Substitute list
 		<type>pbt</type>
 		<match>7821</match>
 		<replaceby>Standard 7821 SIP</replaceby>
-	</substitute>		
+	</substitute>
+	<substitute>
+		<type>pbt</type>
+		<match>7841</match>
+		<replaceby>Standard 7841 SIP</replaceby>
+	</substitute>
+	<substitute>
+		<type>pbt</type>
+		<match>7861</match>
+		<replaceby>Standard 7861 SIP</replaceby>
+	</substitute>	
 	<substitute>
 		<type>pbt</type>
 		<match>7962</match>
@@ -96,6 +136,31 @@ Substitute list
 		<type>pbt</type>
 		<match>8831</match>
 		<replaceby>Standard 8831 SIP</replaceby>
+	</substitute>
+	<substitute>
+		<type>pbt</type>
+		<match>8811</match>
+		<replaceby>Standard 8811 SIP</replaceby>
+	</substitute>
+	<substitute>
+		<type>pbt</type>
+		<match>8841</match>
+		<replaceby>Standard 8841 SIP</replaceby>
+	</substitute>
+	<substitute>
+		<type>pbt</type>
+		<match>8851</match>
+		<replaceby>Standard 8851 SIP</replaceby>
+	</substitute>
+	<substitute>
+		<type>pbt</type>
+		<match>8861</match>
+		<replaceby>Standard 8861 SIP</replaceby>
+	</substitute>
+	<substitute>
+		<type>pbt</type>
+		<match>8865</match>
+		<replaceby>Standard 8865 SIP</replaceby>
 	</substitute>
 	<substitute>
 		<type>pbt</type>

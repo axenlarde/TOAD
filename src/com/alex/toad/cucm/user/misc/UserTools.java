@@ -1,22 +1,18 @@
 package com.alex.toad.cucm.user.misc;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
+import com.alex.toad.cucm.user.items.AppUser;
 import com.alex.toad.cucm.user.items.DeviceProfile;
 import com.alex.toad.cucm.user.items.Line;
 import com.alex.toad.cucm.user.items.Phone;
 import com.alex.toad.cucm.user.items.UdpLogin;
 import com.alex.toad.cucm.user.items.User;
-import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.misc.EmptyValueException;
 import com.alex.toad.misc.ItemToInject;
-import com.alex.toad.misc.Task;
 import com.alex.toad.soap.items.PhoneLine;
 import com.alex.toad.soap.items.PhoneService;
 import com.alex.toad.soap.items.SpeedDial;
-import com.alex.toad.utils.LanguageManagement;
-import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.actionType;
 import com.alex.toad.utils.Variables.itemType;
@@ -73,7 +69,7 @@ public class UserTools
 					else if((ut.getType().equals(itemType.udplogin)) && udpLogin)
 						{
 						UdpLogin udpLoginTemplate = (UdpLogin)getTemplate(ut.getType(), ut.getTarget());
-						UdpLogin ul = prepareUdpLogin(ad, udpLoginTemplate, action);
+						UdpLogin ul = prepareUdpLogin(ad, udpLoginTemplate, at);
 						
 						if(ul != null)
 							{
@@ -92,7 +88,14 @@ public class UserTools
 						User uTemplate = (User)getTemplate(ut.getType(), ut.getTarget());
 						itemList.add(prepareUser(ad, uTemplate, at));
 						
-						Variables.getLogger().debug(ad.getInfo()+"Preparation process ends");
+						Variables.getLogger().debug("User prepared for : "+ad.getInfo());
+						}
+					else if(ut.getType().equals(itemType.appuser))
+						{
+						AppUser uTemplate = (AppUser)getTemplate(ut.getType(), ut.getTarget());
+						itemList.add(prepareAppUser(ad, uTemplate, at));
+						
+						Variables.getLogger().debug("AppUser prepared for : "+ad.getInfo());
 						}
 					}
 				}
@@ -297,6 +300,38 @@ public class UserTools
 		return myUser;
 		}
 	
+	/***********
+	 * Method used to prepare an AppUser object
+	 * @throws Exception 
+	 */
+	public static AppUser prepareAppUser(AgentData ad, AppUser template, actionType action) throws Exception
+		{
+		Variables.getLogger().debug("Preparing an AppUser");
+		
+		AppUser myAppUser = new AppUser(template.getName(),
+				template.getTargetName(),
+				template.getPassword(),
+				template.getUserControlGroupList(),
+				template.getDeviceList(),
+				template.getCtiUDPList());
+		
+		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
+		myAppUser.setAgentData(ad);
+		myAppUser.setAction(action);
+		
+		try
+			{
+			myAppUser.resolve();
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().debug(ad.getInfo()+" : The AppUser has not been added because an important value was empty : "+e.getMessage());
+			return null;
+			}
+		
+		return myAppUser;
+		}
+	
 	/**
 	 * Method used to return add a line to an itemToInject list
 	 * @throws Exception 
@@ -489,6 +524,13 @@ public class UserTools
 					if(((UdpLogin) item).getTargetName().equals(targetName))
 						{
 						return (UdpLogin) item;
+						}
+					}
+				else if(type.equals(itemType.appuser))
+					{
+					if(((AppUser) item).getTargetName().equals(targetName))
+						{
+						return (AppUser) item;
 						}
 					}
 				}

@@ -11,7 +11,7 @@ the collection file
 				<target>newuser</target>
 				<action>inject</action>
 			</user>
-			<!--<udp>
+			<udp>
 				<target>udp</target>
 				<action>inject</action>
 			</udp>
@@ -33,8 +33,8 @@ the collection file
 			</appuser>
 			<udplogin>
 				<target>udplogin</target>
-				<action>update</action>
-			</udplogin>-->
+				<action>inject</action>
+			</udplogin>
 		</profile>
 		<profile>
 			<name>addAgent</name>
