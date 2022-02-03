@@ -37,16 +37,22 @@ public class AgentTools
 	 */
 	public static AgentData doAuthenticate(String userid, String password) throws Exception
 		{
-		if(SimpleRequest.doAuthenticate(userid, password))
+		try
 			{
-			//Successful
-			return new AgentData(userid);
+			AgentData ad = getAgent(userid);
+			if((ad.getAgentType().equals(AgentType.supervisor)) && (SimpleRequest.doAuthenticate(userid, password)))
+				{
+				//Successful
+				return ad;
+				}
 			}
-		else
+		catch (Exception e)
 			{
-			//Failed
-			throw new Exception(userid+" : Failed to authenticate");
+			Variables.getLogger().error("Something went wrong while authenticating "+userid+" : "+e.getMessage());
 			}
+		
+		//Failed
+		throw new Exception(userid+" : Failed to authenticate");
 		}
 	
 	/**
@@ -119,9 +125,10 @@ public class AgentTools
 	 * Used to create a new agent
 	 * Will return the taskID
 	 */
-	public static String addAgent(String userCreationProfile, String userID, String lastName,
+	public static String addUpdateAgent(String userCreationProfile, String userID, String lastName,
 			String firstName, Office office, AgentType agentType, Team team, ArrayList<Team> primarySupervisorOf, ArrayList<Team> secondarySupervisorOf,
-			ArrayList<Skill> skills, String deviceName, String deviceModel, String lineNumber, boolean udpLogin) throws Exception
+			ArrayList<Skill> skills, String deviceName, String deviceModel, String lineNumber, boolean udpLogin,
+			webRequestType requestType) throws Exception
 		{
 		String userIDPattern = UsefulMethod.getTargetOption("agentidpattern");
 		String linePattern = UsefulMethod.getTargetOption("agentextension");
@@ -143,6 +150,7 @@ public class AgentTools
 		agentData.resolve();
 		
 		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to Inject List
+		actionType action = requestType.equals(requestType.addAgent)?actionType.inject:actionType.update;
 		
 		/**
 		 * CUCM items
@@ -151,7 +159,7 @@ public class AgentTools
 		UserCreationProfile ucp = UsefulMethod.getUserCreationProfile(userCreationProfile);
 		
 		//All the User Creation Profile items are now added to the injection list 
-		itil.addAll(UserTools.getUserItemList(agentData, actionType.inject, ucp, udpLogin));
+		itil.addAll(UserTools.getUserItemList(agentData, action, ucp, udpLogin));
 		
 		/**
 		 * UCCX items
@@ -163,54 +171,14 @@ public class AgentTools
 		 */
 		agent.setAction(actionType.update);
 		
-		//itil.add(agent);
-		
-		/**
-		 * We now launch the injection process
-		 */
-		String taskID = TaskManager.addNewTask(itil, webRequestType.addAgent);
-		Variables.getLogger().debug(agentData.getInfo()+" : Add agent task started, task ID is : "+taskID);
-		
-		return taskID;
-		}
-	
-	/**
-	 * Used to update an existing agent
-	 * Will return the taskID
-	 * @throws Exception 
-	 */
-	public static String updateAgent(String userID, String lastName,
-			String firstName, Office office, AgentType agentType, Team team, ArrayList<Team> primarySupervisorOf, ArrayList<Team> secondarySupervisorOf,
-			ArrayList<Skill> skills, String deviceName, boolean udpLogin) throws Exception
-		{
-		AgentData agentData = new AgentData(userID, firstName, lastName, "", deviceName, "", agentType, team, skills, office);
-		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to Inject List
-		
-		/**
-		 * CUCM items
-		 * Listed in the User Creation Profile : Phone, Line, UDP and so on...
-		 */
-		UserCreationProfile ucp = UsefulMethod.getUserCreationProfile(UsefulMethod.getTargetOption("updateAgent"));
-		Variables.getLogger().debug("The User Creation Profile used for Agent update is : "+ucp.getName());
-		
-		//All the User Creation Profile items are now added to the injection list 
-		itil.addAll(UserTools.getUserItemList(agentData, actionType.update, ucp, udpLogin));
-		
-		/**
-		 * UCCX items
-		 * To create the Agent
-		 */
-		UCCXAgent agent = new UCCXAgent(userID, lastName, firstName, "", agentType, team, primarySupervisorOf, secondarySupervisorOf, skills);
-		agent.setAction(actionType.update);
-		
 		itil.add(agent);
 		
 		/**
 		 * We now launch the injection process
 		 */
-		String taskID = TaskManager.addNewTask(itil, webRequestType.updateAgent);
-		Variables.getLogger().debug(agentData.getInfo()+" : Update agent task started, task ID is : "+taskID);
-
+		String taskID = TaskManager.addNewTask(itil, requestType);
+		Variables.getLogger().debug(agentData.getInfo()+" : "+requestType.name()+" task started, task ID is : "+taskID);
+		
 		return taskID;
 		}
 	
@@ -306,7 +274,10 @@ public class AgentTools
 		ArrayList<AgentData> agents = new ArrayList<AgentData>();
 		ArrayList<UCCXAgent> uccxAgents = RESTTools.doListAgent(Variables.getUccxServer());
 		
-		//TBW
+		for(UCCXAgent ua : uccxAgents)
+			{
+			agents.add(getAgent(ua.getName()));
+			}
 		
 		return agents;
 		}

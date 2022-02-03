@@ -37,17 +37,29 @@ public class UCCXTools
 		String[][] s = parsedReply.get(0);//To ease the following
 		
 		//UUID and Type
-		String[] temp = UsefulMethod.getItemByName("self", s).split("/");
-		String UUID = temp[temp.length-1];//The ID is the last item
+		String UUID = UsefulMethod.getItemByName("userID", s);
 		AgentType type = (UsefulMethod.getItemByName("type", s)).equals("1")?AgentType.agent:AgentType.supervisor;
 		
 		//PrimarySupervisorof
 		ArrayList<Team> primarySupervisorOf = new ArrayList<Team>();
-		//TBW
+		listParams.remove("skillMap");
+		listParams.remove("skillCompetency");
+		listParams.add("primarySupervisorOf");
+		parsedReply = xMLGear.getResultListTabAndAtt(resource, listParams);
+		for(String[][] priSup : parsedReply)
+			{
+			primarySupervisorOf.add(new Team(UsefulMethod.getAttributeItemByName("supervisorOfTeamName", priSup)));
+			}
 		
 		//SecondarySupervisorof
 		ArrayList<Team> secondarySupervisorOf = new ArrayList<Team>();
-		//TBW
+		listParams.remove("primarySupervisorOf");
+		listParams.add("secondarySupervisorOf");
+		parsedReply = xMLGear.getResultListTabAndAtt(resource, listParams);
+		for(String[][] secSup : parsedReply)
+			{
+			secondarySupervisorOf.add(new Team(UsefulMethod.getAttributeItemByName("supervisorOfTeamName", secSup)));
+			}
 		
 		//Skill
 		ArrayList<Skill> skills = new ArrayList<Skill>();
@@ -82,13 +94,31 @@ public class UCCXTools
 		content = "<xml>"+content+"</xml>";
 		ArrayList<String> listParams = new ArrayList<String>();
 		listParams.add("team");
-		ArrayList<String[][]> parsedReply = xMLGear.getResultListTab(content, listParams);
-		
+		ArrayList<String[][]> parsedReply = xMLGear.getResultListTabAndAtt(content, listParams);
 		String[][] s = parsedReply.get(0);//To ease the following
 		
 		Team team = new Team(UsefulMethod.getItemByName("teamname", s));
-		
 		team.setUUID(UsefulMethod.getItemByName("teamId", s));
+		
+		//PrimarySupervisor
+		listParams.add("primarySupervisor");
+		parsedReply = xMLGear.getResultListTabAndAtt(content, listParams);
+		s = parsedReply.get(0);//To ease the following
+		String[] id = UsefulMethod.getItemByName("refURL", s).split("/");
+		team.setPrimarySupervisor(new UCCXAgent(id[id.length-1]));//The id is the last occurrence
+		
+		//secondarySupervisor
+		listParams.remove("primarySupervisor");
+		listParams.add("secondarySupervisors");
+		listParams.add("secondrySupervisor");
+		parsedReply = xMLGear.getResultListTabAndAtt(content, listParams);
+		ArrayList<UCCXAgent> secSupList = new ArrayList<UCCXAgent>();
+		for(String[][] secSup : parsedReply)
+			{
+			String[] secSupID = UsefulMethod.getItemByName("refURL", secSup).split("/");
+			secSupList.add(new UCCXAgent(secSupID[secSupID.length-1]));//The id is the last occurrence
+			}
+		team.setSecondarySupervisorList(secSupList);
 		
 		return team;
 		}

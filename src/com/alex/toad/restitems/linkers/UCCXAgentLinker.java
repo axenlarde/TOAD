@@ -68,9 +68,9 @@ public class UCCXAgentLinker extends RESTItemLinker
 		//Teams
 		try
 			{
-			RESTTools.getRESTUUIDV105(itemType.team, team.getName());
-			for(Team t : primarySupervisorOf)RESTTools.getRESTUUIDV105(itemType.team, t.getName());
-			for(Team t : secondarySupervisorOf)RESTTools.getRESTUUIDV105(itemType.team, t.getName());
+			team.setUUID(RESTTools.getRESTUUIDV105(itemType.team, team.getName()));
+			for(Team t : primarySupervisorOf)t.setUUID(RESTTools.getRESTUUIDV105(itemType.team, t.getName()));
+			for(Team t : secondarySupervisorOf)t.setUUID(RESTTools.getRESTUUIDV105(itemType.team, t.getName()));
 			}
 		catch (Exception e)
 			{
@@ -82,7 +82,7 @@ public class UCCXAgentLinker extends RESTItemLinker
 			{
 			for(Skill s : skills)
 				{
-				RESTTools.getRESTUUIDV105(itemType.skill, s.getName());
+				s.setUUID(RESTTools.getRESTUUIDV105(itemType.skill, s.getName()));
 				}
 			}
 		catch (Exception e)
@@ -123,7 +123,7 @@ public class UCCXAgentLinker extends RESTItemLinker
 		String uri = "https://"+Variables.getUccxServer().getHost()+":"+Variables.getUccxServer().getPort()+"adminapi/resource/"+name;
 		StringBuffer content = new StringBuffer();
 		
-		content.append("<resources>\r\n");
+		content.append("<resources>\r\n");//A valider
 		content.append("	<resource>\r\n");
 		
 		if(tuList.contains(toUpdate.agentType))content.append("		<type>"+UsefulMethod.convertAgentTypeToInt(agentType)+"</type>\r\n");
@@ -147,8 +147,6 @@ public class UCCXAgentLinker extends RESTItemLinker
 			content.append("</secondarySupervisorOf>");
 			}
 		if(tuList.contains(toUpdate.skills))content.append(UCCXTools.getRESTFromSkills(skills));
-		
-		
 		
 		content.append("	</resource>\r\n");
 		content.append("</resources>\r\n");

@@ -291,11 +291,9 @@ public class UserLinker extends AXLItemLinker
 		
 		if(tuList.contains(toUpdate.ipccExtension))
 			{
-			//req.setIpccExtension(new JAXBElement(new QName("ipccExtension"), com.cisco.axl.api._10.XFkType.class, SimpleRequest.getLineUUIDV105(this.ipccExtension, this.routePartition)));
 			com.cisco.axl.api._10.XFkType extension = SimpleRequest.getLineUUIDV105(this.ipccExtension, this.routePartition);
 			extension.setValue(this.ipccExtension);
-			req.setIpccExtension(new JAXBElement(new QName("ipccExtension"), com.cisco.axl.api._10.XFkType.class, extension));//To test
-			//req.setIpccExtension(new JAXBElement(new QName("ipccExtension"), String.class, this.ipccExtension));//To test
+			req.setIpccExtension(new JAXBElement(new QName("ipccExtension"), com.cisco.axl.api._10.XFkType.class, extension));
 			}
 		
 		if(tuList.contains(toUpdate.userControlGroup))

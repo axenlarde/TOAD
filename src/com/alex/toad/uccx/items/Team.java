@@ -19,9 +19,9 @@ public class Team extends ItemToInject
 	 * Variables
 	 */
 	private TeamLinker myTeam;
-	private ArrayList<UCCXAgent> agentList;
-	private ArrayList<UCCXAgent> supervisorList;
-	private UCCXAgent mainSupervisor;//Can be null
+	private ArrayList<UCCXAgent> agentList;//Not used at the moment
+	private ArrayList<UCCXAgent> secondarySupervisorList;
+	private UCCXAgent primarySupervisor;//Can be null
 	
 	/**
 	 * Constructor
@@ -34,13 +34,13 @@ public class Team extends ItemToInject
 		}
 	
 	public Team(String name, ArrayList<UCCXAgent> agentList,
-			ArrayList<UCCXAgent> supervisorList, UCCXAgent mainSupervisor) throws Exception
+			ArrayList<UCCXAgent> secondarySupervisorList, UCCXAgent primarySupervisor) throws Exception
 		{
 		super(itemType.team, name);
 		myTeam = new TeamLinker(name);
 		this.agentList = agentList;
-		this.supervisorList = supervisorList;
-		this.mainSupervisor = mainSupervisor;
+		this.secondarySupervisorList = secondarySupervisorList;
+		this.primarySupervisor = primarySupervisor;
 		}
 	
 	public String getString(String s) throws Exception
@@ -77,9 +77,11 @@ public class Team extends ItemToInject
 		 * We pass the local variables to the linker
 		 */
 		myTeam.setAgentList(agentList);
-		myTeam.setSupervisorList(supervisorList);
-		myTeam.setMainSupervisor(mainSupervisor);
+		myTeam.setSecondarySupervisorList(secondarySupervisorList);
+		myTeam.setPrimarySupervisor(primarySupervisor);
 		/************/
+		
+		errorList.addAll(myTeam.init());
 		}
 
 	@Override
@@ -107,9 +109,10 @@ public class Team extends ItemToInject
 	public boolean isExisting() throws Exception
 		{
 		Team myT = (Team) myTeam.get();
+		UUID = myT.getUUID();
 		agentList = myT.getAgentList();
-		supervisorList = myT.getSupervisorList();
-		mainSupervisor = myT.getMainSupervisor();
+		secondarySupervisorList = myT.getSecondarySupervisorList();
+		primarySupervisor = myT.getPrimarySupervisor();
 		
 		Variables.getLogger().debug("Item "+this.name+" exists in the UCCX");
 		return true;
@@ -119,7 +122,6 @@ public class Team extends ItemToInject
 	public void resolve() throws Exception
 		{
 		// TODO Auto-generated method stub
-		
 		}
 
 	@Override
@@ -149,25 +151,28 @@ public class Team extends ItemToInject
 		this.agentList = agentList;
 		}
 
-	public ArrayList<UCCXAgent> getSupervisorList()
+	public ArrayList<UCCXAgent> getSecondarySupervisorList()
 		{
-		return supervisorList;
+		return secondarySupervisorList;
 		}
 
-	public void setSupervisorList(ArrayList<UCCXAgent> supervisorList)
+	public void setSecondarySupervisorList(
+			ArrayList<UCCXAgent> secondarySupervisorList)
 		{
-		this.supervisorList = supervisorList;
+		this.secondarySupervisorList = secondarySupervisorList;
 		}
 
-	public UCCXAgent getMainSupervisor()
+	public UCCXAgent getPrimarySupervisor()
 		{
-		return mainSupervisor;
+		return primarySupervisor;
 		}
 
-	public void setMainSupervisor(UCCXAgent mainSupervisor)
+	public void setPrimarySupervisor(UCCXAgent primarySupervisor)
 		{
-		this.mainSupervisor = mainSupervisor;
+		this.primarySupervisor = primarySupervisor;
 		}
+
+	
 	
 	
 	/*2022*//*RATEL Alexandre 8)*/

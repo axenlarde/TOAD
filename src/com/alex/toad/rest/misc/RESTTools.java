@@ -101,9 +101,15 @@ public class RESTTools
 		
 		ArrayList<String> teamList = xMLGear.getTextOccurences(reply, "team");//Will return all the teams in an arraylist
 		
-		for(String teamName : teamList)
+		for(String team : teamList)
 			{
-			teams.add(UCCXTools.getTeamFromRESTReply(teamName));
+			Team t = UCCXTools.getTeamFromRESTReply(team);
+			teams.add(t);
+			
+			/**
+			 * We also add the team to the UUID list to be able to look for it later
+			 */
+			Variables.getUuidList().add(new storedUUID(t.getUUID(), t.getName(), itemType.team));
 			}
 		
 		Variables.getLogger().debug("List team done, "+teams.size()+" team found");
@@ -125,9 +131,15 @@ public class RESTTools
 		
 		ArrayList<String> skillList = xMLGear.getTextOccurences(reply, "skill");//Will return all the skills in an arraylist
 		
-		for(String skillName : skillList)
+		for(String skill : skillList)
 			{
-			skills.add(UCCXTools.getSkillFromRESTReply(skillName));
+			Skill s = UCCXTools.getSkillFromRESTReply(skill);
+			skills.add(s);
+			
+			/**
+			 * We also add the team to the UUID list to be able to look for it later
+			 */
+			Variables.getUuidList().add(new storedUUID(s.getUUID(), s.getName(), itemType.skill));
 			}
 		
 		Variables.getLogger().debug("List skill done, "+skills.size()+" skill found");
@@ -178,6 +190,17 @@ public class RESTTools
 			}
 		else if(type.equals(itemType.team))
 			{
+			/**
+			 * Because the getTeam works only with the team ID, we cannot get it using the team name.
+			 * So first we list all the teams, then find the one we are looking for
+			 */
+			ArrayList<Team> teams = doListTeam(Variables.getUccxServer());
+			for(Team t : teams)
+				{
+				if(t.getName().equals(itemName))return getRESTReply(t.getUUID(), itemName, type);
+				}
+			
+			/*
 			String uri = "adminapi/team/"+itemName;
 			String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
 			
@@ -188,10 +211,21 @@ public class RESTTools
 			String[][] s = parsedReply.get(0);//To ease the following
 			
 			//UUID
-			return getRESTReply(UsefulMethod.getItemByName("teamId", s),itemName, type);
+			return getRESTReply(UsefulMethod.getItemByName("teamId", s),itemName, type);*/
 			}
 		else if(type.equals(itemType.skill))
 			{
+			/**
+			 * Because the getSkill works only with the skill ID, we cannot get it using the skill name.
+			 * So first we list all the skills, then find the one we are looking for
+			 */
+			ArrayList<Skill> skills = doListSkill(Variables.getUccxServer());
+			for(Skill s : skills)
+				{
+				if(s.getName().equals(itemName))return getRESTReply(s.getUUID(), itemName, type);
+				}
+			
+			/*
 			String uri = "adminapi/skill/"+itemName;
 			String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
 			
@@ -202,10 +236,38 @@ public class RESTTools
 			String[][] s = parsedReply.get(0);//To ease the following
 			
 			//UUID
-			return getRESTReply(UsefulMethod.getItemByName("skillId", s),itemName, type);
+			return getRESTReply(UsefulMethod.getItemByName("skillId", s),itemName, type);*/
 			}
 		
 		throw new Exception("ItemType \""+type+"\" not found");
+		}
+	
+	/**
+	 * Get a team from the UCCX server
+	 * @throws Exception 
+	 */
+	public static Team doGetTeam(String teamName) throws Exception
+		{
+		for(Team t : doListTeam(Variables.getUccxServer()))
+			{
+			if(t.getName().equals(teamName))return t;
+			}
+		
+		throw new Exception("Team not found : "+teamName);
+		}
+	
+	/**
+	 * Get a skill from the UCCX server
+	 * @throws Exception 
+	 */
+	public static Skill doGetSkill(String skillName) throws Exception
+		{
+		for(Skill s : doListSkill(Variables.getUccxServer()))
+			{
+			if(s.getName().equals(skillName))return s;
+			}
+		
+		throw new Exception("Skill not found : "+skillName);
 		}
 	
 	/**

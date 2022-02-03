@@ -29,8 +29,8 @@ public class TeamLinker extends RESTItemLinker
 	 * Variables
 	 */
 	private ArrayList<UCCXAgent> agentList;
-	private ArrayList<UCCXAgent> supervisorList;
-	private UCCXAgent mainSupervisor;//Can be null
+	private ArrayList<UCCXAgent> secondarySupervisorList;
+	private UCCXAgent primarySupervisor;//Can be null
 	
 	public enum toUpdate implements ToUpdate
 		{
@@ -62,11 +62,11 @@ public class TeamLinker extends RESTItemLinker
 				{
 				RESTTools.getRESTUUIDV105(itemType.agent, agent.getName());				
 				}
-			for(UCCXAgent agent : supervisorList)
+			for(UCCXAgent agent : secondarySupervisorList)
 				{
 				RESTTools.getRESTUUIDV105(itemType.agent, agent.getName());				
 				}
-			RESTTools.getRESTUUIDV105(itemType.agent, mainSupervisor.getName());				
+			RESTTools.getRESTUUIDV105(itemType.agent, primarySupervisor.getName());				
 			}
 		catch (Exception e)
 			{
@@ -112,12 +112,7 @@ public class TeamLinker extends RESTItemLinker
 	 */
 	public ItemToInject doGetVersion105() throws Exception
 		{
-		String uri = "adminapi/team/"+name;
-		String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
-		
-		Team myT = UCCXTools.getTeamFromRESTReply(reply);
-		
-		return myT;//Return a Team
+		return RESTTools.doGetTeam(this.name);
 		}
 	/****************/
 
@@ -131,25 +126,28 @@ public class TeamLinker extends RESTItemLinker
 		this.agentList = agentList;
 		}
 
-	public ArrayList<UCCXAgent> getSupervisorList()
+	public ArrayList<UCCXAgent> getSecondarySupervisorList()
 		{
-		return supervisorList;
+		return secondarySupervisorList;
 		}
 
-	public void setSupervisorList(ArrayList<UCCXAgent> supervisorList)
+	public void setSecondarySupervisorList(
+			ArrayList<UCCXAgent> secondarySupervisorList)
 		{
-		this.supervisorList = supervisorList;
+		this.secondarySupervisorList = secondarySupervisorList;
 		}
 
-	public UCCXAgent getMainSupervisor()
+	public UCCXAgent getPrimarySupervisor()
 		{
-		return mainSupervisor;
+		return primarySupervisor;
 		}
 
-	public void setMainSupervisor(UCCXAgent mainSupervisor)
+	public void setPrimarySupervisor(UCCXAgent primarySupervisor)
 		{
-		this.mainSupervisor = mainSupervisor;
+		this.primarySupervisor = primarySupervisor;
 		}
+
+	
 
 	
 	

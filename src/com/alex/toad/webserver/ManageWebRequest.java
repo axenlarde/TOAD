@@ -201,7 +201,7 @@ public class ManageWebRequest
 	/**
 	 * Add Agent
 	 */
-	public synchronized static WebRequest addAgent(WebRequest request)	
+	public synchronized static WebRequest addUpdateAgent(WebRequest request)	
 		{
 		try
 			{
@@ -262,8 +262,16 @@ public class ManageWebRequest
 			
 			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
 				{
-				Variables.getLogger().debug("Trying to create agent : "+firstName+" "+lastName+" "+type.name()+" "+office.getFullname());
-				String taskID = AgentTools.addAgent(
+				if(request.getType().equals(webRequestType.addAgent))
+					{
+					Variables.getLogger().debug("Trying to create agent : "+firstName+" "+lastName+" "+type.name()+" "+office.getFullname());
+					}
+				else
+					{
+					Variables.getLogger().debug("Trying to update agent : "+firstName+" "+lastName+" "+type.name()+" "+office.getFullname());
+					}
+				
+				String taskID = AgentTools.addUpdateAgent(
 						userCreationProfile,
 						userID,
 						lastName,
@@ -277,104 +285,21 @@ public class ManageWebRequest
 						deviceName,
 						deviceType,
 						lineNumber,
-						udpLogin);
-				return WebRequestBuilder.buildAddAgentReply(taskID);
+						udpLogin,
+						request.getType());
+				
+				return WebRequestBuilder.buildTaskReply(taskID, request.getType());
 				}
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while processing addAgent web request : "+e.getMessage(),e);
+			Variables.getLogger().error("ERROR while processing "+request.getType()+" web request : "+e.getMessage(),e);
 			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
 			}
 		
 		return WebRequestBuilder.buildFailedWebRequest(request.getType(), "Something went wrong");
 		}
 	
-	/**
-	 * Update Agent
-	 */
-	public synchronized static WebRequest updateAgent(WebRequest request)	
-		{
-		try
-			{
-			ArrayList<String> params = new ArrayList<String>();
-			params.add("request");
-			params.add("content");
-			
-			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
-			String[][] t = parsed.get(0);
-			
-			String userID = UsefulMethod.getItemByName("userid", t);
-			String lastName = UsefulMethod.getItemByName("lastname", t);
-			String firstName = UsefulMethod.getItemByName("firstname", t);
-			AgentType type = AgentType.valueOf(UsefulMethod.getItemByName("type", t));
-			Team team = new Team(UsefulMethod.getItemByName("team", t));
-			String deviceName = UsefulMethod.getItemByName("devicename", t);
-			boolean udpLogin = Boolean.parseBoolean(UsefulMethod.getItemByName("udplogin", t));
-			
-			//Office
-			Office office = UsefulMethod.getOffice(UsefulMethod.getItemByName("team", t));
-			
-			//Primary supervisor teams
-			params.add("primarysupervisorof");
-			parsed = xMLGear.getResultListTab(request.getContent(), params);
-			t = parsed.get(0);
-			ArrayList<Team> primarySupervisorOf = new ArrayList<Team>();
-			for(String[] s : t)
-				{
-				primarySupervisorOf.add(new Team(s[1]));
-				}
-			
-			//Primary supervisor teams
-			params.remove("primarysupervisorof");
-			params.add("secondarysupervisorof");
-			parsed = xMLGear.getResultListTab(request.getContent(), params);
-			t = parsed.get(0);
-			ArrayList<Team> secondarySupervisorOf = new ArrayList<Team>();
-			for(String[] s : t)
-				{
-				secondarySupervisorOf.add(new Team(s[1]));
-				}
-			
-			//Skills
-			params.add("skills");
-			params.add("skill");
-			parsed = xMLGear.getResultListTab(request.getContent(), params);
-			ArrayList<Skill> skills = new ArrayList<Skill>();
-			
-			for(String[][] temp : parsed)
-				{
-				Skill s = AgentTools.getSkill(UsefulMethod.getItemByName("name", temp));
-				s.setLevel(Integer.parseInt(UsefulMethod.getItemByName("level", temp)));
-				skills.add(s);
-				}
-			
-			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
-				{
-				Variables.getLogger().debug("Trying to update agent : "+firstName+" "+lastName+" "+type.name());
-				String taskID = AgentTools.updateAgent(
-						userID,
-						lastName,
-						firstName,
-						office,
-						type,
-						team,
-						primarySupervisorOf,
-						secondarySupervisorOf,
-						skills,
-						deviceName,
-						udpLogin);
-				return WebRequestBuilder.buildUpdateAgentReply(taskID);
-				}
-			}
-		catch (Exception e)
-			{
-			Variables.getLogger().error("ERROR while processing update Agent web request : "+e.getMessage(),e);
-			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
-			}
-		
-		return WebRequestBuilder.buildFailedWebRequest(request.getType(), "Something went wrong");
-		}
 	
 	/**
 	 * Delete Agent
@@ -395,8 +320,8 @@ public class ManageWebRequest
 			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
 				{
 				Variables.getLogger().debug("Trying to delete agent : "+userID);
-				AgentTools.deleteAgent(userID);
-				return WebRequestBuilder.buildSuccessWebRequest(request.getType());
+				String taskID = AgentTools.deleteAgent(userID);
+				return WebRequestBuilder.buildTaskReply(taskID, request.getType());
 				}
 			}
 		catch (Exception e)

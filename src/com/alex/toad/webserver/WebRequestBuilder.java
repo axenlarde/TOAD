@@ -248,52 +248,11 @@ public class WebRequestBuilder
 		}
 	
 	/**
-	 * To build the add agent reply
+	 * To build the task reply
 	 */
-	public static WebRequest buildAddAgentReply(String taskID)
+	public static WebRequest buildTaskReply(String taskID, webRequestType type)
 		{
 		StringBuffer content = new StringBuffer();
-		webRequestType type = webRequestType.addAgent;
-		
-		content.append("<xml>\r\n");
-		content.append("	<reply>\r\n");
-		content.append("		<type>"+type.name()+"</type>\r\n");
-		content.append("		<content>\r\n");
-		content.append("			<taskid>"+taskID+"</taskid>\r\n");
-		content.append("		</content>\r\n");
-		content.append("	</reply>\r\n");
-		content.append("</xml>\r\n");
-		
-		return new WebRequest(content.toString(), type);
-		}
-	
-	/**
-	 * To build the update agent reply
-	 */
-	public static WebRequest buildUpdateAgentReply(String taskID)
-		{
-		StringBuffer content = new StringBuffer();
-		webRequestType type = webRequestType.updateAgent;
-		
-		content.append("<xml>\r\n");
-		content.append("	<reply>\r\n");
-		content.append("		<type>"+type.name()+"</type>\r\n");
-		content.append("		<content>\r\n");
-		content.append("			<taskid>"+taskID+"</taskid>\r\n");
-		content.append("		</content>\r\n");
-		content.append("	</reply>\r\n");
-		content.append("</xml>\r\n");
-		
-		return new WebRequest(content.toString(), type);
-		}
-	
-	/**
-	 * To build the delete agent reply
-	 */
-	public static WebRequest buildDeleteAgentReply(String taskID)
-		{
-		StringBuffer content = new StringBuffer();
-		webRequestType type = webRequestType.deleteAgent;
 		
 		content.append("<xml>\r\n");
 		content.append("	<reply>\r\n");

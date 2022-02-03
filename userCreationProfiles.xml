@@ -6,37 +6,6 @@ the collection file
 <xml>
 	<profiles>
 		<profile>
-			<name>test</name>
-			<user>
-				<target>newuser</target>
-				<action>inject</action>
-			</user>
-			<udp>
-				<target>udp</target>
-				<action>inject</action>
-			</udp>
-			<phone>
-				<target>loggedoutphone</target>
-				<action>inject</action>
-			</phone>
-			<user>
-				<target>updateudp</target>
-				<action>update</action>
-			</user>
-			<user>
-				<target>updatepe</target>
-				<action>update</action>
-			</user>
-			<appuser>
-				<target>updateappuserudp</target>
-				<action>update</action>
-			</appuser>
-			<udplogin>
-				<target>udplogin</target>
-				<action>inject</action>
-			</udplogin>
-		</profile>
-		<profile>
 			<name>addAgent</name>
 			<user>
 				<target>newuser</target>
@@ -64,7 +33,7 @@ the collection file
 			</appuser>
 			<udplogin>
 				<target>udplogin</target>
-				<action>update</action>
+				<action>inject</action>
 			</udplogin>
 		</profile>
 		<profile>

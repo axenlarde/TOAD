@@ -76,36 +76,38 @@ public class Skill extends ItemToInject
 	@Override
 	public void doBuild() throws Exception
 		{
-		// TODO Auto-generated method stub
+		//Nothing to build
 		
+		errorList.addAll(mySkill.init());
 		}
 
 	@Override
 	public String doInject() throws Exception
 		{
-		// TODO Auto-generated method stub
-		return null;
+		return mySkill.inject();
+		//Not implemented
 		}
 
 	@Override
 	public void doDelete() throws Exception
 		{
-		// TODO Auto-generated method stub
-		
+		mySkill.delete();
+		//Not implemented
 		}
 
 	@Override
 	public void doUpdate() throws Exception
 		{
-		// TODO Auto-generated method stub
-		
+		mySkill.update(tuList);
+		//Not implemented
 		}
 
 	@Override
 	public boolean isExisting() throws Exception
 		{
-		// TODO Auto-generated method stub
-		return false;
+		Skill myS = (Skill)mySkill.get();
+		UUID = myS.getUUID();
+		return true;
 		}
 
 	@Override
