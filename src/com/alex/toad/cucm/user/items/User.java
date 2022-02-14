@@ -6,6 +6,8 @@ import com.alex.toad.axlitems.linkers.UserLinker;
 import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.misc.EmptyValueException;
 import com.alex.toad.misc.ItemToInject;
+import com.alex.toad.misc.SimpleRequest;
+import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.UserSource;
@@ -201,10 +203,7 @@ public class User extends ItemToInject
 		myUser.update(tuList);
 		}
 	
-	/**
-	 * Method used to check if the element exist in the CUCM
-	 */
-	public boolean isExisting() throws Exception
+	public void doGet() throws Exception
 		{
 		User myU = (User) myUser.get();
 		UUID = myU.getUUID();
@@ -216,6 +215,16 @@ public class User extends ItemToInject
 		deviceList = myU.getDeviceList();
 		UDPList = myU.getUDPList();
 		ctiUDPList = myU.getCtiUDPList();
+		
+		Variables.getLogger().debug("Item "+this.name+" data fetch from the CUCM");
+		}
+	
+	/**
+	 * Method used to check if the element exist in the CUCM
+	 */
+	public boolean doExist() throws Exception
+		{
+		UUID = SimpleRequest.getUUID(type, name);
 		
 		Variables.getLogger().debug("Item "+this.name+" exists in the CUCM");
 		return true;

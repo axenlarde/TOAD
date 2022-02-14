@@ -3,6 +3,8 @@ package com.alex.toad.cucm.user.items;
 import com.alex.toad.axlitems.linkers.LineLinker;
 import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.misc.ItemToInject;
+import com.alex.toad.misc.SimpleRequest;
+import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
@@ -143,15 +145,22 @@ public class Line extends ItemToInject
 		myLine.update(tuList);
 		}
 	
-	/**
-	 * Method used to check if the element exist in the CUCM
-	 */
-	public boolean isExisting() throws Exception
+	public void doGet() throws Exception
 		{
 		Line myL = (Line) myLine.get();
 		this.UUID = myL.getUUID();
 		//Etc...
 		//Has to be written
+		
+		Variables.getLogger().debug("Item "+this.name+" data fetch from the CUCM");
+		}
+	
+	/**
+	 * Method used to check if the element exist in the CUCM
+	 */
+	public boolean doExist() throws Exception
+		{
+		UUID = SimpleRequest.getLineUUID(name, routePartitionName);
 		
 		Variables.getLogger().debug("Item "+this.name+" already exist in the CUCM");
 		return true;

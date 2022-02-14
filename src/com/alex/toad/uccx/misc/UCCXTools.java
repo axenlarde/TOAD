@@ -29,23 +29,11 @@ public class UCCXTools
 		resource = "<xml>"+resource+"</xml>";
 		ArrayList<String> listParams = new ArrayList<String>();
 		listParams.add("resource");
-		ArrayList<String[][]> parsedReply = xMLGear.getResultListTabAndAtt(resource, listParams);
-		listParams.add("skillMap");
-		listParams.add("skillCompetency");
-		ArrayList<String[][]> skillReply = xMLGear.getResultListTabAndAtt(resource, listParams);
-		
-		String[][] s = parsedReply.get(0);//To ease the following
-		
-		//UUID and Type
-		String UUID = UsefulMethod.getItemByName("userID", s);
-		AgentType type = (UsefulMethod.getItemByName("type", s)).equals("1")?AgentType.agent:AgentType.supervisor;
 		
 		//PrimarySupervisorof
 		ArrayList<Team> primarySupervisorOf = new ArrayList<Team>();
-		listParams.remove("skillMap");
-		listParams.remove("skillCompetency");
 		listParams.add("primarySupervisorOf");
-		parsedReply = xMLGear.getResultListTabAndAtt(resource, listParams);
+		ArrayList<String[][]> parsedReply = xMLGear.getResultListTabAndAtt(resource, listParams);
 		for(String[][] priSup : parsedReply)
 			{
 			primarySupervisorOf.add(new Team(UsefulMethod.getAttributeItemByName("supervisorOfTeamName", priSup)));
@@ -63,23 +51,37 @@ public class UCCXTools
 		
 		//Skill
 		ArrayList<Skill> skills = new ArrayList<Skill>();
-		for(String[][] t : skillReply)
+		listParams.remove("secondarySupervisorOf");
+		listParams.add("skillMap");
+		listParams.add("skillCompetency");
+		parsedReply = xMLGear.getResultListTabAndAtt(resource, listParams);
+		
+		for(String[][] t : parsedReply)
 			{
 			String skillName = UsefulMethod.getAttributeItemByName("skillNameUriPair", t);
 			skills.add(new Skill(skillName, Integer.parseInt(UsefulMethod.getItemByName("competencelevel", t))));
 			}
 		
-		UCCXAgent agent = new UCCXAgent(UsefulMethod.getItemByName("userID", s),
+		listParams.remove("skillMap");
+		listParams.remove("skillCompetency");
+		parsedReply = xMLGear.getResultListTabAndAtt(resource, listParams);
+		String[][] s = parsedReply.get(0); //to ease the following
+		
+		//UUID and Type
+		String userID = UsefulMethod.getItemByName("userID", s);
+		AgentType type = (UsefulMethod.getItemByName("type", s)).equals("1")?AgentType.agent:AgentType.supervisor;
+		
+		UCCXAgent agent = new UCCXAgent(userID,
 				UsefulMethod.getItemByName("lastName", s),
 				UsefulMethod.getItemByName("firstName", s),
 				UsefulMethod.getItemByName("extension", s),
 				type,
 				new Team(UsefulMethod.getAttributeItemByName("team", s)),
-				primarySupervisorOf,
-				secondarySupervisorOf,
 				skills);
 		
-		agent.setUUID(UUID);
+		agent.setPrimarySupervisorOf(primarySupervisorOf);
+		agent.setSecondarySupervisorOf(secondarySupervisorOf);
+		agent.setUUID(userID);
 		
 		return agent;
 		}
@@ -103,9 +105,12 @@ public class UCCXTools
 		//PrimarySupervisor
 		listParams.add("primarySupervisor");
 		parsedReply = xMLGear.getResultListTabAndAtt(content, listParams);
-		s = parsedReply.get(0);//To ease the following
-		String[] id = UsefulMethod.getItemByName("refURL", s).split("/");
-		team.setPrimarySupervisor(new UCCXAgent(id[id.length-1]));//The id is the last occurrence
+		if(parsedReply.size() > 0)
+			{
+			s = parsedReply.get(0);//To ease the following
+			String[] id = UsefulMethod.getItemByName("refURL", s).split("/");
+			if(id.length > 0)team.setPrimarySupervisor(new UCCXAgent(id[id.length-1]));//The id is the last occurrence
+			}
 		
 		//secondarySupervisor
 		listParams.remove("primarySupervisor");
@@ -116,7 +121,7 @@ public class UCCXTools
 		for(String[][] secSup : parsedReply)
 			{
 			String[] secSupID = UsefulMethod.getItemByName("refURL", secSup).split("/");
-			secSupList.add(new UCCXAgent(secSupID[secSupID.length-1]));//The id is the last occurrence
+			if(secSupID.length > 0)secSupList.add(new UCCXAgent(secSupID[secSupID.length-1]));//The id is the last occurrence
 			}
 		team.setSecondarySupervisorList(secSupList);
 		
@@ -156,9 +161,9 @@ public class UCCXTools
 		{
 		StringBuffer content = new StringBuffer("");
 		
-		content.append("		<team name=\""+team.getName()+"\">\r\n");
+		content.append("\r\n		<team name=\""+team.getName()+"\">\r\n");
 		content.append("			<refURL>https://"+Variables.getUccxServer().getHost()+"/adminapi/team/"+team.getUUID()+"</refURL>\r\n");
-		content.append("		</team>");
+		content.append("		</team>\r\n");
 		
 		return content.toString();
 		}
@@ -184,6 +189,36 @@ public class UCCXTools
 			}
 		
 		content.append("		</skillMap>\r\n");
+		
+		return content.toString();
+		}
+	
+	/**
+	 * Return the XML form of a Primary supervisor
+	 * @throws Exception 
+	 */
+	public static String getRESTPrimarySupFromAgent(UCCXAgent agent) throws Exception
+		{
+		StringBuffer content = new StringBuffer("");
+		
+		content.append("			<primarySupervisor name=\""+agent.getFirstname()+" "+agent.getLastname()+"\">\r\n");
+		content.append("				<refURL>https://"+Variables.getUccxServer().getHost()+"/adminapi/resource/"+agent.getName()+"</refURL>\r\n");
+		content.append("			</primarySupervisor>\r\n");
+		
+		return content.toString();
+		}
+	
+	/**
+	 * Return the XML form of a secondary supervisor
+	 * @throws Exception 
+	 */
+	public static String getRESTSecondarySupFromAgent(UCCXAgent agent) throws Exception
+		{
+		StringBuffer content = new StringBuffer("");
+		
+		content.append("			<secondrySupervisor name=\""+agent.getFirstname()+" "+agent.getLastname()+"\">\r\n");
+		content.append("				<refURL>https://"+Variables.getUccxServer().getHost()+"/adminapi/resource/"+agent.getName()+"</refURL>\r\n");
+		content.append("			</secondrySupervisor>\r\n");
 		
 		return content.toString();
 		}

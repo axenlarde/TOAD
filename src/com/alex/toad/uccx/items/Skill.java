@@ -3,7 +3,9 @@ package com.alex.toad.uccx.items;
 import java.lang.reflect.Field;
 
 import com.alex.toad.misc.ItemToInject;
+import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.restitems.linkers.SkillLinker;
+import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 
 /**********************************
@@ -101,12 +103,18 @@ public class Skill extends ItemToInject
 		mySkill.update(tuList);
 		//Not implemented
 		}
-
-	@Override
-	public boolean isExisting() throws Exception
+	
+	public void doGet() throws Exception
 		{
 		Skill myS = (Skill)mySkill.get();
 		UUID = myS.getUUID();
+		Variables.getLogger().debug("Item "+this.name+" data fetch from the UCCX");
+		}
+
+	@Override
+	public boolean doExist() throws Exception
+		{
+		UUID = RESTTools.getRESTUUIDV105(type, name);
 		return true;
 		}
 

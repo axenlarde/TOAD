@@ -223,7 +223,8 @@ public class Variables
 		{
 		GET,
 		POST,
-		PUT
+		PUT,
+		DELETE
 		};
 		
 	/**	MISC	**/

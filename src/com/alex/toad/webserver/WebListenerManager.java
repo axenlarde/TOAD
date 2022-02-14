@@ -140,11 +140,11 @@ public class WebListenerManager implements HttpHandler
 						}
 					else if(wr.getType().equals(webRequestType.addAgent))
 						{
-						reply = ManageWebRequest.addAgent(wr);
+						reply = ManageWebRequest.addUpdateAgent(wr);
 						}
 					else if(wr.getType().equals(webRequestType.updateAgent))
 						{
-						reply = ManageWebRequest.updateAgent(wr);
+						reply = ManageWebRequest.addUpdateAgent(wr);
 						}
 					else if(wr.getType().equals(webRequestType.deleteAgent))
 						{

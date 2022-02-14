@@ -113,6 +113,10 @@ public class RESTTools
 			}
 		
 		Variables.getLogger().debug("List team done, "+teams.size()+" team found");
+		for(Team t : teams)
+			{
+			Variables.getLogger().debug(t.getName());
+			}
 		return teams;
 		}
 	
@@ -143,6 +147,10 @@ public class RESTTools
 			}
 		
 		Variables.getLogger().debug("List skill done, "+skills.size()+" skill found");
+		for(Skill s : skills)
+			{
+			Variables.getLogger().debug(s.getName());
+			}
 		return skills;
 		}
 	
@@ -179,6 +187,7 @@ public class RESTTools
 			String uri = "adminapi/resource/"+itemName;
 			String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
 			
+			reply = "<xml>"+reply+"</xml>";
 			ArrayList<String> listParams = new ArrayList<String>();
 			listParams.add("resource");
 			ArrayList<String[][]> parsedReply = xMLGear.getResultListTab(reply, listParams);

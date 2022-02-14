@@ -8,6 +8,7 @@ import org.apache.commons.net.util.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -21,6 +22,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.requestType;
 
 /**********************************
@@ -77,12 +79,14 @@ public class RESTServer
 	
 	public String send(requestType type, String uri, String body) throws Exception
 		{
+		Variables.getLogger().debug("Processing "+type.name()+" request to "+baseUri+uri+" with content : \r\n"+body);
 		String response = null; 
 		switch(type)
 			{
 			case GET: response = get(uri);break;
 			case POST: response = post(uri, body);break;
 			case PUT: response = put(uri, body);break;
+			case DELETE: response = delete(uri);break;
 			default: throw new Exception("Failed to process the REST request");
 			}
 		
@@ -92,15 +96,18 @@ public class RESTServer
 			}
 		else
 			{
-			//We remove the first XML tag (<?xml version="1.0" encoding="UTF-8"?>)
-			return response.substring(response.indexOf("?>")+2);
+			if(response.equals(""))return "";
+			else
+				{
+				//We remove the first XML tag (<?xml version="1.0" encoding="UTF-8"?>)
+				return response.substring(response.indexOf("?>")+2);
+				}
 			}
 		}
 	
 	
 	private String get(String uri) throws Exception
 		{
-		//HttpUriRequest request = new HttpGet(baseUri+uri);
 		HttpUriRequest request = new HttpGet(baseUri+uri);
 	    request.addHeader("Authorization", "Basic "+credentials);
 	    request.addHeader("Content-Type", "application/XML");
@@ -108,9 +115,13 @@ public class RESTServer
         HttpResponse response = httpClient.execute(request);
         
 		int responseCode = response.getStatusLine().getStatusCode();
-		if(responseCode != 200)throw new Exception("REST request failed code : "+responseCode); 
-		
 		HttpEntity entity = response.getEntity();
+		
+		if(responseCode != 200)
+			{
+			throw new Exception("REST request failed "+responseCode+" \r\n"+EntityUtils.toString(entity, "UTF-8"));
+			} 
+		
 		return EntityUtils.toString(entity, "UTF-8");
 		}
 	
@@ -124,9 +135,13 @@ public class RESTServer
         HttpResponse response = httpClient.execute(request);
         
 		int responseCode = response.getStatusLine().getStatusCode();
-		if(responseCode != 200)throw new Exception("REST request failed code : "+responseCode); 
-		
 		HttpEntity entity = response.getEntity();
+		
+		if(responseCode != 200)
+			{
+			throw new Exception("REST request failed "+responseCode+" \r\n"+EntityUtils.toString(entity, "UTF-8"));
+			}
+		
 		return EntityUtils.toString(entity, "UTF-8");
 		}
 	
@@ -140,9 +155,32 @@ public class RESTServer
         HttpResponse response = httpClient.execute(request);
         
 		int responseCode = response.getStatusLine().getStatusCode();
-		if(responseCode != 200)throw new Exception("REST request failed code : "+responseCode); 
-		
 		HttpEntity entity = response.getEntity();
+		
+		if(responseCode != 200)
+			{
+			throw new Exception("REST request failed "+responseCode+" \r\n"+EntityUtils.toString(entity, "UTF-8"));
+			}
+		
+		return EntityUtils.toString(entity, "UTF-8");
+		}
+	
+	private String delete(String uri) throws Exception
+		{
+		HttpDelete request = new HttpDelete(baseUri+uri);
+	    request.addHeader("Authorization", "Basic "+credentials);
+	    request.addHeader("Content-Type", "application/XML");
+	    
+        HttpResponse response = httpClient.execute(request);
+        
+		int responseCode = response.getStatusLine().getStatusCode();
+		HttpEntity entity = response.getEntity();
+		
+		if(responseCode != 200)
+			{
+			throw new Exception("REST request failed "+responseCode+" \r\n"+EntityUtils.toString(entity, "UTF-8"));
+			}
+		
 		return EntityUtils.toString(entity, "UTF-8");
 		}
 

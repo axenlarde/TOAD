@@ -96,9 +96,12 @@ public class UserLinker extends AXLItemLinker
 		//Group
 		try
 			{
-			for(String s : userControlGroupList)
+			if(userControlGroupList != null)
 				{
-				SimpleRequest.getUUIDV105(itemType.usercontrolgroup, s);
+				for(String s : userControlGroupList)
+					{
+					SimpleRequest.getUUIDV105(itemType.usercontrolgroup, s);
+					}
 				}
 			}
 		catch (Exception e)
@@ -110,7 +113,7 @@ public class UserLinker extends AXLItemLinker
 		try
 			{
 			//Proceed only if the user local is not empty
-			if(!this.getUserLocale().equals(""))
+			if((userLocale != null) && (!this.getUserLocale().equals("")))
 				{
 				//Here we need a SQL request to fetch the user local list
 				List<Object> SQLResp = SimpleRequest.doSQLQuery("select name from typeuserlocale");

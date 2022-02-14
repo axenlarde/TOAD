@@ -100,8 +100,8 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 			<fwunrvoicemailenable>'false'</fwunrvoicemailenable>
 			<voicemailprofile>office.voicemailprofile</voicemailprofile>-->
 			<routepartition>config.didpartition</routepartition>
-			<producttype>*LFphone*agent.devicetype</producttype>
-			<buttontemplate>*LFpbt*agent.devicetype</buttontemplate>
+			<producttype>'Cisco 7841'</producttype>
+			<buttontemplate>'Standard 7841 SIP'</buttontemplate>
 			<service>'ippa':'UCCX'</service><!--'Service Name':'Service URL label'--><!--One or more-->
 			<protocol>'SIP'</protocol>
 			<!--<speeddial>tbd</speeddial>--> 
@@ -152,7 +152,6 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 		<appuser>
 			<targetname>updateappuserudp</targetname>
 			<userid>config.uccxrmcmuser</userid>
-			<device>'SEP'+agent.devicename</device>
 			<ctiudp>*m*agent.userid</ctiudp>
 		</appuser>
 		<appuser>

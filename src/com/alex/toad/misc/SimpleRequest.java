@@ -584,12 +584,7 @@ public class SimpleRequest
 	 */
 	public static String getLineUUID(String lineNumber, String partitionName) throws Exception
 		{
-		if(Variables.getCUCMVersion().equals(cucmAXLVersion.version85))
-			{
-			throw new Exception("Unsupported AXL version");
-			//return getLineUUIDV85(type, itemName).getUuid();
-			}
-		else if(Variables.getCUCMVersion().equals(cucmAXLVersion.version105))
+		if(Variables.getCUCMVersion().equals(cucmAXLVersion.version105))
 			{
 			return getLineUUIDV105(lineNumber, partitionName).getUuid();
 			}

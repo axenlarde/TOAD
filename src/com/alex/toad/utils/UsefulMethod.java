@@ -443,7 +443,6 @@ public class UsefulMethod
 			String firstNumber = tab[0];
 			String lastNumber = tab[1];
 			
-			//List<Object> SQLResp = SimpleRequest.doSQLQuery("select dnorpattern from numplan where tkpatternusage='2' and dnorpattern between '"+firstNumber+"' and '"+lastNumber+"'");
 			List<Object> SQLResp = SimpleRequest.doSQLQuery("select dnorpattern from numplan where dnorpattern between '"+firstNumber+"' and '"+lastNumber+"'");
 			
 			for(Object o : SQLResp)
@@ -787,10 +786,13 @@ public class UsefulMethod
 	 * @param faultDesc
 	 * @return
 	 */
-	public static boolean itemNotFoundInTheCUCM(String faultDesc)
+	public static boolean itemNotFound(String faultDesc)
 		{
 		ArrayList<String> faultDescList = new ArrayList<String>();
 		faultDescList.add("was not found");
+		faultDescList.add("Not Found");
+		//Add some more reason
+		
 		for(String s : faultDescList)
 			{
 			if(faultDesc.contains(s))return true;

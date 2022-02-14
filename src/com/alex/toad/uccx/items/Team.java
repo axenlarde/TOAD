@@ -4,7 +4,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import com.alex.toad.misc.ItemToInject;
+import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.restitems.linkers.TeamLinker;
+import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 
@@ -102,17 +104,23 @@ public class Team extends ItemToInject
 	public void doUpdate() throws Exception
 		{
 		myTeam.update(tuList);
-		//Not implemented
 		}
-
-	@Override
-	public boolean isExisting() throws Exception
+	
+	public void doGet() throws Exception
 		{
 		Team myT = (Team) myTeam.get();
 		UUID = myT.getUUID();
 		agentList = myT.getAgentList();
 		secondarySupervisorList = myT.getSecondarySupervisorList();
 		primarySupervisor = myT.getPrimarySupervisor();
+		
+		Variables.getLogger().debug("Item "+this.name+" data fetch from the UCCX");
+		}
+
+	@Override
+	public boolean doExist() throws Exception
+		{
+		UUID = RESTTools.getRESTUUIDV105(type, name);
 		
 		Variables.getLogger().debug("Item "+this.name+" exists in the UCCX");
 		return true;
@@ -127,8 +135,8 @@ public class Team extends ItemToInject
 	@Override
 	public void manageTuList() throws Exception
 		{
-		// TODO Auto-generated method stub
-		
+		if(primarySupervisor != null)tuList.add(TeamLinker.toUpdate.primarySupervisor);
+		if((secondarySupervisorList != null) && (secondarySupervisorList.size()>0))tuList.add(TeamLinker.toUpdate.secondarySupervisorList);
 		}
 
 	public TeamLinker getMyTeam()

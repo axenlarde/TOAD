@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.alex.toad.axlitems.linkers.DeviceProfileLinker;
 import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.misc.ItemToInject;
+import com.alex.toad.misc.SimpleRequest;
 import com.alex.toad.soap.items.PhoneLine;
 import com.alex.toad.soap.items.PhoneService;
 import com.alex.toad.soap.items.SpeedDial;
@@ -127,10 +128,7 @@ public class DeviceProfile extends ItemToInject
 		myUDP.update(tuList);
 		}
 	
-	/**
-	 * Method used to check if the element exist in the CUCM
-	 */
-	public boolean isExisting() throws Exception
+	public void doGet() throws Exception
 		{
 		DeviceProfile myPh = (DeviceProfile) myUDP.get();
 		UUID = myPh.getUUID();
@@ -138,6 +136,16 @@ public class DeviceProfile extends ItemToInject
 		
 		//Etc...
 		//Has to be written
+		
+		Variables.getLogger().debug("Item "+this.name+" data fetch from the CUCM");
+		}
+	
+	/**
+	 * Method used to check if the element exist in the CUCM
+	 */
+	public boolean doExist() throws Exception
+		{
+		UUID = SimpleRequest.getUUID(type, name);
 		
 		Variables.getLogger().debug("Item "+this.name+" already exist in the CUCM");
 		return true;

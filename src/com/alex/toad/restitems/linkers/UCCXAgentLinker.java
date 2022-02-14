@@ -42,10 +42,7 @@ public class UCCXAgentLinker extends RESTItemLinker
 	
 	public enum toUpdate implements ToUpdate
 		{
-		agentType,
 		team,
-		primarySupervisorOf,
-		secondarySupervisorOf,
 		skills
 		}
 	
@@ -68,9 +65,7 @@ public class UCCXAgentLinker extends RESTItemLinker
 		//Teams
 		try
 			{
-			team.setUUID(RESTTools.getRESTUUIDV105(itemType.team, team.getName()));
-			for(Team t : primarySupervisorOf)t.setUUID(RESTTools.getRESTUUIDV105(itemType.team, t.getName()));
-			for(Team t : secondarySupervisorOf)t.setUUID(RESTTools.getRESTUUIDV105(itemType.team, t.getName()));
+			if(team != null)team.setUUID(RESTTools.getRESTUUIDV105(itemType.team, team.getName()));
 			}
 		catch (Exception e)
 			{
@@ -80,9 +75,12 @@ public class UCCXAgentLinker extends RESTItemLinker
 		//Skills
 		try
 			{
-			for(Skill s : skills)
+			if(skills != null)
 				{
-				s.setUUID(RESTTools.getRESTUUIDV105(itemType.skill, s.getName()));
+				for(Skill s : skills)
+					{
+					s.setUUID(RESTTools.getRESTUUIDV105(itemType.skill, s.getName()));
+					}
 				}
 			}
 		catch (Exception e)
@@ -119,37 +117,35 @@ public class UCCXAgentLinker extends RESTItemLinker
 	 * Update
 	 */
 	public void doUpdateVersion105(ArrayList<ToUpdate> tuList) throws Exception
-		{		
-		String uri = "https://"+Variables.getUccxServer().getHost()+":"+Variables.getUccxServer().getPort()+"adminapi/resource/"+name;
+		{
+		String uri = "adminapi/resource/"+name;
 		StringBuffer content = new StringBuffer();
 		
-		content.append("<resources>\r\n");//A valider
 		content.append("	<resource>\r\n");
 		
-		if(tuList.contains(toUpdate.agentType))content.append("		<type>"+UsefulMethod.convertAgentTypeToInt(agentType)+"</type>\r\n");
-		if(tuList.contains(toUpdate.team))content.append(UCCXTools.getRESTFromTeam(team));
-		if(tuList.contains(toUpdate.primarySupervisorOf))
-			{
-			content.append("<primarySupervisorOf>");
-			for(Team t : primarySupervisorOf)
-				{
-				content.append(UCCXTools.getRESTFromTeam(t));
-				}
-			content.append("</primarySupervisorOf>");
-			}
-		if(tuList.contains(toUpdate.secondarySupervisorOf))
-			{
-			content.append("<secondarySupervisorOf>");
-			for(Team t : secondarySupervisorOf)
-				{
-				content.append(UCCXTools.getRESTFromTeam(t));
-				}
-			content.append("</secondarySupervisorOf>");
-			}
-		if(tuList.contains(toUpdate.skills))content.append(UCCXTools.getRESTFromSkills(skills));
+		/**
+		 * The following cannot be updated here but is mandatory
+		 * for the server to accept the request
+		 */
+		content.append("		<userID>"+name+"</userID>\r\n");
+		content.append("		<firstName>"+firstname+"</firstName>\r\n");
+		content.append("		<lastName>"+lastname+"</lastName>\r\n");
+		content.append("		<extension>"+telephoneNumber+"</extension>\r\n");
+		content.append("		<autoAvailable>true</autoAvailable>\r\n");
+		if(agentType.equals(AgentType.agent))content.append("		<type>1</type>\r\n");
+		else content.append("		<type>2</type>");
+		/******/
 		
+		if(tuList.contains(toUpdate.team))content.append(UCCXTools.getRESTFromTeam(team));
+		if(tuList.contains(toUpdate.skills))content.append(UCCXTools.getRESTFromSkills(skills));
 		content.append("	</resource>\r\n");
-		content.append("</resources>\r\n");
+		
+		/**
+		 * We trigger a UCCX agent refresh just to be sure the agent
+		 * we target will be available
+		 */
+		Variables.getUccxServer().send(requestType.GET, "uccx-webservices/getAllAgents", "");
+		/**************/
 		
 		String reply = Variables.getUccxServer().send(requestType.PUT, uri, content.toString());
 		}
@@ -163,9 +159,6 @@ public class UCCXAgentLinker extends RESTItemLinker
 		{
 		String uri = "adminapi/resource/"+name;
 		String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
-		
-		reply = reply.replace("<resources>", "");
-		reply = reply.replace("</resources>", "");
 		
 		UCCXAgent myUA = UCCXTools.getAgentFromRESTReply(reply);
 		

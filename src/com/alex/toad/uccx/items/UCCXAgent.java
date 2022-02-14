@@ -3,11 +3,10 @@ package com.alex.toad.uccx.items;
 import java.util.ArrayList;
 
 import com.alex.toad.misc.ItemToInject;
+import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.restitems.linkers.UCCXAgentLinker;
-import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
-import com.alex.toad.webserver.AgentData;
 
 /**********************************
 * Used to describe a UCCX agent
@@ -41,8 +40,7 @@ public class UCCXAgent extends ItemToInject
 	 */
 	public UCCXAgent(String name, String lastname,
 			String firstname, String telephoneNumber,
-			AgentType agentType, Team team, ArrayList<Team> primarySupervisorOf,
-			ArrayList<Team> secondarySupervisorOf, ArrayList<Skill> skills) throws Exception
+			AgentType agentType, Team team, ArrayList<Skill> skills) throws Exception
 		{
 		super(itemType.agent, name);
 		myAgent = new UCCXAgentLinker(name);
@@ -51,8 +49,6 @@ public class UCCXAgent extends ItemToInject
 		this.telephoneNumber = telephoneNumber;
 		this.agentType = agentType;
 		this.team = team;
-		this.primarySupervisorOf = primarySupervisorOf;
-		this.secondarySupervisorOf = secondarySupervisorOf;
 		this.skills = skills;
 		}
 
@@ -109,11 +105,8 @@ public class UCCXAgent extends ItemToInject
 		{
 		myAgent.update(tuList);
 		}
-
-	/**
-	 * Method used to check if the element exists in the UCCX
-	 */
-	public boolean isExisting() throws Exception
+	
+	public void doGet() throws Exception
 		{
 		UCCXAgent myUA = (UCCXAgent) myAgent.get();
 		UUID = myUA.getUUID();
@@ -125,6 +118,16 @@ public class UCCXAgent extends ItemToInject
 		skills = myUA.getSkills();
 		primarySupervisorOf = myUA.getPrimarySupervisorOf();
 		secondarySupervisorOf = myUA.getSecondarySupervisorOf();
+		
+		Variables.getLogger().debug("Item "+this.name+" data fetch from the UCCX");
+		}
+
+	/**
+	 * Method used to check if the element exists in the UCCX
+	 */
+	public boolean doExist() throws Exception
+		{
+		UUID = RESTTools.getRESTUUIDV105(type, name);
 		
 		Variables.getLogger().debug("Item "+this.name+" exists in the UCCX");
 		return true;
@@ -140,14 +143,17 @@ public class UCCXAgent extends ItemToInject
 		//So nothing to resolve
 		}
 
+	/**
+	 * Type, primarySupervisorOf and secondarySupervisorOf can actually be modified only from team update
+	 */
 	@Override
 	public void manageTuList() throws Exception
 		{
-		if(agentType != null)tuList.add(UCCXAgentLinker.toUpdate.agentType);
+		//if(agentType != null)tuList.add(UCCXAgentLinker.toUpdate.agentType);
 		if((skills != null) && (skills.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.skills);
 		if(team != null)tuList.add(UCCXAgentLinker.toUpdate.team);
-		if((primarySupervisorOf != null) && (primarySupervisorOf.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.primarySupervisorOf);
-		if((secondarySupervisorOf != null) && (secondarySupervisorOf.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.secondarySupervisorOf);
+		//if((primarySupervisorOf != null) && (primarySupervisorOf.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.primarySupervisorOf);
+		//if((secondarySupervisorOf != null) && (secondarySupervisorOf.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.secondarySupervisorOf);
 		}
 
 	public String getLastname()

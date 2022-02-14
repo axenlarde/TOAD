@@ -4,6 +4,7 @@ import com.alex.toad.axlitems.linkers.UdpLoginLinker;
 import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.utils.UsefulMethod;
+import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.webserver.AgentData;
 
@@ -95,12 +96,18 @@ public class UdpLogin extends ItemToInject
 		myUDPLogin.update(tuList);
 		}
 	
+	public void doGet() throws Exception
+		{
+		
+		Variables.getLogger().debug("Item "+this.name+" data fetch from the CUCM");
+		}
+	
 	/**
 	 * Method used to check if the element exist in the CUCM
 	 */
-	public boolean isExisting() throws Exception
+	public boolean doExist() throws Exception
 		{
-		UdpLogin myUDP = (UdpLogin) myUDPLogin.get();
+		//Nothing to get
 		return false;
 		}
 	

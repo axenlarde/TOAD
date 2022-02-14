@@ -29,6 +29,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 	protected ArrayList<ErrorTemplate> errorList;
 	protected ArrayList<Correction> correctionList;
 	protected ArrayList<ToUpdate> tuList;
+	protected boolean exists;
 	
 	/***************
 	 * Constructor
@@ -42,6 +43,28 @@ public abstract class ItemToInject implements ItemToInjectImpl
 		tuList = new ArrayList<ToUpdate>();
 		errorList = new ArrayList<ErrorTemplate>();
 		correctionList = new ArrayList<Correction>();
+		this.exists = false;
+		}
+	
+	/**
+	 * CHeck if the item exists in the server
+	 */
+	public boolean isExisting() throws Exception
+		{
+		if(!exists)exists = doExist();//We do not check again if the item already exists
+		
+		return exists;
+		}
+	
+	/**
+	 * Get the item's data from the server
+	 * @throws Exception 
+	 */
+	public void get() throws Exception
+		{
+		//Add something if necessary
+		doGet();
+		exists = true;
 		}
 	
 	/****
@@ -54,15 +77,13 @@ public abstract class ItemToInject implements ItemToInjectImpl
 		try
 			{
 			//We check that the item doesn't already exist
-			boolean exists = false;
-			
 			try
 				{
 				exists = isExisting();//Will throw an exception if not
 				}
 			catch (Exception e)
 				{
-				if(UsefulMethod.itemNotFoundInTheCUCM(e.getMessage()))
+				if(UsefulMethod.itemNotFound(e.getMessage()))
 					{
 					Variables.getLogger().debug("Item "+this.name+" doesn't already exist");
 					exists = false;
@@ -73,7 +94,6 @@ public abstract class ItemToInject implements ItemToInjectImpl
 					throw e;
 					}
 				}
-			
 			
 			if(exists)
 				{
@@ -331,7 +351,17 @@ public abstract class ItemToInject implements ItemToInjectImpl
 		{
 		this.correctionList = correctionList;
 		}
+
+	public boolean isExists()
+		{
+		return exists;
+		}
+
+	public void setExists(boolean exists)
+		{
+		this.exists = exists;
+		}
 	
-	/*2017*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

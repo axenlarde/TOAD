@@ -92,7 +92,7 @@ public class AgentTools
 		 * We get the User from the CUCM
 		 */
 		User myUser = new User(userID);
-		myUser.isExisting();
+		myUser.get();
 		agentData.setFirstName(myUser.getFirstname());
 		agentData.setLastName(myUser.getLastname());
 		agentData.setLineNumber(myUser.getIpccExtension());
@@ -104,10 +104,10 @@ public class AgentTools
 		agentData.setUDPList(myUser.getUDPList());
 		
 		/**
-		 * We get the agent Teams and skills from the UCCX 
+		 * We get the agent Teams and skills from the UCCX
 		 */
 		UCCXAgent agent = new UCCXAgent(userID);
-		agent.isExisting();
+		agent.get();
 		agentData.setAgentType(agent.getAgentType());
 		agentData.setSkillList(agent.getSkills());
 		agentData.setTeam(agent.getTeam());
@@ -152,26 +152,61 @@ public class AgentTools
 		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to Inject List
 		actionType action = requestType.equals(requestType.addAgent)?actionType.inject:actionType.update;
 		
-		/**
+		/*********************
 		 * CUCM items
 		 * Listed in the User Creation Profile : Phone, Line, UDP and so on...
 		 */
 		UserCreationProfile ucp = UsefulMethod.getUserCreationProfile(userCreationProfile);
 		
-		//All the User Creation Profile items are now added to the injection list 
+		/**
+		 * All the User Creation Profile items are now added to the injection list 
+		 */
 		itil.addAll(UserTools.getUserItemList(agentData, action, ucp, udpLogin));
 		
-		/**
+		/*********************
 		 * UCCX items
 		 * To update the brand new Agent
 		 */
-		UCCXAgent agent = new UCCXAgent(agentData.getUserID(), lastName, firstName, agentData.getLineNumber(), agentType, team, primarySupervisorOf, secondarySupervisorOf, skills);
+		UCCXAgent agent = new UCCXAgent(agentData.getUserID(), lastName, firstName, agentData.getLineNumber(), agentType, team, skills);
 		/**
 		 * Here we update the agent because it has just been created by the CUCM
 		 */
 		agent.setAction(actionType.update);
-		
 		itil.add(agent);
+		
+		/**
+		 * Agent type cannot be updated from the agent so we create a type update request
+		 * 
+		 * Unfortunately modifying the user role is not available through the API
+		 * A workaround is to do it programmatically through the normal web admin portal but it is
+		 * really complex
+		 * As modifying the role is not asked yet, we skip this step for now
+		 */
+		//TBW 
+		
+		/**
+		 * team cannot be updated from the agent so we create team update items
+		 * 
+		 * We allow this only if the agent is a supervisor
+		 */
+		if(agent.getAgentType().equals(AgentType.supervisor))
+			{
+			for(Team t : primarySupervisorOf)
+				{
+				t.setPrimarySupervisor(agent);
+				t.setAction(actionType.update);
+				itil.add(t);
+				}
+			
+			for(Team t : secondarySupervisorOf)
+				{
+				ArrayList<UCCXAgent> list = new ArrayList<UCCXAgent>();
+				list.add(agent);
+				t.setSecondarySupervisorList(list);
+				t.setAction(actionType.update);
+				itil.add(t);
+				}
+			}
 		
 		/**
 		 * We now launch the injection process
@@ -290,7 +325,7 @@ public class AgentTools
 	public static Team getTeam(String teamName) throws Exception
 		{
 		Team team = new Team(teamName);
-		team.isExisting();//Will trigger information fetch
+		team.get();//Will trigger information fetch
 		return team;
 		}
 	
@@ -312,7 +347,7 @@ public class AgentTools
 	public static Skill getSkill(String skillName) throws Exception
 		{
 		Skill skill = new Skill(skillName);
-		skill.isExisting();//Will trigger information fetch
+		skill.get();//Will trigger information fetch
 		return skill;
 		}
 	

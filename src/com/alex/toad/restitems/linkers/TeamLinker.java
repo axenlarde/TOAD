@@ -7,9 +7,11 @@ import com.alex.toad.misc.ErrorTemplate;
 import com.alex.toad.misc.ErrorTemplate.errorType;
 import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.misc.ItemToInject;
+import com.alex.toad.restitems.linkers.UCCXAgentLinker.toUpdate;
 import com.alex.toad.restitems.misc.RESTItemLinker;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
+import com.alex.toad.uccx.items.UCCXAgent.AgentType;
 import com.alex.toad.uccx.misc.UCCXError;
 import com.alex.toad.uccx.misc.UCCXTools;
 import com.alex.toad.utils.Variables;
@@ -34,9 +36,8 @@ public class TeamLinker extends RESTItemLinker
 	
 	public enum toUpdate implements ToUpdate
 		{
-		agentList,
-		supervisorList,
-		mainSupervisor
+		secondarySupervisorList,
+		primarySupervisor
 		}
 	
 	/***************
@@ -58,15 +59,23 @@ public class TeamLinker extends RESTItemLinker
 		//UCCXAgent
 		try
 			{
-			for(UCCXAgent agent : agentList)
+			/*As the agent may not exist yet at the init stage, we should not check for it
+			if(agentList != null)
 				{
-				RESTTools.getRESTUUIDV105(itemType.agent, agent.getName());				
+				for(UCCXAgent agent : agentList)
+					{
+					RESTTools.getRESTUUIDV105(itemType.agent, agent.getName());				
+					}
 				}
-			for(UCCXAgent agent : secondarySupervisorList)
+			if(secondarySupervisorList != null)
 				{
-				RESTTools.getRESTUUIDV105(itemType.agent, agent.getName());				
+				for(UCCXAgent agent : secondarySupervisorList)
+					{
+					RESTTools.getRESTUUIDV105(itemType.agent, agent.getName());				
+					}
 				}
-			RESTTools.getRESTUUIDV105(itemType.agent, primarySupervisor.getName());				
+			if(primarySupervisor != null)RESTTools.getRESTUUIDV105(itemType.agent, primarySupervisor.getName());				
+			*/
 			}
 		catch (Exception e)
 			{
@@ -101,8 +110,35 @@ public class TeamLinker extends RESTItemLinker
 	 * Update
 	 */
 	public void doUpdateVersion105(ArrayList<ToUpdate> tuList) throws Exception
-		{		
-		Variables.getLogger().warn("UCCX Team update is not implemented");
+		{
+		String teamID = RESTTools.getRESTUUIDV105(itemType.team, name);
+		String uri = "adminapi/team/"+teamID;
+		StringBuffer content = new StringBuffer();
+		
+		content.append("	<team>\r\n");
+		
+		/**
+		 * The following cannot be updated here but is mandatory
+		 * for the server to accept the request
+		 */
+		content.append("		<teamId>"+teamID+"</teamId>\r\n");
+		content.append("		<teamname>"+name+"</teamname>\r\n");
+		/******/
+		
+		if(tuList.contains(toUpdate.primarySupervisor))content.append(UCCXTools.getRESTPrimarySupFromAgent(primarySupervisor));
+		if(tuList.contains(toUpdate.secondarySupervisorList))
+			{
+			content.append("		<secondarySupervisors>\r\n");
+			for(UCCXAgent ua : secondarySupervisorList)
+				{
+				content.append(UCCXTools.getRESTSecondarySupFromAgent(ua));
+				}
+			content.append("		</secondarySupervisors>\r\n");
+			}
+		
+		content.append("	</team>\r\n");
+		
+		String reply = Variables.getUccxServer().send(requestType.PUT, uri, content.toString());
 		}
 	/**************/
 	

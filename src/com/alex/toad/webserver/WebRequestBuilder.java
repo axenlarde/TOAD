@@ -167,9 +167,9 @@ public class WebRequestBuilder
 		try
 			{
 			content.append("				<name>"+team.getName()+"</name>\r\n");
-			content.append("				<primarysupervisor>"+team.getName()+"</primarysupervisor>\r\n");
+			content.append("				<primarysupervisor>"+team.getPrimarySupervisor()+"</primarysupervisor>\r\n");
 			content.append("				<supervisors>\r\n");
-			for(UCCXAgent ua : team.getSupervisorList())
+			for(UCCXAgent ua : team.getSecondarySupervisorList())
 				{
 				content.append("				<supervisor>\r\n");
 				content.append("					<userid>"+ua.getName()+"</userid>\r\n");

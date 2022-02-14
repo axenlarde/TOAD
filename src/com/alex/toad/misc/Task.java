@@ -92,49 +92,34 @@ public class Task extends Thread
 					{
 					try
 						{
-						if(myToDo.getStatus().equals(statusType.disabled))
+						if(myToDo.getStatus().equals(statusType.waiting))
 							{
-							Variables.getLogger().debug("The item \""+myToDo.getName()+"\" has been disabled so we do not process it");
-							}
-						else if(myToDo.getAction().equals(actionType.inject))
-							{
-							if(myToDo.getStatus().equals(statusType.waiting))
-								{							
+							if(myToDo.getStatus().equals(statusType.disabled))
+								{
+								Variables.getLogger().debug("The item \""+myToDo.getName()+"\" has been disabled so we do not process it");
+								}
+							else if(myToDo.getAction().equals(actionType.inject))
+								{
 								myToDo.inject();
 								}
-							else
-								{
-								Variables.getLogger().debug("The status of the item \""+myToDo.getName()+"\" is different than waiting (Current status \""+myToDo.getStatus().name()+"\" so we do not inject it)");
-								myToDo.setStatus(statusType.disabled);
-								}
-							}
-						else if(myToDo.getAction().equals(actionType.delete))
-							{
-							if(myToDo.getStatus().equals(statusType.waiting))
+							else if(myToDo.getAction().equals(actionType.delete))
 								{
 								myToDo.delete();
 								}
-							else
+							else if(myToDo.getAction().equals(actionType.update))
 								{
-								Variables.getLogger().debug("The status of the item \""+myToDo.getName()+"\" is different than waiting (Current status \""+myToDo.getStatus().name()+"\" so we do not delete it)");
-								myToDo.setStatus(statusType.disabled);
-								}
-							}
-						else if(myToDo.getAction().equals(actionType.update))
-							{
-							if(myToDo.isExisting())
-								{
+								/**
+								 * Because some dependencies may have been just injected
+								 * we check again if the item exists
+								 */
+								myToDo.isExisting();
 								myToDo.update();
-								}
-							else
-								{
-								Variables.getLogger().debug("The status of the item \""+myToDo.getName()+"\" is different than injected (Current status \""+myToDo.getStatus().name()+"\" so we do not update it)");
-								myToDo.setStatus(statusType.disabled);
 								}
 							}
 						else
 							{
 							Variables.getLogger().debug("The following item has not been processed because of its status \""+myToDo.getStatus().name()+"\" : "+myToDo.getName());
+							myToDo.setStatus(statusType.disabled);
 							}
 						}
 					catch (Exception e)
