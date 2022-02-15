@@ -961,6 +961,9 @@ public class UsefulMethod
 			case usercontrolgroup:return "Access Control Group";
 			case analog:return "Analog Port";
 			case gateway:return "Gateway";
+			case agent:return "Agent UCCX";
+			case team:return "Team UCCX";
+			case skill:return "Skill UCCX";
 			default:return type.name();
 			}
 		}

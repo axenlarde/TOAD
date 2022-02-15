@@ -138,11 +138,29 @@ public class Task extends Thread
 			end = true;
 			Variables.getLogger().info("Task ends");
 			UsefulMethod.clean();
+			defineStatus();
 			}
 		catch (Exception e)
 			{
 			Variables.getLogger().debug("ERROR : "+e.getMessage(),e);
 			}
+		}
+	
+	/**
+	 * Used to find the good task status according to what happened
+	 * during the process
+	 */
+	private void defineStatus()
+		{
+		for(ItemToInject myToDo : todoList)
+			{
+			if((myToDo.getStatus().equals(statusType.error)) || (myToDo.getErrorList().size() > 0))
+				{
+				this.status = statusType.error;
+				return;
+				}
+			}
+		this.status = statusType.done;
 		}
 	
 	public String getInfo()

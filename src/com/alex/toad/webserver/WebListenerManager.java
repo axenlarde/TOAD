@@ -166,6 +166,10 @@ public class WebListenerManager implements HttpHandler
 						{
 						reply = ManageWebRequest.listTask(wr);
 						}
+					else if(wr.getType().equals(webRequestType.listUCP))
+						{
+						reply = ManageWebRequest.listUCP(wr);
+						}
 					else if(wr.getType().equals(webRequestType.copyLogFile))
 						{
 						reply = ManageWebRequest.copyLogFile(wr);

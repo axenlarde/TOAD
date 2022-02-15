@@ -71,7 +71,7 @@ public class AgentTools
 		
 		for(UCCXAgent ua : list)
 			{
-			if(Pattern.matches(".*"+search+".*", ua.getName()+ua.getLastname()+ua.getFirstname()+ua.getTeam().getName()))
+			if(Pattern.matches("(?i).*"+search+".*", ua.getName()+ua.getLastname()+ua.getFirstname()+ua.getTeam().getName()))
 				{
 				Variables.getLogger().debug("The agent "+ua.getName()+" match the search criteria : "+search);
 				agents.add(ua);
@@ -115,6 +115,8 @@ public class AgentTools
 		agentData.setAgentType(agent.getAgentType());
 		agentData.setSkillList(agent.getSkills());
 		agentData.setTeam(agent.getTeam());
+		agentData.setPrimarySupervisorOf(agent.getPrimarySupervisorOf());
+		agentData.setSecondarySupervisorOf(agent.getSecondarySupervisorOf());
 		
 		/**
 		 * We find the office thanks to the Team name

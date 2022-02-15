@@ -2,6 +2,7 @@ package com.alex.toad.webserver;
 
 import java.util.ArrayList;
 
+import com.alex.toad.cucm.user.misc.UserCreationProfile;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.misc.Office;
 import com.alex.toad.misc.Task;
@@ -101,6 +102,7 @@ public class WebRequestBuilder
 				content.append("					<userid>"+ad.getName()+"</userid>\r\n");
 				content.append("					<firstname>"+ad.getFirstname()+"</firstname>\r\n");
 				content.append("					<lastname>"+ad.getLastname()+"</lastname>\r\n");
+				content.append("					<number>"+ad.getTelephoneNumber()+"</number>\r\n");
 				content.append("					<type>"+ad.getAgentType()+"</type>\r\n");
 				content.append("					<team>"+ad.getTeam().getName()+"</team>\r\n");
 				content.append("				</agent>\r\n");
@@ -431,11 +433,48 @@ public class WebRequestBuilder
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while retrieving the office list : "+e.getMessage());
+			Variables.getLogger().error("ERROR while retrieving the task list : "+e.getMessage());
 			content.append("				<task></task>\r\n");
 			}
 		
 		content.append("			</tasks>\r\n");
+		content.append("		</content>\r\n");
+		content.append("	</reply>\r\n");
+		content.append("</xml>\r\n");
+		
+		return new WebRequest(content.toString(), type);
+		}
+	
+	/**
+	 * To build the list task reply
+	 */
+	public static WebRequest buildListUCPReply(ArrayList<UserCreationProfile> ucps)
+		{
+		StringBuffer content = new StringBuffer();
+		webRequestType type = webRequestType.listUCP;
+		
+		content.append("<xml>\r\n");
+		content.append("	<reply>\r\n");
+		content.append("		<type>"+type.name()+"</type>\r\n");
+		content.append("		<content>\r\n");
+		content.append("			<ucps>\r\n");
+		
+		try
+			{
+			for(UserCreationProfile ucp : ucps)
+				{
+				content.append("				<ucp>\r\n");
+				content.append("					<name>"+ucp.getName()+"</name>\r\n");
+				content.append("				</ucp>\r\n");
+				}
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("ERROR while retrieving the User Creatio profile list : "+e.getMessage());
+			content.append("				<ucp></ucp>\r\n");
+			}
+		
+		content.append("			</ucps>\r\n");
 		content.append("		</content>\r\n");
 		content.append("	</reply>\r\n");
 		content.append("</xml>\r\n");
@@ -456,13 +495,28 @@ public class WebRequestBuilder
 		content.append("				<firstname>"+agent.getFirstName()+"</firstname>\r\n");
 		content.append("				<lastname>"+agent.getLastName()+"</lastname>\r\n");
 		content.append("				<number>"+agent.getLineNumber()+"</number>\r\n");
-		content.append("				<office>"+agent.getOffice()+"</office>\r\n");
+		content.append("				<office>"+agent.getOffice().getFullname()+"</office>\r\n");
 		content.append("				<type>"+agent.getAgentType()+"</type>\r\n");
-		content.append("				<team>"+agent.getTeam()+"</team>\r\n");
+		content.append("				<team>"+agent.getTeam().getName()+"</team>\r\n");
+		content.append("				<primarysupervisorof>\r\n");
+		for(Team t : agent.getPrimarySupervisorOf())
+			{
+			content.append("					<team>"+t.getName()+"</team>\r\n");
+			}
+		content.append("				</primarysupervisorof>\r\n");
+		content.append("				<secondarysupervisorof>\r\n");
+		for(Team t : agent.getSecondarySupervisorOf())
+			{
+			content.append("					<team>"+t.getName()+"</team>\r\n");
+			}
+		content.append("				</secondarysupervisorof>\r\n");
 		content.append("				<skills>\r\n");
 		for(Skill s : agent.getSkillList())
 			{
-			content.append("					<skill>"+s.getName()+"</skill>\r\n");
+			content.append("					<skill>\r\n");
+			content.append("						<name>"+s.getName()+"</name>\r\n");
+			content.append("						<level>"+s.getLevel()+"</level>\r\n");
+			content.append("					</skill>\r\n");
 			}
 		content.append("				</skills>\r\n");
 		content.append("				<devices>\r\n");
@@ -472,7 +526,8 @@ public class WebRequestBuilder
 			content.append("						<name>"+s+"</name>\r\n");
 			content.append("					</device>\r\n");
 			}
-		content.append("				</udps>\r\n");
+		content.append("				</devices>\r\n");
+		content.append("				<udps>\r\n");
 		for(String s : agent.getUDPList())
 			{
 			content.append("					<udp>\r\n");

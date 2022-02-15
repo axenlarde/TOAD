@@ -153,8 +153,7 @@ public class DeviceProfile extends ItemToInject
 	
 	public String getInfo()
 		{
-		return name+" "
-		+UUID;
+		return UsefulMethod.convertItemTypeToVerbose(type)+" "+name;
 		}
 
 	/**

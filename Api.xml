@@ -514,6 +514,35 @@ Update agent will only allow to update some fields for now
 	</reply>
 </xml>
 
+<!--listUCP-->
+<xml>
+	<request>
+		<type>listUCP</type>
+		<securitytoken></securitytoken><!--Security token of the connected user-->
+		</content>
+	</request>
+</xml>
+<xml>
+	<reply>
+		<type>listUCP</type>
+		<content>
+			<ucps>
+				<ucp><!--One or more ucp-->
+					<name></name>
+				</ucp>
+			</ucps>
+		</content>
+	</reply>
+</xml>
+<xml>
+	<reply>
+		<type>listUCP</type>
+		<content>
+			<error>Error description</error>
+		</content>
+	</reply>
+</xml>
+
 <!--copyLogFile-->
 <xml>
 	<request>

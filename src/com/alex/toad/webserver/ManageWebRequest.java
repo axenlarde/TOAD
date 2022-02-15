@@ -43,6 +43,7 @@ public class ManageWebRequest
 		listSkill,
 		listOffice,
 		listTask,
+		listUCP,
 		copyLogFile
 		}
 	
@@ -409,7 +410,23 @@ public class ManageWebRequest
 			}
 		catch (Exception e)
 			{
-			Variables.getLogger().error("ERROR while processing list Office web request : "+e.getMessage(),e);
+			Variables.getLogger().error("ERROR while processing list Task web request : "+e.getMessage(),e);
+			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
+			}
+		}
+	
+	/**
+	 * List User Creation Profile
+	 */
+	public synchronized static WebRequest listUCP(WebRequest request)	
+		{
+		try
+			{
+			return WebRequestBuilder.buildListUCPReply(Variables.getUserCreationProfileList());
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().error("ERROR while processing list User Creation profile web request : "+e.getMessage(),e);
 			return WebRequestBuilder.buildFailedWebRequest(request.getType(), e.getMessage());
 			}
 		}

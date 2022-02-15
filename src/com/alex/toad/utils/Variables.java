@@ -152,7 +152,8 @@ public class Variables
 		disabled,
 		init,
 		deleted,
-		updated
+		updated,
+		done
 		};
 		
 	/********************************************

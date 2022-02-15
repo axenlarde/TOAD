@@ -168,9 +168,7 @@ public class Line extends ItemToInject
 	
 	public String getInfo()
 		{
-		return name+" "
-		+routePartitionName+" "
-		+UUID;
+		return UsefulMethod.convertItemTypeToVerbose(type)+" "+name+" "+UsefulMethod.convertItemTypeToVerbose(itemType.partition)+" "+routePartitionName;
 		}
 	
 	/**
