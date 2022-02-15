@@ -208,19 +208,6 @@ public class RESTTools
 				{
 				if(t.getName().equals(itemName))return getRESTReply(t.getUUID(), itemName, type);
 				}
-			
-			/*
-			String uri = "adminapi/team/"+itemName;
-			String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
-			
-			reply = "<xml>"+reply+"</xml>";
-			ArrayList<String> listParams = new ArrayList<String>();
-			listParams.add("Team");
-			ArrayList<String[][]> parsedReply = xMLGear.getResultListTab(reply, listParams);
-			String[][] s = parsedReply.get(0);//To ease the following
-			
-			//UUID
-			return getRESTReply(UsefulMethod.getItemByName("teamId", s),itemName, type);*/
 			}
 		else if(type.equals(itemType.skill))
 			{
@@ -233,19 +220,6 @@ public class RESTTools
 				{
 				if(s.getName().equals(itemName))return getRESTReply(s.getUUID(), itemName, type);
 				}
-			
-			/*
-			String uri = "adminapi/skill/"+itemName;
-			String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
-			
-			reply = "<xml>"+reply+"</xml>";
-			ArrayList<String> listParams = new ArrayList<String>();
-			listParams.add("Skill");
-			ArrayList<String[][]> parsedReply = xMLGear.getResultListTab(reply, listParams);
-			String[][] s = parsedReply.get(0);//To ease the following
-			
-			//UUID
-			return getRESTReply(UsefulMethod.getItemByName("skillId", s),itemName, type);*/
 			}
 		
 		throw new Exception("ItemType \""+type+"\" not found");

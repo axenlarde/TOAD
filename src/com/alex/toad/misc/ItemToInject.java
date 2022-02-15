@@ -51,7 +51,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 	 */
 	public boolean isExisting() throws Exception
 		{
-		doExist();
+		if(!exists)exists = doExist();//We do not check twice
 		
 		return exists;
 		}
@@ -119,7 +119,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 					}
 				}
 			
-			doBuild();
+			if(!action.equals(actionType.delete))doBuild();//we don't build if it is a deletion task
 			}
 		catch (Exception e)
 			{

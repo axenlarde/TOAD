@@ -22,6 +22,8 @@ public class AgentData
 	private String userID, firstName, lastName, lineNumber, deviceName, deviceType;
 	private AgentType agentType;
 	private Team team;
+	private ArrayList<Team> primarySupervisorOf;
+	private ArrayList<Team> secondarySupervisorOf;
 	private ArrayList<Skill> skillList;
 	private Office office;
 	
@@ -35,15 +37,13 @@ public class AgentData
 	/**
 	 * Constructor
 	 */
-	public AgentData(String userID)
+	public AgentData(String userID, String firstName, String lastName,
+			String lineNumber, String deviceName, String deviceType,
+			AgentType agentType, Team team, ArrayList<Team> primarySupervisorOf,
+			ArrayList<Team> secondarySupervisorOf, ArrayList<Skill> skillList,
+			Office office)
 		{
-		this.userID = userID;
-		}
-	
-	public AgentData(String userID, String firstName, String lastName, String lineNumber,
-			String deviceName, String deviceType, AgentType agentType,
-			Team team, ArrayList<Skill> skillList, Office office)
-		{
+		super();
 		this.userID = userID;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -52,8 +52,15 @@ public class AgentData
 		this.deviceType = deviceType;
 		this.agentType = agentType;
 		this.team = team;
+		this.primarySupervisorOf = primarySupervisorOf;
+		this.secondarySupervisorOf = secondarySupervisorOf;
 		this.skillList = skillList;
 		this.office = office;
+		}
+	
+	public AgentData(String userID)
+		{
+		this.userID = userID;
 		}
 	
 	/******
@@ -245,6 +252,26 @@ public class AgentData
 	public void setTeam(Team team)
 		{
 		this.team = team;
+		}
+
+	public ArrayList<Team> getPrimarySupervisorOf()
+		{
+		return primarySupervisorOf;
+		}
+
+	public void setPrimarySupervisorOf(ArrayList<Team> primarySupervisorOf)
+		{
+		this.primarySupervisorOf = primarySupervisorOf;
+		}
+
+	public ArrayList<Team> getSecondarySupervisorOf()
+		{
+		return secondarySupervisorOf;
+		}
+
+	public void setSecondarySupervisorOf(ArrayList<Team> secondarySupervisorOf)
+		{
+		this.secondarySupervisorOf = secondarySupervisorOf;
 		}
 	
 	

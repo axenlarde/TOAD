@@ -74,6 +74,9 @@ public class UserLinker extends AXLItemLinker
 	public UserLinker(String name) throws Exception
 		{
 		super(name);
+		deviceList = new ArrayList<String>();
+		UDPList = new ArrayList<String>();
+		ctiUDPList = new ArrayList<String>();
 		}
 	
 	/***************

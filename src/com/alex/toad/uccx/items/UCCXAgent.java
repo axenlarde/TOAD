@@ -2,12 +2,14 @@ package com.alex.toad.uccx.items;
 
 import java.util.ArrayList;
 
+import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.restitems.linkers.UCCXAgentLinker;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.utils.Variables.requestType;
+import com.alex.toad.webserver.AgentData;
 
 /**********************************
 * Used to describe a UCCX agent
@@ -25,7 +27,8 @@ public class UCCXAgent extends ItemToInject
 		supervisor
 		};
 	
-	private String lastname,//Name is the userID
+	private String targetName,//Name is the userID
+	lastname,
 	firstname,
 	telephoneNumber;
 	private UCCXAgentLinker myAgent;
@@ -34,6 +37,8 @@ public class UCCXAgent extends ItemToInject
 	private ArrayList<Team> primarySupervisorOf;
 	private ArrayList<Team> secondarySupervisorOf;
 	private ArrayList<Skill> skills;
+	
+	private AgentData agentData;
 	
 	/**
 	 * Constructor
@@ -51,6 +56,17 @@ public class UCCXAgent extends ItemToInject
 		this.agentType = agentType;
 		this.team = team;
 		this.skills = skills;
+		}
+	
+	public UCCXAgent(String targetName, String name, String lastname,
+			String firstname, String telephoneNumber) throws Exception
+		{
+		super(itemType.agent, name);
+		myAgent = new UCCXAgentLinker(name);
+		this.targetName = targetName;
+		this.lastname = lastname;
+		this.firstname = firstname;
+		this.telephoneNumber = telephoneNumber;
 		}
 
 	public UCCXAgent(String userID) throws Exception
@@ -146,11 +162,10 @@ public class UCCXAgent extends ItemToInject
 	@Override
 	public void resolve() throws Exception
 		{
-		/**
-		 * In this case, there is no pattern to apply
-		 * For instance, agent firstName can only be changed from the CUCM
-		 */
-		//So nothing to resolve
+		name = CollectionTools.applyPattern(agentData, name, this, true);
+		lastname = CollectionTools.applyPattern(agentData, lastname, this, true);
+		firstname = CollectionTools.applyPattern(agentData, firstname, this, true);
+		telephoneNumber = CollectionTools.applyPattern(agentData, telephoneNumber, this, true);
 		}
 
 	/**
@@ -254,6 +269,26 @@ public class UCCXAgent extends ItemToInject
 	public void setSecondarySupervisorOf(ArrayList<Team> secondarySupervisorOf)
 		{
 		this.secondarySupervisorOf = secondarySupervisorOf;
+		}
+
+	public String getTargetName()
+		{
+		return targetName;
+		}
+
+	public void setTargetName(String targetName)
+		{
+		this.targetName = targetName;
+		}
+
+	public AgentData getAgentData()
+		{
+		return agentData;
+		}
+
+	public void setAgentData(AgentData agentData)
+		{
+		this.agentData = agentData;
 		}
 	
 	

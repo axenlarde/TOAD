@@ -13,6 +13,9 @@ import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.soap.items.PhoneLine;
 import com.alex.toad.soap.items.PhoneService;
 import com.alex.toad.soap.items.SpeedDial;
+import com.alex.toad.uccx.items.Team;
+import com.alex.toad.uccx.items.UCCXAgent;
+import com.alex.toad.uccx.items.UCCXAgent.AgentType;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.actionType;
 import com.alex.toad.utils.Variables.itemType;
@@ -81,7 +84,8 @@ public class UserTools
 						}
 					else if(ut.getType().equals(itemType.phone))
 						{
-						ArrayList<ItemToInject> phoneList = preparePhone(ad, (Phone)getTemplate(ut.getType(), ut.getTarget()), at);
+						Phone pTemplate = (Phone)getTemplate(ut.getType(), ut.getTarget());
+						ArrayList<ItemToInject> phoneList = preparePhone(ad, pTemplate, at);
 						if((phoneList != null) && (phoneList.size() > 0))
 							{
 							itemList.addAll(phoneList);
@@ -101,6 +105,16 @@ public class UserTools
 						itemList.add(prepareAppUser(ad, uTemplate, at));
 						
 						Variables.getLogger().debug("AppUser prepared for : "+ad.getInfo());
+						}
+					else if(ut.getType().equals(itemType.agent))
+						{
+						UCCXAgent uaTemplate = (UCCXAgent)getTemplate(ut.getType(), ut.getTarget());
+						ArrayList<ItemToInject> agentList = prepareAgent(ad, uaTemplate, at);
+						if((agentList != null) && (agentList.size() > 0))
+							{
+							itemList.addAll(prepareAgent(ad, uaTemplate, at));
+							Variables.getLogger().debug("Agent prepared for : "+ad.getInfo());
+							}
 						}
 					}
 				}
@@ -333,7 +347,6 @@ public class UserTools
 				template.getDeviceList(),
 				template.getCtiUDPList());
 		
-		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
 		myAppUser.setAgentData(ad);
 		myAppUser.setAction(action);
 		
@@ -348,6 +361,75 @@ public class UserTools
 			}
 		
 		return myAppUser;
+		}
+	
+	/***********
+	 * Method used to prepare an Agent object
+	 * @throws Exception 
+	 */
+	public static ArrayList<ItemToInject> prepareAgent(AgentData ad, UCCXAgent template, actionType action) throws Exception
+		{
+		Variables.getLogger().debug("Preparing an Agent");
+		ArrayList<ItemToInject> list = new ArrayList<ItemToInject>();
+		
+		UCCXAgent agent = new UCCXAgent(template.getName(),
+				template.getLastname(),
+				template.getFirstname(),
+				template.getTelephoneNumber(),
+				ad.getAgentType(),
+				ad.getTeam(),
+				ad.getSkillList());
+		
+		agent.setAgentData(ad);
+		agent.setAction(action);
+		
+		try
+			{
+			agent.resolve();
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().debug(ad.getInfo()+" : The agent has not been added because an important value was empty : "+e.getMessage());
+			return null;
+			}
+		
+		list.add(agent);
+		
+		/**
+		 * Agent type cannot be updated from the agent so we create a type update request
+		 * 
+		 * Unfortunately modifying the user role is not available through the API
+		 * A workaround is to do it programmatically through the normal web admin portal but it is
+		 * really complex
+		 * As modifying the role is not asked yet, we skip this step for now
+		 */
+		//TBW
+		
+		/**
+		 * team cannot be updated from the agent so we create team update items
+		 * 
+		 * We allow this only if the agent is a supervisor
+		 */
+		if(agent.getAgentType().equals(AgentType.supervisor))
+			{
+			for(Team t : ad.getPrimarySupervisorOf())
+				{
+				t.setPrimarySupervisor(agent);
+				t.setAction(action);
+				list.add(t);
+				}
+			
+			for(Team t : ad.getSecondarySupervisorOf())
+				{
+				ArrayList<UCCXAgent> secSuplist = new ArrayList<UCCXAgent>();
+				secSuplist.add(agent);
+				t.setSecondarySupervisorList(secSuplist);
+				t.setAction(action);
+				list.add(t);
+				}
+			}
+		
+		return list;
 		}
 	
 	/**
@@ -549,6 +631,13 @@ public class UserTools
 					if(((AppUser) item).getTargetName().equals(targetName))
 						{
 						return (AppUser) item;
+						}
+					}
+				else if(type.equals(itemType.agent))
+					{
+					if(((UCCXAgent) item).getTargetName().equals(targetName))
+						{
+						return (UCCXAgent) item;
 						}
 					}
 				}

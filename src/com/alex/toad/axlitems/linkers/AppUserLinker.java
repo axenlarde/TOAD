@@ -46,6 +46,8 @@ public class AppUserLinker extends AXLItemLinker
 	public AppUserLinker(String name) throws Exception
 		{
 		super(name);
+		deviceList = new ArrayList<String>();
+		ctiUDPList = new ArrayList<String>();
 		}
 	
 	/***************
@@ -152,6 +154,12 @@ public class AppUserLinker extends AXLItemLinker
 	 */
 	public void doUpdateVersion105(ArrayList<ToUpdate> tuList) throws Exception
 		{
+		/**
+		 * We add the phone and udps to the existing ones
+		 * So first we fetch them
+		 */
+		doGetVersion105();//will add the new devices and udps to the existing ones
+		
 		com.cisco.axl.api._10.UpdateAppUserReq req = new com.cisco.axl.api._10.UpdateAppUserReq();
 		
 		/***********

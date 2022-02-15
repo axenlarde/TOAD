@@ -311,6 +311,7 @@ public class ManageWebRequest
 			ArrayList<String> params = new ArrayList<String>();
 			params.add("request");
 			params.add("content");
+			params.add("agent");
 			
 			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
 			String[][] t = parsed.get(0);

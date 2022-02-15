@@ -176,5 +176,12 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 			<device>'SEP'+agent.devicename</device>
 			<udp>*m*agent.userid</udp>
 		</udplogin>
+		<agent>
+			<targetname>agent</targetname>
+			<userid>agent.userid</userid>
+			<lastname>*M**C*agent.lastname</lastname>
+			<firstname>(*1M**C*agent.firstname)IfLongerThan30(*1_**M**C*agent.firstname+'.')</firstname>
+			<number>agent.linenumber</number>
+		</agent>
 	</items>
 </xml>

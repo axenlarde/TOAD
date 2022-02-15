@@ -323,7 +323,9 @@ Update agent will only allow to update some fields for now
 		<type>deleteAgent</type>
 		<securitytoken></securitytoken><!--Security token of the connected user. To check if the deletion is allowed-->
 		<content>
-			<userid></userid><!--The userid of the user we want to delete-->
+			<agent>
+				<userid></userid><!--The userid of the user we want to delete-->
+			</agent>
 		</content>
 	</request>
 </xml>

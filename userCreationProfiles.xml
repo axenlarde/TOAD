@@ -35,6 +35,10 @@ the collection file
 				<target>udplogin</target>
 				<action>inject</action>
 			</udplogin>
+			<agent>
+				<target>agent</target>
+				<action>update</action>
+			</agent>
 		</profile>
 		<profile>
 			<name>addRemoteAgent</name>
@@ -58,6 +62,10 @@ the collection file
 				<target>updateappuserphone</target>
 				<action>update</action>
 			</appuser>
+			<agent>
+				<target>agent</target>
+				<action>update</action>
+			</agent>
 		</profile>
 		<profile>
 			<name>updateAgent</name>
@@ -69,6 +77,10 @@ the collection file
 				<target>udplogin</target>
 				<action>inject</action>
 			</udplogin>
+			<agent>
+				<target>agent</target>
+				<action>update</action>
+			</agent>
 		</profile>
 	</profiles>
 </xml>
