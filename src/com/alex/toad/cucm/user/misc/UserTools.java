@@ -62,9 +62,11 @@ public class UserTools
 						{
 						DeviceProfile dpTemplate = (DeviceProfile)getTemplate(ut.getType(), ut.getTarget());
 						ArrayList<ItemToInject> udpList = prepareUDP(ad, dpTemplate, at);
-						itemList.addAll(udpList);
-						
-						Variables.getLogger().debug("UDP prepared for the user : "+ad.getInfo());
+						if((udpList != null) && (udpList.size() > 0))
+							{
+							itemList.addAll(udpList);
+							Variables.getLogger().debug("UDP prepared for the user : "+ad.getInfo());
+							}
 						}
 					else if((ut.getType().equals(itemType.udplogin)) && udpLogin)
 						{
@@ -80,8 +82,11 @@ public class UserTools
 					else if(ut.getType().equals(itemType.phone))
 						{
 						ArrayList<ItemToInject> phoneList = preparePhone(ad, (Phone)getTemplate(ut.getType(), ut.getTarget()), at);
-						itemList.addAll(phoneList);
-						Variables.getLogger().debug("Phone prepared for the user : "+ad.getInfo());
+						if((phoneList != null) && (phoneList.size() > 0))
+							{
+							itemList.addAll(phoneList);
+							Variables.getLogger().debug("Phone prepared for the user : "+ad.getInfo());
+							}
 						}
 					else if(ut.getType().equals(itemType.user))
 						{
@@ -187,7 +192,11 @@ public class UserTools
 		}
 	
 	/**
-	 * Method used to create a UDP profile 
+	 * Method used to create a phone
+	 * 
+	 * If something goes wrong during the resolve process we want the preparation process
+	 * to abort. For instance, this way we avoid to inject a line without the associated phone
+	 * 
 	 * @throws Exception 
 	 */
 	public static ArrayList<ItemToInject> preparePhone(AgentData ad, Phone template, actionType action) throws Exception
@@ -258,10 +267,19 @@ public class UserTools
 				template.getSecurityProfileName(),
 				template.getDeviceMobilityMode());
 		
-		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
 		myPhone.setAgentData(ad);
 		myPhone.setAction(action);//It is important to set the action before resolving
-		myPhone.resolve();
+		
+		try
+			{
+			myPhone.resolve();
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().debug(ad.getInfo()+" : The phone has not been added because an important value was empty : "+e.getMessage());
+			return null;
+			}
+		
 		list.add(myPhone);
 		
 		return list;

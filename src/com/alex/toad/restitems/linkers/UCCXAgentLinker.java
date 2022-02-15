@@ -132,20 +132,13 @@ public class UCCXAgentLinker extends RESTItemLinker
 		content.append("		<lastName>"+lastname+"</lastName>\r\n");
 		content.append("		<extension>"+telephoneNumber+"</extension>\r\n");
 		content.append("		<autoAvailable>true</autoAvailable>\r\n");
-		if(agentType.equals(AgentType.agent))content.append("		<type>1</type>\r\n");
+		if(agentType.equals(AgentType.agent))content.append("		<type>1</type>");
 		else content.append("		<type>2</type>");
 		/******/
 		
 		if(tuList.contains(toUpdate.team))content.append(UCCXTools.getRESTFromTeam(team));
 		if(tuList.contains(toUpdate.skills))content.append(UCCXTools.getRESTFromSkills(skills));
 		content.append("	</resource>\r\n");
-		
-		/**
-		 * We trigger a UCCX agent refresh just to be sure the agent
-		 * we target will be available
-		 */
-		Variables.getUccxServer().send(requestType.GET, "uccx-webservices/getAllAgents", "");
-		/**************/
 		
 		String reply = Variables.getUccxServer().send(requestType.PUT, uri, content.toString());
 		}

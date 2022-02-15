@@ -206,7 +206,6 @@ public class CollectionTools
 				match = true;
 				}
 			
-			
 			/***********/
 			
 			//Default
@@ -215,7 +214,9 @@ public class CollectionTools
 				regex.append(param[i]);
 				}
 			}
-	
+		
+		if(regex.toString().equals("") && emptyException)throw new EmptyValueException("The processed regex return an empty value : "+pat);
+		
 		return regex.toString();
 		}
 			
@@ -402,6 +403,19 @@ public class CollectionTools
 			/**
 			 * End Convert values into CUCM acceptable ones
 			 ****************/
+			
+			/***************
+			 * Validate if the given value is a MAC address 
+			 * 
+			 * Example : *MAC*
+			 */
+			if(Pattern.matches(".*\\*MAC\\*.*", param))
+				{
+				if(!Pattern.matches("\\p{XDigit}{12}", newValue))throw new Exception(newValue+" is not a valid MAC address");
+				}
+			/**
+			 * End of MAC validation
+			 ********************/
 			
 			
 			/**************************************/

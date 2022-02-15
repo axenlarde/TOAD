@@ -3,11 +3,16 @@
 Rappel :
 Texte libre à mettre entre guillement simple, exemple = 'test'
 utiliser des + pour séparer les éléments
-Un chiffre entre étoiles placé avant une valeure indique le nombre de lettre à utiliser, exemple : *1_*agent.firstname = On utilise la première lettre du prénom
+Un chiffre entre étoiles placé avant une valeure indique le nombre de lettre à utiliser, exemple : *1*agent.firstname = On utilise la première lettre du prénom
 Le symbole *M* indique que toute la valeure suivante doit être converti en majuscule
 Le symbole *1M* indique que seul la première lettre doit être converti en majuscule. Le chiffre peut être ajusté.
 Le symbole *m* indique que toute la valeure suivante doit être converti en minuscule
 Le symbole *1m* indique que seul la première lettre doit être converti en minuscule. Le chiffre peut être ajusté.
+Le symbole *C* remplace les caractères français accentués par leur équivalent sans accent é->e
+Le symbole *_S_* exemple *1S/* permet de spliter la valeure en utilisant le caractère / et de garder la première occurence
+Le symbole *""R""* exemple *"test"R"testo"* remplace test par testo
+Le symbole *LF_* va chercher la valeur correspondante dans le fichier des substitus. Par exemple *LFpbt* va chercher le phone button template correspodnant
+Le symbole *MAC* valide que la valeure suivante est une adresse MAC. Si ce n'est pas le cas, une exception sera levée
 Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera les 4 premières lettres du nom mises en majuscule. *M**4* est équivalent. *2M**5*agent.lastname affichera les 5 première lettres du prénom dont les deux premières seront en majuscule.
 -->
 <xml>
@@ -54,7 +59,7 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 		</phone>
 		<phone>
 			<targetname>loggedoutphone</targetname>
-			<devicename>'SEP'+agent.devicename</devicename>
+			<devicename>'SEP'+*MAC*agent.devicename</devicename>
 			<description>'Telephone non connecte'</description>
 			<linedescription>'Ligne HSDA'</linedescription>
 			<commondeviceconfig>office.name+'_CDC'</commondeviceconfig>
@@ -127,6 +132,12 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 			<group>'Standard CCM End Users'</group><!--One or more-->
 		</user>
 		<user>
+			<targetname>updateuser</targetname>
+			<userid>agent.userid</userid>
+			<lastname>*M**C*agent.lastname</lastname>
+			<firstname>(*1M**C*agent.firstname)IfLongerThan30(*1_**M**C*agent.firstname+'.')</firstname>
+		</user>
+		<user>
 			<targetname>updateudp</targetname>
 			<userid>agent.userid</userid>
 			<udp>*m*agent.userid</udp>
@@ -145,7 +156,7 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 			<partition>config.didpartition</partition>
 		</user>
 		<user>
-			<targetname>updatephone</targetname>
+			<targetname>updatesoftphone</targetname>
 			<userid>agent.userid</userid>
 			<device>'CSF'+*M*agent.userid</device>
 		</user>

@@ -47,7 +47,7 @@ the collection file
 				<action>inject</action>
 			</phone>
 			<user>
-				<target>updatephone</target>
+				<target>updatesoftphone</target>
 				<action>update</action>
 			</user>
 			<user>
@@ -61,34 +61,14 @@ the collection file
 		</profile>
 		<profile>
 			<name>updateAgent</name>
-			<!--<user>
-				<target>newuser</target>
-				<action>inject</action>
-			</user>
-			<udp>
-				<target>udp</target>
-				<action>inject</action>
-			</udp>
-			<phone>
-				<target>loggedoutphone</target>
-				<action>inject</action>
-			</phone>
-			<phone>
-				<target>softphone</target>
-				<action>inject</action>
-			</phone>
 			<user>
 				<target>updateuser</target>
 				<action>update</action>
 			</user>
-			<user>
-				<target>updatepe</target>
-				<action>update</action>
-			</user>
 			<udplogin>
 				<target>udplogin</target>
-				<action>update</action>
-			</udplogin>-->
+				<action>inject</action>
+			</udplogin>
 		</profile>
 	</profiles>
 </xml>

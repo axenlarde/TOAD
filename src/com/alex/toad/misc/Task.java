@@ -109,7 +109,7 @@ public class Task extends Thread
 							else if(myToDo.getAction().equals(actionType.update))
 								{
 								/**
-								 * Because some dependencies may have been just injected
+								 * Because some dependencies may have been just injected or updated
 								 * we check again if the item exists
 								 */
 								myToDo.isExisting();

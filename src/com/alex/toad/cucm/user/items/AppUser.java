@@ -123,9 +123,16 @@ public class AppUser extends ItemToInject
 	 */
 	public boolean doExist() throws Exception
 		{
-		UUID = SimpleRequest.getUUID(type, name);
+		/**
+		 * In the case of an appUser we add device and udp to the existing ones
+		 * so first we fetch them
+		 */
+		AppUser myU = (AppUser) myAppUser.get();
+		UUID = myU.getUUID();
+		if(deviceList != null)deviceList = myU.getDeviceList();
+		if(ctiUDPList != null)ctiUDPList = myU.getCtiUDPList();
 		
-		Variables.getLogger().debug("Item "+this.name+" exists in the CUCM");
+		Variables.getLogger().debug("Item "+this.name+" data fetch from the CUCM");
 		return true;
 		}
 	

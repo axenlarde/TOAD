@@ -112,7 +112,7 @@ public class RESTTools
 			Variables.getUuidList().add(new storedUUID(t.getUUID(), t.getName(), itemType.team));
 			}
 		
-		Variables.getLogger().debug("List team done, "+teams.size()+" team found");
+		Variables.getLogger().debug("List team done, "+teams.size()+" teams found");
 		for(Team t : teams)
 			{
 			Variables.getLogger().debug(t.getName());
@@ -146,7 +146,7 @@ public class RESTTools
 			Variables.getUuidList().add(new storedUUID(s.getUUID(), s.getName(), itemType.skill));
 			}
 		
-		Variables.getLogger().debug("List skill done, "+skills.size()+" skill found");
+		Variables.getLogger().debug("List skill done, "+skills.size()+" skills found");
 		for(Skill s : skills)
 			{
 			Variables.getLogger().debug(s.getName());

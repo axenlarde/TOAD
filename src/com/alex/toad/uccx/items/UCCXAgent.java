@@ -7,6 +7,7 @@ import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.restitems.linkers.UCCXAgentLinker;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
+import com.alex.toad.utils.Variables.requestType;
 
 /**********************************
 * Used to describe a UCCX agent
@@ -127,6 +128,15 @@ public class UCCXAgent extends ItemToInject
 	 */
 	public boolean doExist() throws Exception
 		{
+		/***********
+		 * We trigger a UCCX agent refresh just to be sure the agent
+		 * we target will be available
+		 */
+		Variables.getLogger().debug("Forcing the UCCX to refresh the agent list");
+		Variables.getUccxServer().send(requestType.GET, "uccx-webservices/getAllAgents", "");
+		Variables.getLogger().debug("Agent refresh done");
+		/**************/
+		
 		UUID = RESTTools.getRESTUUIDV105(type, name);
 		
 		Variables.getLogger().debug("Item "+this.name+" exists in the UCCX");
