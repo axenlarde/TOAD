@@ -96,6 +96,8 @@ public class RESTServer
 			}
 		else
 			{
+			Variables.getLogger().debug("Answer from server : \r\n"+response);
+			
 			if(response.equals(""))return "";
 			else
 				{

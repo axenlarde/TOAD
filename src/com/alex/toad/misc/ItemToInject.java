@@ -51,7 +51,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 	 */
 	public boolean isExisting() throws Exception
 		{
-		if(!exists)exists = doExist();//We do not check twice
+		exists = doExist();
 		
 		return exists;
 		}
