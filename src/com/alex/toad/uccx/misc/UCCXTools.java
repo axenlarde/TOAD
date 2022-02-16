@@ -34,9 +34,10 @@ public class UCCXTools
 		ArrayList<Team> primarySupervisorOf = new ArrayList<Team>();
 		listParams.add("primarySupervisorOf");
 		ArrayList<String[][]> parsedReply = xMLGear.getResultListTabAndAtt(resource, listParams);
-		for(String[][] priSup : parsedReply)
+		String[][] priSupTemp = parsedReply.get(0);
+		for(String[] priSup : priSupTemp)
 			{
-			primarySupervisorOf.add(new Team(UsefulMethod.getAttributeItemByName("supervisorOfTeamName", priSup)));
+			primarySupervisorOf.add(new Team(priSup[2]));
 			}
 		
 		//SecondarySupervisorof
@@ -44,9 +45,10 @@ public class UCCXTools
 		listParams.remove("primarySupervisorOf");
 		listParams.add("secondarySupervisorOf");
 		parsedReply = xMLGear.getResultListTabAndAtt(resource, listParams);
-		for(String[][] secSup : parsedReply)
+		String[][] secSupTemp = parsedReply.get(0);
+		for(String[] secSup : secSupTemp)
 			{
-			secondarySupervisorOf.add(new Team(UsefulMethod.getAttributeItemByName("supervisorOfTeamName", secSup)));
+			secondarySupervisorOf.add(new Team(secSup[2]));
 			}
 		
 		//Skill

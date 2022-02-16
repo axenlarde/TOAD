@@ -192,6 +192,13 @@ public class User extends ItemToInject
 	public void doDelete() throws Exception
 		{
 		myUser.delete();
+		
+		/***********
+		 * We trigger an agent refresh to make the UCCX discover that 
+		 * the agent has been deleted
+		 */
+		RESTTools.doAgentRefresh();
+		/**************/
 		}
 
 	/**

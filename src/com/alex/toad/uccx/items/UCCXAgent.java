@@ -6,6 +6,7 @@ import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.restitems.linkers.UCCXAgentLinker;
+import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.utils.Variables.requestType;
@@ -148,9 +149,7 @@ public class UCCXAgent extends ItemToInject
 		 * We trigger a UCCX agent refresh just to be sure the agent
 		 * we target will be available
 		 */
-		Variables.getLogger().debug("Forcing the UCCX to refresh the agent list");
-		Variables.getUccxServer().send(requestType.GET, "uccx-webservices/getAllAgents", "");
-		Variables.getLogger().debug("Agent refresh done");
+		RESTTools.doAgentRefresh();
 		/**************/
 		
 		UUID = RESTTools.getRESTUUIDV105(type, name);
@@ -166,6 +165,11 @@ public class UCCXAgent extends ItemToInject
 		lastname = CollectionTools.applyPattern(agentData, lastname, this, true);
 		firstname = CollectionTools.applyPattern(agentData, firstname, this, true);
 		telephoneNumber = CollectionTools.applyPattern(agentData, telephoneNumber, this, true);
+		}
+	
+	public String getInfo()
+		{
+		return UsefulMethod.convertItemTypeToVerbose(type)+" "+name;
 		}
 
 	/**

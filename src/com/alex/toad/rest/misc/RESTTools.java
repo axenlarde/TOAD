@@ -254,6 +254,17 @@ public class RESTTools
 		}
 	
 	/**
+	 * To trigger a UCCX agent refresh
+	 * @throws Exception 
+	 */
+	public static void doAgentRefresh() throws Exception
+		{
+		Variables.getLogger().debug("Forcing the UCCX to refresh the agent list");
+		Variables.getUccxServer().send(requestType.GET, "uccx-webservices/getAllAgents", "");
+		Variables.getLogger().debug("Agent refresh done");
+		}
+	
+	/**
 	 * Add the UUID to the history
 	 */
 	private static String getRESTReply(String UUID, String itemName, itemType type) throws Exception

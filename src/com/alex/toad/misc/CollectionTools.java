@@ -178,7 +178,6 @@ public class CollectionTools
 			else if(Pattern.matches(".*office.availableuserid.*", param[i]))
 				{
 				String prefix = UsefulMethod.getTargetOption("agentidprefix");
-				//pattern = pattern.replaceAll("\\+office.availableuseridindex|office.availableuseridindex\\+", "");
 				prefix = applyPattern(ad, prefix, null, false);
 				String userID = getAvailableUserId(prefix);
 				Variables.getLogger().debug("Generated userID : "+userID);

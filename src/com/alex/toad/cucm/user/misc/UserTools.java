@@ -421,6 +421,13 @@ public class UserTools
 			
 			for(Team t : ad.getSecondarySupervisorOf())
 				{
+				/**
+				 * You cannot update the secondarysupervisor without providing the current primary
+				 * supervisor. So we fetch it
+				 */
+				t.get();//To get the primary supervisor ID
+				t.getPrimarySupervisor().get();//We then get the primary supervisor firstname and lastname
+				/*********/
 				ArrayList<UCCXAgent> secSuplist = new ArrayList<UCCXAgent>();
 				secSuplist.add(agent);
 				t.setSecondarySupervisorList(secSuplist);

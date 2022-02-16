@@ -110,9 +110,9 @@ public class Team extends ItemToInject
 		{
 		Team myT = (Team) myTeam.get();
 		UUID = myT.getUUID();
-		agentList = myT.getAgentList();
-		secondarySupervisorList = myT.getSecondarySupervisorList();
+		//agentList = myT.getAgentList();//Not used yet
 		primarySupervisor = myT.getPrimarySupervisor();
+		secondarySupervisorList = myT.getSecondarySupervisorList();
 		
 		Variables.getLogger().debug("Item "+this.name+" data fetch from the UCCX");
 		}
@@ -124,6 +124,11 @@ public class Team extends ItemToInject
 		
 		Variables.getLogger().debug("Item "+this.name+" exists in the UCCX");
 		return true;
+		}
+	
+	public String getInfo()
+		{
+		return UsefulMethod.convertItemTypeToVerbose(type)+" "+name;
 		}
 
 	@Override

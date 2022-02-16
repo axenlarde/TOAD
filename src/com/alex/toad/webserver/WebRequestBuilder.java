@@ -105,6 +105,15 @@ public class WebRequestBuilder
 				content.append("					<number>"+ad.getTelephoneNumber()+"</number>\r\n");
 				content.append("					<type>"+ad.getAgentType()+"</type>\r\n");
 				content.append("					<team>"+ad.getTeam().getName()+"</team>\r\n");
+				content.append("					<skills>\r\n");
+				for(Skill s : ad.getSkills())
+					{
+					content.append("						<skill>\r\n");
+					content.append("							<name>"+s.getName()+"</name>\r\n");
+					content.append("							<level>"+s.getLevel()+"</level>\r\n");
+					content.append("						</skill>\r\n");
+					}
+				content.append("					</skills>\r\n");
 				content.append("				</agent>\r\n");
 				}
 			}
@@ -539,49 +548,6 @@ public class WebRequestBuilder
 		
 		return content;
 		}
-	
-	/**
-	 * To build the requested request
-	 * success
-	 */
-	/*
-	public static WebRequest buildSuccess()
-		{
-		StringBuffer content = new StringBuffer();
-		
-		content.append("<xml>\r\n");
-		content.append("	<reply>\r\n");
-		content.append("		<type>success</type>\r\n");
-		content.append("		<content>\r\n");
-		content.append("			<success></success>\r\n");
-		content.append("		</content>\r\n");
-		content.append("	</reply>\r\n");
-		content.append("</xml>\r\n");
-		
-		return new WebRequest(content.toString(), webRequestType.success);
-		}
-	*/
-	/**
-	 * To build the requested request
-	 * error
-	 */
-	/*
-	public static WebRequest buildError(String message)
-		{
-		StringBuffer content = new StringBuffer();
-		
-		content.append("<xml>\r\n");
-		content.append("	<reply>\r\n");
-		content.append("		<type>error</type>\r\n");
-		content.append("		<content>\r\n");
-		content.append("			<error>"+message+"</error>\r\n");
-		content.append("		</content>\r\n");
-		content.append("	</reply>\r\n");
-		content.append("</xml>\r\n");
-		
-		return new WebRequest(content.toString(), webRequestType.error);
-		}
-		*/
 	
 	/*2022*//*RATEL Alexandre 8)*/
 	}

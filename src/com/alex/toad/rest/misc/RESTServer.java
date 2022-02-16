@@ -96,7 +96,7 @@ public class RESTServer
 			}
 		else
 			{
-			Variables.getLogger().debug("Answer from server : \r\n"+response);
+			Variables.getLogger().debug("Answer body from server : \r\n"+response);
 			
 			if(response.equals(""))return "";
 			else
@@ -124,6 +124,7 @@ public class RESTServer
 			throw new Exception("REST request failed "+responseCode+" \r\n"+EntityUtils.toString(entity, "UTF-8"));
 			} 
 		
+		Variables.getLogger().debug("Server answer code 200");
 		return EntityUtils.toString(entity, "UTF-8");
 		}
 	
@@ -144,6 +145,7 @@ public class RESTServer
 			throw new Exception("REST request failed "+responseCode+" \r\n"+EntityUtils.toString(entity, "UTF-8"));
 			}
 		
+		Variables.getLogger().debug("Server answer code 200");
 		return EntityUtils.toString(entity, "UTF-8");
 		}
 	
@@ -164,6 +166,7 @@ public class RESTServer
 			throw new Exception("REST request failed "+responseCode+" \r\n"+EntityUtils.toString(entity, "UTF-8"));
 			}
 		
+		Variables.getLogger().debug("Server answer code 200");
 		return EntityUtils.toString(entity, "UTF-8");
 		}
 	
@@ -183,6 +186,7 @@ public class RESTServer
 			throw new Exception("REST request failed "+responseCode+" \r\n"+EntityUtils.toString(entity, "UTF-8"));
 			}
 		
+		Variables.getLogger().debug("Server answer code 200");
 		return EntityUtils.toString(entity, "UTF-8");
 		}
 
