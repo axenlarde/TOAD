@@ -179,7 +179,7 @@ public class UCCXAgent extends ItemToInject
 	public void manageTuList() throws Exception
 		{
 		//if(agentType != null)tuList.add(UCCXAgentLinker.toUpdate.agentType);
-		if((skills != null) && (skills.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.skills);
+		if((skills != null))tuList.add(UCCXAgentLinker.toUpdate.skills);
 		if(team != null)tuList.add(UCCXAgentLinker.toUpdate.team);
 		//if((primarySupervisorOf != null) && (primarySupervisorOf.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.primarySupervisorOf);
 		//if((secondarySupervisorOf != null) && (secondarySupervisorOf.size() > 0))tuList.add(UCCXAgentLinker.toUpdate.secondarySupervisorOf);

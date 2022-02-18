@@ -16,6 +16,7 @@ import com.alex.toad.misc.SimpleRequest;
 import com.alex.toad.soap.items.PhoneLine;
 import com.alex.toad.soap.items.PhoneService;
 import com.alex.toad.soap.items.SpeedDial;
+import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.utils.Variables.sdType;
@@ -152,7 +153,7 @@ public class DeviceProfileLinker extends AXLItemLinker
 			myService.setName(s.getServicename());
 			myService.setServiceNameAscii(s.getServicename());
 			myService.setUrlButtonIndex(Integer.toString(i));
-			myService.setUrlLabel(s.getSurl());
+			myService.setUrlLabel(s.getUrlLabel());
 			myServices.getService().add(myService);
 			i++;
 			}
@@ -266,7 +267,7 @@ public class DeviceProfileLinker extends AXLItemLinker
 		 */
 		req.setName(this.getName());
 		
-		if(tuList.contains(toUpdate.service))
+		if(tuList.contains(toUpdate.description))
 			{
 			req.setDescription(this.description);
 			}
@@ -286,6 +287,7 @@ public class DeviceProfileLinker extends AXLItemLinker
 				myService.setTelecasterServiceName(SimpleRequest.getUUIDV105(itemType.telecasterservice, s.getServicename()));
 				myService.setName(s.getServicename());
 				myService.setServiceNameAscii(s.getServicename());
+				myService.setUrlLabel(s.getUrlLabel());
 				myServices.getService().add(myService);
 				}
 			

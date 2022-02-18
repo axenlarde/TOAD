@@ -16,6 +16,7 @@ import com.alex.toad.misc.SimpleRequest;
 import com.alex.toad.soap.items.PhoneLine;
 import com.alex.toad.soap.items.PhoneService;
 import com.alex.toad.soap.items.SpeedDial;
+import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.utils.Variables.sdType;
@@ -249,7 +250,7 @@ public class PhoneLinker extends AXLItemLinker
 			myService.setName(s.getServicename());
 			myService.setServiceNameAscii(s.getServicename());
 			myService.setUrlButtonIndex(Integer.toString(i));
-			myService.setUrlLabel(s.getSurl());
+			myService.setUrlLabel(s.getUrlLabel());
 			myServs.getService().add(myService);
 			i++;
 			}
@@ -344,6 +345,19 @@ public class PhoneLinker extends AXLItemLinker
 		
 		req.setPhone(params);//We add the parameters to the request
 		com.cisco.axl.api._10.StandardResponse resp = Variables.getAXLConnectionToCUCMV105().addPhone(req);//We send the request to the CUCM
+		
+		//Services (again)
+		//If the service has got parameters we need some extra SQL request to set them as this is not possible through AXL
+		//We can only do it once the phone has been injected with success
+		//TBW
+		/*
+		String query = "UPDATE telecastersubscribedparameter SET value = '" + defaultGroup + "' WHERE fktelecasterserviceparameter = '" + parameterUuid + "' AND fktelecastersubscribedservice = " +
+                        "(SELECT ss.pkid FROM telecastersubscribedservice ss INNER JOIN telecasterservice s ON ss.fktelecasterservice = s.pkid AND s.pkid = '" + serviceUuid + "' "
+                        +"INNER JOIN device d ON ss.fkdevice = d.pkid AND d.name = '" + prof.getName() + "')";
+ 
+		query = "UPDATE telecastersubscribedservice SET serviceurl = '' WHERE fkdevice = (SELECT pkid FROM device WHERE name = '" + prof.getName()
+                    + "') AND fktelecasterservice = '" + serviceUuid + "'";
+		 */
 		
 		return resp.getReturn();//Return UUID
 		}
@@ -460,7 +474,7 @@ public class PhoneLinker extends AXLItemLinker
 				myService.setName(s.getServicename());
 				myService.setServiceNameAscii(s.getServicename());
 				myService.setUrlButtonIndex(Integer.toString(i));
-				myService.setUrlLabel(s.getSurl());
+				myService.setUrlLabel(s.getUrlLabel());
 				myServs.getService().add(myService);
 				i++;
 				}

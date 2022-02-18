@@ -1,7 +1,10 @@
 package com.alex.toad.soap.items;
 
+import java.util.ArrayList;
+
 import com.alex.toad.misc.BasicItem;
 import com.alex.toad.misc.CollectionTools;
+import com.alex.toad.utils.Variables;
 import com.alex.toad.webserver.AgentData;
 
 
@@ -16,7 +19,8 @@ public class PhoneService extends BasicItem
 	 * Variables
 	 */
 	private String template, servicename,
-	surl;
+	urllabel;
+	private ArrayList<ServiceParameters> parameterList;
 	
 	private AgentData agentData;
 
@@ -26,7 +30,47 @@ public class PhoneService extends BasicItem
 	public PhoneService(String template)
 		{
 		super();
+		
 		this.template = template;
+		parameterList = new ArrayList<ServiceParameters>();
+		processTemplate();
+		}
+	
+	/**
+	 * The template here is composed of the followings :
+	 * 'Service Name':'Service URL label' and the followings are service parameters
+	 * So for them we have to process differently
+	 */
+	private void processTemplate()
+		{
+		if(template.contains(":"))
+			{
+			String[] tab = template.split(":");
+			servicename = tab[0];
+			urllabel = tab[1];
+			
+			if(tab.length > 2)
+				{
+				/**
+				 * The value after the second one are parameters
+				 */
+				//We get what is after the second ':'
+				int secondSep = template.indexOf(":", template.indexOf(":")+1)+1;
+				for(String s : template.substring(secondSep, template.length()).split(":"))
+					{
+					if(s.contains("="))
+						{
+						String[] parameters = s.split("=");
+						parameterList.add(new ServiceParameters(parameters[0], parameters[1]));
+						}
+					}
+				Variables.getLogger().debug(servicename+" : found "+parameterList.size()+" parameter(s)");
+				}
+			}
+		else
+			{
+			servicename = template;
+			}
 		}
 
 	/******
@@ -38,18 +82,9 @@ public class PhoneService extends BasicItem
 	 */
 	public void resolve() throws Exception
 		{
-		template = CollectionTools.applyPattern(agentData, template, this, true);
-		
-		if(template.contains(":"))
-			{
-			String[] tab = template.split(":");
-			servicename = tab[0];
-			surl = tab[1];
-			}
-		else
-			{
-			servicename = template;
-			}
+		servicename = CollectionTools.applyPattern(agentData, servicename, this, true);
+		urllabel = CollectionTools.applyPattern(agentData, urllabel, this, true);
+		for(ServiceParameters sp : parameterList)sp.resolve(agentData);
 		}
 	
 	
@@ -63,14 +98,14 @@ public class PhoneService extends BasicItem
 		this.servicename = servicename;
 		}
 
-	public String getSurl()
+	public String getUrlLabel()
 		{
-		return surl;
+		return urllabel;
 		}
 
-	public void setSurl(String surl)
+	public void setUrlLabel(String surl)
 		{
-		this.surl = surl;
+		this.urllabel = surl;
 		}
 
 	public String getTemplate()

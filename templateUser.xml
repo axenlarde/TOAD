@@ -54,8 +54,7 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 			<devicepool>office.name+'_DP'</devicepool>
 			<location>office.name+'_LOC'</location>
 			<cssdevice>office.name+'_DEVICE_CSS'</cssdevice>
-			<service>'ippa':'UCCX'</service><!--'Service Name':'Service URL label' One or more service-->
-			<!--<speeddial>'tbd'</speeddial>--><!--One or more-->
+			<service>'ippa':'UCCX':'id=agent.userid':'extension=agent.linenumber':'password=agent.linenumber'</service><!--'Service Name':'Service URL label':'parameters name=parameters value' One or more service and one or more parameters separated by : -->
 		</phone>
 		<phone>
 			<targetname>loggedoutphone</targetname>
@@ -107,9 +106,9 @@ Les combinaisons sont possibles, par exemple : *4**M*agent.lastname affichera le
 			<routepartition>config.didpartition</routepartition>
 			<producttype>'Cisco 7841'</producttype>
 			<buttontemplate>'Standard 7841 SIP'</buttontemplate>
-			<service>'ippa':'UCCX'</service><!--'Service Name':'Service URL label'--><!--One or more-->
+			<service>'ippa':'UCCX':'id=agent.userid':'extension=agent.linenumber':'password=agent.linenumber'</service><!--'Service Name':'Service URL label':'parameters name=parameters value' One or more service and one or more parameters separated by : -->
 			<protocol>'SIP'</protocol>
-			<!--<speeddial>tbd</speeddial>--> 
+			<!--<speeddial>tbd</speeddial>--><!--number:description-->
 		</udp>
 		<user>
 			<targetname>user</targetname>

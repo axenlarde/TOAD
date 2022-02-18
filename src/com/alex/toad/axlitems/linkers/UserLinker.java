@@ -184,6 +184,7 @@ public class UserLinker extends AXLItemLinker
 		params.setPassword(this.password);
 		params.setPin(this.pin);
 		params.setHomeCluster("true");
+		params.setImAndPresenceEnable("true");
 		
 		//Primary extension
 		if(UsefulMethod.isNotEmpty(primaryExtension))

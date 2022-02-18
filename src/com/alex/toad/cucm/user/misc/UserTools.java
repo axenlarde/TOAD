@@ -412,27 +412,39 @@ public class UserTools
 		 */
 		if(agent.getAgentType().equals(AgentType.supervisor))
 			{
-			for(Team t : ad.getPrimarySupervisorOf())
+			/**
+			 * We might get a team with no primary supervisor
+			 * In this case the followings will failed
+			 * So we add the try catch just to handle that properly
+			 */
+			try
 				{
-				t.setPrimarySupervisor(agent);
-				t.setAction(action);
-				list.add(t);
+				for(Team t : ad.getPrimarySupervisorOf())
+					{
+					t.setPrimarySupervisor(agent);
+					t.setAction(action);
+					list.add(t);
+					}
+				
+				for(Team t : ad.getSecondarySupervisorOf())
+					{
+					/**
+					 * You cannot update the secondarysupervisor without providing the current primary
+					 * supervisor. So we fetch it
+					 */
+					t.get();//To get the primary supervisor ID
+					t.getPrimarySupervisor().get();//We then get the primary supervisor firstname and lastname
+					/*********/
+					ArrayList<UCCXAgent> secSuplist = new ArrayList<UCCXAgent>();
+					secSuplist.add(agent);
+					t.setSecondarySupervisorList(secSuplist);
+					t.setAction(action);
+					list.add(t);
+					}
 				}
-			
-			for(Team t : ad.getSecondarySupervisorOf())
+			catch (Exception e)
 				{
-				/**
-				 * You cannot update the secondarysupervisor without providing the current primary
-				 * supervisor. So we fetch it
-				 */
-				t.get();//To get the primary supervisor ID
-				t.getPrimarySupervisor().get();//We then get the primary supervisor firstname and lastname
-				/*********/
-				ArrayList<UCCXAgent> secSuplist = new ArrayList<UCCXAgent>();
-				secSuplist.add(agent);
-				t.setSecondarySupervisorList(secSuplist);
-				t.setAction(action);
-				list.add(t);
+				Variables.getLogger().error("Something went wrong while managing team supervisor. Surely a team with an empty primary supervisor : "+e.getMessage(),e);
 				}
 			}
 		
