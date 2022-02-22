@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
+import com.alex.toad.axlitems.linkers.PhoneLinker.toUpdate;
 import com.alex.toad.axlitems.misc.AXLItemLinker;
 import com.alex.toad.axlitems.misc.ToUpdate;
 import com.alex.toad.cucm.user.items.DeviceProfile;
@@ -251,6 +252,17 @@ public class DeviceProfileLinker extends AXLItemLinker
 		req.setDeviceProfile(params);//We add the parameters to the request
 		com.cisco.axl.api._10.StandardResponse resp = Variables.getAXLConnectionToCUCMV105().addDeviceProfile(req);//We send the request to the CUCM
 		
+		/**
+		 * Services (again)
+		 *
+		 * If the service has got parameters we need some extra SQL request to set them as this is not possible through AXL
+		 * We can only do it once the device profile has been injected with success
+		 */
+		for(PhoneService s : serviceList)
+			{
+			SimpleRequest.createServiceParameters(s, name);
+			}
+		
 		return resp.getReturn();//Return UUID
 		}
 	/**************/
@@ -394,6 +406,20 @@ public class DeviceProfileLinker extends AXLItemLinker
 			}
 		
 		com.cisco.axl.api._10.StandardResponse resp = Variables.getAXLConnectionToCUCMV105().updateDeviceProfile(req);//We send the request to the CUCM
+		
+		/**
+		 * Services (again)
+		 *
+		 * If the service has got parameters we need some extra SQL request to set them as this is not possible through AXL
+		 * We can only do it once the device profile has been updated with success
+		 */
+		if(tuList.contains(toUpdate.service))
+			{
+			for(PhoneService s : serviceList)
+				{
+				SimpleRequest.updateServiceParameters(s, name);
+				}
+			}
 		}
 
 	/**************/

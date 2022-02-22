@@ -17,7 +17,6 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.1
  * 
  */
-//@WebServiceClient(name = "AXLAPIService", targetNamespace = "http://www.cisco.com/AXLAPIService/", wsdlLocation = "file:/F:/JAVA/YUZA/Temp/wsdl10/AXLAPI.wsdl")
 @WebServiceClient(name = "AXLAPIService", targetNamespace = "http://www.cisco.com/AXLAPIService/", wsdlLocation = "/wsdl/10/AXLAPI.wsdl")
 public class AXLAPIService
     extends Service

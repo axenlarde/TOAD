@@ -262,7 +262,7 @@ public class UsefulMethod
 	 */
 	public static String getFlatFileContent(String fileName) throws Exception
 		{
-		return xMLReader.fileRead(Variables.getMainConfigFileDirectory()+"\\"+fileName);
+		return xMLReader.fileRead(Variables.getMainConfigFileDirectory()+"/"+fileName);
 		}
 	
 	/************

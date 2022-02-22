@@ -19,7 +19,7 @@ public class PhoneService extends BasicItem
 	 * Variables
 	 */
 	private String template, servicename,
-	urllabel;
+	urllabel, surl;
 	private ArrayList<ServiceParameters> parameterList;
 	
 	private AgentData agentData;
@@ -52,15 +52,21 @@ public class PhoneService extends BasicItem
 			if(tab.length > 2)
 				{
 				/**
-				 * The value after the second one are parameters
+				 * The value after the second one is the service URL and
+				 * the following ones are parameters
 				 */
 				//We get what is after the second ':'
 				int secondSep = template.indexOf(":", template.indexOf(":")+1)+1;
-				for(String s : template.substring(secondSep, template.length()).split(":"))
+				String[] s = CollectionTools.getSplittedValue(template.substring(secondSep, template.length()), ":");
+				for(int i=0;i<s.length; i++)
 					{
-					if(s.contains("="))
+					if(i==0)//The surl
 						{
-						String[] parameters = s.split("=");
+						surl=s[i];
+						}
+					else if(s[i].contains("="))
+						{
+						String[] parameters = s[i].split("=");
 						parameterList.add(new ServiceParameters(parameters[0], parameters[1]));
 						}
 					}
@@ -84,6 +90,7 @@ public class PhoneService extends BasicItem
 		{
 		servicename = CollectionTools.applyPattern(agentData, servicename, this, true);
 		urllabel = CollectionTools.applyPattern(agentData, urllabel, this, true);
+		surl = CollectionTools.applyPattern(agentData, surl, this, true);
 		for(ServiceParameters sp : parameterList)sp.resolve(agentData);
 		}
 	
@@ -126,6 +133,26 @@ public class PhoneService extends BasicItem
 	public void setAgentData(AgentData agentData)
 		{
 		this.agentData = agentData;
+		}
+
+	public ArrayList<ServiceParameters> getParameterList()
+		{
+		return parameterList;
+		}
+
+	public void setParameterList(ArrayList<ServiceParameters> parameterList)
+		{
+		this.parameterList = parameterList;
+		}
+
+	public String getSurl()
+		{
+		return surl;
+		}
+
+	public void setSurl(String surl)
+		{
+		this.surl = surl;
 		}
 	
 	

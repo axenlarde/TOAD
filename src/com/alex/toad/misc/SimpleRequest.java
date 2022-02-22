@@ -1,6 +1,5 @@
 package com.alex.toad.misc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
@@ -9,7 +8,8 @@ import javax.xml.namespace.QName;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.alex.toad.uccx.items.UCCXAgent;
+import com.alex.toad.soap.items.PhoneService;
+import com.alex.toad.soap.items.ServiceParameters;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.cucmAXLVersion;
 import com.alex.toad.utils.Variables.itemType;
@@ -648,6 +648,139 @@ public class SimpleRequest
 		
 		return false;
 		}
+	
+	/***********
+	 * Method used to send a sql request and return only the first replied value
+	 * Supposed that the request is really accurate and should only return one value
+	 * @throws Exception 
+	 */
+	public static String getSimpleResponse(String request, String valueToReturn) throws Exception
+		{
+		List<Object> SQLResp = SimpleRequest.doSQLQuery(request);
+		
+		for(Object o : SQLResp)
+			{
+			Element rowElement = (Element) o;
+			NodeList list = rowElement.getChildNodes();
+			
+			for(int i = 0; i< list.getLength(); i++)
+				{
+				if(list.item(i).getNodeName().equals(valueToReturn))
+					{
+					Variables.getLogger().debug("Value found and returned for "+valueToReturn+" : "+list.item(i).getTextContent());
+					return list.item(i).getTextContent();
+					}
+				}
+			}
+		
+		throw new EmptyValueException("Nothing found for value '"+valueToReturn+"' and request : "+request);
+		}
+	
+	/**
+	 * To update phone service parameters
+	 * @throws Exception 
+	 */
+	public static void updateServiceParameters(PhoneService service, String deviceName) throws Exception
+		{
+		if((service.getParameterList() != null) && (service.getParameterList().size() > 0))
+			{
+			Variables.getLogger().debug("Updating phone service parameters for service '"+service.getServicename()+"' onphone '"+deviceName+"'");
+			
+			//Before updating we check that there is something to update
+			try
+				{
+				SimpleRequest.getSimpleResponse("select p.pkid from telecastersubscribedparameter p, telecastersubscribedservice s, device d where d.pkid=s.fkdevice and s.pkid=p.fktelecastersubscribedservice and d.name='"+deviceName+"'", "pkid");
+				}
+			catch (Exception e)
+				{
+				//Means that we found no value to update so we must create value instead
+				Variables.getLogger().debug("We found no parameter to update for server '"+service.getServicename()+"' so we create them instead");
+				createServiceParameters(service, deviceName);
+				}
+			
+			//We get the service UUID
+			String serviceUuid = SimpleRequest.getUUIDV105(itemType.telecasterservice, service.getServicename()).getUuid().replaceAll("\\{|\\}", "").toLowerCase();
+			StringBuffer parameters = new StringBuffer("");
+			
+			//We update each parameter
+			for(ServiceParameters parameter : service.getParameterList())
+				{
+				//We get the parameter UUID
+				String query = "select pkid from telecasterserviceparameter where name ='"+parameter.getName()+"'";
+				String parameterUuid = SimpleRequest.getSimpleResponse(query, "pkid");
+				
+				query = "UPDATE telecastersubscribedparameter SET value = '" + parameter.getValue() + "' WHERE fktelecasterserviceparameter = '" + parameterUuid + "' AND fktelecastersubscribedservice = " +
+		                "(SELECT ss.pkid FROM telecastersubscribedservice ss INNER JOIN telecasterservice s ON ss.fktelecasterservice = s.pkid AND s.pkid = '" + serviceUuid + "' "
+		                +"INNER JOIN device d ON ss.fkdevice = d.pkid AND d.name = '" + deviceName + "')";
+				SimpleRequest.doSQLUpdate(query);//We send the request to update the parameter
+				
+				parameters.append(parameter.getName()+"="+parameter.getValue()+"&");
+				}
+			
+			//We update the sUrl with the parameter value
+			String queryUrl = "UPDATE telecastersubscribedservice SET serviceurl = '"+service.getSurl()+parameters.toString().substring(0, parameters.length()-1)+"' WHERE fkdevice = (SELECT pkid FROM device WHERE name = '" + deviceName
+	            + "') AND fktelecasterservice = '" + serviceUuid + "'";
+			SimpleRequest.doSQLUpdate(queryUrl);//We send the second request
+			Variables.getLogger().debug("Phone service parameter updated for phone "+deviceName);
+			}
+		else
+			{
+			Variables.getLogger().debug("No parameters to update for service '"+service.getServicename()+"' on phone "+deviceName);
+			}
+		}
+	
+	/**
+	 * To create phone service parameters
+	 * @throws Exception 
+	 */
+	public static void createServiceParameters(PhoneService service, String deviceName) throws Exception
+		{
+		if((service.getParameterList() != null) && (service.getParameterList().size() > 0))
+			{
+			Variables.getLogger().debug("Creating phone service parameters for service '"+service.getServicename()+"' onphone '"+deviceName+"'");
+			
+			//Before creating we check that there is not already something
+			try
+				{
+				SimpleRequest.getSimpleResponse("select p.pkid from telecastersubscribedparameter p, telecastersubscribedservice s, device d where d.pkid=s.fkdevice and s.pkid=p.fktelecastersubscribedservice and d.name='"+deviceName+"'", "pkid");
+				//Reaching this point means that there is already some value which is not normal
+				Variables.getLogger().error("Some existing parameters were found for service '"+service.getServicename()+"' : aborting creation");
+				return;
+				}
+			catch (EmptyValueException e)
+				{
+				//It means that there is no existing parameters so we can create them
+				}
+			
+			//We get the telecastersubscribedservice UUID
+			String tssUUID = SimpleRequest.getSimpleResponse("select s.pkid from telecastersubscribedservice s, device d where d.pkid=s.fkdevice and d.name='"+deviceName+"' and s.servicename='"+service.getServicename()+"'", "pkid");
+			StringBuffer parameters = new StringBuffer("");
+			
+			//We create each parameter
+			for(ServiceParameters parameter : service.getParameterList())
+				{
+				//We get the parameter UUID
+				String paramUUID = SimpleRequest.getSimpleResponse("select s.pkid from telecasterserviceparameter s where s.name = '"+parameter.getName()+"'","pkid");
+				
+				String query = "INSERT INTO telecastersubscribedparameter (fktelecastersubscribedservice, fktelecasterserviceparameter, value) VALUES ('"+tssUUID+"', '"+paramUUID+"', '"+parameter.getValue()+"')";
+				SimpleRequest.doSQLUpdate(query);//We send the request to create the parameter
+				
+				parameters.append(parameter.getName()+"="+parameter.getValue()+"&");
+				}
+			
+			//We update the sUrl with the parameter value
+			String queryUrl = "UPDATE telecastersubscribedservice SET serviceurl = '"+service.getSurl()+parameters.toString().substring(0, parameters.length()-1)+"' WHERE fkdevice = (SELECT pkid FROM device WHERE name = '" + deviceName
+	            + "') AND servicename = '"+service.getServicename()+"'";
+			SimpleRequest.doSQLUpdate(queryUrl);//We send the second request
+			
+			Variables.getLogger().debug("Phone service parameter created for phone "+deviceName);
+			}
+		else
+			{
+			Variables.getLogger().debug("No parameters to update for service '"+service.getServicename()+"' on phone "+deviceName);
+			}
+		}
+			
 	
 	/*2022*//*RATEL Alexandre 8)*/
 	}

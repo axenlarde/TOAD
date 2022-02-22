@@ -607,7 +607,7 @@ public class CollectionTools
 	 * @param splitter
 	 * @return
 	 */
-	private static String[] getSplittedValue(String pat, String splitter)
+	public static String[] getSplittedValue(String pat, String splitter)
 		{
 		pat = pat.replace("'", "");
 		String splitRegex = "(?<!\\\\)" + Pattern.quote(splitter);//To activate "\" as an escape character

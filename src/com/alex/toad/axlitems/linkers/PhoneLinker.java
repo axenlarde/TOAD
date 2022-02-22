@@ -9,18 +9,20 @@ import com.alex.toad.axlitems.misc.AXLItemLinker;
 import com.alex.toad.axlitems.misc.ToUpdate;
 import com.alex.toad.cucm.user.items.Phone;
 import com.alex.toad.cucm.user.misc.UserError;
+import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.misc.ErrorTemplate;
 import com.alex.toad.misc.ErrorTemplate.errorType;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.misc.SimpleRequest;
 import com.alex.toad.soap.items.PhoneLine;
 import com.alex.toad.soap.items.PhoneService;
+import com.alex.toad.soap.items.ServiceParameters;
 import com.alex.toad.soap.items.SpeedDial;
-import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.utils.Variables.sdType;
 import com.cisco.axl.api._10.RPhoneLine;
+import com.cisco.axl.api._10.UpdateServiceParameterReq;
 
 
 
@@ -346,18 +348,16 @@ public class PhoneLinker extends AXLItemLinker
 		req.setPhone(params);//We add the parameters to the request
 		com.cisco.axl.api._10.StandardResponse resp = Variables.getAXLConnectionToCUCMV105().addPhone(req);//We send the request to the CUCM
 		
-		//Services (again)
-		//If the service has got parameters we need some extra SQL request to set them as this is not possible through AXL
-		//We can only do it once the phone has been injected with success
-		//TBW
-		/*
-		String query = "UPDATE telecastersubscribedparameter SET value = '" + defaultGroup + "' WHERE fktelecasterserviceparameter = '" + parameterUuid + "' AND fktelecastersubscribedservice = " +
-                        "(SELECT ss.pkid FROM telecastersubscribedservice ss INNER JOIN telecasterservice s ON ss.fktelecasterservice = s.pkid AND s.pkid = '" + serviceUuid + "' "
-                        +"INNER JOIN device d ON ss.fkdevice = d.pkid AND d.name = '" + prof.getName() + "')";
- 
-		query = "UPDATE telecastersubscribedservice SET serviceurl = '' WHERE fkdevice = (SELECT pkid FROM device WHERE name = '" + prof.getName()
-                    + "') AND fktelecasterservice = '" + serviceUuid + "'";
+		/**
+		 * Services (again)
+		 *
+		 * If the service has got parameters we need some extra SQL request to set them as this is not possible through AXL
+		 * We can only do it once the phone has been injected with success
 		 */
+		for(PhoneService s : serviceList)
+			{
+			SimpleRequest.createServiceParameters(s, name);
+			}
 		
 		return resp.getReturn();//Return UUID
 		}
@@ -506,6 +506,20 @@ public class PhoneLinker extends AXLItemLinker
 			}
 		
 		com.cisco.axl.api._10.StandardResponse resp = Variables.getAXLConnectionToCUCMV105().updatePhone(req);//We send the request to the CUCM
+		
+		/**
+		 * Services (again)
+		 *
+		 * If the service has got parameters we need some extra SQL request to set them as this is not possible through AXL
+		 * We can only do it once the phone has been updated with success
+		 */
+		if(tuList.contains(toUpdate.service))
+			{
+			for(PhoneService s : serviceList)
+				{
+				SimpleRequest.updateServiceParameters(s, name);
+				}
+			}
 		}
 	/**************/
 	
