@@ -127,6 +127,7 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
 			<password>agent.linenumber</password>
 			<pin>agent.linenumber</pin>
+			<serviceprofile>'FULL_UC_SCOM_SPC_CUCMDir'</serviceprofile>
 			<group>'Standard CCM End Users'</group><!--One or more-->
 		</user>
 		<user>

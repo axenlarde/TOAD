@@ -22,6 +22,7 @@ public class Office
 	templatename,
 	fullname,
 	team,
+	city,
 	audiobandwidth,
 	videobandwidth,
 	softkeytemplate,
@@ -46,7 +47,7 @@ public class Office
 	/***************
 	 * Constructor
 	 ***************/
-	public Office(String name, String templatename, String fullname, String team, String audiobandwidth,
+	public Office(String name, String templatename, String fullname, String team, String city, String audiobandwidth,
 			String videobandwidth, String softkeytemplate,
 			String callmanagergroup, String datetimegroup, String mohnumber,
 			String internalprefix, String e164, String receptionnumber,
@@ -59,6 +60,7 @@ public class Office
 		this.templatename = templatename;
 		this.fullname = fullname;
 		this.team = team;
+		this.city = city;
 		this.audiobandwidth = audiobandwidth;
 		this.videobandwidth = videobandwidth;
 		this.softkeytemplate = softkeytemplate;
@@ -290,8 +292,19 @@ public class Office
 		{
 		this.team = team;
 		}
+
+	public String getCity()
+		{
+		return city;
+		}
+
+	public void setCity(String city)
+		{
+		this.city = city;
+		}
 	
 	
-	/*2018*//*RATEL Alexandre 8)*/
+	
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

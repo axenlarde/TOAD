@@ -43,6 +43,7 @@ public class UserLinker extends AXLItemLinker
 	ipccExtension,
 	routePartition,
 	password,
+	serviceProfile,
 	pin;
 	
 	private ArrayList<String> userControlGroupList;
@@ -61,6 +62,7 @@ public class UserLinker extends AXLItemLinker
 		subscribeCallingSearchSpaceName,
 		primaryExtension,
 		ipccExtension,
+		serviceProfile,
 		userControlGroup,
 		devices,
 		udps,
@@ -94,6 +96,19 @@ public class UserLinker extends AXLItemLinker
 		catch (Exception e)
 			{
 			errorList.add(new UserError(this.name, "", "Not found during init : "+e.getMessage(), itemType.user, itemType.callingsearchspace, errorType.notFound));
+			}
+		
+		//Service profile
+		try
+			{
+			if(serviceProfile != null)
+				{
+				SimpleRequest.getUUIDV105(itemType.serviceprofile, serviceProfile);
+				}
+			}
+		catch (Exception e)
+			{
+			errorList.add(new UserError(this.name, "", "Not found during init : "+e.getMessage(), itemType.user, itemType.usercontrolgroup, errorType.notFound));
 			}
 		
 		//Group
@@ -185,6 +200,7 @@ public class UserLinker extends AXLItemLinker
 		params.setPin(this.pin);
 		params.setHomeCluster("true");
 		params.setImAndPresenceEnable("true");
+		params.setServiceProfile(new JAXBElement(new QName("serviceProfile"), com.cisco.axl.api._10.XFkType.class, SimpleRequest.getUUIDV105(itemType.serviceprofile, serviceProfile)));
 		
 		//Primary extension
 		if(UsefulMethod.isNotEmpty(primaryExtension))
@@ -287,6 +303,7 @@ public class UserLinker extends AXLItemLinker
 		if(tuList.contains(toUpdate.pin))req.setPin(this.pin);
 		if(tuList.contains(toUpdate.password))req.setPassword(this.password);
 		if(tuList.contains(toUpdate.subscribeCallingSearchSpaceName))req.setSubscribeCallingSearchSpaceName(new JAXBElement(new QName("subscribeCallingSearchSpaceName"), com.cisco.axl.api._10.XFkType.class, SimpleRequest.getUUIDV105(itemType.callingsearchspace, subscribeCallingSearchSpaceName)));
+		if(tuList.contains(toUpdate.serviceProfile))req.setServiceProfile(new JAXBElement(new QName("serviceProfile"), com.cisco.axl.api._10.XFkType.class, SimpleRequest.getUUIDV105(itemType.serviceprofile, serviceProfile)));
 		
 		if(tuList.contains(toUpdate.primaryExtension))
 			{
@@ -392,6 +409,7 @@ public class UserLinker extends AXLItemLinker
 		myU.setTelephoneNumber(resp.getReturn().getUser().getTelephoneNumber());
 		myU.setPrimaryExtension(resp.getReturn().getUser().getPrimaryExtension().getPattern());
 		myU.setIpccExtension(resp.getReturn().getUser().getIpccExtension().getValue());
+		myU.setServiceProfile(resp.getReturn().getUser().getServiceProfile().getValue());
 		
 		//Get the devices
 		for(String d : resp.getReturn().getUser().getAssociatedDevices().getDevice())
@@ -560,13 +578,17 @@ public class UserLinker extends AXLItemLinker
 		this.ctiUDPList = ctiUDPList;
 		}
 
-	
-	
-	
+	public String getServiceProfile()
+		{
+		return serviceProfile;
+		}
 
+	public void setServiceProfile(String serviceProfile)
+		{
+		this.serviceProfile = serviceProfile;
+		}
 	
 	
-	
-	/*2020*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

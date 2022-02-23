@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -339,6 +340,7 @@ public class UsefulMethod
 						UsefulMethod.getItemByName("templatename", tab),
 						UsefulMethod.getItemByName("fullname", tab),
 						UsefulMethod.getItemByName("teamname", tab),
+						UsefulMethod.getItemByName("city", tab),
 						UsefulMethod.getItemByName("audiobandwidth", tab),
 						UsefulMethod.getItemByName("videobandwidth", tab),
 						UsefulMethod.getItemByName("softkeytemplate", tab),
@@ -468,13 +470,13 @@ public class UsefulMethod
 	 * Used to initialize the used userID list
 	 * @throws Exception 
 	 */
-	public static UsedItemList initUserIDList(String prefix) throws Exception
+	public static UsedItemList initUserIDList(String prefix, String suffix) throws Exception
 		{
 		try
 			{
 			ArrayList<String> usedUserIdList = new ArrayList<String>();
 			
-			List<Object> SQLResp = SimpleRequest.doSQLQuery("select userid from enduser where userid like '"+prefix+"%'");
+			List<Object> SQLResp = SimpleRequest.doSQLQuery("select userid from enduser where userid like '"+prefix+"%"+suffix+"'");
 			
 			for(Object o : SQLResp)
 				{
@@ -487,7 +489,7 @@ public class UsefulMethod
 					}
 				}
 			
-			return new UsedItemList(prefix, usedUserIdList);
+			return new UsedItemList(prefix+suffix, usedUserIdList);
 			}
 		catch(Exception e)
 			{
@@ -1227,7 +1229,7 @@ public class UsefulMethod
 	 * Used to retrieve the UserID list to use
 	 * @throws Exception 
 	 */
-	public static UsedItemList getUsedUserIDList(String prefix) throws Exception
+	public static UsedItemList getUsedUserIDList(String prefix, String suffix) throws Exception
 		{
 		/**
 		 * We check if the list must be initialized
@@ -1235,7 +1237,7 @@ public class UsefulMethod
 		if(Variables.getUsedUserIdList() == null)
 			{
 			ArrayList<UsedItemList> list = new ArrayList<UsedItemList>();
-			UsedItemList uil = UsefulMethod.initUserIDList(prefix);
+			UsedItemList uil = UsefulMethod.initUserIDList(prefix, suffix);
 			list.add(uil);
 			Variables.setUsedUserIdList(list);
 			return uil;
@@ -1243,7 +1245,7 @@ public class UsefulMethod
 		
 		for(UsedItemList uil : Variables.getUsedUserIdList())
 			{
-			if(uil.getPattern().equals(prefix))
+			if(Pattern.matches(prefix+suffix, uil.getPattern()))
 				{
 				return uil;
 				}
@@ -1252,7 +1254,7 @@ public class UsefulMethod
 		/**
 		 * No list were found for the given prefix so we create one
 		 */
-		UsedItemList uil = UsefulMethod.initUserIDList(prefix);
+		UsedItemList uil = UsefulMethod.initUserIDList(prefix, suffix);
 		Variables.getUsedUserIdList().add(uil);
 		return uil;
 		}

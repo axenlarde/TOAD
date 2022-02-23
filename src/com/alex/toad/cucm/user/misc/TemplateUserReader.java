@@ -168,7 +168,8 @@ public class TemplateUserReader
 					UsefulMethod.getItemByName("ipccextension", itemDetails),
 					UsefulMethod.getItemByName("partition", itemDetails),
 					UsefulMethod.getItemByName("pin", itemDetails),
-					UsefulMethod.getItemByName("password", itemDetails));
+					UsefulMethod.getItemByName("password", itemDetails),
+					UsefulMethod.getItemByName("serviceprofile", itemDetails));
 			}
 		else if(type.equals(itemType.agent))
 			{

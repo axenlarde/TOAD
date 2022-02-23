@@ -175,14 +175,32 @@ public class CollectionTools
 				regex.append(applyRegex(result, param[i]));
 				match = true;
 				}
-			else if(Pattern.matches(".*office.availableuserid.*", param[i]))
+			else if(Pattern.matches(".*availableuseridindex.*", param[i]))
 				{
+				/**
+				 * In this special case, we know that we have to consider the whole pattern so we use "pat" and not param[i]
+				 */
+				//We get the prefix and suffix
+				String prefix = pat.substring(0,pat.indexOf("#availableuseridindex")-1);
+				String suffix = pat.substring(pat.indexOf("#availableuseridindex"),pat.length()).replace("#availableuseridindex", "");
+				suffix = suffix.substring(1, suffix.length());//To remove the first +
+				
+				//We resolve them in case of regex
+				prefix = applyPattern(ad, prefix, null, false);
+				suffix = applyPattern(ad, suffix, null, false);
+				int userIDIndex = getAvailableUserIdIndex(prefix, suffix);
+				Variables.getLogger().debug("Available index found : "+userIDIndex);
+				regex.append(userIDIndex);
+				match = true;
+				
+				/*
 				String prefix = UsefulMethod.getTargetOption("agentidprefix");
 				prefix = applyPattern(ad, prefix, null, false);
 				String userID = getAvailableUserId(prefix);
 				Variables.getLogger().debug("Generated userID : "+userID);
 				regex.append(userID);
 				match = true;
+				*/
 				}
 			else if(Pattern.matches(".*office\\..*", param[i]))
 				{
@@ -528,26 +546,26 @@ public class CollectionTools
 		}
 	
 	/*************
-	 * Method used to get an available userID in the given range
+	 * Method used to get an available userID index in the given range
 	 * from the CUCM
 	 */
-	public static String getAvailableUserId(String prefix) throws Exception
+	public static int getAvailableUserIdIndex(String prefix, String suffix) throws Exception
 		{
 		try
 			{
-			UsedItemList uil = UsefulMethod.getUsedUserIDList(prefix);
+			UsedItemList uil = UsefulMethod.getUsedUserIDList(prefix, suffix);
 			
 			int currentIndex = 1;
 			int lastIndex = Integer.parseInt(UsefulMethod.getTargetOption("maxuseridindex"));//Max index
 			
 			while(currentIndex < lastIndex)
 				{
-				if(!(uil.getItemList().contains(prefix+currentIndex)))
+				if(!(uil.getItemList().contains(prefix+currentIndex+suffix)))
 					{
-					String userID = prefix+currentIndex;
+					String userID = prefix+currentIndex+suffix;
 					uil.getItemList().add(userID);//We add the userID to the list to be sure to not use it twice
 					Variables.getLogger().debug("Available userID found : "+userID);
-					return userID;
+					return currentIndex;
 					}
 				currentIndex++;
 				}
@@ -556,7 +574,7 @@ public class CollectionTools
 			{
 			throw new Exception("Error while trying to get an available userID : "+e.getMessage());
 			}
-		throw new Exception("No available userID found with the prefix : "+prefix);
+		throw new Exception("No available userID found with the prefix '"+prefix+"' and suffix '"+suffix+"'");
 		}
 	
 	/*************

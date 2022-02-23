@@ -322,7 +322,8 @@ public class UserTools
 				template.getIpccExtension(),
 				template.getRoutePartition(),
 				template.getPin(),
-				template.getPassword());
+				template.getPassword(),
+				template.getServiceProfile());
 		
 		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
 		myUser.setAgentData(ad);

@@ -40,8 +40,9 @@ Overal configuration file
 		<maxnumchar>30</maxnumchar><!--Integer-->
 		<maxuseridindex>999</maxuseridindex><!--The higher index allowed for naming userid-->
 		<!--Mandatory variables template-->
-		<agentidpattern>office.availableuserid</agentidpattern>
-		<agentidprefix>*1M*agent.agenttype+office.name</agentidprefix>
+		<agentidpattern>*m*office.name+'_'+*m*agent.agenttype+#availableuseridindex+'_'+*m*office.city</agentidpattern>
+		<agentidprefix>*m*office.name+'_'+*m*agent.agenttype</agentidprefix>
+		<agentidsuffix>*m*office.name+'_'+*m*agent.agenttype</agentidsuffix>
 		<agentextension>cucm.availableline</agentextension>
 		<!--Web server parameters-->
 		<webserverport>8092</webserverport>

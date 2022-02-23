@@ -5,6 +5,7 @@
 			<templatename>template1</templatename>
 			<fullname>Toulouse</fullname>
 			<teamname>TLS</teamname>
+			<city>TLS</city>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
@@ -33,6 +34,7 @@
 			<templatename>template1</templatename>
 			<fullname>Default</fullname>
 			<teamname>Default</teamname>
+			<city>DEFAULT</city>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
@@ -61,6 +63,7 @@
 			<templatename>template3</templatename>
 			<fullname>Malakoff</fullname>
 			<teamname>MLK</teamname>
+			<city>MLK</city>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>

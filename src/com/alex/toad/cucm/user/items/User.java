@@ -39,7 +39,8 @@ public class User extends ItemToInject
 	ipccExtension,
 	routePartition,
 	pin,
-	password;
+	password,
+	serviceProfile;
 	
 	private ArrayList<String> userControlGroupList;
 	private ArrayList<String> deviceList;
@@ -67,7 +68,8 @@ public class User extends ItemToInject
 			String ipccExtension,
 			String routePartition,
 			String pin,
-			String password) throws Exception
+			String password,
+			String serviceProfile) throws Exception
 		{
 		super(itemType.user, name);
 		this.targetName = targetName;
@@ -86,6 +88,7 @@ public class User extends ItemToInject
 		this.userControlGroupList = userControlGroupList;
 		this.pin = pin;
 		this.password = password;
+		this.serviceProfile = serviceProfile;
 		}
 
 	public User(String name,
@@ -102,7 +105,8 @@ public class User extends ItemToInject
 			String ipccExtension,
 			String routePartition,
 			String pin,
-			String password) throws Exception
+			String password,
+			String serviceProfile) throws Exception
 		{
 		super(itemType.user, name);
 		myUser = new UserLinker(name);
@@ -124,6 +128,7 @@ public class User extends ItemToInject
 		this.routePartition = routePartition;
 		this.pin = pin;
 		this.password = password;
+		this.serviceProfile = serviceProfile;
 		}
 	
 	public User(String name) throws Exception
@@ -156,6 +161,7 @@ public class User extends ItemToInject
 		myUser.setDeviceList(deviceList);
 		myUser.setUDPList(UDPList);
 		myUser.setCtiUDPList(ctiUDPList);
+		myUser.setServiceProfile(serviceProfile);
 		/***********/
 		
 		/**
@@ -222,6 +228,7 @@ public class User extends ItemToInject
 		deviceList = myU.getDeviceList();
 		UDPList = myU.getUDPList();
 		ctiUDPList = myU.getCtiUDPList();
+		serviceProfile = myU.getServiceProfile();
 		
 		Variables.getLogger().debug("Item "+this.name+" data fetch from the CUCM");
 		}
@@ -258,6 +265,7 @@ public class User extends ItemToInject
 		routePartition = CollectionTools.applyPattern(agentData, routePartition, this, false);
 		pin = CollectionTools.applyPattern(agentData, pin, this, false);
 		password = CollectionTools.applyPattern(agentData, password, this, false);
+		serviceProfile = CollectionTools.applyPattern(agentData, serviceProfile, this, false);
 		
 		ArrayList<String> ucgList = new ArrayList<String>();
 		for(String s : userControlGroupList)
@@ -347,6 +355,7 @@ public class User extends ItemToInject
 		if(UsefulMethod.isNotEmpty(ipccExtension))tuList.add(UserLinker.toUpdate.ipccExtension);
 		if(UsefulMethod.isNotEmpty(pin))tuList.add(UserLinker.toUpdate.pin);
 		if(UsefulMethod.isNotEmpty(password))tuList.add(UserLinker.toUpdate.password);
+		if(UsefulMethod.isNotEmpty(serviceProfile))tuList.add(UserLinker.toUpdate.serviceProfile);
 		if((userControlGroupList != null) && (userControlGroupList.size() != 0))tuList.add(UserLinker.toUpdate.userControlGroup);
 		if((deviceList != null) && (deviceList.size() != 0))tuList.add(UserLinker.toUpdate.devices);
 		if((UDPList != null) && (UDPList.size() != 0))tuList.add(UserLinker.toUpdate.udps);
@@ -522,6 +531,16 @@ public class User extends ItemToInject
 	public void setAgentData(AgentData agentData)
 		{
 		this.agentData = agentData;
+		}
+
+	public String getServiceProfile()
+		{
+		return serviceProfile;
+		}
+
+	public void setServiceProfile(String serviceProfile)
+		{
+		this.serviceProfile = serviceProfile;
 		}
 
 	

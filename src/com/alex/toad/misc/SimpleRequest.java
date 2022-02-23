@@ -442,6 +442,16 @@ public class SimpleRequest
 			com.cisco.axl.api._10.GetSoftKeyTemplateRes resp = Variables.getAXLConnectionToCUCMV105().getSoftKeyTemplate(req);//We send the request to the CUCM
 			return getXFKV105(resp.getReturn().getSoftKeyTemplate().getUuid(), itemName, type);
 			}
+		else if(type.equals(itemType.serviceprofile))
+			{
+			com.cisco.axl.api._10.GetServiceProfileReq req = new com.cisco.axl.api._10.GetServiceProfileReq();
+			com.cisco.axl.api._10.RServiceProfile returnedTags = new com.cisco.axl.api._10.RServiceProfile();
+			req.setName(itemName);
+			returnedTags.setUuid("");
+			req.setReturnedTags(returnedTags);
+			com.cisco.axl.api._10.GetServiceProfileRes resp = Variables.getAXLConnectionToCUCMV105().getServiceProfile(req);//We send the request to the CUCM
+			return getXFKV105(resp.getReturn().getServiceProfile().getUuid(), itemName, type);
+			}
 		
 		throw new Exception("ItemType \""+type+"\" not found");
 		}

@@ -88,6 +88,7 @@ public class Variables
 		userlocal,
 		softkeytemplate,
 		appuser,
+		serviceprofile,
 		agent,//UCCX
 		team,//UCCX
 		skill,//UCCX
