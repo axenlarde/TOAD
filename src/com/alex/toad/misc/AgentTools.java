@@ -134,13 +134,59 @@ public class AgentTools
 	public static String addUpdateAgent(String userCreationProfile, String userID, String lastName,
 			String firstName, Office office, AgentType agentType, Team team, ArrayList<Team> primarySupervisorOf, ArrayList<Team> secondarySupervisorOf,
 			ArrayList<Skill> skills, String deviceName, String deviceModel, String lineNumber, boolean udpLogin,
-			webRequestType requestType) throws Exception
+			WebRequest request) throws Exception
 		{
 		String userIDPattern = UsefulMethod.getTargetOption("agentidpattern");
 		String linePattern = UsefulMethod.getTargetOption("agentextension");
 		
-		if(userID.equals(""))userID = userIDPattern;
-		if(lineNumber.equals(""))lineNumber = linePattern;
+		if(userID.equals(""))
+			{
+			userID = userIDPattern;
+			}
+		else
+			{
+			if(request.getType().equals(webRequestType.addAgent))//We check only for a creation, not an update
+				{
+				//If the userID is provided we check that it is not already used
+				boolean found = false;
+				try
+					{
+					User u = new User(userID);
+					u.isExisting();
+					found = true;
+					}
+				catch (Exception e)
+					{
+					//Means that the user doesn't exist so we continue
+					Variables.getLogger().debug("The userID '"+userID+"' is free so we continue");
+					}
+				if(found)throw new Exception("The choosen userID already exists '"+userID+"' aborting");
+				}
+			}
+		if(lineNumber.equals(""))
+			{
+			lineNumber = linePattern;
+			}
+		else
+			{
+			if(request.getType().equals(webRequestType.addAgent))//We check only for a creation, not an update
+				{
+				//If the line is provided we check that it is not already used
+				boolean found = false;
+				try
+					{
+					Line l = new Line(lineNumber,UsefulMethod.getTargetOption("nodidpartition"));
+					l.isExisting();
+					found = true;
+					}
+				catch (Exception e)
+					{
+					//Means that the user doesn't exist so we continue
+					Variables.getLogger().debug("The line '"+lineNumber+"' is free so we continue");
+					}
+				if(found)throw new Exception("The choosen line already exists '"+lineNumber+"' aborting");
+				}
+			}
 		
 		AgentData agentData = new AgentData(userID,
 				firstName,
@@ -158,7 +204,7 @@ public class AgentTools
 		agentData.resolve();
 		
 		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to Inject List
-		actionType action = requestType.equals(requestType.addAgent)?actionType.inject:actionType.update;
+		actionType action = request.getType().equals(webRequestType.addAgent)?actionType.inject:actionType.update;
 		
 		/*********************
 		 * CUCM & UCCX items
@@ -174,8 +220,8 @@ public class AgentTools
 		/**
 		 * We now launch the injection process
 		 */
-		String taskID = TaskManager.addNewTask(itil, requestType);
-		Variables.getLogger().debug(agentData.getInfo()+" : "+requestType.name()+" task started, task ID is : "+taskID);
+		String taskID = TaskManager.addNewTask(itil, request);
+		Variables.getLogger().debug(agentData.getInfo()+" : "+request.getType().name()+" task started, task ID is : "+taskID);
 		
 		return taskID;
 		}
@@ -184,7 +230,7 @@ public class AgentTools
 	 * Used to delete an agent based on the user ID
 	 * @throws Exception 
 	 */
-	public static String deleteAgent(String userID) throws Exception
+	public static String deleteAgent(String userID, WebRequest request) throws Exception
 		{
 		AgentData agentData = new AgentData(userID);
 		ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();//The Item to delete List
@@ -257,7 +303,7 @@ public class AgentTools
 		/**
 		 * We now launch the injection process
 		 */
-		String taskID = TaskManager.addNewTask(itil, webRequestType.deleteAgent);
+		String taskID = TaskManager.addNewTask(itil, request);
 		Variables.getLogger().debug(agentData.getInfo()+" : delete agent task started, task ID is : "+taskID);
 		
 		return taskID;

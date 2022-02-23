@@ -11,7 +11,7 @@ Overal configuration file
 		<storerequest>enable</storerequest><!--Keep in memory the already asked UUID-->
 		<splitter>+</splitter>
 		<csvsplitter>,</csvsplitter>
-		<maxtaskthread>10</maxtaskthread><!--The number of task allowed to process in the same time-->
+		<maxtaskthread>4</maxtaskthread><!--The number of task allowed to process in the same time-->
 		<!--Smtp parameters-->
 		<smtpemailport>25</smtpemailport>
 		<smtpemailprotocol>smtp</smtpemailprotocol>
@@ -41,8 +41,6 @@ Overal configuration file
 		<maxuseridindex>999</maxuseridindex><!--The higher index allowed for naming userid-->
 		<!--Mandatory variables template-->
 		<agentidpattern>*m*office.name+'_'+*m*agent.agenttype+#availableuseridindex+'_'+*m*office.city</agentidpattern>
-		<agentidprefix>*m*office.name+'_'+*m*agent.agenttype</agentidprefix>
-		<agentidsuffix>*m*office.name+'_'+*m*agent.agenttype</agentidsuffix>
 		<agentextension>cucm.availableline</agentextension>
 		<!--Web server parameters-->
 		<webserverport>8092</webserverport>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.webserver.ManageWebRequest.webRequestType;
+import com.alex.toad.webserver.WebRequest;
 
 /**********************************
 * To start new tasks
@@ -19,7 +20,7 @@ public class TaskManager
 	 * 
 	 * Will return the task ID
 	 */
-	public static String addNewTask(ArrayList<ItemToInject> todoList, webRequestType type) throws Exception
+	public static String addNewTask(ArrayList<ItemToInject> todoList, WebRequest request) throws Exception
 		{
 		try
 			{
@@ -27,22 +28,26 @@ public class TaskManager
 			Variables.getLogger().debug("Clearing task list");
 			if(Variables.getTaskList().size()>0)
 				{
-				clearStaleTask();
 				System.gc();
 				}
 			Variables.getLogger().debug("Task list cleared");
 			
-			int sum = 0;
-			for(Task t : Variables.getTaskList())
+			if(Variables.getTaskList().size() > Integer.parseInt(UsefulMethod.getTargetOption("maxtaskthread")))
 				{
-				if(t.isAlive())sum++;
+				clearStaleTask();//We keep only a certain amount of task in the history
 				}
 			
-			if(sum < Integer.parseInt(UsefulMethod.getTargetOption("maxtaskthread")))
+			int alive = 0;
+			for(Task t : Variables.getTaskList())
+				{
+				if(t.isAlive())alive++;
+				}
+			
+			if(alive < Integer.parseInt(UsefulMethod.getTargetOption("maxtaskthread")))
 				{
 				if(todoList.size() != 0)
 					{
-					Task t = new Task(todoList, type);
+					Task t = new Task(todoList, request);
 					Variables.getTaskList().add(t);
 					t.startBuildProcess();
 					t.start();
@@ -55,7 +60,7 @@ public class TaskManager
 				}
 			else
 				{
-				throw new Exception("Max concurent task reached. You cannot start more task");
+				throw new Exception("Max concurent task reached. You cannot start more task for the moment");
 				}
 			}
 		catch (Exception e)
@@ -66,16 +71,21 @@ public class TaskManager
 	
 	/**
 	 * To clear stale tasks
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	private static void clearStaleTask()
+	private static void clearStaleTask() throws NumberFormatException, Exception
 		{
-		for(Task t : Variables.getTaskList())
+		if(Variables.getTaskList().size() > Integer.parseInt(UsefulMethod.getTargetOption("maxtaskthread")))
 			{
-			if(!t.isAlive())
+			for(Task t : Variables.getTaskList())
 				{
-				Variables.getTaskList().remove(t);
-				clearStaleTask();
-				break;
+				if(!t.isAlive())
+					{
+					Variables.getTaskList().remove(t);
+					clearStaleTask();
+					break;
+					}
 				}
 			}
 		}

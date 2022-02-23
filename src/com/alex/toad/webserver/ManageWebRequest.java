@@ -64,12 +64,21 @@ public class ManageWebRequest
 		
 		if(!type.equals(webRequestType.doAuthenticate))
 			{
+			Variables.getLogger().debug(content);
 			/**
 			 * doAuthenticate is the only case where the security token will be missing
 			 * and therefore not verified
 			 */
-			//securityToken = WebTools.getSecurityToken(UsefulMethod.getItemByName("securitytoken", parsed.get(0)));
-			Variables.getLogger().debug("Associated security token found is : "+securityToken);
+			try
+				{
+				securityToken = WebTools.getSecurityToken(UsefulMethod.getItemByName("securitytoken", parsed.get(0)));
+				}
+			catch (Exception e)
+				{
+				Variables.getLogger().error(e);
+				return WebRequestBuilder.buildFailedWebRequest(webRequestType.doAuthenticate, "Failed to authenticate with the provided credentials");
+				}
+			Variables.getLogger().debug("Security token found for : "+securityToken.getAgent().getInfo());
 			}
 		
 		return new WebRequest(content, type, securityToken);
@@ -287,7 +296,7 @@ public class ManageWebRequest
 						deviceType,
 						lineNumber,
 						udpLogin,
-						request.getType());
+						request);
 				
 				return WebRequestBuilder.buildTaskReply(taskID, request.getType());
 				}
@@ -322,7 +331,7 @@ public class ManageWebRequest
 			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
 				{
 				Variables.getLogger().debug("Trying to delete agent : "+userID);
-				String taskID = AgentTools.deleteAgent(userID);
+				String taskID = AgentTools.deleteAgent(userID, request);
 				return WebRequestBuilder.buildTaskReply(taskID, request.getType());
 				}
 			}

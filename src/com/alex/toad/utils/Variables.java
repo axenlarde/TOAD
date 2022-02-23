@@ -665,6 +665,10 @@ public class Variables
 
 	public static ArrayList<SecurityToken> getSecurityTokenList()
 		{
+		if(securityTokenList == null)
+			{
+			securityTokenList = new ArrayList<SecurityToken>();
+			}
 		return securityTokenList;
 		}
 

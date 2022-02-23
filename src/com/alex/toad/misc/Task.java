@@ -9,6 +9,7 @@ import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.actionType;
 import com.alex.toad.utils.Variables.statusType;
 import com.alex.toad.webserver.ManageWebRequest.webRequestType;
+import com.alex.toad.webserver.WebRequest;
 
 
 
@@ -28,13 +29,13 @@ public class Task extends Thread
 	private statusType status;
 	private boolean pause, stop, started, end;
 	private int progress;
-	private webRequestType type;
+	private WebRequest request;
 	private String taskID;
 	
 	/***************
 	 * Constructor
 	 ***************/
-	public Task(ArrayList<ItemToInject> todoList, webRequestType type)
+	public Task(ArrayList<ItemToInject> todoList, WebRequest request)
 		{
 		this.todoList = todoList;
 		this.status = statusType.init;
@@ -44,7 +45,7 @@ public class Task extends Thread
 		end = false;
 		progress = 0;
 		this.taskID = DigestUtils.md5Hex(System.currentTimeMillis()+Math.random()+"8)");
-		this.type = type;
+		this.request = request;
 		}
 	
 	/******
@@ -79,6 +80,7 @@ public class Task extends Thread
 		try
 			{
 			Variables.getLogger().info("Task begins");
+			this.status = statusType.processing;
 			
 			//Execution
 			for(ItemToInject myToDo : todoList)
@@ -165,7 +167,7 @@ public class Task extends Thread
 	
 	public String getInfo()
 		{
-		return type.name()+" : "+progress+"/"+todoList.size();
+		return request.getType().name()+" : "+progress+"/"+todoList.size()+" : "+request.getSecurityToken().getAgent().getInfo();
 		}
 
 	public ArrayList<ItemToInject> getTodoList()

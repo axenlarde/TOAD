@@ -43,7 +43,7 @@ the collection file
 		<profile>
 			<name>addRemoteAgent</name>
 			<user>
-				<target>newuser</target>
+				<target>newusersoftphone</target>
 				<action>inject</action>
 			</user>
 			<phone>

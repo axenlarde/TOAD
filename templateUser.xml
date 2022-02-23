@@ -83,7 +83,7 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 		</phone>
 		<udp>
 			<targetname>udp</targetname>
-			<devicename>*m*agent.userid</devicename>
+			<devicename>*M*agent.userid</devicename>
 			<description>(*1M**C*agent.firstname+' '+*M**C*agent.lastname+' - '+office.name)IfLongerThan40(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname+' - '+office.name)</description>
 			<linedescription>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan30(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</linedescription>
 			<alertingname>(*1M**C*agent.firstname+' '+*M**C*agent.lastname)IfLongerThan30(*1_**M**C*agent.firstname+'.'+*M**C*agent.lastname)</alertingname>
@@ -131,6 +131,19 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<group>'Standard CCM End Users'</group><!--One or more-->
 		</user>
 		<user>
+			<targetname>newusersoftphone</targetname>
+			<userid>agent.userid</userid>
+			<lastname>*M**C*agent.lastname</lastname>
+			<firstname>(*1M**C*agent.firstname)IfLongerThan30(*1_**M**C*agent.firstname+'.')</firstname>
+			<telephonenumber>agent.linenumber</telephonenumber>
+			<!--<userlocal>office.userlocal</userlocal>-->
+			<subscribecss>'SUBSCRIBE_CSS'</subscribecss>
+			<password>agent.linenumber</password>
+			<pin>agent.linenumber</pin>
+			<serviceprofile>'FULL_UC_SCOM_SPC_CUCMDir'</serviceprofile>
+			<group>'Standard CCM End Users'</group><!--One or more-->
+		</user>
+		<user>
 			<targetname>updateuser</targetname>
 			<userid>agent.userid</userid>
 			<lastname>*M**C*agent.lastname</lastname>
@@ -139,8 +152,8 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 		<user>
 			<targetname>updateudp</targetname>
 			<userid>agent.userid</userid>
-			<udp>*m*agent.userid</udp>
-			<ctiudp>*m*agent.userid</ctiudp>
+			<udp>*M*agent.userid</udp>
+			<ctiudp>*M*agent.userid</ctiudp>
 		</user>
 		<user>
 			<targetname>updatephone</targetname>
@@ -162,7 +175,7 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 		<appuser>
 			<targetname>updateappuserudp</targetname>
 			<userid>config.uccxrmcmuser</userid>
-			<ctiudp>*m*agent.userid</ctiudp>
+			<ctiudp>*M*agent.userid</ctiudp>
 		</appuser>
 		<appuser>
 			<targetname>updateappuserphone</targetname>

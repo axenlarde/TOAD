@@ -1,6 +1,7 @@
 package com.alex.toad.webserver;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.alex.toad.cucm.user.misc.UserCreationProfile;
 import com.alex.toad.misc.ItemToInject;
@@ -321,6 +322,11 @@ public class WebRequestBuilder
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.listTeam;
 		
+		//We build a sorted list of skill just to help the user
+		ArrayList<String> teamList = new ArrayList<String>();
+		for(Team t : teams)teamList.add(t.getName());
+		Collections.sort(teamList);
+		
 		content.append("<xml>\r\n");
 		content.append("	<reply>\r\n");
 		content.append("		<type>"+type.name()+"</type>\r\n");
@@ -329,9 +335,9 @@ public class WebRequestBuilder
 		
 		try
 			{
-			for(Team t : teams)
+			for(String t : teamList)
 				{
-				content.append("				<team>"+t.getName()+"</team>\r\n");
+				content.append("				<team>"+t+"</team>\r\n");
 				}
 			}
 		catch (Exception e)
@@ -355,6 +361,11 @@ public class WebRequestBuilder
 		StringBuffer content = new StringBuffer();
 		webRequestType type = webRequestType.listSkill;
 		
+		//We build a sorted list of skill just to help the user
+		ArrayList<String> skillList = new ArrayList<String>();
+		for(Skill s : skills)skillList.add(s.getName());
+		Collections.sort(skillList);
+		
 		content.append("<xml>\r\n");
 		content.append("	<reply>\r\n");
 		content.append("		<type>"+type.name()+"</type>\r\n");
@@ -363,9 +374,9 @@ public class WebRequestBuilder
 		
 		try
 			{
-			for(Skill s : skills)
+			for(String s : skillList)
 				{
-				content.append("				<skill>"+s.getName()+"</skill>\r\n");
+				content.append("				<skill>"+s+"</skill>\r\n");
 				}
 			}
 		catch (Exception e)
@@ -437,7 +448,7 @@ public class WebRequestBuilder
 				content.append("					<taskid>"+t.getTaskID()+"</taskid>\r\n");
 				content.append("					<status>"+t.getStatus().name()+"</status>\r\n");
 				content.append("					<desc>"+t.getInfo()+"</desc>\r\n");
-				content.append("				<task>\r\n");
+				content.append("				</task>\r\n");
 				}
 			}
 		catch (Exception e)

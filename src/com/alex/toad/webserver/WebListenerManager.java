@@ -113,7 +113,6 @@ public class WebListenerManager implements HttpHandler
 					
 					String content = getContent(exc);
 					Variables.getLogger().debug("Web request content : ");
-					Variables.getLogger().debug(content);
 					
 					WebRequest wr = ManageWebRequest.parseWebRequest(content);
 					WebRequest reply = null;
