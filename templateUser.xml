@@ -26,12 +26,14 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<display>*M*agent.userid</display>
 			<linetextlabel>*M*agent.userid</linetextlabel>
 			<externalphonemask>office.setting.1</externalphonemask>
-			<commondeviceconfig>office.name+'_Jabber_CDC'</commondeviceconfig>
+			<commondeviceconfig>office.city+'_Jabber_CDC'</commondeviceconfig>
 			<commonphoneconfig>'Standard Common Phone Profile'</commonphoneconfig>
 			<securityprofile>'securejabbersics.ce.int.amecspie.com'</securityprofile>
 			<aarcss></aarcss>
 			<subscribecss>'INTERNAL_CSS'</subscribecss>
 			<reroutingcss>'INTERNAL_CSS'</reroutingcss>
+			<mohaudiosourceid>office.mohnumber</mohaudiosourceid>
+			<softkeytemplate>office.softkeytemplate</softkeytemplate>
 			<linenumber>agent.linenumber</linenumber><!--One or more-->
 			<cssline>'AllowedCalls_NATGSMSPC_FRANCE'</cssline>
 			<!--<cssforward>'INTERNAL_CSS'</cssforward>
@@ -43,14 +45,14 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<fwnoanvoicemailenable>'false'</fwnoanvoicemailenable>
 			<fwbusyvoicemailenable>'false'</fwbusyvoicemailenable>
 			<fwunrvoicemailenable>'false'</fwunrvoicemailenable>-->
-			<voicemailprofile>'NoVoiceMail'</voicemailprofile>
+			<voicemailprofile>office.voicemailprofile</voicemailprofile>
 			<routepartition>config.nodidpartition</routepartition>
 			<producttype>'Cisco Unified Client Services Framework'</producttype>
 			<protocol>'SIP'</protocol>
 			<buttontemplate>'Standard Client Services Framework'</buttontemplate>
-			<devicepool>office.name+'_DP'</devicepool>
-			<location>office.name+'_LOC'</location>
-			<cssdevice>office.name+'_CSS'</cssdevice>
+			<devicepool>office.city+office.devicepool</devicepool>
+			<location>office.city+'_LOC'</location>
+			<cssdevice>office.city+'_CSS'</cssdevice>
 		</phone>
 		<phone>
 			<targetname>loggedoutphone</targetname>
@@ -60,20 +62,21 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<alertingname>'Unlogged DN'</alertingname>
 			<display>'Unlogged DN'</display>
 			<linetextlabel>'Connectez-vous'</linetextlabel>
-			<commondeviceconfig>office.name+'_Phone_CDC'</commondeviceconfig>
-			<commonphoneconfig>office.name'_CPPC'</commonphoneconfig>
+			<commondeviceconfig>office.city+'_Phone_CDC'</commondeviceconfig>
+			<commonphoneconfig>office.city+'_CPPC'</commonphoneconfig>
 			<securityprofile>*LFphone*agent.devicetype+' - Standard SIP Non-Secure Profile'</securityprofile>
 			<subscribecss>'INTERNAL_CSS'</subscribecss>
 			<reroutingcss>'INTERNAL_CSS'</reroutingcss>
 			<linenumber>cucm.availableline</linenumber><!--One or more-->
 			<cssline>'AllowedCalls_LOC_FRANCE'</cssline>
+			<voicemailprofile>office.voicemailprofile</voicemailprofile>
 			<routepartition>config.nodidpartition</routepartition>
 			<producttype>*LFphone*agent.devicetype</producttype>
 			<protocol>'SIP'</protocol>
 			<buttontemplate>*LFpbt*agent.devicetype</buttontemplate>
-			<devicepool>office.name+'_DP'</devicepool>
-			<location>office.name+'_LOC'</location>
-			<cssdevice>office.name+'_CSS'</cssdevice>
+			<devicepool>office.city+office.devicepool</devicepool>
+			<location>office.city+'_LOC'</location>
+			<cssdevice>office.city+'_CSS'</cssdevice>
 		</phone>
 		<udp>
 			<targetname>udp</targetname>
@@ -84,9 +87,11 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<display>*M*agent.userid</display>
 			<linetextlabel>*M*agent.userid</linetextlabel>
 			<externalphonemask>office.setting.1</externalphonemask>
+			<mohaudiosourceid>office.mohnumber</mohaudiosourceid>
+			<softkeytemplate>office.softkeytemplate</softkeytemplate>
 			<linenumber>agent.linenumber</linenumber><!--One or more-->
 			<cssline>'AllowedCalls_NATGSMSPC_FRANCE'</cssline>
-			<voicemailprofile>'NoVoiceMail'</voicemailprofile>
+			<voicemailprofile>office.voicemailprofile</voicemailprofile>
 			<routepartition>config.nodidpartition</routepartition>
 			<producttype>'Cisco 7841'</producttype>
 			<buttontemplate>'PBT_7841_2L_1SURL'</buttontemplate>
@@ -108,7 +113,7 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<lastname>*M**C*agent.lastname</lastname>
 			<firstname>(*1M**C*agent.firstname)IfLongerThan30(*1_**M**C*agent.firstname+'.')</firstname>
 			<telephonenumber>agent.linenumber</telephonenumber>
-			<userlocal>office.userlocal</userlocal>
+			<!--<userlocal>office.userlocal</userlocal>-->
 			<subscribecss>'INTERNAL_CSS'</subscribecss>
 			<password>agent.linenumber</password>
 			<pin>agent.linenumber</pin>
@@ -121,7 +126,7 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<lastname>*M**C*agent.lastname</lastname>
 			<firstname>(*1M**C*agent.firstname)IfLongerThan30(*1_**M**C*agent.firstname+'.')</firstname>
 			<telephonenumber>agent.linenumber</telephonenumber>
-			<userlocal>office.userlocal</userlocal>
+			<!--<userlocal>office.userlocal</userlocal>-->
 			<subscribecss>'INTERNAL_CSS'</subscribecss>
 			<password>agent.linenumber</password>
 			<pin>agent.linenumber</pin>

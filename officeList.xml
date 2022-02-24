@@ -10,20 +10,21 @@ Office list
 			<fullname>Default</fullname>
 			<teamname>Default</teamname>
 			<city>Default</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -39,20 +40,21 @@ Office list
 			<fullname>MLK</fullname>
 			<teamname>MLK_PRIVE</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -68,20 +70,21 @@ Office list
 			<fullname>MLKPUBLIC</fullname>
 			<teamname>MLK_PUBLIC</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -97,20 +100,21 @@ Office list
 			<fullname>FORMATION</fullname>
 			<teamname>FORMATION</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -126,20 +130,21 @@ Office list
 			<fullname>CG92</fullname>
 			<teamname>CG92</teamname>
 			<city>CG92</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -155,20 +160,21 @@ Office list
 			<fullname>SEB</fullname>
 			<teamname>SEB</teamname>
 			<city>BRON</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -184,20 +190,21 @@ Office list
 			<fullname>MELLISA</fullname>
 			<teamname>Mellisa</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -213,20 +220,21 @@ Office list
 			<fullname>SPA</fullname>
 			<teamname>SPA_Alpha_AD</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -242,20 +250,21 @@ Office list
 			<fullname>Cockpit</fullname>
 			<teamname>Cockpit</teamname>
 			<city>ACD</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -271,20 +280,21 @@ Office list
 			<fullname>DELL</fullname>
 			<teamname>DELL</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -300,20 +310,21 @@ Office list
 			<fullname>ADOMA</fullname>
 			<teamname>ADOMA</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -329,20 +340,21 @@ Office list
 			<fullname>DEMO</fullname>
 			<teamname>DemoTeam</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -358,20 +370,21 @@ Office list
 			<fullname>AREVA</fullname>
 			<teamname>AREVA</teamname>
 			<city>TLS</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -387,20 +400,21 @@ Office list
 			<fullname>IGR</fullname>
 			<teamname>IGR</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -416,20 +430,21 @@ Office list
 			<fullname>SPIEFR</fullname>
 			<teamname>SPIE_FR_PROXI</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -445,20 +460,21 @@ Office list
 			<fullname>CRIDF</fullname>
 			<teamname>CRIDF</teamname>
 			<city>ACD</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -474,20 +490,21 @@ Office list
 			<fullname>MINEDUC</fullname>
 			<teamname>MINEDUC</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -503,20 +520,21 @@ Office list
 			<fullname>FDR</fullname>
 			<teamname>FDR</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -532,20 +550,21 @@ Office list
 			<fullname>ENC92</fullname>
 			<teamname>ENC92</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -561,20 +580,21 @@ Office list
 			<fullname>RMNGP</fullname>
 			<teamname>RMNGP</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -590,20 +610,21 @@ Office list
 			<fullname>HLP</fullname>
 			<teamname>HLP_TEST</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -619,20 +640,21 @@ Office list
 			<fullname>CNSA</fullname>
 			<teamname>CNSA</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -648,20 +670,21 @@ Office list
 			<fullname>CSN</fullname>
 			<teamname>CSN RIF</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -677,20 +700,21 @@ Office list
 			<fullname>FMSD</fullname>
 			<teamname>FMSD</teamname>
 			<city>TLS</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -706,20 +730,21 @@ Office list
 			<fullname>CHU</fullname>
 			<teamname>SANTE</teamname>
 			<city>TLS</city>
+			<devicepool>_HLP_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -735,20 +760,21 @@ Office list
 			<fullname>SPIE</fullname>
 			<teamname>SPIE_SD</teamname>
 			<city>TLS</city>
+			<devicepool>_HLP_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -764,20 +790,21 @@ Office list
 			<fullname>MUTU</fullname>
 			<teamname>MUTUALISE</teamname>
 			<city>TLS</city>
+			<devicepool>_HLP_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -793,20 +820,21 @@ Office list
 			<fullname>RTE</fullname>
 			<teamname>RTE</teamname>
 			<city>TLS</city>
+			<devicepool>_HLP_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -822,20 +850,21 @@ Office list
 			<fullname>CNR</fullname>
 			<teamname>CNR</teamname>
 			<city>BRON</city>
+			<devicepool>_HLP_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -851,20 +880,21 @@ Office list
 			<fullname>EDF</fullname>
 			<teamname>EDF</teamname>
 			<city>BRON</city>
+			<devicepool>_HLP_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>
@@ -880,20 +910,21 @@ Office list
 			<fullname>TEST</fullname>
 			<teamname>Test_CV</teamname>
 			<city>MLK</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
 			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
-			<mohnumber>3</mohnumber>
+			<mohnumber>1</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
 			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
-			<voicemailprofile></voicemailprofile>
+			<voicemailprofile>NoVoiceMail</voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
 				<did>1495914XX</did>

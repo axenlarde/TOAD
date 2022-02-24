@@ -33,7 +33,9 @@ public class DeviceProfile extends ItemToInject
 	phoneClass,
 	protocol,
 	protocolSide,
-	phoneButtonTemplate;
+	phoneButtonTemplate,
+	mohAudioSourceId,
+	softkeyTemplateName;
 	
 	private ArrayList<PhoneService> serviceList;
 	private ArrayList<PhoneLine> lineList;
@@ -52,7 +54,9 @@ public class DeviceProfile extends ItemToInject
 			String phoneButtonTemplate,
 			ArrayList<PhoneService> serviceList,
 			ArrayList<PhoneLine> lineList,
-			ArrayList<SpeedDial> sdList) throws Exception
+			ArrayList<SpeedDial> sdList,
+			String mohAudioSourceId,
+			String softkeyTemplateName) throws Exception
 		{
 		super(itemType.udp, name);
 		myUDP = new DeviceProfileLinker(name);
@@ -66,6 +70,8 @@ public class DeviceProfile extends ItemToInject
 		this.serviceList = serviceList;
 		this.lineList = lineList;
 		this.sdList = sdList;
+		this.mohAudioSourceId = mohAudioSourceId;
+		this.softkeyTemplateName = softkeyTemplateName;
 		}
 
 	public DeviceProfile(String name) throws Exception
@@ -93,6 +99,8 @@ public class DeviceProfile extends ItemToInject
 		myUDP.setServiceList(this.serviceList);
 		myUDP.setSdList(this.sdList);
 		myUDP.setPhoneButtonTemplate(phoneButtonTemplate);
+		myUDP.setMohAudioSourceId(mohAudioSourceId);
+		myUDP.setSoftkeyTemplateName(softkeyTemplateName);
 		/**************/
 		
 		errorList.addAll(myUDP.init());
@@ -168,6 +176,8 @@ public class DeviceProfile extends ItemToInject
 		this.protocol = CollectionTools.applyPattern(agentData, this.protocol, this, true);
 		this.protocolSide = CollectionTools.applyPattern(agentData, this.protocolSide, this, true);
 		this.phoneButtonTemplate = CollectionTools.applyPattern(agentData, this.phoneButtonTemplate, this, true);
+		this.mohAudioSourceId = CollectionTools.applyPattern(agentData, this.mohAudioSourceId, this, false);
+		this.softkeyTemplateName = CollectionTools.applyPattern(agentData, this.softkeyTemplateName, this, false);
 		
 		/**
 		 * We fetch the errors and corrections from the lists
@@ -204,6 +214,8 @@ public class DeviceProfile extends ItemToInject
 		if((serviceList != null) && (serviceList.size() != 0))tuList.add(DeviceProfileLinker.toUpdate.service);
 		if((sdList != null) && (sdList.size() != 0))tuList.add(DeviceProfileLinker.toUpdate.sd);
 		if((lineList != null) && (lineList.size() != 0))tuList.add(DeviceProfileLinker.toUpdate.line);
+		if(UsefulMethod.isNotEmpty(mohAudioSourceId))tuList.add(DeviceProfileLinker.toUpdate.mohAudioSourceId);
+		if(UsefulMethod.isNotEmpty(softkeyTemplateName))tuList.add(DeviceProfileLinker.toUpdate.softkeyTemplateName);
 		}
 
 	public DeviceProfileLinker getMyUDP()
@@ -324,6 +336,26 @@ public class DeviceProfile extends ItemToInject
 	public void setAgentData(AgentData agentData)
 		{
 		this.agentData = agentData;
+		}
+
+	public String getMohAudioSourceId()
+		{
+		return mohAudioSourceId;
+		}
+
+	public void setMohAudioSourceId(String mohAudioSourceId)
+		{
+		this.mohAudioSourceId = mohAudioSourceId;
+		}
+
+	public String getSoftkeyTemplateName()
+		{
+		return softkeyTemplateName;
+		}
+
+	public void setSoftkeyTemplateName(String softkeyTemplateName)
+		{
+		this.softkeyTemplateName = softkeyTemplateName;
 		}
 	
 	

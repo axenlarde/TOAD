@@ -194,7 +194,9 @@ public class UserTools
 				template.getPhoneButtonTemplate(),
 				serviceList,
 				lineList,
-				sdList);
+				sdList,
+				template.getMohAudioSourceId(),
+				template.getSoftkeyTemplateName());
 		
 		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
 		myUDP.setAgentData(ad);
@@ -279,20 +281,15 @@ public class UserTools
 				sdList,
 				template.getCommonPhoneConfigName(),
 				template.getSecurityProfileName(),
-				template.getDeviceMobilityMode());
+				template.getDeviceMobilityMode(),
+				template.getMohAudioSourceId(),
+				template.getSoftkeyTemplateName());
 		
 		myPhone.setAgentData(ad);
 		myPhone.setAction(action);//It is important to set the action before resolving
 		
-		try
-			{
-			myPhone.resolve();
-			}
-		catch (Exception e)
-			{
-			Variables.getLogger().debug(ad.getInfo()+" : The phone has not been added because an important value was empty : "+e.getMessage());
-			return null;
-			}
+		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
+		myPhone.resolve();
 		
 		list.add(myPhone);
 		
@@ -351,15 +348,8 @@ public class UserTools
 		myAppUser.setAgentData(ad);
 		myAppUser.setAction(action);
 		
-		try
-			{
-			myAppUser.resolve();
-			}
-		catch (Exception e)
-			{
-			Variables.getLogger().debug(ad.getInfo()+" : The AppUser has not been added because an important value was empty : "+e.getMessage());
-			return null;
-			}
+		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
+		myAppUser.resolve();
 		
 		return myAppUser;
 		}
@@ -384,6 +374,10 @@ public class UserTools
 		agent.setAgentData(ad);
 		agent.setAction(action);
 		
+		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
+		agent.resolve();
+		
+		/*
 		try
 			{
 			agent.resolve();
@@ -392,7 +386,7 @@ public class UserTools
 			{
 			Variables.getLogger().debug(ad.getInfo()+" : The agent has not been added because an important value was empty : "+e.getMessage());
 			return null;
-			}
+			}*/
 		
 		list.add(agent);
 		
@@ -480,15 +474,8 @@ public class UserTools
 		myLine.setAgentData(ad);
 		myLine.setAction(action);
 		
-		try
-			{
-			myLine.resolve();
-			}
-		catch (EmptyValueException eve)
-			{
-			Variables.getLogger().debug(ad.getInfo()+" : The line has not been added because an important value was empty : "+eve.getMessage());
-			return null;
-			}
+		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
+		myLine.resolve();
 		
 		return myLine;
 		}
@@ -520,15 +507,8 @@ public class UserTools
 		
 		myLine.setAgentData(ad);
 		
-		try
-			{
-			myLine.resolve();
-			}
-		catch (EmptyValueException eve)
-			{
-			Variables.getLogger().debug(ad.getInfo()+" : The line has not been added because an important value was empty : "+eve.getMessage());
-			return null;
-			}
+		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
+		myLine.resolve();
 		
 		return myLine;
 		}
@@ -544,15 +524,8 @@ public class UserTools
 		
 		myService.setAgentData(ad);
 		
-		try
-			{
-			myService.resolve();
-			}
-		catch (EmptyValueException eve)
-			{
-			Variables.getLogger().debug(ad.getInfo()+" : The service has not been added because an important value was empty : "+eve.getMessage());
-			return null;
-			}
+		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
+		myService.resolve();
 		
 		return myService;	
 		}
@@ -568,15 +541,8 @@ public class UserTools
 		
 		mySD.setAgentData(ad);
 		
-		try
-			{
-			mySD.resolve();
-			}
-		catch (EmptyValueException eve)
-			{
-			Variables.getLogger().debug(ad.getInfo()+" : The speedDial has not been added because an important value was empty : "+eve.getMessage());
-			return null;
-			}
+		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
+		mySD.resolve();
 		
 		return mySD;	
 		}
@@ -595,15 +561,8 @@ public class UserTools
 		ul.setAgentData(ad);
 		ul.setAction(action);
 		
-		try
-			{
-			ul.resolve();
-			}
-		catch (EmptyValueException eve)
-			{
-			Variables.getLogger().debug(ad.getInfo()+" : The UDPLogin has not been added because an important value was empty : "+eve.getMessage());
-			return null;
-			}
+		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
+		ul.resolve();
 		
 		return ul;	
 		}

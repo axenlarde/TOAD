@@ -40,7 +40,9 @@ public class DeviceProfileLinker extends AXLItemLinker
 	phoneClass,
 	protocol,
 	protocolSide,
-	phoneButtonTemplate;
+	phoneButtonTemplate,
+	mohAudioSourceId,
+	softkeyTemplateName;
 	
 	private ArrayList<PhoneService> serviceList;
 	private ArrayList<PhoneLine> lineList;
@@ -53,6 +55,8 @@ public class DeviceProfileLinker extends AXLItemLinker
 		description,
 		phoneButtonTemplate,
 		service,
+		mohAudioSourceId,
+		softkeyTemplateName,
 		line
 		}
 	
@@ -109,6 +113,16 @@ public class DeviceProfileLinker extends AXLItemLinker
 			errorList.add(new UserError(this.name, "", "Not found during init : "+e.getMessage(), itemType.udp, itemType.partition, errorType.notFound));
 			}
 		
+		//SoftkeyTemplate
+		try
+			{
+			SimpleRequest.getUUIDV105(itemType.softkeytemplate, this.softkeyTemplateName);
+			}
+		catch (Exception e)
+			{
+			errorList.add(new UserError(this.name, "", "Not found during init : "+e.getMessage(), itemType.udp, itemType.softkeytemplate, errorType.notFound));
+			}
+		
 		return errorList;
 		}
 	/**************/
@@ -143,6 +157,8 @@ public class DeviceProfileLinker extends AXLItemLinker
 		params.setProtocol(this.protocol);
 		params.setProtocolSide(this.protocolSide);
 		params.setPhoneTemplateName(new JAXBElement(new QName("phoneTemplateName"), com.cisco.axl.api._10.XFkType.class, SimpleRequest.getUUIDV105(itemType.phonetemplatename, phoneButtonTemplate)));
+		params.setSoftkeyTemplateName(new JAXBElement(new QName("softkeyTemplateName"), com.cisco.axl.api._10.XFkType.class, this.softkeyTemplateName));
+		params.setUserHoldMohAudioSourceId(new JAXBElement(new QName("userHoldMohAudioSourceId"), String.class, this.mohAudioSourceId));
 		
 		//Services
 		com.cisco.axl.api._10.XDeviceProfile.Services myServices = new com.cisco.axl.api._10.XDeviceProfile.Services();
@@ -279,15 +295,11 @@ public class DeviceProfileLinker extends AXLItemLinker
 		 */
 		req.setName(this.getName());
 		
-		if(tuList.contains(toUpdate.description))
-			{
-			req.setDescription(this.description);
-			}
-		if(tuList.contains(toUpdate.phoneButtonTemplate))
-			{
-			req.setPhoneTemplateName(new JAXBElement(new QName("phoneTemplateName"), com.cisco.axl.api._10.XFkType.class, SimpleRequest.getUUIDV105(itemType.phonetemplatename, phoneButtonTemplate)));
-			}
-			
+		if(tuList.contains(toUpdate.description))req.setDescription(this.description);
+		if(tuList.contains(toUpdate.phoneButtonTemplate))req.setPhoneTemplateName(new JAXBElement(new QName("phoneTemplateName"), com.cisco.axl.api._10.XFkType.class, SimpleRequest.getUUIDV105(itemType.phonetemplatename, phoneButtonTemplate)));
+		if(tuList.contains(toUpdate.softkeyTemplateName))req.setSoftkeyTemplateName(new JAXBElement(new QName("softkeyTemplateName"), com.cisco.axl.api._10.XFkType.class, this.softkeyTemplateName));
+		if(tuList.contains(toUpdate.mohAudioSourceId))req.setUserHoldMohAudioSourceId(new JAXBElement(new QName("userHoldMohAudioSourceId"), String.class, this.mohAudioSourceId));
+		
 		//Service
 		if(tuList.contains(toUpdate.service))
 			{
@@ -547,14 +559,27 @@ public class DeviceProfileLinker extends AXLItemLinker
 		this.sdList = sdList;
 		}
 
-	
+	public String getMohAudioSourceId()
+		{
+		return mohAudioSourceId;
+		}
+
+	public void setMohAudioSourceId(String mohAudioSourceId)
+		{
+		this.mohAudioSourceId = mohAudioSourceId;
+		}
+
+	public String getSoftkeyTemplateName()
+		{
+		return softkeyTemplateName;
+		}
+
+	public void setSoftkeyTemplateName(String softkeyTemplateName)
+		{
+		this.softkeyTemplateName = softkeyTemplateName;
+		}
 
 	
-	
-
-	
-	
-	
-	/*2015*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

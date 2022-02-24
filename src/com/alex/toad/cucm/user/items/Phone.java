@@ -6,7 +6,6 @@ import com.alex.toad.axlitems.linkers.PhoneLinker;
 import com.alex.toad.misc.CollectionTools;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.misc.SimpleRequest;
-import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.soap.items.PhoneLine;
 import com.alex.toad.soap.items.PhoneService;
 import com.alex.toad.soap.items.SpeedDial;
@@ -48,7 +47,9 @@ public class Phone extends ItemToInject
 	enableExtensionMobility,
 	commonPhoneConfigName,
 	securityProfileName,
-	deviceMobilityMode;
+	deviceMobilityMode,
+	mohAudioSourceId,
+	softkeyTemplateName;
 	
 	private ArrayList<PhoneService> serviceList;
 	private ArrayList<PhoneLine> lineList;
@@ -74,7 +75,8 @@ public class Phone extends ItemToInject
 			String enableExtensionMobility,
 			ArrayList<SpeedDial> sdList,
 			String commonPhoneConfigName, String securityProfileName,
-			String deviceMobilityMode) throws Exception
+			String deviceMobilityMode, String mohAudioSourceId,
+			String softkeyTemplateName) throws Exception
 		{
 		super(itemType.phone, name);
 		myPhone = new PhoneLinker(name);
@@ -100,6 +102,8 @@ public class Phone extends ItemToInject
 		this.securityProfileName = securityProfileName;
 		this.commonPhoneConfigName = commonPhoneConfigName;
 		this.deviceMobilityMode = deviceMobilityMode;
+		this.mohAudioSourceId = mohAudioSourceId;
+		this.softkeyTemplateName = softkeyTemplateName;
 		}
 
 	public Phone(String name) throws Exception
@@ -139,6 +143,8 @@ public class Phone extends ItemToInject
 		myPhone.setCommonPhoneConfigName(commonPhoneConfigName);
 		myPhone.setSecurityProfileName(securityProfileName);
 		myPhone.setDeviceMobilityMode(deviceMobilityMode);
+		myPhone.setSoftkeyTemplateName(softkeyTemplateName);
+		myPhone.setMohAudioSourceId(mohAudioSourceId);
 		/***************/
 		
 		this.errorList.addAll(myPhone.init());
@@ -224,6 +230,8 @@ public class Phone extends ItemToInject
 		commonPhoneConfigName = CollectionTools.applyPattern(agentData, commonPhoneConfigName, this, false);
 		securityProfileName = CollectionTools.applyPattern(agentData, securityProfileName, this, false);
 		deviceMobilityMode = CollectionTools.applyPattern(agentData, deviceMobilityMode, this, false);
+		mohAudioSourceId = CollectionTools.applyPattern(agentData, mohAudioSourceId, this, false);
+		softkeyTemplateName = CollectionTools.applyPattern(agentData, softkeyTemplateName, this, false);
 		
 		/**
 		 * We fetch the errors and corrections from the lists
@@ -268,7 +276,8 @@ public class Phone extends ItemToInject
 		if(UsefulMethod.isNotEmpty(commonPhoneConfigName))tuList.add(PhoneLinker.toUpdate.commonPhoneConfigName);
 		if(UsefulMethod.isNotEmpty(securityProfileName))tuList.add(PhoneLinker.toUpdate.securityProfileName);
 		if(UsefulMethod.isNotEmpty(deviceMobilityMode))tuList.add(PhoneLinker.toUpdate.deviceMobilityMode);
-		
+		if(UsefulMethod.isNotEmpty(softkeyTemplateName))tuList.add(PhoneLinker.toUpdate.deviceMobilityMode);
+		if(UsefulMethod.isNotEmpty(mohAudioSourceId))tuList.add(PhoneLinker.toUpdate.mohAudioSourceId);
 		if(UsefulMethod.isNotEmpty(enableExtensionMobility))tuList.add(PhoneLinker.toUpdate.enableExtensionMobility);
 		if((serviceList != null) && (serviceList.size() != 0))tuList.add(PhoneLinker.toUpdate.service);
 		if((sdList != null) && (sdList.size() != 0))tuList.add(PhoneLinker.toUpdate.sd);
@@ -517,10 +526,26 @@ public class Phone extends ItemToInject
 		{
 		this.agentData = agentData;
 		}
-	
-	
-	
-	
+
+	public String getSoftkeyTemplateName()
+		{
+		return softkeyTemplateName;
+		}
+
+	public void setSoftkeyTemplateName(String softkeyTemplateName)
+		{
+		this.softkeyTemplateName = softkeyTemplateName;
+		}
+
+	public String getMohAudioSourceId()
+		{
+		return mohAudioSourceId;
+		}
+
+	public void setMohAudioSourceId(String mohAudioSourceId)
+		{
+		this.mohAudioSourceId = mohAudioSourceId;
+		}
 	
 	
 	/*2022*//*RATEL Alexandre 8)*/

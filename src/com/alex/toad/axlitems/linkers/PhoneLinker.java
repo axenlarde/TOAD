@@ -54,7 +54,9 @@ public class PhoneLinker extends AXLItemLinker
 	enableExtensionMobility,
 	commonPhoneConfigName,
 	securityProfileName,
-	deviceMobilityMode;
+	deviceMobilityMode,
+	mohAudioSourceId,
+	softkeyTemplateName;
 	
 	private ArrayList<PhoneService> serviceList;
 	private ArrayList<PhoneLine> lineList;
@@ -79,6 +81,8 @@ public class PhoneLinker extends AXLItemLinker
 		securityProfileName,
 		deviceMobilityMode,
 		service,
+		mohAudioSourceId,
+		softkeyTemplateName,
 		line
 		}
 	
@@ -195,6 +199,16 @@ public class PhoneLinker extends AXLItemLinker
 			errorList.add(new UserError(this.name, "", "Not found during init : "+e.getMessage(), itemType.phone, itemType.aargroup, errorType.notFound));
 			}
 		
+		//SoftkeyTemplate
+		try
+			{
+			SimpleRequest.getUUIDV105(itemType.softkeytemplate, this.softkeyTemplateName);
+			}
+		catch (Exception e)
+			{
+			errorList.add(new UserError(this.name, "", "Not found during init : "+e.getMessage(), itemType.phone, itemType.softkeytemplate, errorType.notFound));
+			}
+		
 		return errorList;
 		}
 	/**************/
@@ -241,6 +255,9 @@ public class PhoneLinker extends AXLItemLinker
 		params.setCommonPhoneConfigName(SimpleRequest.getUUIDV105(itemType.commonPhoneConfig, this.commonPhoneConfigName));
 		params.setSecurityProfileName(new JAXBElement(new QName("securityProfileName"), com.cisco.axl.api._10.XFkType.class, this.securityProfileName));
 		params.setDeviceMobilityMode(this.deviceMobilityMode);
+		params.setSoftkeyTemplateName(new JAXBElement(new QName("softkeyTemplateName"), com.cisco.axl.api._10.XFkType.class, this.softkeyTemplateName));
+		params.setNetworkHoldMohAudioSourceId(new JAXBElement(new QName("networkHoldMohAudioSourceId"), String.class, this.mohAudioSourceId));
+		params.setUserHoldMohAudioSourceId(new JAXBElement(new QName("userHoldMohAudioSourceId"), String.class, this.mohAudioSourceId));
 		
 		//Services
 		com.cisco.axl.api._10.XPhone.Services myServs = new com.cisco.axl.api._10.XPhone.Services();
@@ -389,6 +406,9 @@ public class PhoneLinker extends AXLItemLinker
 		if(tuList.contains(toUpdate.securityProfileName))req.setSecurityProfileName(new JAXBElement(new QName("securityProfileName"), com.cisco.axl.api._10.XFkType.class, this.securityProfileName));
 		if(tuList.contains(toUpdate.commonPhoneConfigName))req.setLocationName(SimpleRequest.getUUIDV105(itemType.commonPhoneConfig, this.commonPhoneConfigName));
 		if(tuList.contains(toUpdate.deviceMobilityMode))req.setDeviceMobilityMode(this.deviceMobilityMode);
+		if(tuList.contains(toUpdate.softkeyTemplateName))req.setSoftkeyTemplateName(new JAXBElement(new QName("softkeyTemplateName"), com.cisco.axl.api._10.XFkType.class, this.softkeyTemplateName));
+		if(tuList.contains(toUpdate.mohAudioSourceId))req.setNetworkHoldMohAudioSourceId(new JAXBElement(new QName("networkHoldMohAudioSourceId"), String.class, this.mohAudioSourceId));
+		if(tuList.contains(toUpdate.mohAudioSourceId))req.setUserHoldMohAudioSourceId(new JAXBElement(new QName("userHoldMohAudioSourceId"), String.class, this.mohAudioSourceId));
 		
 		//Speed Dial
 		if(tuList.contains(toUpdate.sd))
@@ -773,9 +793,29 @@ public class PhoneLinker extends AXLItemLinker
 		{
 		this.deviceMobilityMode = deviceMobilityMode;
 		}
+
+	public String getSoftkeyTemplateName()
+		{
+		return softkeyTemplateName;
+		}
+
+	public void setSoftkeyTemplateName(String softkeyTemplateName)
+		{
+		this.softkeyTemplateName = softkeyTemplateName;
+		}
+
+	public String getMohAudioSourceId()
+		{
+		return mohAudioSourceId;
+		}
+
+	public void setMohAudioSourceId(String mohAudioSourceId)
+		{
+		this.mohAudioSourceId = mohAudioSourceId;
+		}
 	
 	
 	
-	/*2016*//*RATEL Alexandre 8)*/
+	/*2022*//*RATEL Alexandre 8)*/
 	}
 

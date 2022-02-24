@@ -37,7 +37,8 @@ public class Office
 	voicemailprofile,
 	voicenetwork,
 	userlocal,
-	country;
+	country,
+	devicepool;
 	
 	//Lists
 	private ArrayList<DidRange> didRanges;
@@ -53,7 +54,7 @@ public class Office
 			String internalprefix, String e164, String receptionnumber,
 			String aargroup, String voicemailtemplate, String voicemailprofile,
 			String voicenetwork, String userlocal, String country,
-			ArrayList<DidRange> didRanges, ArrayList<OfficeSetting> settings)
+			ArrayList<DidRange> didRanges, ArrayList<OfficeSetting> settings, String devicepool)
 		{
 		super();
 		this.name = name;
@@ -78,6 +79,7 @@ public class Office
 		this.country = country;
 		this.didRanges = didRanges;
 		this.settings = settings;
+		this.devicepool = devicepool;
 		}
 
 	/******
@@ -301,6 +303,16 @@ public class Office
 	public void setCity(String city)
 		{
 		this.city = city;
+		}
+
+	public String getDevicepool()
+		{
+		return devicepool;
+		}
+
+	public void setDevicepool(String devicepool)
+		{
+		this.devicepool = devicepool;
 		}
 	
 	

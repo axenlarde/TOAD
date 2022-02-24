@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
+import com.alex.toad.utils.Variables.statusType;
 import com.alex.toad.webserver.ManageWebRequest.webRequestType;
 import com.alex.toad.webserver.WebRequest;
 
@@ -50,6 +51,16 @@ public class TaskManager
 					Task t = new Task(todoList, request);
 					Variables.getTaskList().add(t);
 					t.startBuildProcess();
+					
+					/**
+					 * If some items got disabled we throw an exception
+					 * It means that something is not right so we prefer to abort
+					 */
+					for(ItemToInject iti : t.getTodoList())
+						{
+						if(iti.getStatus().equals(statusType.disabled))throw new Exception("Some item got disabled so we prefer to abort");
+						}
+					
 					t.start();
 					return t.getTaskID();
 					}

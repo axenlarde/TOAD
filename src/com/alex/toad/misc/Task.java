@@ -111,7 +111,7 @@ public class Task extends Thread
 							else if(myToDo.getAction().equals(actionType.update))
 								{
 								/**
-								 * Because some dependencies may have been just injected or updated
+								 * Because some dependencies may have just been injected or updated
 								 * we check again if the item exists
 								 */
 								myToDo.isExisting();
@@ -128,6 +128,12 @@ public class Task extends Thread
 						{
 						Variables.getLogger().error("An error occured with the item \""+myToDo.getName()+"\" : "+e.getMessage(), e);
 						myToDo.setStatus(statusType.error);
+						
+						/**
+						 * If some errors occurs we prefer to abort to avoid cascading failure
+						 */
+						break;
+						/**********/
 						}
 					}
 				else

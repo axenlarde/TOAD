@@ -357,7 +357,8 @@ public class UsefulMethod
 						UsefulMethod.getItemByName("userlocal", tab),
 						UsefulMethod.getItemByName("country", tab),
 						didRanges,
-						settings
+						settings,
+						UsefulMethod.getItemByName("devicepool", tab)
 						));
 				}
 			

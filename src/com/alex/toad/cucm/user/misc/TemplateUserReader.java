@@ -120,7 +120,9 @@ public class TemplateUserReader
 					mySDList,
 					UsefulMethod.getItemByName("commonphoneconfig", itemDetails),
 					UsefulMethod.getItemByName("securityprofile", itemDetails),
-					UsefulMethod.getItemByName("devicemobilitymode", itemDetails));
+					UsefulMethod.getItemByName("devicemobilitymode", itemDetails),
+					UsefulMethod.getItemByName("mohaudiosourceid", itemDetails),
+					UsefulMethod.getItemByName("softkeytemplate", itemDetails));
 			}
 		else if(type.equals(itemType.udp))
 			{
@@ -143,7 +145,9 @@ public class TemplateUserReader
 					UsefulMethod.getItemByName("buttontemplate", itemDetails),
 					myServiceList,
 					lineList,
-					mySDList);
+					mySDList,
+					UsefulMethod.getItemByName("mohaudiosourceid", itemDetails),
+					UsefulMethod.getItemByName("softkeytemplate", itemDetails));
 			}
 		else if(type.equals(itemType.user))
 			{
