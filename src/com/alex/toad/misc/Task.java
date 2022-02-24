@@ -99,6 +99,9 @@ public class Task extends Thread
 							if(myToDo.getStatus().equals(statusType.disabled))
 								{
 								Variables.getLogger().debug("The item \""+myToDo.getName()+"\" has been disabled so we do not process it");
+								
+								//It is not normal to get a disabled item here to better to abort
+								throw new Exception(myToDo.getInfo()+" : is disabled, better to abort the whole process");
 								}
 							else if(myToDo.getAction().equals(actionType.inject))
 								{

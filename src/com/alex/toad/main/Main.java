@@ -32,11 +32,12 @@ public class Main
 		/****************
 		 * Initialization of the logging
 		 */
-		Variables.setLogger(InitLogging.init(Variables.getSoftwareName()+"_LogFile.txt"));
+		Variables.setLogFileName(Variables.getSoftwareName()+"_LogFile.txt");
+		Variables.setLogger(InitLogging.init(Variables.getLogFileName()));
 		Variables.getLogger().info("\r\n");
 		Variables.getLogger().info("#### Entering application");
 		Variables.getLogger().info("## Welcome to : "+Variables.getSoftwareName()+" version "+Variables.getSoftwareVersion());
-		Variables.getLogger().info("## Author : RATEL Alexandre : 2021");
+		Variables.getLogger().info("## Author : RATEL Alexandre : 2022");
 		/*******/
 		
 		/******

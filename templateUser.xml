@@ -13,6 +13,8 @@ Le symbole *_S_* exemple *1S/* permet de spliter la valeure en utilisant le cara
 Le symbole *""R""* exemple *"test"R"testo"* remplace test par testo
 Le symbole *LF_* va chercher la valeur correspondante dans le fichier des substitus. Par exemple *LFpbt* va chercher le phone button template correspodnant
 Le symbole *MAC* valide que la valeure suivante est une adresse MAC. Si ce n'est pas le cas, une exception sera levée
+Le symbole *INCREMENT* va incrémenter la valeur suivante de 1
+
 Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera les 4 premières lettres du nom mises en majuscule. *M**4_* est équivalent. *2M**5_*agent.lastname affichera les 5 première lettres du prénom dont les deux premières seront en majuscule.
 -->
 <xml>
@@ -27,14 +29,14 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<linetextlabel>*M*agent.userid</linetextlabel>
 			<externalphonemask>office.setting.1</externalphonemask>
 			<commondeviceconfig>office.city+'_Jabber_CDC'</commondeviceconfig>
-			<commonphoneconfig>'Standard Common Phone Profile'</commonphoneconfig>
+			<commonphoneconfig>office.city+'_CPPC'</commonphoneconfig>
 			<securityprofile>'securejabbersics.ce.int.amecspie.com'</securityprofile>
 			<aarcss></aarcss>
 			<subscribecss>'INTERNAL_CSS'</subscribecss>
 			<reroutingcss>'INTERNAL_CSS'</reroutingcss>
 			<mohaudiosourceid>office.mohnumber</mohaudiosourceid>
 			<softkeytemplate>office.softkeytemplate</softkeytemplate>
-			<linenumber>agent.linenumber</linenumber><!--One or more-->
+			<linenumber>*INCREMENT*agent.linenumber</linenumber><!--One or more-->
 			<cssline>'AllowedCalls_NATGSMSPC_FRANCE'</cssline>
 			<!--<cssforward>'INTERNAL_CSS'</cssforward>
 			<fwalldestination>''</fwalldestination>
@@ -100,18 +102,10 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<!--<speeddial>tbd</speeddial>--><!--number:description-->
 		</udp>
 		<user>
-			<targetname>user</targetname>
-			<userid>agent.userid</userid>
-			<lastname>*M**C*agent.lastname</lastname>
-			<firstname>*1M**C*agent.firstname</firstname>
-			<subscribecss>'INTERNAL_CSS'</subscribecss>
-			<group>'SICS_Default_ACGC'</group><!--One or more-->
-		</user>
-		<user>
 			<targetname>newuser</targetname>
 			<userid>agent.userid</userid>
 			<lastname>*M**C*agent.lastname</lastname>
-			<firstname>(*1M**C*agent.firstname)IfLongerThan30(*1_**M**C*agent.firstname+'.')</firstname>
+			<firstname>(*1M*agent.firstname)IfLongerThan30(*1_**M*agent.firstname+'.')</firstname>
 			<telephonenumber>agent.linenumber</telephonenumber>
 			<!--<userlocal>office.userlocal</userlocal>-->
 			<subscribecss>'INTERNAL_CSS'</subscribecss>
@@ -122,14 +116,14 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 		</user>
 		<user>
 			<targetname>newusersoftphone</targetname>
-			<userid>agent.userid</userid>
+			<userid>agent.userid+'_ttv'</userid>
 			<lastname>*M**C*agent.lastname</lastname>
-			<firstname>(*1M**C*agent.firstname)IfLongerThan30(*1_**M**C*agent.firstname+'.')</firstname>
-			<telephonenumber>agent.linenumber</telephonenumber>
+			<firstname>(*1M*agent.firstname)IfLongerThan30(*1_**M*agent.firstname+'.')</firstname>
+			<telephonenumber>*INCREMENT*agent.linenumber</telephonenumber>
 			<!--<userlocal>office.userlocal</userlocal>-->
 			<subscribecss>'INTERNAL_CSS'</subscribecss>
-			<password>agent.linenumber</password>
-			<pin>agent.linenumber</pin>
+			<password>*INCREMENT*agent.linenumber</password>
+			<pin>*INCREMENT*agent.linenumber</pin>
 			<serviceprofile>'FULL_UC_SCOM_SPC_CUCMDir'</serviceprofile>
 			<group>'SICS_Default_ACGC'</group><!--One or more-->
 		</user>
@@ -137,40 +131,41 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<targetname>updateuser</targetname>
 			<userid>agent.userid</userid>
 			<lastname>*M**C*agent.lastname</lastname>
-			<firstname>(*1M**C*agent.firstname)IfLongerThan30(*1_**M**C*agent.firstname+'.')</firstname>
+			<firstname>(*1M*agent.firstname)IfLongerThan30(*1_**M*agent.firstname+'.')</firstname>
 		</user>
 		<user>
 			<targetname>updateudp</targetname>
 			<userid>agent.userid</userid>
+			<device>('CSF'+*M*office.name+agent.index)IfLongerThan15('CSF'+*10_**M*office.name+agent.index)</device>
 			<udp>*M*agent.userid</udp>
 			<ctiudp>*M*agent.userid</ctiudp>
 		</user>
 		<user>
-			<targetname>updatephone</targetname>
-			<userid>agent.userid</userid>
-			<device>'SEP'+file.phonemac</device>
+			<targetname>updatesoftphone</targetname>
+			<userid>agent.userid+'_ttv'</userid>
+			<device>('CSF'+*M*office.name+agent.index)IfLongerThan15('CSF'+*10_**M*office.name+agent.index)</device>
+			<udp>*M*agent.userid</udp>
+			<ctiudp>*M*agent.userid</ctiudp>
 		</user>
 		<user>
-			<targetname>updatepe</targetname>
+			<targetname>updatepeudp</targetname>
 			<userid>agent.userid</userid>
 			<primaryextension>agent.linenumber</primaryextension>
 			<ipccextension>agent.linenumber</ipccextension>
 			<partition>config.nodidpartition</partition>
 		</user>
 		<user>
-			<targetname>updatesoftphone</targetname>
-			<userid>agent.userid</userid>
-			<device>('CSF'+*M*office.name+agent.index)IfLongerThan15('CSF'+*10_**M*office.name+agent.index)</device>
+			<targetname>updatepesoftphone</targetname>
+			<userid>agent.userid+'_ttv'</userid>
+			<primaryextension>*INCREMENT*agent.linenumber</primaryextension>
+			<ipccextension>*INCREMENT*agent.linenumber</ipccextension>
+			<partition>config.nodidpartition</partition>
 		</user>
 		<appuser>
-			<targetname>updateappuserudp</targetname>
-			<userid>config.uccxrmcmuser</userid>
-			<ctiudp>*M*agent.userid</ctiudp>
-		</appuser>
-		<appuser>
-			<targetname>updateappuserphone</targetname>
+			<targetname>updateappuser</targetname>
 			<userid>config.uccxrmcmuser</userid>
 			<device>('CSF'+*M*office.name+agent.index)IfLongerThan15('CSF'+*10_**M*office.name+agent.index)</device>
+			<ctiudp>*M*agent.userid</ctiudp>
 		</appuser>
 		<udplogin>
 			<targetname>udplogin</targetname>
@@ -182,8 +177,15 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<targetname>agent</targetname>
 			<userid>agent.userid</userid>
 			<lastname>*M**C*agent.lastname</lastname>
-			<firstname>(*1M**C*agent.firstname)IfLongerThan30(*1_**M**C*agent.firstname+'.')</firstname>
+			<firstname>(*1M*agent.firstname)IfLongerThan30(*1_**M*agent.firstname+'.')</firstname>
 			<number>agent.linenumber</number>
+		</agent>
+		<agent>
+			<targetname>agentsoftphone</targetname>
+			<userid>agent.userid+'_ttv'</userid>
+			<lastname>*M**C*agent.lastname</lastname>
+			<firstname>(*1M*agent.firstname)IfLongerThan30(*1_**M*agent.firstname+'.')</firstname>
+			<number>*INCREMENT*agent.linenumber</number>
 		</agent>
 	</items>
 </xml>

@@ -163,7 +163,7 @@ public class UCCXAgent extends ItemToInject
 		{
 		name = CollectionTools.applyPattern(agentData, name, this, true);
 		lastname = CollectionTools.applyPattern(agentData, lastname, this, true);
-		firstname = CollectionTools.applyPattern(agentData, firstname, this, true);
+		firstname = CollectionTools.applyPattern(agentData, firstname, this, false);
 		telephoneNumber = CollectionTools.applyPattern(agentData, telephoneNumber, this, true);
 		}
 	

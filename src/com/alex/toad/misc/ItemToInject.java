@@ -151,6 +151,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 				this.status = statusType.error;
 				errorList.add(new ErrorTemplate(e.getMessage()));
 				Variables.getLogger().error("Error while injecting the "+this.getType().name()+" \""+this.getName()+"\": "+e.getMessage(), e);
+				throw new Exception("Error while injecting the item \""+this.getName()+"\": "+e.getMessage());//We add this to stop the process in case of any issue
 				}
 			}
 		else if(this.status.equals(statusType.init))
@@ -218,6 +219,7 @@ public abstract class ItemToInject implements ItemToInjectImpl
 				this.status = statusType.error;
 				errorList.add(new ErrorTemplate(e.getMessage()));
 				Variables.getLogger().error("Error while updating the item \""+this.getName()+"\": "+e.getMessage(), e);
+				throw new Exception("Error while updating the item \""+this.getName()+"\": "+e.getMessage());//We add this to stop the process in case of any issue
 				}
 			}
 		else

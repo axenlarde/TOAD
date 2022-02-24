@@ -288,8 +288,15 @@ public class UserTools
 		myPhone.setAgentData(ad);
 		myPhone.setAction(action);//It is important to set the action before resolving
 		
-		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
-		myPhone.resolve();
+		try
+			{
+			myPhone.resolve();
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().debug(ad.getInfo()+" : The phone has not been added because an important value was empty : "+e.getMessage());
+			return null;
+			}
 		
 		list.add(myPhone);
 		
@@ -561,8 +568,15 @@ public class UserTools
 		ul.setAgentData(ad);
 		ul.setAction(action);
 		
-		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
-		ul.resolve();
+		try
+			{
+			ul.resolve();
+			}
+		catch (Exception e)
+			{
+			Variables.getLogger().debug(ad.getInfo()+" : The udplogin has not been added because an important value was empty : "+e.getMessage());
+			return null;
+			}
 		
 		return ul;	
 		}

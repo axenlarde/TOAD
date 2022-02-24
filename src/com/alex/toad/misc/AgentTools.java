@@ -63,14 +63,42 @@ public class AgentTools
 	 * Will look for a list of agents matching the search string
 	 * @throws Exception 
 	 */
-	public static ArrayList<UCCXAgent> search(String search) throws Exception
+	public static ArrayList<UCCXAgent> search(String search, WebRequest request) throws Exception
 		{
 		ArrayList<UCCXAgent> agents = new ArrayList<UCCXAgent>();
 		
 		ArrayList<UCCXAgent> list = RESTTools.doListAgent(Variables.getUccxServer());
 		
+		ArrayList<Team> supTeamList = new ArrayList<Team>();
+		supTeamList.addAll(request.getSecurityToken().getAgent().getPrimarySupervisorOf());
+		supTeamList.addAll(request.getSecurityToken().getAgent().getSecondarySupervisorOf());
+		supTeamList.add(request.getSecurityToken().getAgent().getTeam());
+		
 		for(UCCXAgent ua : list)
 			{
+			/**
+			 * We only display the agent of the supervisor's teams
+			 */
+			
+			if(UsefulMethod.getTargetOption("searchallagent").equals("false"))
+				{
+				boolean found = false;
+				for(Team t : supTeamList)
+					{
+					if(ua.getTeam().getName().equals(t.getName()))
+						{
+						found = true;
+						break;
+						}
+					}
+				if(!found)
+					{
+					Variables.getLogger().debug("Not allowed to display "+ua.getInfo()+" : continue");
+					continue;
+					}
+				}
+			
+			
 			if(Pattern.matches("(?i).*"+search+".*", ua.getName()+ua.getLastname()+ua.getFirstname()+ua.getTeam().getName()))
 				{
 				Variables.getLogger().debug("The agent "+ua.getName()+" match the search criteria : "+search);
@@ -129,9 +157,9 @@ public class AgentTools
 	
 	/**
 	 * Used to create a new agent
-	 * Will return the taskID
+	 * Will return the list of item to process
 	 */
-	public static String addUpdateAgent(String userCreationProfile, String userID, String lastName,
+	public static ArrayList<ItemToInject> addUpdateAgent(String userCreationProfile, String userID, String lastName,
 			String firstName, Office office, AgentType agentType, Team team, ArrayList<Team> primarySupervisorOf, ArrayList<Team> secondarySupervisorOf,
 			ArrayList<Skill> skills, String deviceName, String deviceModel, String lineNumber, boolean udpLogin,
 			WebRequest request) throws Exception
@@ -217,13 +245,7 @@ public class AgentTools
 		 */
 		itil.addAll(UserTools.getUserItemList(agentData, action, ucp, udpLogin));
 		
-		/**
-		 * We now launch the injection process
-		 */
-		String taskID = TaskManager.addNewTask(itil, request);
-		Variables.getLogger().debug(agentData.getInfo()+" : "+request.getType().name()+" task started, task ID is : "+taskID);
-		
-		return taskID;
+		return itil;
 		}
 	
 	/**

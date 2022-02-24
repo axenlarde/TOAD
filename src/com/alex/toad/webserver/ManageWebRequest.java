@@ -7,8 +7,10 @@ import org.apache.commons.io.FileUtils;
 
 import com.alex.toad.cucm.user.items.Phone;
 import com.alex.toad.misc.AgentTools;
+import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.misc.Office;
 import com.alex.toad.misc.Task;
+import com.alex.toad.misc.TaskManager;
 import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent.AgentType;
@@ -126,7 +128,7 @@ public class ManageWebRequest
 			
 			String search = UsefulMethod.getItemByName("search", t);
 			
-			return WebRequestBuilder.buildSearchReply(AgentTools.search(search));
+			return WebRequestBuilder.buildSearchReply(AgentTools.search(search, request));
 			}
 		catch (Exception e)
 			{
@@ -215,63 +217,65 @@ public class ManageWebRequest
 		{
 		try
 			{
+			ArrayList<ItemToInject> itil = new ArrayList<ItemToInject>();
 			ArrayList<String> params = new ArrayList<String>();
 			params.add("request");
 			params.add("content");
+			params.add("agents");
 			params.add("agent");
 			
 			ArrayList<String[][]> parsed = xMLGear.getResultListTab(request.getContent(), params);
-			String[][] t = parsed.get(0);
-			
-			String userCreationProfile = UsefulMethod.getItemByName("usercreationprofile", t);
-			String userID = UsefulMethod.getItemByName("userid", t);
-			String lastName = UsefulMethod.getItemByName("lastname", t);
-			String firstName = UsefulMethod.getItemByName("firstname", t);
-			String lineNumber = UsefulMethod.getItemByName("number", t);
-			Office office = UsefulMethod.getOffice(UsefulMethod.getItemByName("team", t));
-			AgentType type = AgentType.valueOf(UsefulMethod.getItemByName("type", t));
-			String deviceName = UsefulMethod.getItemByName("devicename", t);
-			String deviceType = UsefulMethod.getItemByName("devicetype", t);
-			Team team = new Team(UsefulMethod.getItemByName("team", t));
-			boolean udpLogin = Boolean.parseBoolean(UsefulMethod.getItemByName("udplogin", t));
-			
-			//Primary supervisor teams
-			params.add("primarysupervisorof");
-			parsed = xMLGear.getResultListTab(request.getContent(), params);
-			t = parsed.get(0);
-			ArrayList<Team> primarySupervisorOf = new ArrayList<Team>();
-			for(String[] s : t)
+			//We process one or more agent
+			for(String[][] t : parsed)
 				{
-				primarySupervisorOf.add(new Team(s[1]));
-				}
-			
-			//Primary supervisor teams
-			params.remove("primarysupervisorof");
-			params.add("secondarysupervisorof");
-			parsed = xMLGear.getResultListTab(request.getContent(), params);
-			t = parsed.get(0);
-			ArrayList<Team> secondarySupervisorOf = new ArrayList<Team>();
-			for(String[] s : t)
-				{
-				secondarySupervisorOf.add(new Team(s[1]));
-				}
-			
-			//Skills
-			params.remove("secondarysupervisorof");
-			params.add("skills");
-			params.add("skill");
-			parsed = xMLGear.getResultListTab(request.getContent(), params);
-			ArrayList<Skill> skills = new ArrayList<Skill>();
-			
-			for(String[][] temp : parsed)
-				{
-				Skill s = AgentTools.getSkill(UsefulMethod.getItemByName("name", temp));
-				s.setLevel(Integer.parseInt(UsefulMethod.getItemByName("level", temp)));
-				skills.add(s);
-				}
-			
-			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
-				{
+				String userCreationProfile = UsefulMethod.getItemByName("usercreationprofile", t);
+				String userID = UsefulMethod.getItemByName("userid", t);
+				String lastName = UsefulMethod.getItemByName("lastname", t);
+				String firstName = UsefulMethod.getItemByName("firstname", t);
+				String lineNumber = UsefulMethod.getItemByName("number", t);
+				Office office = UsefulMethod.getOffice(UsefulMethod.getItemByName("team", t));
+				AgentType type = AgentType.valueOf(UsefulMethod.getItemByName("type", t));
+				String deviceName = UsefulMethod.getItemByName("devicename", t);
+				String deviceType = UsefulMethod.getItemByName("devicetype", t);
+				Team team = new Team(UsefulMethod.getItemByName("team", t));
+				boolean udpLogin = Boolean.parseBoolean(UsefulMethod.getItemByName("udplogin", t));
+				
+				//Primary supervisor teams
+				params.add("primarysupervisorof");
+				parsed = xMLGear.getResultListTab(request.getContent(), params);
+				t = parsed.get(0);
+				ArrayList<Team> primarySupervisorOf = new ArrayList<Team>();
+				for(String[] s : t)
+					{
+					primarySupervisorOf.add(new Team(s[1]));
+					}
+				
+				//Primary supervisor teams
+				params.remove("primarysupervisorof");
+				params.add("secondarysupervisorof");
+				parsed = xMLGear.getResultListTab(request.getContent(), params);
+				t = parsed.get(0);
+				ArrayList<Team> secondarySupervisorOf = new ArrayList<Team>();
+				for(String[] s : t)
+					{
+					secondarySupervisorOf.add(new Team(s[1]));
+					}
+				
+				//Skills
+				params.remove("secondarysupervisorof");
+				params.add("skills");
+				params.add("skill");
+				parsed = xMLGear.getResultListTab(request.getContent(), params);
+				ArrayList<Skill> skills = new ArrayList<Skill>();
+				
+				for(String[][] temp : parsed)
+					{
+					Skill s = AgentTools.getSkill(UsefulMethod.getItemByName("name", temp));
+					s.setLevel(Integer.parseInt(UsefulMethod.getItemByName("level", temp)));
+					skills.add(s);
+					}
+				
+				
 				if(request.getType().equals(webRequestType.addAgent))
 					{
 					Variables.getLogger().debug("Trying to create agent : "+firstName+" "+lastName+" "+type.name()+" "+office.getFullname());
@@ -281,7 +285,7 @@ public class ManageWebRequest
 					Variables.getLogger().debug("Trying to update agent : "+firstName+" "+lastName+" "+type.name()+" "+office.getFullname());
 					}
 				
-				String taskID = AgentTools.addUpdateAgent(
+				itil.addAll(AgentTools.addUpdateAgent(
 						userCreationProfile,
 						userID,
 						lastName,
@@ -296,7 +300,15 @@ public class ManageWebRequest
 						deviceType,
 						lineNumber,
 						udpLogin,
-						request);
+						request));
+					}
+			if(AgentTools.isAllowed(request))//Is Allowed has to be implemented
+				{
+				/**
+				 * We now launch the injection process
+				 */
+				String taskID = TaskManager.addNewTask(itil, request);
+				Variables.getLogger().debug(request.getSecurityToken().getAgent().getInfo()+" : "+request.getType().name()+" task started, task ID is : "+taskID);
 				
 				return WebRequestBuilder.buildTaskReply(taskID, request.getType());
 				}

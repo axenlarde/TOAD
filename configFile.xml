@@ -12,6 +12,7 @@ Overal configuration file
 		<splitter>+</splitter>
 		<csvsplitter>,</csvsplitter>
 		<maxtaskthread>4</maxtaskthread><!--The number of task allowed to process in the same time-->
+		<searchallagent>false</searchallagent><!--true,false--><!--If false, only the supervisor's teams'agents are returned for a search request-->
 		<!--Smtp parameters-->
 		<smtpemailport>25</smtpemailport>
 		<smtpemailprotocol>smtp</smtpemailprotocol>

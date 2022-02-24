@@ -11,10 +11,18 @@ the collection file
 				<target>newuser</target>
 				<action>inject</action>
 			</user>
+			<user>
+				<target>newusersoftphone</target>
+				<action>inject</action>
+			</user>
 			<udp>
 				<target>udp</target>
 				<action>inject</action>
 			</udp>
+			<phone>
+				<target>softphone</target>
+				<action>inject</action>
+			</phone>
 			<phone>
 				<target>loggedoutphone</target>
 				<action>inject</action>
@@ -24,11 +32,19 @@ the collection file
 				<action>update</action>
 			</user>
 			<user>
-				<target>updatepe</target>
+				<target>updatesoftphone</target>
+				<action>update</action>
+			</user>
+			<user>
+				<target>updatepeudp</target>
+				<action>update</action>
+			</user>
+			<user>
+				<target>updatepesoftphone</target>
 				<action>update</action>
 			</user>
 			<appuser>
-				<target>updateappuserudp</target>
+				<target>updateappuser</target>
 				<action>update</action>
 			</appuser>
 			<udplogin>
@@ -39,31 +55,8 @@ the collection file
 				<target>agent</target>
 				<action>update</action>
 			</agent>
-		</profile>
-		<profile>
-			<name>addRemoteAgent</name>
-			<user>
-				<target>newusersoftphone</target>
-				<action>inject</action>
-			</user>
-			<phone>
-				<target>softphone</target>
-				<action>inject</action>
-			</phone>
-			<user>
-				<target>updatesoftphone</target>
-				<action>update</action>
-			</user>
-			<user>
-				<target>updatepe</target>
-				<action>update</action>
-			</user>
-			<appuser>
-				<target>updateappuserphone</target>
-				<action>update</action>
-			</appuser>
 			<agent>
-				<target>agent</target>
+				<target>agentsoftphone</target>
 				<action>update</action>
 			</agent>
 		</profile>

@@ -314,6 +314,22 @@ public class CollectionTools
 			 ****************/
 			
 			/*************
+			 * Increment
+			 **/
+			if(Pattern.matches(".*\\*INCREMENT\\*.*", param))
+				{
+				if(Pattern.matches("\\d+", newValue))
+					{
+					int i = Integer.parseInt(newValue);
+					i++;
+					newValue = Integer.toString(i);
+					}
+				}
+			/**
+			 * End Increment
+			 ****************/
+			
+			/*************
 			 * Split
 			 * 
 			 * Example : *1S/*
@@ -519,10 +535,11 @@ public class CollectionTools
 			
 			while(currentNum < lastNum)
 				{
-				if(!(uil.getItemList().contains(Integer.toString(currentNum))))
+				if((!(uil.getItemList().contains(Integer.toString(currentNum)))) && (!(uil.getItemList().contains(Integer.toString(currentNum+1)))))//Check that 2 consecutive numbers are available
 					{
 					String num = Integer.toString(currentNum);
-					uil.getItemList().add(num);//We add the number to the list to be sure to not use it twice
+					uil.getItemList().add(num);//We add 2 number to the list to be sure to not use them twice
+					uil.getItemList().add(Integer.toString(currentNum+1));
 					Variables.getLogger().debug("Available number found : "+num);
 					return num;
 					}
@@ -567,48 +584,6 @@ public class CollectionTools
 			throw new Exception("Error while trying to get an available userID : "+e.getMessage());
 			}
 		throw new Exception("No available userID found with the prefix '"+prefix+"' and suffix '"+suffix+"'");
-		}
-	
-	/*************
-	 * Method used to get an available userID in the given range
-	 * from the CUCM
-	 */
-	public static ArrayList<AgentData> searchForUser(String searchPattern) throws Exception
-		{
-		try
-			{
-			ArrayList<AgentData> userList = new ArrayList<AgentData>();
-			
-			List<Object> SQLResp = SimpleRequest.doSQLQuery("select userid, firstname, lastname from enduser where userid like '%"+searchPattern+"%' or lastname like '%"+searchPattern+"%' or firstname like '%"+searchPattern+"%'");
-			
-			for(Object o : SQLResp)
-				{
-				Element rowElement = (Element) o;
-				NodeList list = rowElement.getChildNodes();
-				
-				String userid = null, lastname = null, firstname = null;
-				
-				for(int i = 0; i< list.getLength(); i++)
-					{
-					if(list.item(i).getNodeName().equals("userid"))userid = list.item(i).getTextContent();
-					else if(list.item(i).getNodeName().equals("firstname"))firstname = list.item(i).getTextContent();
-					else if(list.item(i).getNodeName().equals("lastname"))lastname = list.item(i).getTextContent();
-					}
-				
-				AgentData ad = new AgentData(userid);
-				ad.setLastName(lastname);
-				ad.setFirstName(firstname);
-				
-				userList.add(ad);
-				}
-			
-			Variables.getLogger().debug("No user found with the following search pattern : "+searchPattern);
-			throw new Exception("No user found with the following search pattern : "+searchPattern);
-			}
-		catch(Exception e)
-			{
-			throw new Exception("Error while trying to search for a user : "+e.getMessage());
-			}
 		}
 	
 	/**

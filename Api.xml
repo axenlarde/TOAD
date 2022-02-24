@@ -222,30 +222,32 @@ copyLogFile
 		<type>addAgent</type>
 		<securitytoken></securitytoken><!--Security token of the connected user. To check if the creation is allowed-->
 		<content>
-			<agent>
-				<usercreationprofile></usercreationprofile><!--The profile to use for CUCM item creation-->
-				<userid></userid><!--if empty we will generate one-->
-				<firstname></firstname>
-				<lastname></lastname>
-				<number></number><!--if empty we will generate one-->
-				<type></type><!--agent,supervisor-->
-				<devicename></devicename><!--Mac address-->
-				<devicetype></devicetype><!--Phone type-->
-				<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->
-				<team></team><!--Team name-->
-				<primarysupervisorof>
-					<team></team><!--Team name--><!--One or more-->
-				</primarysupervisorof>
-				<secondarysupervisorof>
-					<team></team><!--Team name--><!--One or more-->
-				</secondarysupervisorof>
-				<skills>
-					<skill><!--One or more skills-->
-						<name></name><!--skill name-->
-						<level></level><!--skill level-->
-					</skill>
-				</skills>
-			</agent>
+			<agents>
+				<agent><!--one or more-->
+					<usercreationprofile></usercreationprofile><!--The profile to use for CUCM item creation-->
+					<userid></userid><!--if empty we will generate one-->
+					<firstname></firstname>
+					<lastname></lastname>
+					<number></number><!--if empty we will generate one-->
+					<type></type><!--agent,supervisor-->
+					<devicename></devicename><!--Mac address-->
+					<devicetype></devicetype><!--Phone type-->
+					<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->
+					<team></team><!--Team name-->
+					<primarysupervisorof>
+						<team></team><!--Team name--><!--One or more-->
+					</primarysupervisorof>
+					<secondarysupervisorof>
+						<team></team><!--Team name--><!--One or more-->
+					</secondarysupervisorof>
+					<skills>
+						<skill><!--One or more skills-->
+							<name></name><!--skill name-->
+							<level></level><!--skill level-->
+						</skill>
+					</skills>
+				</agent>
+			</agents>
 		</content>
 	</request>
 </xml>
@@ -275,28 +277,30 @@ Update agent will only allow to update some fields for now
 		<type>updateAgent</type>
 		<securitytoken></securitytoken><!--Security token of the connected user. To check if the update is allowed-->
 		<content>
-			<agent>
-				<usercreationprofile></usercreationprofile><!--The profile to use for CUCM item update-->
-				<userid></userid>
-				<firstname></firstname>
-				<lastname></lastname>
-				<type></type><!--agent,supervisor-->
-				<devicename></devicename><!--Mac address--><!--In the case of an update, the MAC address is used only for udplogin-->
-				<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->
-				<team></team><!--Team name-->
-				<primarysupervisorof>
-					<team></team><!--Team name--><!--One or more-->
-				</primarysupervisorof>
-				<secondarysupervisorof>
-					<team></team><!--Team name--><!--One or more-->
-				</secondarysupervisorof>
-				<skills>
-					<skill><!--One or more skills-->
-						<name></name><!--skill name-->
-						<level></level><!--skill level-->
-					</skill>
-				</skills>
-			</agent>
+			<agents>
+				<agent><!--one or more-->
+					<usercreationprofile></usercreationprofile><!--The profile to use for CUCM item update-->
+					<userid></userid>
+					<firstname></firstname>
+					<lastname></lastname>
+					<type></type><!--agent,supervisor-->
+					<devicename></devicename><!--Mac address--><!--In the case of an update, the MAC address is used only for udplogin-->
+					<udplogin></udplogin><!--true,false--><!--Need the device name to be filled with the MAC address-->
+					<team></team><!--Team name-->
+					<primarysupervisorof>
+						<team></team><!--Team name--><!--One or more-->
+					</primarysupervisorof>
+					<secondarysupervisorof>
+						<team></team><!--Team name--><!--One or more-->
+					</secondarysupervisorof>
+					<skills>
+						<skill><!--One or more skills-->
+							<name></name><!--skill name-->
+							<level></level><!--skill level-->
+						</skill>
+					</skills>
+				</agent>
+			</agents>
 		</content>
 	</request>
 </xml>
