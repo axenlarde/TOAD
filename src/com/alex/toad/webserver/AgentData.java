@@ -19,7 +19,7 @@ public class AgentData
 	/**
 	 * Variables
 	 */
-	private String userID, firstName, lastName, lineNumber, deviceName, deviceType;
+	private String userID, firstName, lastName, lineNumber, deviceName, deviceType, index;
 	private AgentType agentType;
 	private Team team;
 	private ArrayList<Team> primarySupervisorOf;
@@ -56,6 +56,7 @@ public class AgentData
 		this.secondarySupervisorOf = secondarySupervisorOf;
 		this.skillList = skillList;
 		this.office = office;
+		this.index = "0";
 		}
 	
 	public AgentData(String userID)
@@ -273,6 +274,18 @@ public class AgentData
 		{
 		this.secondarySupervisorOf = secondarySupervisorOf;
 		}
+
+	public String getIndex()
+		{
+		return index;
+		}
+
+	public void setIndex(String index)
+		{
+		this.index = index;
+		}
+
+	
 	
 	
 	/*2022*//*RATEL Alexandre 8)*/

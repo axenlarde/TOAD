@@ -1,10 +1,362 @@
+<!--
+Office list
+-->
+
 <xml>
 	<offices>
 		<office>
-			<name>TOULS</name>
+			<name>Default</name>
 			<templatename>template1</templatename>
-			<fullname>Toulouse</fullname>
-			<teamname>TLS</teamname>
+			<fullname>Default</fullname>
+			<teamname>Default</teamname>
+			<city>Default</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>MLKPRIVE</name>
+			<templatename>template1</templatename>
+			<fullname>MLK</fullname>
+			<teamname>MLK_PRIVE</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>MLKPUBLIC</name>
+			<templatename>template1</templatename>
+			<fullname>MLKPUBLIC</fullname>
+			<teamname>MLK_PUBLIC</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>FORMATION</name>
+			<templatename>template1</templatename>
+			<fullname>FORMATION</fullname>
+			<teamname>FORMATION</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>CG92</name>
+			<templatename>template1</templatename>
+			<fullname>CG92</fullname>
+			<teamname>CG92</teamname>
+			<city>CG92</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>SEB</name>
+			<templatename>template1</templatename>
+			<fullname>SEB</fullname>
+			<teamname>SEB</teamname>
+			<city>BRON</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>MELLISA</name>
+			<templatename>template1</templatename>
+			<fullname>MELLISA</fullname>
+			<teamname>Mellisa</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>SPA</name>
+			<templatename>template1</templatename>
+			<fullname>SPA</fullname>
+			<teamname>SPA_Alpha_AD</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>Cockpit</name>
+			<templatename>template1</templatename>
+			<fullname>Cockpit</fullname>
+			<teamname>Cockpit</teamname>
+			<city>ACD</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>DELL</name>
+			<templatename>template1</templatename>
+			<fullname>DELL</fullname>
+			<teamname>DELL</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>ADOMA</name>
+			<templatename>template1</templatename>
+			<fullname>ADOMA</fullname>
+			<teamname>ADOMA</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>DEMO</name>
+			<templatename>template1</templatename>
+			<fullname>DEMO</fullname>
+			<teamname>DemoTeam</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>AREVA</name>
+			<templatename>template1</templatename>
+			<fullname>AREVA</fullname>
+			<teamname>AREVA</teamname>
 			<city>TLS</city>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
@@ -30,11 +382,11 @@
 			</setting>
 		</office>
 		<office>
-			<name>DEFAULT</name>
+			<name>IGR</name>
 			<templatename>template1</templatename>
-			<fullname>Default</fullname>
-			<teamname>Default</teamname>
-			<city>DEFAULT</city>
+			<fullname>IGR</fullname>
+			<teamname>IGR</teamname>
+			<city>MLK</city>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
@@ -59,33 +411,496 @@
 			</setting>
 		</office>
 		<office>
-			<name>MLK</name>
-			<templatename>template3</templatename>
-			<fullname>Malakoff</fullname>
-			<teamname>MLK</teamname>
+			<name>SPIEFR</name>
+			<templatename>template1</templatename>
+			<fullname>SPIEFR</fullname>
+			<teamname>SPIE_FR_PROXI</teamname>
 			<city>MLK</city>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Malakoff</softkeytemplate>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>3</mohnumber>
 			<country>France</country>
 			<internalprefix>331</internalprefix>
 			<e164>33</e164>
-			<receptionnumber>4408030</receptionnumber>
+			<receptionnumber>3317500</receptionnumber>
 			<aargroup></aargroup>
 			<voicemailtemplate></voicemailtemplate>
 			<voicemailprofile></voicemailprofile>
 			<voicenetwork></voicenetwork>
 			<didranges>
-				<did>20857180[3-9]X</did>
-				<did>20857187[0-7]X</did>
+				<did>1495914XX</did>
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>2085718030</value>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>CRIDF</name>
+			<templatename>template1</templatename>
+			<fullname>CRIDF</fullname>
+			<teamname>CRIDF</teamname>
+			<city>ACD</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>MINEDUC</name>
+			<templatename>template1</templatename>
+			<fullname>MINEDUC</fullname>
+			<teamname>MINEDUC</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>FDR</name>
+			<templatename>template1</templatename>
+			<fullname>FDR</fullname>
+			<teamname>FDR</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>ENC92</name>
+			<templatename>template1</templatename>
+			<fullname>ENC92</fullname>
+			<teamname>ENC92</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>RMNGP</name>
+			<templatename>template1</templatename>
+			<fullname>RMNGP</fullname>
+			<teamname>RMNGP</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>HLP</name>
+			<templatename>template1</templatename>
+			<fullname>HLP</fullname>
+			<teamname>HLP_TEST</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>CNSA</name>
+			<templatename>template1</templatename>
+			<fullname>CNSA</fullname>
+			<teamname>CNSA</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>CSN</name>
+			<templatename>template1</templatename>
+			<fullname>CSN</fullname>
+			<teamname>CSN RIF</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>FMSD</name>
+			<templatename>template1</templatename>
+			<fullname>FMSD</fullname>
+			<teamname>FMSD</teamname>
+			<city>TLS</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>CHU</name>
+			<templatename>template1</templatename>
+			<fullname>CHU</fullname>
+			<teamname>SANTE</teamname>
+			<city>TLS</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>SPIE</name>
+			<templatename>template1</templatename>
+			<fullname>SPIE</fullname>
+			<teamname>SPIE_SD</teamname>
+			<city>TLS</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>MUTU</name>
+			<templatename>template1</templatename>
+			<fullname>MUTU</fullname>
+			<teamname>MUTUALISE</teamname>
+			<city>TLS</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>RTE</name>
+			<templatename>template1</templatename>
+			<fullname>RTE</fullname>
+			<teamname>RTE</teamname>
+			<city>TLS</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>CNR</name>
+			<templatename>template1</templatename>
+			<fullname>CNR</fullname>
+			<teamname>CNR</teamname>
+			<city>BRON</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>EDF</name>
+			<templatename>template1</templatename>
+			<fullname>EDF</fullname>
+			<teamname>EDF</teamname>
+			<city>BRON</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
+			</setting>
+		</office>
+		<office>
+			<name>TEST</name>
+			<templatename>template1</templatename>
+			<fullname>TEST</fullname>
+			<teamname>Test_CV</teamname>
+			<city>MLK</city>
+			<audiobandwidth>UNLIMITED</audiobandwidth>
+			<videobandwidth>384</videobandwidth>
+			<userlocal>French France</userlocal>
+			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<callmanagergroup>MAIN_CMG</callmanagergroup>
+			<datetimegroup>France</datetimegroup>
+			<mohnumber>3</mohnumber>
+			<country>France</country>
+			<internalprefix>331</internalprefix>
+			<e164>33</e164>
+			<receptionnumber>3317500</receptionnumber>
+			<aargroup></aargroup>
+			<voicemailtemplate></voicemailtemplate>
+			<voicemailprofile></voicemailprofile>
+			<voicenetwork></voicenetwork>
+			<didranges>
+				<did>1495914XX</did>
+			</didranges>
+			<setting>
+				<targetname>1</targetname>
+				<value>149597500</value>
 			</setting>
 		</office>
 	</offices>

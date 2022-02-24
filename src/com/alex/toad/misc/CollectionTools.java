@@ -190,17 +190,9 @@ public class CollectionTools
 				suffix = applyPattern(ad, suffix, null, false);
 				int userIDIndex = getAvailableUserIdIndex(prefix, suffix);
 				Variables.getLogger().debug("Available index found : "+userIDIndex);
+				ad.setIndex(Integer.toString(userIDIndex));
 				regex.append(userIDIndex);
 				match = true;
-				
-				/*
-				String prefix = UsefulMethod.getTargetOption("agentidprefix");
-				prefix = applyPattern(ad, prefix, null, false);
-				String userID = getAvailableUserId(prefix);
-				Variables.getLogger().debug("Generated userID : "+userID);
-				regex.append(userID);
-				match = true;
-				*/
 				}
 			else if(Pattern.matches(".*office\\..*", param[i]))
 				{

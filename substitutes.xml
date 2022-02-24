@@ -110,12 +110,12 @@ Substitute list
 	<substitute>
 		<type>pbt</type>
 		<match>7841</match>
-		<replaceby>Standard 7841 SIP</replaceby>
+		<replaceby>PBT_7841_2L_1SURL</replaceby>
 	</substitute>
 	<substitute>
 		<type>pbt</type>
 		<match>7861</match>
-		<replaceby>Standard 7861 SIP</replaceby>
+		<replaceby>PBT_7861_8L_8SD</replaceby>
 	</substitute>	
 	<substitute>
 		<type>pbt</type>
@@ -150,7 +150,7 @@ Substitute list
 	<substitute>
 		<type>pbt</type>
 		<match>8851</match>
-		<replaceby>Standard 8851 SIP</replaceby>
+		<replaceby>PBT_8851_1L_40SD (Default)</replaceby>
 	</substitute>
 	<substitute>
 		<type>pbt</type>
