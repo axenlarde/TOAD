@@ -2,6 +2,7 @@ package com.alex.toad.uccx.misc;
 
 import java.util.ArrayList;
 
+import com.alex.toad.uccx.items.CSQ;
 import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
@@ -127,6 +128,33 @@ public class UCCXTools
 			}
 		team.setSecondarySupervisorList(secSupList);
 		
+		//Resources
+		listParams.remove("secondarySupervisors");
+		listParams.remove("secondrySupervisor");
+		listParams.add("resources");
+		listParams.add("resource");
+		parsedReply = xMLGear.getResultListTabAndAtt(content, listParams);
+		ArrayList<UCCXAgent> agentList = new ArrayList<UCCXAgent>();
+		for(String[][] agent : parsedReply)
+			{
+			String[] agentID = UsefulMethod.getItemByName("refURL", agent).split("/");
+			if(agent.length > 0)agentList.add(new UCCXAgent(agentID[agentID.length-1]));//The id is the last occurrence
+			}
+		team.setAgentList(agentList);
+		
+		//CSQs
+		listParams.remove("resources");
+		listParams.remove("resource");
+		listParams.add("csqs");
+		parsedReply = xMLGear.getResultListTabAndAtt(content, listParams);
+		ArrayList<CSQ> csqList = new ArrayList<CSQ>();
+		for(String[][] csq : parsedReply)
+			{
+			String csqName = UsefulMethod.getAttributeItemByName("csq", csq);
+			csqList.add(new CSQ(csqName));
+			}
+		team.setCsqList(csqList);
+		
 		return team;
 		}
 	
@@ -153,6 +181,28 @@ public class UCCXTools
 		skill.setUUID(UsefulMethod.getItemByName("skillId", s));
 		
 		return skill;
+		}
+	
+	/**
+	 * Parse the REST reply and return a CSQ
+	 * @throws Exception 
+	 */
+	public static CSQ getCSQFromRESTReply(String content) throws Exception
+		{
+		//We parse the XML
+		content = "<xml>"+content+"</xml>";
+		ArrayList<String> listParams = new ArrayList<String>();
+		
+		listParams.add("csq");
+		
+		ArrayList<String[][]> parsedReply = xMLGear.getResultListTab(content, listParams);
+		
+		String[][] q = parsedReply.get(0);//To ease the following
+		
+		CSQ csq = new CSQ(UsefulMethod.getItemByName("name", q));
+		csq.setUUID(UsefulMethod.getItemByName("id", q));
+		
+		return csq;
 		}
 	
 	/**
@@ -221,6 +271,36 @@ public class UCCXTools
 		content.append("			<secondrySupervisor name=\""+agent.getFirstname()+" "+agent.getLastname()+"\">\r\n");
 		content.append("				<refURL>https://"+Variables.getUccxServer().getHost()+"/adminapi/resource/"+agent.getName()+"</refURL>\r\n");
 		content.append("			</secondrySupervisor>\r\n");
+		
+		return content.toString();
+		}
+	
+	/**
+	 * Return the XML form of a resource
+	 * @throws Exception 
+	 */
+	public static String getRESTResourceFromAgent(UCCXAgent agent) throws Exception
+		{
+		StringBuffer content = new StringBuffer("");
+		
+		content.append("			<resource name=\""+agent.getFirstname()+" "+agent.getLastname()+"\">\r\n");
+		content.append("				<refURL>https://"+Variables.getUccxServer().getHost()+"/adminapi/resource/"+agent.getName()+"</refURL>\r\n");
+		content.append("			</resource>\r\n");
+		
+		return content.toString();
+		}
+	
+	/**
+	 * Return the XML form of a CSQ
+	 * @throws Exception 
+	 */
+	public static String getRESTCSQFromCSQ(CSQ csq) throws Exception
+		{
+		StringBuffer content = new StringBuffer("");
+		
+		content.append("			<csq name=\""+csq.getName()+"\">\r\n");
+		content.append("				<refURL>https://"+Variables.getUccxServer().getHost()+"/adminapi/csq/"+csq.getUUID()+"</refURL>\r\n");
+		content.append("			</csq>\r\n");
 		
 		return content.toString();
 		}

@@ -92,6 +92,7 @@ public class Variables
 		agent,//UCCX
 		team,//UCCX
 		skill,//UCCX
+		csq,//UCCX
 		unknown
 		};
 	
@@ -119,6 +120,7 @@ public class Variables
 		version105,
 		version110,
 		version115,
+		version116,
 		version120,
 		version125
 		};

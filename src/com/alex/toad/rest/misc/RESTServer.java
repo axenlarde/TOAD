@@ -23,6 +23,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.alex.toad.utils.Variables;
+import com.alex.toad.utils.Variables.UCCXRESTVersion;
 import com.alex.toad.utils.Variables.requestType;
 
 /**********************************
@@ -38,6 +39,7 @@ public class RESTServer
 	private String host, port, username, password, description, credentials, baseUri;
 	private int timeout;
 	private HttpClient httpClient;
+	private UCCXRESTVersion version;
 	
 	/**
 	 * Constructor
@@ -46,7 +48,7 @@ public class RESTServer
 	 * @throws KeyManagementException 
 	 */
 	public RESTServer(String host, String port, String username,
-			String password, int timeout, String description) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
+			String password, int timeout, String description, UCCXRESTVersion version) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
 		{
 		super();
 		this.host = host;
@@ -55,6 +57,7 @@ public class RESTServer
 		this.password = password;
 		this.timeout = timeout;
 		this.description = description;
+		this.version = version;
 		
 		init();
 		}
@@ -218,6 +221,11 @@ public class RESTServer
 	public int getTimeout()
 		{
 		return timeout;
+		}
+
+	public UCCXRESTVersion getVersion()
+		{
+		return version;
 		}
 	
 	

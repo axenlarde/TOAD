@@ -1,43 +1,45 @@
 package com.alex.toad.uccx.items;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.rest.misc.RESTTools;
-import com.alex.toad.restitems.linkers.SkillLinker;
+import com.alex.toad.restitems.linkers.CSQLinker;
 import com.alex.toad.utils.Variables;
 import com.alex.toad.utils.Variables.itemType;
 
 /**********************************
-* Used to store a UCCX skill
+* Used to store a UCCX CSQ
 * 
 * @author RATEL Alexandre
 **********************************/
-public class Skill extends ItemToInject
+public class CSQ extends ItemToInject
 	{
 	/**
 	 * Variables
 	 */
-	private SkillLinker mySkill;
-	private int level;
+	private CSQLinker myCSQ;
+	private ArrayList<Skill> skills;
 	
-	/***************
+	/**
 	 * Constructor
 	 * @throws Exception 
-	 ***************/
-	public Skill(String name) throws Exception
+	 */
+	public CSQ(String name,
+			ArrayList<Skill> skills) throws Exception
 		{
-		super(itemType.skill, name);
-		mySkill = new SkillLinker(name);
+		super(itemType.csq, name);
+		this.myCSQ = new CSQLinker(name);
+		this.skills = skills;
 		}
 	
-	public Skill(String name, int level) throws Exception
+	public CSQ(String name) throws Exception
 		{
-		super(itemType.skill, name);
-		mySkill = new SkillLinker(name);
-		this.level = level;
+		super(itemType.csq, name);
+		this.myCSQ = new CSQLinker(name);
 		}
-	
+
 	public String getString(String s) throws Exception
 		{
 		for(Field f : this.getClass().getDeclaredFields())
@@ -51,49 +53,40 @@ public class Skill extends ItemToInject
 		throw new Exception("ERROR : No value found");
 		}
 
-	public int getLevel()
-		{
-		return level;
-		}
-
-	public void setLevel(int level)
-		{
-		this.level = level;
-		}
-
 	@Override
 	public void doBuild() throws Exception
 		{
 		//Nothing to build
 		
-		errorList.addAll(mySkill.init());
+		errorList.addAll(myCSQ.init());
 		}
 
 	@Override
 	public String doInject() throws Exception
 		{
-		return mySkill.inject();
+		return myCSQ.inject();
 		//Not implemented
 		}
 
 	@Override
 	public void doDelete() throws Exception
 		{
-		mySkill.delete();
+		myCSQ.delete();
 		//Not implemented
 		}
 
 	@Override
 	public void doUpdate() throws Exception
 		{
-		mySkill.update(tuList);
+		myCSQ.update(tuList);
 		//Not implemented
 		}
 	
 	public void doGet() throws Exception
 		{
-		Skill myS = (Skill)mySkill.get();
-		UUID = myS.getUUID();
+		CSQ myQ = (CSQ)myCSQ.get();
+		UUID = myQ.getUUID();
+		skills = myQ.getSkills();
 		Variables.getLogger().debug("Item "+this.name+" data fetch from the UCCX");
 		}
 
@@ -115,6 +108,17 @@ public class Skill extends ItemToInject
 		{
 		//Not implemented
 		}
+
+	public ArrayList<Skill> getSkills()
+		{
+		return skills;
+		}
+
+	public void setSkills(ArrayList<Skill> skills)
+		{
+		this.skills = skills;
+		}
+	
 	
 	
 	/*2022*//*RATEL Alexandre 8)*/

@@ -21,9 +21,10 @@ public class Team extends ItemToInject
 	 * Variables
 	 */
 	private TeamLinker myTeam;
-	private ArrayList<UCCXAgent> agentList;//Not used at the moment
+	private ArrayList<UCCXAgent> agentList;
 	private ArrayList<UCCXAgent> secondarySupervisorList;
 	private UCCXAgent primarySupervisor;//Can be null
+	private ArrayList<CSQ> csqList;
 	
 	/**
 	 * Constructor
@@ -47,20 +48,6 @@ public class Team extends ItemToInject
 	
 	public String getString(String s) throws Exception
 		{
-		/*String tab[] = s.split("\\.");
-		
-		if(tab.length == 2)
-			{
-			for(Field f : this.getClass().getDeclaredFields())
-				{
-				if(f.getName().toLowerCase().equals(tab[1].toLowerCase()))
-					{
-					return (String) f.get(this);
-					}
-				}
-			}
-			*/
-		
 		for(Field f : this.getClass().getDeclaredFields())
 			{
 			if(f.getName().toLowerCase().equals(s.toLowerCase()))
@@ -81,6 +68,8 @@ public class Team extends ItemToInject
 		myTeam.setAgentList(agentList);
 		myTeam.setSecondarySupervisorList(secondarySupervisorList);
 		myTeam.setPrimarySupervisor(primarySupervisor);
+		myTeam.setAgentList(agentList);
+		myTeam.setCsqList(csqList);
 		/************/
 		
 		errorList.addAll(myTeam.init());
@@ -110,9 +99,10 @@ public class Team extends ItemToInject
 		{
 		Team myT = (Team) myTeam.get();
 		UUID = myT.getUUID();
-		//agentList = myT.getAgentList();//Not used yet
 		primarySupervisor = myT.getPrimarySupervisor();
 		secondarySupervisorList = myT.getSecondarySupervisorList();
+		agentList = myT.getAgentList();
+		csqList = myT.getCsqList();
 		
 		Variables.getLogger().debug("Item "+this.name+" data fetch from the UCCX");
 		}
@@ -134,7 +124,7 @@ public class Team extends ItemToInject
 	@Override
 	public void resolve() throws Exception
 		{
-		// TODO Auto-generated method stub
+		//Not implemented
 		}
 
 	@Override
@@ -142,6 +132,8 @@ public class Team extends ItemToInject
 		{
 		if(primarySupervisor != null)tuList.add(TeamLinker.toUpdate.primarySupervisor);
 		if((secondarySupervisorList != null) && (secondarySupervisorList.size()>0))tuList.add(TeamLinker.toUpdate.secondarySupervisorList);
+		if((agentList != null) && (agentList.size()>0))tuList.add(TeamLinker.toUpdate.agentList);
+		if((csqList != null) && (csqList.size()>0))tuList.add(TeamLinker.toUpdate.csqList);
 		}
 
 	public TeamLinker getMyTeam()
@@ -183,6 +175,16 @@ public class Team extends ItemToInject
 	public void setPrimarySupervisor(UCCXAgent primarySupervisor)
 		{
 		this.primarySupervisor = primarySupervisor;
+		}
+
+	public ArrayList<CSQ> getCsqList()
+		{
+		return csqList;
+		}
+
+	public void setCsqList(ArrayList<CSQ> csqList)
+		{
+		this.csqList = csqList;
 		}
 
 	

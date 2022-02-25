@@ -176,7 +176,8 @@ public class UsefulMethod
 				UsefulMethod.getTargetOption("uccxusername"),
 				UsefulMethod.getTargetOption("uccxpassword"),
 				Integer.parseInt(UsefulMethod.getTargetOption("uccxresttimeout")),
-				"UCCX server");
+				"UCCX server",
+				Variables.getUCCXVersion());
 		}
 	
 	/**
@@ -579,6 +580,10 @@ public class UsefulMethod
 			{
 			return UCCXRESTVersion.version115;
 			}
+		else if(version.contains("116"))
+			{
+			return UCCXRESTVersion.version116;
+			}
 		else if(version.contains("120"))
 			{
 			return UCCXRESTVersion.version120;
@@ -608,7 +613,7 @@ public class UsefulMethod
 				}
 			}
 		//throw new Exception("Item not found : "+name);
-		Variables.getLogger().debug("Item not found : "+name);
+		//Variables.getLogger().debug("Item not found : "+name);
 		return "";
 		}
 	
@@ -626,7 +631,7 @@ public class UsefulMethod
 				}
 			}
 		//throw new Exception("Item not found : "+name);
-		Variables.getLogger().debug("Item not found : "+name);
+		//Variables.getLogger().debug("Item not found : "+name);
 		return "";
 		}
 	

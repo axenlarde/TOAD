@@ -3,13 +3,16 @@ package com.alex.toad.rest.misc;
 import java.util.ArrayList;
 
 import com.alex.toad.misc.storedUUID;
+import com.alex.toad.uccx.items.CSQ;
 import com.alex.toad.uccx.items.Skill;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
 import com.alex.toad.uccx.misc.UCCXTools;
 import com.alex.toad.utils.UsefulMethod;
 import com.alex.toad.utils.Variables;
+import com.alex.toad.utils.Variables.UCCXRESTVersion;
 import com.alex.toad.utils.Variables.agentStatus;
+import com.alex.toad.utils.Variables.cucmAXLVersion;
 import com.alex.toad.utils.Variables.itemType;
 import com.alex.toad.utils.Variables.requestType;
 import com.alex.toad.utils.xMLGear;
@@ -155,6 +158,55 @@ public class RESTTools
 		}
 	
 	/**
+	 * Will list all UCCX CSQs
+	 * @throws Exception 
+	 */
+	public static ArrayList<CSQ> doListCSQ(RESTServer host) throws Exception
+		{
+		ArrayList<CSQ> CSQs = new ArrayList<CSQ>();
+		Variables.getLogger().debug("List CSQ request started");
+		String uri = "adminapi/csq";
+		String content = "";
+		
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, content);
+		
+		ArrayList<String> CSQList = xMLGear.getTextOccurences(reply, "csq");//Will return all the CSQs in an arraylist
+		
+		for(String csq : CSQList)
+			{
+			CSQ q = UCCXTools.getCSQFromRESTReply(csq);
+			CSQs.add(q);
+			
+			/**
+			 * We also add the team to the UUID list to be able to look for it later
+			 */
+			Variables.getUuidList().add(new storedUUID(q.getUUID(), q.getName(), itemType.skill));
+			}
+		
+		Variables.getLogger().debug("List CSQ done, "+CSQs.size()+" CSQ found");
+		for(CSQ q : CSQs)
+			{
+			Variables.getLogger().debug(q.getName());
+			}
+		return CSQs;
+		}
+	
+	/*****
+	 * Used to get the string value of an UUID item
+	 */
+	public static String getRESTUUID(itemType type, String itemName) throws Exception
+		{
+		if(Variables.getUccxServer().getVersion().equals(UCCXRESTVersion.version105))
+			{
+			return getRESTUUIDV105(type, itemName);
+			}
+		else
+			{
+			return getRESTUUIDV105(type, itemName);//To implement
+			}
+		}
+	
+	/**
 	 * Method used to find a UUID from the UCCX
 	 * 
 	 * In addition it stores all the UUID found to avoid to
@@ -221,8 +273,35 @@ public class RESTTools
 				if(s.getName().equals(itemName))return getRESTReply(s.getUUID(), itemName, type);
 				}
 			}
+		else if(type.equals(itemType.csq))
+			{
+			/**
+			 * Because the getCSQ works only with the CSQ ID, we cannot get it using the CSQ name.
+			 * So first we list all the CSQ, then find the one we are looking for
+			 */
+			ArrayList<CSQ> CSQs = doListCSQ(Variables.getUccxServer());
+			for(CSQ q : CSQs)
+				{
+				if(q.getName().equals(itemName))return getRESTReply(q.getUUID(), itemName, type);
+				}
+			}
 		
 		throw new Exception("ItemType \""+type+"\" not found");
+		}
+	
+	/**
+	 * Get an agent from the UCCX server
+	 * @throws Exception 
+	 */
+	public static UCCXAgent doGetAgent(String agentName) throws Exception
+		{
+		String UUID = getRESTUUID(itemType.agent, agentName);
+		
+		String uri = "adminapi/resource/"+UUID;
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
+		UCCXAgent myUA = UCCXTools.getAgentFromRESTReply(reply);
+		
+		return myUA;//Return a UCCXAgent
 		}
 	
 	/**
@@ -231,12 +310,13 @@ public class RESTTools
 	 */
 	public static Team doGetTeam(String teamName) throws Exception
 		{
-		for(Team t : doListTeam(Variables.getUccxServer()))
-			{
-			if(t.getName().equals(teamName))return t;
-			}
+		String UUID = getRESTUUID(itemType.team, teamName);
 		
-		throw new Exception("Team not found : "+teamName);
+		String uri = "adminapi/team/"+UUID;
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
+		Team t = UCCXTools.getTeamFromRESTReply(reply);
+		
+		return t;//Return a Team
 		}
 	
 	/**
@@ -245,12 +325,28 @@ public class RESTTools
 	 */
 	public static Skill doGetSkill(String skillName) throws Exception
 		{
-		for(Skill s : doListSkill(Variables.getUccxServer()))
-			{
-			if(s.getName().equals(skillName))return s;
-			}
+		String UUID = getRESTUUID(itemType.skill, skillName);
 		
-		throw new Exception("Skill not found : "+skillName);
+		String uri = "adminapi/skill/"+UUID;
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
+		Skill s = UCCXTools.getSkillFromRESTReply(reply);
+		
+		return s;//Return a Skill
+		}
+	
+	/**
+	 * Get a CSQ from the UCCX server
+	 * @throws Exception 
+	 */
+	public static CSQ doGetCSQ(String csqName) throws Exception
+		{
+		String UUID = getRESTUUID(itemType.csq, csqName);
+		
+		String uri = "adminapi/csq/"+UUID;
+		String reply = Variables.getUccxServer().send(requestType.GET, uri, "");
+		CSQ q = UCCXTools.getCSQFromRESTReply(reply);
+		
+		return q;//Return a CSQ
 		}
 	
 	/**

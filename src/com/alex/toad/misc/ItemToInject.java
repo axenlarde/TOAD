@@ -287,8 +287,9 @@ public abstract class ItemToInject implements ItemToInjectImpl
 		{
 		this.type = type;
 		}
-	public String getUUID()
+	public String getUUID() throws Exception
 		{
+		if((UUID == null) || (UUID.equals("")))this.isExisting();
 		return UUID;
 		}
 	public void setUUID(String uUID)

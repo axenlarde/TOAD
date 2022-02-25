@@ -384,17 +384,6 @@ public class UserTools
 		//We don't put a try/catch here because we want the whole injection to be interrupted in case of exception
 		agent.resolve();
 		
-		/*
-		try
-			{
-			agent.resolve();
-			}
-		catch (Exception e)
-			{
-			Variables.getLogger().debug(ad.getInfo()+" : The agent has not been added because an important value was empty : "+e.getMessage());
-			return null;
-			}*/
-		
 		list.add(agent);
 		
 		/**
@@ -421,25 +410,136 @@ public class UserTools
 			 */
 			try
 				{
-				for(Team t : ad.getPrimarySupervisorOf())
+				/**
+				 * We get the current configuration of the agent to compare
+				 */
+				UCCXAgent kagemusha = new UCCXAgent(agent.getName());
+				kagemusha.get();
+				/*****/
+				
+				/**
+				 * We cannot remove a primary supervisor from a team because
+				 * a team must have a primary supervisor
+				 * So removing a supervisor just means putting somebody else in place 
+				 */
+				ArrayList<Team> primTeamToAdd = new ArrayList<Team>();
+				
+				//To check for primTeam to add
+				for(Team te : ad.getPrimarySupervisorOf())
 					{
+					boolean found = false;
+					for(Team t : kagemusha.getPrimarySupervisorOf())
+						{
+						if(t.getName().equals(te.getName()))
+							{
+							//The supervisor supervise this team already
+							found = true;
+							break;
+							}
+						}
+					if(!found)
+						{
+						//The team was not found so it must be added
+						primTeamToAdd.add(te);
+						}
+					}
+				
+				for(Team t : primTeamToAdd)
+					{
+					t.get();
 					t.setPrimarySupervisor(agent);
+					/***
+					 * We then get all the UCCXAgent firstname and lastname (Needed for update)
+					 */
+					for(UCCXAgent ua : t.getSecondarySupervisorList())ua.get();
+					for(UCCXAgent ua : t.getAgentList())ua.get();
+					/*********/
 					t.setAction(action);
 					list.add(t);
 					}
 				
-				for(Team t : ad.getSecondarySupervisorOf())
+				/**
+				 * About secondary supervisor we need to get the current status of the supervisor
+				 * to eventually remove him from a team and add him to a new one
+				 */
+				ArrayList<Team> teamsToRemove = new ArrayList<Team>();
+				ArrayList<Team> teamsToAdd = new ArrayList<Team>();
+				
+				//To check for team to remove
+				for(Team t : kagemusha.getSecondarySupervisorOf())
+					{
+					boolean found = false;
+					for(Team te : ad.getSecondarySupervisorOf())
+						{
+						if(t.getName().equals(te.getName()))
+							{
+							//The supervisor still supervise this team
+							found = true;
+							break;
+							}
+						}
+					if(!found)
+						{
+						//The team was not found so it must been removed from this team
+						teamsToRemove.add(t);
+						}
+					}
+				
+				//To check for team to add
+				for(Team te : ad.getSecondarySupervisorOf())
+					{
+					boolean found = false;
+					for(Team t : kagemusha.getSecondarySupervisorOf())
+						{
+						if(t.getName().equals(te.getName()))
+							{
+							//The supervisor supervise this team already
+							found = true;
+							break;
+							}
+						}
+					if(!found)
+						{
+						//The team was not found so it must be added
+						teamsToAdd.add(te);
+						}
+					}
+				
+				//We update the found team
+				for(Team t : teamsToRemove)
 					{
 					/**
 					 * You cannot update the secondarysupervisor without providing the current primary
 					 * supervisor. So we fetch it
 					 */
 					t.get();//To get the primary supervisor ID
-					t.getPrimarySupervisor().get();//We then get the primary supervisor firstname and lastname
+					/***
+					 * We then get all the UCCXAgent firstname and lastname (Needed for update)
+					 */
+					t.getPrimarySupervisor().get();
+					for(UCCXAgent ua : t.getSecondarySupervisorList())ua.get();
+					for(UCCXAgent ua : t.getAgentList())ua.get();
 					/*********/
-					ArrayList<UCCXAgent> secSuplist = new ArrayList<UCCXAgent>();
-					secSuplist.add(agent);
-					t.setSecondarySupervisorList(secSuplist);
+					t.setAction(action);
+					list.add(t);
+					}
+				
+				
+				for(Team t : teamsToAdd)
+					{
+					/**
+					 * You cannot update the secondarysupervisor without providing the current primary
+					 * supervisor. So we fetch it
+					 */
+					t.get();//To get the primary supervisor ID
+					/***
+					 * We then get all the UCCXAgent firstname and lastname (Needed for update)
+					 */
+					t.getPrimarySupervisor().get();
+					for(UCCXAgent ua : t.getSecondarySupervisorList())ua.get();
+					for(UCCXAgent ua : t.getAgentList())ua.get();
+					/*********/
+					t.getSecondarySupervisorList().add(agent);//We add the supervisor to the team
 					t.setAction(action);
 					list.add(t);
 					}

@@ -9,6 +9,7 @@ import com.alex.toad.rest.misc.RESTTools;
 import com.alex.toad.misc.ItemToInject;
 import com.alex.toad.restitems.linkers.UCCXAgentLinker.toUpdate;
 import com.alex.toad.restitems.misc.RESTItemLinker;
+import com.alex.toad.uccx.items.CSQ;
 import com.alex.toad.uccx.items.Team;
 import com.alex.toad.uccx.items.UCCXAgent;
 import com.alex.toad.uccx.items.UCCXAgent.AgentType;
@@ -33,11 +34,14 @@ public class TeamLinker extends RESTItemLinker
 	private ArrayList<UCCXAgent> agentList;
 	private ArrayList<UCCXAgent> secondarySupervisorList;
 	private UCCXAgent primarySupervisor;//Can be null
+	private ArrayList<CSQ> csqList;
 	
 	public enum toUpdate implements ToUpdate
 		{
 		secondarySupervisorList,
-		primarySupervisor
+		primarySupervisor,
+		agentList,
+		csqList
 		}
 	
 	/***************
@@ -136,6 +140,26 @@ public class TeamLinker extends RESTItemLinker
 			content.append("		</secondarySupervisors>\r\n");
 			}
 		
+		if(tuList.contains(toUpdate.agentList))
+			{
+			content.append("		<resources>\r\n");
+			for(UCCXAgent ua : agentList)
+				{
+				content.append(UCCXTools.getRESTResourceFromAgent(ua));
+				}
+			content.append("		</resources>\r\n");
+			}
+		
+		if(tuList.contains(toUpdate.csqList))
+			{
+			content.append("		<csqs>\r\n");
+			for(CSQ q : csqList)
+				{
+				content.append(UCCXTools.getRESTCSQFromCSQ(q));
+				}
+			content.append("		</csqs>\r\n");
+			}
+		
 		content.append("	</team>\r\n");
 		
 		String reply = Variables.getUccxServer().send(requestType.PUT, uri, content.toString());
@@ -183,8 +207,15 @@ public class TeamLinker extends RESTItemLinker
 		this.primarySupervisor = primarySupervisor;
 		}
 
-	
+	public ArrayList<CSQ> getCsqList()
+		{
+		return csqList;
+		}
 
+	public void setCsqList(ArrayList<CSQ> csqList)
+		{
+		this.csqList = csqList;
+		}
 	
 	
 	/*2022*//*RATEL Alexandre 8)*/
