@@ -34,7 +34,7 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<aarcss></aarcss>
 			<subscribecss>'INTERNAL_CSS'</subscribecss>
 			<reroutingcss>'INTERNAL_CSS'</reroutingcss>
-			<mohaudiosourceid>office.mohnumber</mohaudiosourceid>
+			<!--<mohaudiosourceid>office.mohnumber</mohaudiosourceid>-->
 			<softkeytemplate>office.softkeytemplate</softkeytemplate>
 			<linenumber>*INCREMENT*agent.linenumber</linenumber><!--One or more-->
 			<cssline>'AllowedCalls_NATGSMSPC_FRANCE'</cssline>
@@ -98,7 +98,7 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<producttype>'Cisco 7841'</producttype>
 			<buttontemplate>'PBT_7841_2L_1SURL'</buttontemplate>
 			<protocol>'SIP'</protocol>
-			<service>'FIPPA':'ACD':'http\\://fr071px050301.ce.int.amecspie.com\\:8082/fippa/#DEVICENAME#?':'id=agent.userid':'extension=agent.linenumber':'password=agent.linenumber'</service><!--'Service Name':'Service URL label':'Service surl':'parameters name=parameters value' One or more service and one or more parameters separated by : -->
+			<service>'FIPPA':office.setting.2:'http\\://fr071px050301.ce.int.amecspie.com\\:8082/fippa/#DEVICENAME#?':'id=agent.userid':'extension=agent.linenumber':'password=agent.linenumber'</service><!--'Service Name':'Service URL label':'Service surl':'parameters name=parameters value' One or more service and one or more parameters separated by : -->
 			<!--<speeddial>tbd</speeddial>--><!--number:description-->
 		</udp>
 		<user>
@@ -107,7 +107,7 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<lastname>*M**C*agent.lastname</lastname>
 			<firstname>(*1M*agent.firstname)IfLongerThan30(*1_**M*agent.firstname+'.')</firstname>
 			<telephonenumber>agent.linenumber</telephonenumber>
-			<!--<userlocal>office.userlocal</userlocal>-->
+			<userlocal>office.userlocal</userlocal>
 			<subscribecss>'INTERNAL_CSS'</subscribecss>
 			<password>agent.linenumber</password>
 			<pin>agent.linenumber</pin>
@@ -120,7 +120,7 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<lastname>*M**C*agent.lastname</lastname>
 			<firstname>(*1M*agent.firstname)IfLongerThan30(*1_**M*agent.firstname+'.')</firstname>
 			<telephonenumber>*INCREMENT*agent.linenumber</telephonenumber>
-			<!--<userlocal>office.userlocal</userlocal>-->
+			<userlocal>office.userlocal</userlocal>
 			<subscribecss>'INTERNAL_CSS'</subscribecss>
 			<password>*INCREMENT*agent.linenumber</password>
 			<pin>*INCREMENT*agent.linenumber</pin>
@@ -136,7 +136,6 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 		<user>
 			<targetname>updateudp</targetname>
 			<userid>agent.userid</userid>
-			<device>('CSF'+*M*office.name+agent.index)IfLongerThan15('CSF'+*10_**M*office.name+agent.index)</device>
 			<udp>*M*agent.userid</udp>
 			<ctiudp>*M*agent.userid</ctiudp>
 		</user>
@@ -144,8 +143,6 @@ Les combinaisons sont possibles, par exemple : *4_**M*agent.lastname affichera l
 			<targetname>updatesoftphone</targetname>
 			<userid>agent.userid+'_ttv'</userid>
 			<device>('CSF'+*M*office.name+agent.index)IfLongerThan15('CSF'+*10_**M*office.name+agent.index)</device>
-			<udp>*M*agent.userid</udp>
-			<ctiudp>*M*agent.userid</ctiudp>
 		</user>
 		<user>
 			<targetname>updatepeudp</targetname>

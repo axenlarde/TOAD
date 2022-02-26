@@ -9,12 +9,12 @@ Office list
 			<templatename>template1</templatename>
 			<fullname>Default</fullname>
 			<teamname>Default</teamname>
-			<city>Default</city>
+			<city>MLK</city>
 			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -31,7 +31,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -44,7 +48,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -61,7 +65,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -74,7 +82,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -91,7 +99,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -104,7 +116,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -121,7 +133,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -129,12 +145,12 @@ Office list
 			<templatename>template1</templatename>
 			<fullname>CG92</fullname>
 			<teamname>CG92</teamname>
-			<city>CG92</city>
+			<city>MLK</city>
 			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -151,7 +167,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -159,12 +179,12 @@ Office list
 			<templatename>template1</templatename>
 			<fullname>SEB</fullname>
 			<teamname>SEB</teamname>
-			<city>BRON</city>
+			<city>DAGE</city>
 			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -181,7 +201,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -194,7 +218,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -211,7 +235,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -224,7 +252,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -241,7 +269,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -249,12 +281,12 @@ Office list
 			<templatename>template1</templatename>
 			<fullname>Cockpit</fullname>
 			<teamname>Cockpit</teamname>
-			<city>ACD</city>
+			<city>TLS</city>
 			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -271,7 +303,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value>0141464300</value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -284,7 +320,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -301,7 +337,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -314,7 +354,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -331,7 +371,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -344,7 +388,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -361,7 +405,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -374,7 +422,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_ACD</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -391,7 +439,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>SI-nerGIE</value>
 			</setting>
 		</office>
 		<office>
@@ -404,7 +456,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -421,7 +473,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -434,7 +490,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -451,7 +507,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -459,12 +519,12 @@ Office list
 			<templatename>template1</templatename>
 			<fullname>CRIDF</fullname>
 			<teamname>CRIDF</teamname>
-			<city>ACD</city>
+			<city>MLK</city>
 			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -481,7 +541,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -494,7 +558,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -511,7 +575,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -524,7 +592,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -541,7 +609,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value>0970845132</value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -554,7 +626,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -571,7 +643,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -584,7 +660,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -601,7 +677,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value>0140134567</value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -614,7 +694,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -631,7 +711,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -644,7 +728,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -661,7 +745,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value>0141464700</value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -674,7 +762,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_ACD</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -691,7 +779,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -700,11 +792,11 @@ Office list
 			<fullname>FMSD</fullname>
 			<teamname>FMSD</teamname>
 			<city>TLS</city>
-			<devicepool>_DP</devicepool>
+			<devicepool>_HLP_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_ACD</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -721,7 +813,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value>0534618400</value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -734,7 +830,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_ACD</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -751,7 +847,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value>0534618400</value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -764,7 +864,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_ACD</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -781,7 +881,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -794,7 +898,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_ACD</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -811,7 +915,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value>0534618400</value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -824,7 +932,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_ACD</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -841,7 +949,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value>0534618415</value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -849,12 +961,12 @@ Office list
 			<templatename>template1</templatename>
 			<fullname>CNR</fullname>
 			<teamname>CNR</teamname>
-			<city>BRON</city>
-			<devicepool>_HLP_DP</devicepool>
+			<city>DAGE</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -871,7 +983,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -879,12 +995,12 @@ Office list
 			<templatename>template1</templatename>
 			<fullname>EDF</fullname>
 			<teamname>EDF</teamname>
-			<city>BRON</city>
-			<devicepool>_HLP_DP</devicepool>
+			<city>DAGE</city>
+			<devicepool>_DP</devicepool>
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -901,7 +1017,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 		<office>
@@ -914,7 +1034,7 @@ Office list
 			<audiobandwidth>UNLIMITED</audiobandwidth>
 			<videobandwidth>384</videobandwidth>
 			<userlocal>French France</userlocal>
-			<softkeytemplate>Standard User Toulouse</softkeytemplate>
+			<softkeytemplate>SKT_USER_STD_Default</softkeytemplate>
 			<callmanagergroup>MAIN_CMG</callmanagergroup>
 			<datetimegroup>France</datetimegroup>
 			<mohnumber>1</mohnumber>
@@ -931,7 +1051,11 @@ Office list
 			</didranges>
 			<setting>
 				<targetname>1</targetname>
-				<value>149597500</value>
+				<value></value>
+			</setting>
+			<setting>
+				<targetname>2</targetname>
+				<value>ACD</value>
 			</setting>
 		</office>
 	</offices>

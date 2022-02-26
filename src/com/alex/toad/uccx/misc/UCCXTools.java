@@ -148,10 +148,13 @@ public class UCCXTools
 		listParams.add("csqs");
 		parsedReply = xMLGear.getResultListTabAndAtt(content, listParams);
 		ArrayList<CSQ> csqList = new ArrayList<CSQ>();
-		for(String[][] csq : parsedReply)
+		if((parsedReply != null) && (parsedReply.size() > 0))
 			{
-			String csqName = UsefulMethod.getAttributeItemByName("csq", csq);
-			csqList.add(new CSQ(csqName));
+			for(String[] csq : parsedReply.get(0))
+				{
+				String csqName = csq[2];
+				csqList.add(new CSQ(csqName));
+				}
 			}
 		team.setCsqList(csqList);
 		

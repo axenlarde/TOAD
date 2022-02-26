@@ -505,14 +505,22 @@ public class UserTools
 						}
 					}
 				
-				//We update the found team
+				//We update the teams where the supervisor must be removed
 				for(Team t : teamsToRemove)
 					{
+					t.get();//To get the current team data
+					
 					/**
-					 * You cannot update the secondarysupervisor without providing the current primary
-					 * supervisor. So we fetch it
+					 * We remove the supervisor from the team
 					 */
-					t.get();//To get the primary supervisor ID
+					for(UCCXAgent ua : t.getSecondarySupervisorList())
+						{
+						if(ua.getName().equals(agent.getName()))
+							{
+							t.getSecondarySupervisorList().remove(ua);
+							break;
+							}
+						}
 					/***
 					 * We then get all the UCCXAgent firstname and lastname (Needed for update)
 					 */
@@ -524,7 +532,7 @@ public class UserTools
 					list.add(t);
 					}
 				
-				
+				//We update the teams where the supervisor must be added
 				for(Team t : teamsToAdd)
 					{
 					/**
