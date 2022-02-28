@@ -47,6 +47,8 @@ public class User extends ItemToInject
 	private ArrayList<String> UDPList;
 	private ArrayList<String> ctiUDPList;
 	
+	boolean isLocal;
+	
 	private AgentData agentData; 
 
 	/***************
@@ -165,11 +167,13 @@ public class User extends ItemToInject
 		/***********/
 		
 		/**
-		 * If the user already exist but the data source is LDAP
-		 * we will update it instead
+		 * If the user is an LDAP one we will update it instead of inject it
 		 */
+		isLocal = SimpleRequest.isUserLocal(name);
+		myUser.setLocal(isLocal);
+		
 		if((this.status == statusType.injected) && 
-			(Variables.getUserSource().equals(UserSource.external)) &&
+			!isLocal &&
 			!(this.action.equals(actionType.delete)))
 			{
 			setStatus(statusType.waiting);
@@ -541,6 +545,16 @@ public class User extends ItemToInject
 	public void setServiceProfile(String serviceProfile)
 		{
 		this.serviceProfile = serviceProfile;
+		}
+
+	public boolean isLocal()
+		{
+		return isLocal;
+		}
+
+	public void setLocal(boolean isLocal)
+		{
+		this.isLocal = isLocal;
 		}
 
 	

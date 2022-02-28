@@ -46,6 +46,8 @@ public class UserLinker extends AXLItemLinker
 	serviceProfile,
 	pin;
 	
+	private boolean isLocal;
+	
 	private ArrayList<String> userControlGroupList;
 	private ArrayList<String> deviceList;
 	private ArrayList<String> UDPList;
@@ -79,6 +81,7 @@ public class UserLinker extends AXLItemLinker
 		deviceList = new ArrayList<String>();
 		UDPList = new ArrayList<String>();
 		ctiUDPList = new ArrayList<String>();
+		isLocal = true;
 		}
 	
 	/***************
@@ -287,7 +290,7 @@ public class UserLinker extends AXLItemLinker
 	 * Update
 	 */
 	public void doUpdateVersion105(ArrayList<ToUpdate> tuList) throws Exception
-		{		
+		{
 		com.cisco.axl.api._10.UpdateUserReq req = new com.cisco.axl.api._10.UpdateUserReq();
 		
 		/***********
@@ -296,12 +299,12 @@ public class UserLinker extends AXLItemLinker
 		req.setUserid(this.getName());
 		req.setHomeCluster("true");
 		
-		if(tuList.contains(toUpdate.firstname))req.setFirstName(this.firstname);
-		if(tuList.contains(toUpdate.lastname))req.setLastName(this.lastname);
-		if(tuList.contains(toUpdate.telephoneNumber))req.setTelephoneNumber(this.telephoneNumber);
+		if(tuList.contains(toUpdate.firstname) && isLocal)req.setFirstName(this.firstname);
+		if(tuList.contains(toUpdate.lastname) && isLocal)req.setLastName(this.lastname);
+		if(tuList.contains(toUpdate.telephoneNumber) && isLocal)req.setTelephoneNumber(this.telephoneNumber);
 		if(tuList.contains(toUpdate.userLocale))req.setUserLocale(new JAXBElement(new QName("userLocale"), String.class, this.userLocale));
 		if(tuList.contains(toUpdate.pin))req.setPin(this.pin);
-		if(tuList.contains(toUpdate.password))req.setPassword(this.password);
+		if(tuList.contains(toUpdate.password) && isLocal)req.setPassword(this.password);
 		if(tuList.contains(toUpdate.subscribeCallingSearchSpaceName))req.setSubscribeCallingSearchSpaceName(new JAXBElement(new QName("subscribeCallingSearchSpaceName"), com.cisco.axl.api._10.XFkType.class, SimpleRequest.getUUIDV105(itemType.callingsearchspace, subscribeCallingSearchSpaceName)));
 		if(tuList.contains(toUpdate.serviceProfile))req.setServiceProfile(new JAXBElement(new QName("serviceProfile"), com.cisco.axl.api._10.XFkType.class, SimpleRequest.getUUIDV105(itemType.serviceprofile, serviceProfile)));
 		
@@ -586,6 +589,16 @@ public class UserLinker extends AXLItemLinker
 	public void setServiceProfile(String serviceProfile)
 		{
 		this.serviceProfile = serviceProfile;
+		}
+
+	public boolean isLocal()
+		{
+		return isLocal;
+		}
+
+	public void setLocal(boolean isLocal)
+		{
+		this.isLocal = isLocal;
 		}
 	
 	

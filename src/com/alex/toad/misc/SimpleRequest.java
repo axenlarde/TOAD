@@ -770,7 +770,8 @@ public class SimpleRequest
 			for(ServiceParameters parameter : service.getParameterList())
 				{
 				//We get the parameter UUID
-				String paramUUID = SimpleRequest.getSimpleResponse("select s.pkid from telecasterserviceparameter s where s.name = '"+parameter.getName()+"'","pkid");
+				//String paramUUID = SimpleRequest.getSimpleResponse("select s.pkid from telecasterserviceparameter s where s.name = '"+parameter.getName()+"'","pkid");
+				String paramUUID = SimpleRequest.getSimpleResponse("select s.pkid from telecasterserviceparameter s, telecasterservice t where t.pkid=s.fktelecasterservice and s.name = '"+parameter.getName()+"' and t.name='"+service.getServicename()+"'","pkid");
 				
 				String query = "INSERT INTO telecastersubscribedparameter (fktelecastersubscribedservice, fktelecasterserviceparameter, value) VALUES ('"+tssUUID+"', '"+paramUUID+"', '"+parameter.getValue()+"')";
 				SimpleRequest.doSQLUpdate(query);//We send the request to create the parameter
@@ -789,6 +790,38 @@ public class SimpleRequest
 			{
 			Variables.getLogger().debug("No parameters to update for service '"+service.getServicename()+"' on phone "+deviceName);
 			}
+		}
+	
+	/**
+	 * Will check if the given userID is local to the CUCM
+	 * or if it is an LDAP user
+	 * 
+	 * As a reminder, an LDAP user cannot be updated from CUCM
+	 * so it is important to know
+	 * @throws Exception 
+	 */
+	public static boolean isUserLocal(String userID) throws Exception
+		{
+		String query = "select fkdirectorypluginconfig from enduser where lower(userid) like '%"+userID+"%'";
+		String reply;
+		try
+			{
+			reply = getSimpleResponse(query, "fkdirectorypluginconfig");
+			}
+		catch (EmptyValueException e)
+			{
+			Variables.getLogger().debug("The user '"+userID+"' doesn't exist");
+			return false;
+			}
+		
+		if(reply.equals(""))
+			{
+			Variables.getLogger().debug("The user '"+userID+"' is a local user");
+			return true;
+			}
+		
+		Variables.getLogger().debug("The user '"+userID+"' is an LDAP user");
+		return false;
 		}
 			
 	

@@ -171,7 +171,7 @@ public class UCCXTools
 		content = "<xml>"+content+"</xml>";
 		ArrayList<String> listParams = new ArrayList<String>();
 		
-		//Because sometime the skill tag contains upercase we have to test
+		//Because sometime the skill tag contains uppercase we have to test
 		if(content.contains("<Skill>"))listParams.add("Skill");
 		else listParams.add("skill");
 		

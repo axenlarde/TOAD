@@ -478,7 +478,7 @@ public class UsefulMethod
 			{
 			ArrayList<String> usedUserIdList = new ArrayList<String>();
 			
-			List<Object> SQLResp = SimpleRequest.doSQLQuery("select userid from enduser where userid like '"+prefix+"%"+suffix+"'");
+			List<Object> SQLResp = SimpleRequest.doSQLQuery("select userid from enduser where lower(userid) like '"+prefix.toLowerCase()+"%"+suffix.toLowerCase()+"'");
 			
 			for(Object o : SQLResp)
 				{
