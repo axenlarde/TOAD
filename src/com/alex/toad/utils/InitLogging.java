@@ -31,6 +31,7 @@ public class InitLogging
 		myR.setMaxFileSize("10000KB");
 		myR.setMaxBackupIndex(10);
 		myR.setLayout(myPattern);
+		myR.setEncoding("UTF-8");
 		myR.activateOptions();
 		
 		//Console appender setup

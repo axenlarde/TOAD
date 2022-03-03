@@ -136,7 +136,7 @@ public class RESTServer
 		HttpPost request = new HttpPost(baseUri+uri);
 	    request.addHeader("Authorization", "Basic "+credentials);
 	    request.addHeader("Content-Type", "application/XML");
-	    request.setEntity(new StringEntity(body));
+	    request.setEntity(new StringEntity(body,"UTF-8"));
 	    
         HttpResponse response = httpClient.execute(request);
         
@@ -157,7 +157,7 @@ public class RESTServer
 		HttpPut request = new HttpPut(baseUri+uri);
 	    request.addHeader("Authorization", "Basic "+credentials);
 	    request.addHeader("Content-Type", "application/XML");
-	    request.setEntity(new StringEntity(body));
+	    request.setEntity(new StringEntity(body,"UTF-8"));
 	    
         HttpResponse response = httpClient.execute(request);
         

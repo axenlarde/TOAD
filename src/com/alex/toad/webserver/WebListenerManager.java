@@ -216,7 +216,7 @@ public class WebListenerManager implements HttpHandler
 	
 	private String getContent(HttpExchange exc) throws Exception
 		{
-		BufferedReader in = new BufferedReader(new InputStreamReader(exc.getRequestBody()));
+		BufferedReader in = new BufferedReader(new InputStreamReader(exc.getRequestBody(),"UTF-8"));
 		StringBuffer buf = new StringBuffer();
 		
 		while(true)
